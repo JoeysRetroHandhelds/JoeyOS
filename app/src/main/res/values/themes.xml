@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        Fullscreen theme so the Compose UI owns the entire display.
+        edge-to-edge is handled in code via enableEdgeToEdge().
+    -->
+    <style name="Theme.JoeyOS" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>

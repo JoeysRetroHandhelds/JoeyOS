@@ -1,0 +1,26 @@
+*.iml
+.gradle
+/local.properties
+.idea/
+.DS_Store
+build/
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+*.hprof
+.kotlin
+
+# Claude Code local state (not meant for public consumption)
+.claude/
+
+# Python
+__pycache__/
+*.pyc
+
+# Local script cache state
+scripts/.gamedb_etags.json
+scripts/.gamedb_last_fetch
+
+# Log files
+*.log

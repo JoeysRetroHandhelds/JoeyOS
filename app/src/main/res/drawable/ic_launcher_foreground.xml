@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    JoeyOS icon — landscape controller, blue theme
+    Viewport 108×108; all key elements within the 18-90 adaptive-icon safe zone.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- ── Controller body ────────────────────────────────────────────── -->
+    <path
+        android:fillColor="#1E40AF"
+        android:pathData="M26,34 L82,34 Q90,34 90,42 L90,66 Q90,72 82,72 L26,72 Q18,72 18,66 L18,42 Q18,34 26,34 Z"/>
+
+    <!-- ── Left grip ──────────────────────────────────────────────────── -->
+    <path
+        android:fillColor="#1E40AF"
+        android:pathData="M20,64 L36,64 Q42,64 42,70 L42,80 Q42,86 36,86 L22,86 Q16,86 16,80 L16,70 Q16,64 20,64 Z"/>
+
+    <!-- ── Right grip ─────────────────────────────────────────────────── -->
+    <path
+        android:fillColor="#1E40AF"
+        android:pathData="M72,64 L88,64 Q92,64 92,70 L92,80 Q92,86 86,86 L72,86 Q66,86 66,80 L66,70 Q66,64 72,64 Z"/>
+
+    <!-- ── Left shoulder button ───────────────────────────────────────── -->
+    <path
+        android:fillColor="#2563EB"
+        android:pathData="M22,26 L44,26 Q48,26 48,30 L48,36 L18,36 L18,30 Q18,26 22,26 Z"/>
+
+    <!-- ── Right shoulder button ──────────────────────────────────────── -->
+    <path
+        android:fillColor="#2563EB"
+        android:pathData="M64,26 L86,26 Q90,26 90,30 L90,36 L60,36 L60,30 Q60,26 64,26 Z"/>
+
+    <!-- ── Screen bezel ───────────────────────────────────────────────── -->
+    <path
+        android:fillColor="#0D1B2A"
+        android:pathData="M36,40 L72,40 L72,64 L36,64 Z"/>
+
+    <!-- ── Screen active area ─────────────────────────────────────────── -->
+    <path
+        android:fillColor="#1E3A5F"
+        android:pathData="M38,42 L70,42 L70,62 L38,62 Z"/>
+
+    <!-- ── J — top horizontal bar ────────────────────────────────────── -->
+    <path
+        android:fillColor="#93C5FD"
+        android:pathData="M45,45 L62,45 L62,49 L45,49 Z"/>
+
+    <!-- ── J — right vertical stem ───────────────────────────────────── -->
+    <path
+        android:fillColor="#93C5FD"
+        android:pathData="M58,45 L62,45 L62,58 L58,58 Z"/>
+
+    <!-- ── J — hook ──────────────────────────────────────────────────── -->
+    <path
+        android:fillColor="#93C5FD"
+        android:pathData="M44,54 L58,54 L58,58 Q58,63 51,63 Q44,63 44,58 Z"/>
+
+    <!-- ── D-pad horizontal ───────────────────────────────────────────── -->
+    <path
+        android:fillColor="#0D1B2A"
+        android:pathData="M20,50 L34,50 L34,54 L20,54 Z"/>
+
+    <!-- ── D-pad vertical ────────────────────────────────────────────── -->
+    <path
+        android:fillColor="#0D1B2A"
+        android:pathData="M25,45 L29,45 L29,59 L25,59 Z"/>
+
+    <!-- ── Face buttons (diamond: X top, A right, B bottom, Y left) ──── -->
+    <path android:fillColor="#0D1B2A"
+        android:pathData="M79,42 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0"/>
+    <path android:fillColor="#0D1B2A"
+        android:pathData="M83,48 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0"/>
+    <path android:fillColor="#0D1B2A"
+        android:pathData="M79,54 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0"/>
+    <path android:fillColor="#0D1B2A"
+        android:pathData="M75,48 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0"/>
+
+    <!-- ── Start / Select ─────────────────────────────────────────────── -->
+    <path
+        android:fillColor="#0D1B2A"
+        android:pathData="M46,66 L52,66 L52,68 L46,68 Z"/>
+    <path
+        android:fillColor="#0D1B2A"
+        android:pathData="M56,66 L62,66 L62,68 L56,68 Z"/>
+
+    <!-- ── Left analog stick ──────────────────────────────────────────── -->
+    <path
+        android:fillColor="#0D1B2A"
+        android:pathData="M24,71 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0"/>
+
+    <!-- ── Right analog stick ─────────────────────────────────────────── -->
+    <path
+        android:fillColor="#0D1B2A"
+        android:pathData="M74,71 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0"/>
+
+</vector>
