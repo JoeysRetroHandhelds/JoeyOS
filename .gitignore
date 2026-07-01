@@ -9,6 +9,9 @@ build/
 .cxx
 local.properties
 *.hprof
+keystore.properties
+*.jks
+*.keystore
 .kotlin
 
 # Claude Code local state (not meant for public consumption)
