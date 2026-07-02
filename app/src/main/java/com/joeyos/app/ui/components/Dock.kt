@@ -39,6 +39,7 @@ import com.joeyos.app.data.DockCornerStyle
 import com.joeyos.app.data.DockTitleSize
 import com.joeyos.app.data.DockSortOrder
 import com.joeyos.app.data.InstalledApp
+import com.joeyos.app.data.RecentGame
 import com.joeyos.app.data.RecentGamesReader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -97,21 +98,31 @@ fun Dock(
     showBadge: Boolean = true,
     cornerStyle: DockCornerStyle = DockCornerStyle.ROUNDED,
     bgOpacity: DockBgOpacity = DockBgOpacity.NONE,
-    titleSize: DockTitleSize = DockTitleSize.MEDIUM
+    titleSize: DockTitleSize = DockTitleSize.MEDIUM,
+    recentGamesVersion: Int = 0
 ) {
     // Load the most-recently-played title for each emulator, refreshing after every launch.
+    // Keyed on recentGamesVersion too, since dockEntries alone doesn't change when the same
+    // emulator (already at the top of the dock) plays a different game.
     var lastPlayedTitles by remember { mutableStateOf<Map<String, String?>>(emptyMap()) }
-    LaunchedEffect(dockEntries) {
+    var recentAllTitle by remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(dockEntries, recentGamesVersion) {
         val titles = mutableMapOf<String, String?>()
+        var topGame: RecentGame? = null
         dockEntries.forEach { entry ->
             if (entry.packageName != FAVORITE_PACKAGE && entry.packageName != RECENT_ALL_PACKAGE &&
                 RecentGamesReader.supportsRecentlyPlayed(entry.packageName)) {
-                titles[entry.packageName] = withContext(Dispatchers.IO) {
-                    RecentGamesReader.readForPackage(entry.packageName).firstOrNull()?.title
+                val game = withContext(Dispatchers.IO) {
+                    RecentGamesReader.readForPackage(entry.packageName).firstOrNull()
+                }
+                titles[entry.packageName] = game?.title
+                if (game != null && (topGame == null || game.lastPlayed > topGame!!.lastPlayed)) {
+                    topGame = game
                 }
             }
         }
         lastPlayedTitles = titles
+        recentAllTitle = topGame?.title
     }
 
     val bgAlpha = when (bgOpacity) {
@@ -126,7 +137,7 @@ fun Dock(
         val pkg = dockEntries[selectedIndex].packageName
         when (pkg) {
             FAVORITE_PACKAGE   -> favoriteTitle
-            RECENT_ALL_PACKAGE -> null
+            RECENT_ALL_PACKAGE -> recentAllTitle
             else               -> lastPlayedTitles[pkg]
         }
     } else null

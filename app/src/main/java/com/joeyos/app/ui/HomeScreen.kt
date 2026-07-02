@@ -73,6 +73,7 @@ fun HomeScreen(viewModel: HomeViewModel) {
     val recentDepth       by viewModel.recentDepth.collectAsStateWithLifecycle()
     val dockBgOpacity     by viewModel.dockBgOpacity.collectAsStateWithLifecycle()
     val dockTitleSize     by viewModel.dockTitleSize.collectAsStateWithLifecycle()
+    val recentGamesVersion by viewModel.recentGamesVersion.collectAsStateWithLifecycle()
 
     var showSettings            by remember { mutableStateOf(false) }
     var settingsTab             by remember { mutableIntStateOf(0) }
@@ -513,7 +514,8 @@ fun HomeScreen(viewModel: HomeViewModel) {
             showBadge           = showRecentBadge,
             cornerStyle         = DockCornerStyle.CIRCLE,
             bgOpacity           = dockBgOpacity,
-            titleSize           = dockTitleSize
+            titleSize           = dockTitleSize,
+            recentGamesVersion  = recentGamesVersion
         )
 
         // ── Recent games overlay ──────────────────────────────────────────

@@ -228,8 +228,15 @@ class HomeViewModel(
         }
     }
 
+    // Bumped every time the recent-games cache is invalidated so the dock's cached
+    // "last played" title badges know to refetch even when dockEntries itself is unchanged
+    // (e.g. the same emulator stays at the top of the dock after playing another game).
+    private val _recentGamesVersion = MutableStateFlow(0)
+    val recentGamesVersion: StateFlow<Int> = _recentGamesVersion.asStateFlow()
+
     /** Called from Activity.onResume when returning from an emulator. */
     fun invalidateAndPreWarmRecentGames() {
+        _recentGamesVersion.update { it + 1 }
         viewModelScope.launch(Dispatchers.IO) {
             RecentGamesReader.invalidateCache()
             val apps = _installedApps.value
