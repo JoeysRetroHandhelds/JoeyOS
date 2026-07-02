@@ -76,7 +76,7 @@ internal val CORE_SYSTEMS = mapOf(
     "o2em"                    to "Odyssey²",
 )
 
-private val EMULATOR_NAMES = mapOf(
+internal val EMULATOR_NAMES = mapOf(
     "org.ppsspp"                       to "PPSSPP",
     "me.magnum.melonds"                to "melonDS",
     "me.magnum.melondualds"            to "MelonDualDS",
@@ -90,6 +90,7 @@ private val EMULATOR_NAMES = mapOf(
     "com.github.stenzek.duckstation"   to "DuckStation",
     "com.duckstation"                  to "DuckStation",
     "aenu.aps3e"                       to "APS3E",
+    "org.mupen64plusae"                to "M64Plus FZ",
 )
 
 private fun gameSubtitle(game: RecentGame): String {
@@ -102,7 +103,7 @@ private fun gameSubtitle(game: RecentGame): String {
         .removeSuffix(".so")
         .removeSuffix("_libretro_android")
         .removeSuffix("_libretro")
-    return CORE_SYSTEMS[coreName] ?: coreName
+    return "RetroArch - ${CORE_SYSTEMS[coreName] ?: coreName}"
 }
 
 @Composable
@@ -161,13 +162,11 @@ fun RecentGamesPopup(
                     modifier       = Modifier.fillMaxWidth(),
                     contentPadding = PaddingValues(vertical = 0.dp)
                 ) {
-                    val isMultiEmulator = games.map { it.emulatorPackage }.toSet().size > 1
                     itemsIndexed(games) { i, game ->
                         RecentGameRow(
                             index        = i + 1,
                             game         = game,
                             isSelected   = i == selectedIndex,
-                            showSubtitle = game.corePath != null || isMultiEmulator,
                             onClick      = { onLaunch(game) }
                         )
                     }
@@ -178,7 +177,7 @@ fun RecentGamesPopup(
 }
 
 @Composable
-private fun RecentGameRow(index: Int, game: RecentGame, isSelected: Boolean, showSubtitle: Boolean, onClick: () -> Unit) {
+private fun RecentGameRow(index: Int, game: RecentGame, isSelected: Boolean, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -208,7 +207,7 @@ private fun RecentGameRow(index: Int, game: RecentGame, isSelected: Boolean, sho
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
-            if (showSubtitle) Text(
+            Text(
                 gameSubtitle(game),
                 fontSize = 10.sp,
                 fontFamily = FontFamily.Monospace,

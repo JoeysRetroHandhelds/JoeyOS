@@ -25,14 +25,17 @@ import com.joeyos.app.data.RecentGame
 import com.joeyos.app.ui.theme.*
 
 private fun favoriteSubtitle(game: RecentGame): String {
-    val core = game.corePath ?: return game.emulatorPackage.substringAfterLast(".")
+    val core = game.corePath ?: run {
+        val pkg = game.emulatorPackage
+        return EMULATOR_NAMES.entries.firstOrNull { (prefix, _) -> pkg.startsWith(prefix) }?.value ?: pkg
+    }
     val coreName = core
         .substringAfterLast("/")
         .removeSuffix(".so")
         .removeSuffix("_libretro_android")
         .removeSuffix("_libretro")
     val system = CORE_SYSTEMS[coreName] ?: coreName
-    return "retroarch - $system"
+    return "RetroArch - $system"
 }
 
 @Composable

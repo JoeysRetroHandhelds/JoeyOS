@@ -166,7 +166,11 @@ fun RetroAchievementsTab(
     // IB connected:      [raCount+0 = Refresh, raCount+1 = Year◀, raCount+2 = Year▶, raCount+3 = Toggle]
     val raNavCount = if (isRALoggedIn) 5 else 1
     val ibNavCount = if (ibIsSuccess) 4 else 1
-    val navCount   = raNavCount + ibNavCount
+    // The "Total Beaten" table has no controls, but it still needs a nav stop — otherwise
+    // dpad-down clamps at the IB toggle forever and the section below it is unreachable
+    // without a touchscreen. Pressing A on this stop is a no-op (see activateTick below).
+    val hasCombinedSection = combinedBeatenByYear.isNotEmpty()
+    val navCount   = raNavCount + ibNavCount + if (hasCombinedSection) 1 else 0
     LaunchedEffect(navCount) { onItemCountChange(navCount) }
 
     val maxYear = Calendar.getInstance().get(Calendar.YEAR)
@@ -207,6 +211,13 @@ fun RetroAchievementsTab(
     val listState = rememberLazyListState()
     LaunchedEffect(selectedItemIndex) {
         if (selectedItemIndex < 0) return@LaunchedEffect
+        // Trailing "Total Beaten" nav stop — scroll all the way to the bottom of the list
+        // rather than computing its exact item index (it's the last thing rendered).
+        if (hasCombinedSection && selectedItemIndex == navCount - 1) {
+            val lastIndex = listState.layoutInfo.totalItemsCount - 1
+            if (lastIndex >= 0) listState.animateScrollToItem(lastIndex)
+            return@LaunchedEffect
+        }
         val ibSectionStart = when {
             isRALoggedIn -> 7
             raResult is RAResult.Error -> 5

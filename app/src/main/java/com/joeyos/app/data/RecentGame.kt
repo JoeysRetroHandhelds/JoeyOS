@@ -177,11 +177,17 @@ object RecentGamesReader {
             }
             .take(depth)
             .mapIndexed { index, (decodedPath, displayName) ->
+                // ppsspp.ini's [Recent] list has no real per-entry timestamps, only relative
+                // order. Index 0 gets the file's real mtime (accurate); every entry after that
+                // assumes a conservative 1-day gap so a cluster of recent-but-not-that-recent
+                // PPSSPP plays doesn't outrank a genuinely recent play on another emulator in
+                // the merged "Recent" view. This only affects cross-emulator ranking — within
+                // PPSSPP's own list, order is unchanged (still most-recent-first).
                 RecentGame(
                     title           = cleanTitle(displayName),
                     path            = decodedPath,
                     emulatorPackage = packageName,
-                    lastPlayed      = now - index * 60_000L
+                    lastPlayed      = now - index * 86_400_000L
                 )
             }
     }
@@ -267,11 +273,14 @@ object RecentGamesReader {
                     ?: File(path).nameWithoutExtension
                 val corePath = item.optString("core_path").takeIf { it.isNotEmpty() && it != "DETECT" }
                 if (seen.add(label)) {
+                    // content_history.lpl has no real per-entry timestamps either — same
+                    // conservative 1-day-per-position gap as PPSSPP's [Recent] list, see there
+                    // for why.
                     games += RecentGame(
                         title           = label,
                         path            = path,
                         emulatorPackage = packageName,
-                        lastPlayed      = now - i * 60_000L,
+                        lastPlayed      = now - i * 86_400_000L,
                         corePath        = corePath
                     )
                     Log.d(TAG, "readRetroArchHistory: added '$label'")
