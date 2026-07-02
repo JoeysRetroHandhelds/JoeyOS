@@ -99,12 +99,7 @@ object RomFinder {
             } ?: continue
             val files = systemDir.listFiles()?.filter { it.isFile } ?: continue
             Log.d(TAG, "findRomByTitle: searching ${systemDir.absolutePath} for '$titleHint' (normalized='$normalHint' short='$shortHint') among ${files.size} files")
-            val rom = files.firstOrNull { normalizeTitle(it.nameWithoutExtension).startsWith(normalHint, ignoreCase = true) }
-                ?: files.firstOrNull { normalizeTitle(it.nameWithoutExtension).contains(normalHint, ignoreCase = true) }
-                ?: shortHint?.let { hint ->
-                    files.firstOrNull { normalizeTitle(it.nameWithoutExtension).startsWith(hint, ignoreCase = true) }
-                        ?: files.firstOrNull { normalizeTitle(it.nameWithoutExtension).contains(hint, ignoreCase = true) }
-                }
+            val rom = pickBestMatch(files, normalHint) ?: shortHint?.let { pickBestMatch(files, it) }
             if (rom != null) {
                 Log.d(TAG, "findRomByTitle: found ${rom.absolutePath}")
                 return rom.absolutePath
@@ -120,6 +115,56 @@ object RomFinder {
         title.replace(Regex("[^\\w\\s]"), " ")
              .replace(Regex("\\s+"), " ")
              .trim()
+
+    private data class RomCandidate(val file: File, val normalized: String)
+
+    /**
+     * Rank candidate ROM files against a normalized title hint rather than picking the
+     * first filesystem match (which is arbitrary order and can pick a sequel — e.g.
+     * "Mario Party 2" — when the hint was just "Mario Party" and both are installed).
+     * Preference order: exact match, then prefix match where the text right after the
+     * hint doesn't look like a sequel number, then substring match under the same rule.
+     * Ties are broken by shortest filename (closest overall match to the hint). Always
+     * returns a result if any candidate matches at all — never falls back to nothing
+     * just because the ranking is ambiguous.
+     */
+    private fun pickBestMatch(files: List<File>, hint: String): File? {
+        val candidates = files.map { RomCandidate(it, normalizeTitle(it.nameWithoutExtension)) }
+
+        candidates.firstOrNull { it.normalized.equals(hint, ignoreCase = true) }?.let { return it.file }
+
+        val startsWith = candidates.filter { it.normalized.startsWith(hint, ignoreCase = true) }
+        if (startsWith.isNotEmpty()) {
+            return startsWith.minWithOrNull(
+                compareBy(
+                    { c: RomCandidate -> looksLikeSequel(c.normalized, hint.length) },
+                    { c: RomCandidate -> c.normalized.length }
+                )
+            )?.file
+        }
+
+        val contains = candidates.filter { it.normalized.contains(hint, ignoreCase = true) }
+        if (contains.isNotEmpty()) {
+            return contains.minWithOrNull(
+                compareBy(
+                    { c: RomCandidate -> looksLikeSequelAt(c.normalized, hint) },
+                    { c: RomCandidate -> c.normalized.length }
+                )
+            )?.file
+        }
+
+        return null
+    }
+
+    /** True if the text right after the matched prefix starts with a digit (likely a sequel number). */
+    private fun looksLikeSequel(normalized: String, prefixLength: Int): Boolean =
+        normalized.substring(prefixLength).trimStart().firstOrNull()?.isDigit() == true
+
+    private fun looksLikeSequelAt(normalized: String, hint: String): Boolean {
+        val idx = normalized.indexOf(hint, ignoreCase = true)
+        if (idx < 0) return false
+        return normalized.substring(idx + hint.length).trimStart().firstOrNull()?.isDigit() == true
+    }
 
     /**
      * Convert a stored path (plain file path, file://, or content:// URI string) to a Uri

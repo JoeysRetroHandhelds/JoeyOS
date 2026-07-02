@@ -460,7 +460,7 @@ fun HomeScreen(viewModel: HomeViewModel) {
                 when (pkg) {
                     FAVORITE_PACKAGE -> {
                         val fav = favoriteGame
-                        if (fav != null) launchRecentGame(context, fav, assignments, viewModel)
+                        if (fav != null) scope.launch { launchRecentGame(context, fav, assignments, viewModel) }
                         else {
                             favoritePickerGames = emptyList(); selectedFavoritePicker = 0; showFavoritePicker = true
                             scope.launch {
@@ -523,7 +523,7 @@ fun HomeScreen(viewModel: HomeViewModel) {
             RecentGamesPopup(
                 games         = recentGames,
                 selectedIndex = selectedRecent,
-                onLaunch      = { game -> showRecentGames = false; launchRecentGame(context, game, assignments, viewModel) },
+                onLaunch      = { game -> showRecentGames = false; scope.launch { launchRecentGame(context, game, assignments, viewModel) } },
                 onDismiss     = { showRecentGames = false }
             )
         }
@@ -659,44 +659,48 @@ fun SettingsGearButton(onClick: () -> Unit) {
 
 private fun formattedDate(): String = SimpleDateFormat("EEE, MMM d", Locale.getDefault()).format(Date())
 
-fun launchRecentGame(
+suspend fun launchRecentGame(
     context: android.content.Context,
     game: RecentGame,
     assignments: Map<String, String>,
     viewModel: HomeViewModel
 ) {
     Log.d("launchRecentGame", "title=${game.title} pkg=${game.emulatorPackage} path=${game.path}")
-    val launched = when {
-        game.emulatorPackage.startsWith("com.retroarch") ->
-            RetroArchLauncher.launch(context, game, assignments)
-        game.emulatorPackage.startsWith("me.magnum.melonds") ||
-        game.emulatorPackage.startsWith("me.magnum.melondualds") ->
-            MelonDSLauncher.launch(context, game)
-        game.emulatorPackage.startsWith("org.ppsspp") ->
-            PpssppLauncher.launch(context, game)
-        game.emulatorPackage.startsWith("xyz.aethersx2") ||
-        game.emulatorPackage.startsWith("net.nicholaswilde.nethersx2") ->
-            NetherSX2Launcher.launch(context, game)
-        game.emulatorPackage.startsWith("com.armsx2") ->
-            ARMSX2Launcher.launch(context, game)
-        game.emulatorPackage.startsWith("org.dolphinemu") ->
-            DolphinLauncher.launch(context, game)
-        game.emulatorPackage.startsWith("org.azahar_emu") ->
-            AzaharLauncher.launch(context, game)
-        game.emulatorPackage.startsWith("info.cemu") ->
-            CemuLauncher.launch(context, game)
-        game.emulatorPackage.startsWith("dev.eden") ->
-            EdenLauncher.launch(context, game)
-        game.emulatorPackage.startsWith("org.vita3k") ->
-            Vita3KLauncher.launch(context, game)
-        game.emulatorPackage.startsWith("com.github.stenzek.duckstation") ||
-        game.emulatorPackage.startsWith("com.duckstation") ->
-            DuckStationLauncher.launch(context, game)
-        game.emulatorPackage.startsWith("aenu.aps3e") ->
-            Aps3eLauncher.launch(context, game)
-        game.emulatorPackage.startsWith("org.mupen64plusae") ->
-            M64PlusFZLauncher.launch(context, game)
-        else -> false
+    // Most launchers resolve the ROM by scanning storage directories (RomFinder.findRomByTitle)
+    // on every launch, not just as a fallback — keep that disk I/O off the main thread.
+    val launched = withContext(Dispatchers.IO) {
+        when {
+            game.emulatorPackage.startsWith("com.retroarch") ->
+                RetroArchLauncher.launch(context, game, assignments)
+            game.emulatorPackage.startsWith("me.magnum.melonds") ||
+            game.emulatorPackage.startsWith("me.magnum.melondualds") ->
+                MelonDSLauncher.launch(context, game)
+            game.emulatorPackage.startsWith("org.ppsspp") ->
+                PpssppLauncher.launch(context, game)
+            game.emulatorPackage.startsWith("xyz.aethersx2") ||
+            game.emulatorPackage.startsWith("net.nicholaswilde.nethersx2") ->
+                NetherSX2Launcher.launch(context, game)
+            game.emulatorPackage.startsWith("com.armsx2") ->
+                ARMSX2Launcher.launch(context, game)
+            game.emulatorPackage.startsWith("org.dolphinemu") ->
+                DolphinLauncher.launch(context, game)
+            game.emulatorPackage.startsWith("org.azahar_emu") ->
+                AzaharLauncher.launch(context, game)
+            game.emulatorPackage.startsWith("info.cemu") ->
+                CemuLauncher.launch(context, game)
+            game.emulatorPackage.startsWith("dev.eden") ->
+                EdenLauncher.launch(context, game)
+            game.emulatorPackage.startsWith("org.vita3k") ->
+                Vita3KLauncher.launch(context, game)
+            game.emulatorPackage.startsWith("com.github.stenzek.duckstation") ||
+            game.emulatorPackage.startsWith("com.duckstation") ->
+                DuckStationLauncher.launch(context, game)
+            game.emulatorPackage.startsWith("aenu.aps3e") ->
+                Aps3eLauncher.launch(context, game)
+            game.emulatorPackage.startsWith("org.mupen64plusae") ->
+                M64PlusFZLauncher.launch(context, game)
+            else -> false
+        }
     }
     if (!launched) {
         val intent = Intent(Intent.ACTION_VIEW).apply {
