@@ -152,23 +152,31 @@ object RecentGamesReader {
             }
         }
         Log.d(TAG, "readPpsspp: found ${paths.size} recent paths")
-        val now = System.currentTimeMillis()
+        // Anchor to the ini's real last-modified time rather than read time, so cross-emulator
+        // sorting (readAll) reflects when PPSSPP actually last wrote to its recent list — not
+        // whenever JoeyOS happened to read/cache this file.
+        val now = ini.lastModified()
+        val seen = mutableSetOf<String>()
         return paths
             .sortedBy { it.first }
-            .take(depth)
-            .mapIndexed { index, (_, path) ->
+            .mapNotNull { (_, path) ->
                 // If path is a content:// or file:// URI, don't URL-decode it — the URI
                 // scheme chars would get corrupted. Only decode plain percent-encoded file paths.
                 val decodedPath = if (path.startsWith("content://") || path.startsWith("file://"))
                     path
                 else
                     java.net.URLDecoder.decode(path, "UTF-8")
+                if (!seen.add(decodedPath)) return@mapNotNull null
                 // For content URIs the "file name" is the last path segment; for file paths it's nameWithoutExtension.
                 val displayName = if (decodedPath.startsWith("content://"))
                     Uri.parse(decodedPath).lastPathSegment?.substringAfterLast('/')
                         ?.substringBeforeLast('.') ?: decodedPath
                 else
                     File(decodedPath).nameWithoutExtension
+                decodedPath to displayName
+            }
+            .take(depth)
+            .mapIndexed { index, (decodedPath, displayName) ->
                 RecentGame(
                     title           = cleanTitle(displayName),
                     path            = decodedPath,
@@ -247,7 +255,10 @@ object RecentGamesReader {
             Log.d(TAG, "readRetroArchHistory: items array has ${items.length()} entries")
             val seen  = mutableSetOf<String>()
             val games = mutableListOf<RecentGame>()
-            val now   = System.currentTimeMillis()
+            // Anchor to the lpl's real last-modified time rather than read time, so cross-emulator
+            // sorting (readAll) reflects when RetroArch actually last wrote its history — not
+            // whenever JoeyOS happened to read/cache this file.
+            val now   = lpl.lastModified()
             for (i in 0 until items.length()) {
                 if (games.size >= depth) break
                 val item  = items.getJSONObject(i)
