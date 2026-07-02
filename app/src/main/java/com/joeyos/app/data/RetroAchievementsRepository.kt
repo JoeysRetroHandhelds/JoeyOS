@@ -8,7 +8,9 @@ import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
 import java.net.HttpURLConnection
+import java.net.SocketTimeoutException
 import java.net.URL
+import java.net.UnknownHostException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -103,11 +105,31 @@ class RetroAchievementsRepository(context: Context) {
                 conn.setRequestProperty("User-Agent", "JoeyOS/1.0")
 
                 if (conn.responseCode != 200) {
-                    return@withContext RAResult.Error("HTTP ${conn.responseCode}")
+                    val code = conn.responseCode
+                    return@withContext RAResult.Error(
+                        when (code) {
+                            401, 403 -> "Invalid username or API key"
+                            404      -> "User \"$username\" not found"
+                            429      -> "Too many requests — try again in a few minutes"
+                            in 500..599 -> "RetroAchievements server error — try again later"
+                            else     -> "RetroAchievements returned an unexpected error (HTTP $code)"
+                        }
+                    )
                 }
 
                 val json = JSONObject(conn.inputStream.bufferedReader().readText())
                 conn.disconnect()
+
+                // The API can return HTTP 200 with an error body for bad credentials rather
+                // than a 4xx status.
+                json.optString("Error", "").takeIf { it.isNotBlank() }?.let { apiError ->
+                    return@withContext RAResult.Error(
+                        if (apiError.contains("credentials", ignoreCase = true) ||
+                            apiError.contains("key", ignoreCase = true))
+                            "Invalid username or API key"
+                        else apiError
+                    )
+                }
 
                 val awardsArray = json.getJSONArray("VisibleUserAwards")
                 val dateFormat  = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.US)
@@ -141,6 +163,10 @@ class RetroAchievementsRepository(context: Context) {
                 cachePrefs.edit().putString(KEY_CACHE, serializeResult(result)).apply()
                 if (forceRefresh) lastManualRefreshAt = System.currentTimeMillis()
                 RAResult.Success(result)
+            } catch (e: UnknownHostException) {
+                RAResult.Error("No internet connection")
+            } catch (e: SocketTimeoutException) {
+                RAResult.Error("Connection timed out — RetroAchievements may be down")
             } catch (e: Exception) {
                 RAResult.Error(e.message ?: "Unknown error")
             }

@@ -36,6 +36,22 @@ if hasattr(sys.stderr, "reconfigure"):
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUT_DIR    = os.path.join(SCRIPT_DIR, "..", "app", "src", "main", "assets", "gamedb")
 
+# Manual corrections for specific title IDs the upstream sources get wrong or omit
+# entirely. Applied every time the corresponding CSV is regenerated, so they survive
+# future automatic re-fetches even after the upstream source changes.
+MANUAL_3DS_OVERRIDES = {
+    # Missing from all 5 hax0kartik/3dsdb regions (US/GB/JP/KR/TW) — likely a regional
+    # SKU variant (e.g. non-GB EUR language pack) not covered by any of those lists.
+    "00040000000f8000": "Team Ogre Attacks!",
+    "000400000019e600": "Shantae and the Pirate's Curse",
+}
+MANUAL_SWITCH_OVERRIDES = {
+    # titledb's official eShop metadata names these as bundle SKUs rather than the
+    # plain retail title.
+    "0100a3d008c5c000": "Pokémon Scarlet",
+    "01008f6008c5e000": "Pokémon Violet",
+}
+
 SOURCES = {
     "wii":          "https://www.gametdb.com/wiitdb.zip",
     "gcn":          "https://www.gametdb.com/gcntdb.zip",
@@ -56,6 +72,8 @@ SOURCES = {
     "3ds_titleids_us": "https://raw.githubusercontent.com/hax0kartik/3dsdb/master/jsons/list_US.json",
     "3ds_titleids_gb": "https://raw.githubusercontent.com/hax0kartik/3dsdb/master/jsons/list_GB.json",
     "3ds_titleids_jp": "https://raw.githubusercontent.com/hax0kartik/3dsdb/master/jsons/list_JP.json",
+    "3ds_titleids_kr": "https://raw.githubusercontent.com/hax0kartik/3dsdb/master/jsons/list_KR.json",
+    "3ds_titleids_tw": "https://raw.githubusercontent.com/hax0kartik/3dsdb/master/jsons/list_TW.json",
     "switch":       "https://raw.githubusercontent.com/blawar/titledb/master/US.en.json",
     "ps2":          "https://redump.org/datfile/ps2/",
     "ps2_libretro": (
@@ -325,7 +343,8 @@ def fetch_3ds() -> None:
     titles: dict[str, str] = {}
     primary_ok = False
 
-    for region_key in ("3ds_titleids_us", "3ds_titleids_gb", "3ds_titleids_jp"):
+    for region_key in ("3ds_titleids_us", "3ds_titleids_gb", "3ds_titleids_jp",
+                       "3ds_titleids_kr", "3ds_titleids_tw"):
         try:
             parsed = parse_3ds_titleids(fetch(SOURCES[region_key]))
             print(f"  3DS title IDs ({region_key}): {len(parsed)} entries")
@@ -348,6 +367,7 @@ def fetch_3ds() -> None:
             print(f"  WARNING: 3DS GameTDB also failed: {e}", file=sys.stderr)
 
     if titles:
+        titles.update(MANUAL_3DS_OVERRIDES)
         write_csv("3ds.csv", titles, "3DS — full title IDs (hax0kartik/3dsdb)")
 
 
@@ -365,6 +385,7 @@ def fetch_switch() -> None:
             # save directories. The JSON key is nsuId (14-char eShop ID), not useful here.
             if name and len(real_id) == 16:
                 titles[real_id.lower()] = name
+        titles.update(MANUAL_SWITCH_OVERRIDES)
         write_csv("switch.csv", titles, "Switch — blawar/titledb (full title IDs)")
     except _UnchangedError:
         print("  Switch database unchanged, skipping.")

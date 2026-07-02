@@ -550,7 +550,9 @@ object RecentGamesReader {
         return entries
             .sortedByDescending { it.time }
             .mapNotNull { (time, id, path) ->
-                val title = GameDatabase.lookup3ds(id) ?: id
+                // 3ds.csv titles are formatted "English Name(Japanese Name)" — strip the
+                // parenthetical via cleanTitle like every other DB-backed reader does.
+                val title = GameDatabase.lookup3ds(id)?.let { cleanTitle(it) } ?: id
                 Log.d(TAG, "readAzahar: id=$id title=$title")
                 if (seen.add(id)) RecentGame(title, path, packageName, time) else null
             }
@@ -573,7 +575,8 @@ object RecentGamesReader {
             .mapNotNull { (time, dir) ->
                 val id = "00050000${dir.name}".lowercase()
                     .takeIf { it.matches(Regex("[0-9a-f]{16}")) } ?: return@mapNotNull null
-                val title = GameDatabase.lookupWiiU(id) ?: dir.name
+                // wiiu.csv titles are formatted "English Name(Japanese Name)" like 3ds.csv.
+                val title = GameDatabase.lookupWiiU(id)?.let { cleanTitle(it) } ?: dir.name
                 Log.d(TAG, "readCemu: id=$id title=$title")
                 if (seen.add(id)) RecentGame(title, dir.absolutePath, packageName, time) else null
             }
@@ -602,7 +605,8 @@ object RecentGamesReader {
         return entries
             .sortedByDescending { it.time }
             .mapNotNull { (time, id, path) ->
-                val title = GameDatabase.lookupSwitch(id) ?: id
+                // switch.csv has a handful of titles formatted "English Name(Japanese Name)".
+                val title = GameDatabase.lookupSwitch(id)?.let { cleanTitle(it) } ?: id
                 Log.d(TAG, "readEden: id=$id title=$title")
                 if (seen.add(id)) RecentGame(title, path, packageName, time) else null
             }
