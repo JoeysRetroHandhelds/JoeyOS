@@ -1,5 +1,6 @@
 package com.joeyos.app.ui.components
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -11,11 +12,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -83,6 +86,7 @@ internal val EMULATOR_NAMES = mapOf(
     "org.dolphinemu"                   to "Dolphin",
     "xyz.aethersx2"                    to "AetherSX2",
     "net.nicholaswilde.nethersx2"      to "NetherSX2",
+    "com.armsx2"                       to "ARMSX2",
     "org.azahar_emu"                   to "Azahar",
     "info.cemu"                        to "Cemu",
     "dev.eden"                         to "Eden",
@@ -93,10 +97,25 @@ internal val EMULATOR_NAMES = mapOf(
     "org.mupen64plusae"                to "M64Plus FZ",
 )
 
-private fun gameSubtitle(game: RecentGame): String {
+/**
+ * Reads the actual installed app's display label from PackageManager. Some emulator forks
+ * (e.g. a "root storage patch" build of NetherSX2) keep the original app's package ID
+ * unchanged, so package-name-prefix matching alone can't tell them apart — only the real
+ * installed label can, since that reflects whatever name the user actually sees for it.
+ */
+internal fun installedAppLabel(context: Context, packageName: String): String? = try {
+    val pm = context.packageManager
+    pm.getApplicationLabel(pm.getApplicationInfo(packageName, 0)).toString()
+} catch (_: Exception) {
+    null
+}
+
+internal fun gameSubtitle(context: Context, game: RecentGame): String {
     val core = game.corePath ?: run {
         val pkg = game.emulatorPackage
-        return EMULATOR_NAMES.entries.firstOrNull { (prefix, _) -> pkg.startsWith(prefix) }?.value ?: pkg
+        return installedAppLabel(context, pkg)
+            ?: EMULATOR_NAMES.entries.firstOrNull { (prefix, _) -> pkg.startsWith(prefix) }?.value
+            ?: pkg
     }
     val coreName = core
         .substringAfterLast("/")
@@ -178,6 +197,8 @@ fun RecentGamesPopup(
 
 @Composable
 private fun RecentGameRow(index: Int, game: RecentGame, isSelected: Boolean, onClick: () -> Unit) {
+    val context = LocalContext.current
+    val subtitle = remember(game.emulatorPackage, game.corePath) { gameSubtitle(context, game) }
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -208,7 +229,7 @@ private fun RecentGameRow(index: Int, game: RecentGame, isSelected: Boolean, onC
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                gameSubtitle(game),
+                subtitle,
                 fontSize = 10.sp,
                 fontFamily = FontFamily.Monospace,
                 color = TextFaint,

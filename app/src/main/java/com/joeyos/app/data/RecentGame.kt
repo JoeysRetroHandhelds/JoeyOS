@@ -747,25 +747,17 @@ object RecentGamesReader {
             .take(depth)
     }
 
-    // ── PS3 (APS3E / RPCSX) ──────────────────────────────────────────────────
+    // ── PS3 (APS3E) ────────────────────────────────────────────────────────
 
     private fun readPs3(packageName: String, depth: Int = 20): List<RecentGame> {
         val titleIdRegex = Regex("[A-Z]{4}\\d{5}")
         val roots = storageRoots()
-        val candidates = when {
-            packageName.startsWith("aenu.aps3e") -> roots.flatMap { root ->
-                listOf(
-                    File(root, "Android/data/aenu.aps3e/files/aps3e/config/dev_hdd0/home/00000001/savedata"),
-                    File(root, "Android/data/aenu.aps3e/files/dev_hdd0/home/00000001/savedata"),
-                    File(root, "Android/data/aenu.aps3e/files/aps3e/dev_hdd0/home/00000001/savedata"),
-                )
-            }
-            else -> roots.flatMap { root ->
-                listOf(
-                    File(root, "Android/data/net.rpcsx/files/config/dev_hdd0/home/00000001/savedata"),
-                    File(root, "Android/data/net.rpcsx/files/dev_hdd0/home/00000001/savedata"),
-                )
-            }
+        val candidates = roots.flatMap { root ->
+            listOf(
+                File(root, "Android/data/aenu.aps3e/files/aps3e/config/dev_hdd0/home/00000001/savedata"),
+                File(root, "Android/data/aenu.aps3e/files/dev_hdd0/home/00000001/savedata"),
+                File(root, "Android/data/aenu.aps3e/files/aps3e/dev_hdd0/home/00000001/savedata"),
+            )
         }
         Log.d(TAG, "readPs3: candidates=${candidates.map { "${it.absolutePath} exists=${it.isDirectory}" }}")
         val saveRoot = candidates.firstOrNull { it.isDirectory }

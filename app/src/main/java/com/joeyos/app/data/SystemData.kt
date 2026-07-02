@@ -244,10 +244,6 @@ val ALL_SYSTEMS = listOf(
         retroarchCores = listOf("ScummVM")),
 
     // ── PC / Other ───────────────────────────────────────────────────────────
-    RetroSystem("syncthing", "SYNC", "Syncthing", "PC",
-        0xFF0891B2, 0xFF062229,
-        listOf("com.github.catfriend1.syncthingfork"),  // Syncthing-Fork
-        restrictToKnown = true),
     RetroSystem("pcgames", "PC", "PC Games", "PC",
         0xFF1E40AF, 0xFF0A1530,
         listOf(

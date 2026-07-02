@@ -10,11 +10,13 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -23,20 +25,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.material3.Text
 import com.joeyos.app.data.RecentGame
 import com.joeyos.app.ui.theme.*
-
-private fun favoriteSubtitle(game: RecentGame): String {
-    val core = game.corePath ?: run {
-        val pkg = game.emulatorPackage
-        return EMULATOR_NAMES.entries.firstOrNull { (prefix, _) -> pkg.startsWith(prefix) }?.value ?: pkg
-    }
-    val coreName = core
-        .substringAfterLast("/")
-        .removeSuffix(".so")
-        .removeSuffix("_libretro_android")
-        .removeSuffix("_libretro")
-    val system = CORE_SYSTEMS[coreName] ?: coreName
-    return "RetroArch - $system"
-}
 
 @Composable
 fun FavoritePickerPopup(
@@ -120,6 +108,8 @@ private fun FavoritePickerRow(
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
+    val context = LocalContext.current
+    val subtitle = remember(game.emulatorPackage, game.corePath) { gameSubtitle(context, game) }
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -153,7 +143,7 @@ private fun FavoritePickerRow(
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                favoriteSubtitle(game),
+                subtitle,
                 fontSize = 9.sp,
                 fontFamily = FontFamily.Monospace,
                 color = TextFaint,
