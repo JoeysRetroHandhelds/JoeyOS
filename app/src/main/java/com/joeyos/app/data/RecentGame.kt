@@ -787,8 +787,11 @@ object RecentGamesReader {
 
     // ── M64Plus FZ (N64) ─────────────────────────────────────────────────────
 
-    // Dir names: "<Title> (U) <32-hex-char hash>" — strip the trailing hash to get the title.
+    // Dir names: "<internal ROM header title> (<region code>) <32-hex-char hash>". Strip both
+    // the hash and the region code to recover the exact header title (e.g. "CONKER BFD"),
+    // since that's what findN64RomByHeaderTitle compares against.
     private val M64_HASH_SUFFIX = Regex("\\s+[0-9A-Fa-f]{32}$")
+    private val M64_REGION_SUFFIX = Regex("\\s*\\([A-Za-z]{1,3}\\)$")
 
     private fun readM64PlusFZ(packageName: String, depth: Int = 20): List<RecentGame> {
         val roots = storageRoots()
@@ -805,9 +808,17 @@ object RecentGamesReader {
         return gameDirs
             .sortedByDescending { latestModified(it) }
             .mapNotNull { dir ->
-                // Strip the trailing 32-char hash to get a search hint, then find the actual ROM.
-                val hint = M64_HASH_SUFFIX.replace(dir.name, "").trim()
-                val romPath = RomFinder.findRomByTitle(hint, "n64") ?: return@mapNotNull null
+                // Strip the trailing 32-char hash to get a search hint. This hint is the ROM's
+                // internal N64 header title (e.g. "CONKER BFD"), not a filename or retail title,
+                // so match against the actual ROM header first; fall back to fuzzy filename
+                // matching in case a ROM lacks a readable header.
+                val hintWithRegion = M64_HASH_SUFFIX.replace(dir.name, "").trim()
+                val hint = M64_REGION_SUFFIX.replace(hintWithRegion, "").trim()
+                val romPath = RomFinder.findN64RomByHeaderTitle(hint) ?: RomFinder.findRomByTitle(hint, "n64")
+                if (romPath == null) {
+                    Log.d(TAG, "readM64PlusFZ: no ROM match for dir='${dir.name}' hint='$hint'")
+                    return@mapNotNull null
+                }
                 // Use the ROM filename as the display title so casing and formatting match the file.
                 val title = cleanTitle(File(romPath).nameWithoutExtension)
                 if (title.isNotEmpty() && seen.add(title)) {

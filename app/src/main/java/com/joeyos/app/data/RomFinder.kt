@@ -166,6 +166,107 @@ object RomFinder {
         return normalized.substring(idx + hint.length).trimStart().firstOrNull()?.isDigit() == true
     }
 
+    private val N64_ROM_EXTENSIONS = setOf("z64", "n64", "v64")
+
+    /**
+     * Finds a ROM in the given system folder whose internal N64 header title matches
+     * [headerTitleHint] exactly (case-insensitive, whitespace-trimmed).
+     *
+     * M64Plus FZ names its save-data folders after this internal header field (e.g.
+     * "CONKER BFD" for Conker's Bad Fur Day, "YOSHI STORY" for Yoshi's Story) — these
+     * are fixed 20-byte ASCII fields baked into every N64 ROM, often abbreviated with
+     * no resemblance to the retail title or filename, so filename-based fuzzy matching
+     * (findRomByTitle) can never find them.
+     */
+    fun findN64RomByHeaderTitle(headerTitleHint: String, systemFolder: String = "n64"): String? {
+        if (headerTitleHint.isBlank()) return null
+        val roots = storageRoots()
+        for (root in roots) {
+            val romsRoot = root.listFiles()?.firstOrNull {
+                it.isDirectory && it.name.equals("roms", ignoreCase = true)
+            } ?: continue
+            val systemDir = romsRoot.listFiles()?.firstOrNull {
+                it.isDirectory && it.name.equals(systemFolder, ignoreCase = true)
+            } ?: continue
+            val files = systemDir.listFiles()?.filter { it.isFile } ?: continue
+            for (file in files) {
+                val title = readN64RomHeaderTitle(file) ?: continue
+                if (title.equals(headerTitleHint, ignoreCase = true)) {
+                    Log.d(TAG, "findN64RomByHeaderTitle: matched '$headerTitleHint' -> ${file.absolutePath}")
+                    return file.absolutePath
+                }
+            }
+        }
+        Log.d(TAG, "findN64RomByHeaderTitle: no match for '$headerTitleHint' in system '$systemFolder'")
+        return null
+    }
+
+    /** Reads the 20-byte ASCII title field from an N64 ROM's header (plain file or inside a zip). */
+    private fun readN64RomHeaderTitle(file: File): String? {
+        val headerBytes = try {
+            if (file.extension.equals("zip", ignoreCase = true)) {
+                java.util.zip.ZipFile(file).use { zip ->
+                    val entry = zip.entries().asSequence()
+                        .firstOrNull { e -> N64_ROM_EXTENSIONS.any { ext -> e.name.endsWith(".$ext", ignoreCase = true) } }
+                        ?: return null
+                    zip.getInputStream(entry).use { readExactly(it, 0x34) }
+                }
+            } else if (file.extension.lowercase() in N64_ROM_EXTENSIONS) {
+                file.inputStream().use { readExactly(it, 0x34) }
+            } else {
+                null
+            }
+        } catch (_: Exception) {
+            null
+        } ?: return null
+        return decodeN64HeaderTitle(headerBytes)
+    }
+
+    private fun readExactly(stream: java.io.InputStream, len: Int): ByteArray? {
+        val buf = ByteArray(len)
+        var off = 0
+        while (off < len) {
+            val n = stream.read(buf, off, len - off)
+            if (n < 0) return null
+            off += n
+        }
+        return buf
+    }
+
+    /**
+     * N64 ROMs come in three byte orders depending on dump/format: z64 (native big-endian),
+     * v64 (16-bit byte-swapped), and n64 (32-bit little-endian). The title field is plain
+     * ASCII, but byte-swapped formats scramble it just like every other field, so it must
+     * be un-swapped before reading.
+     */
+    private fun decodeN64HeaderTitle(headerBytes: ByteArray): String? {
+        if (headerBytes.size < 0x34) return null
+        val b0 = headerBytes[0].toInt() and 0xFF
+        val b1 = headerBytes[1].toInt() and 0xFF
+        val normalized = ByteArray(headerBytes.size)
+        when {
+            b0 == 0x80 && b1 == 0x37 -> headerBytes.copyInto(normalized)
+            b0 == 0x37 && b1 == 0x80 -> {
+                var i = 0
+                while (i + 1 < headerBytes.size) {
+                    normalized[i] = headerBytes[i + 1]; normalized[i + 1] = headerBytes[i]
+                    i += 2
+                }
+            }
+            b0 == 0x40 && b1 == 0x12 -> {
+                var i = 0
+                while (i + 3 < headerBytes.size) {
+                    normalized[i] = headerBytes[i + 3]; normalized[i + 1] = headerBytes[i + 2]
+                    normalized[i + 2] = headerBytes[i + 1]; normalized[i + 3] = headerBytes[i]
+                    i += 4
+                }
+            }
+            else -> return null
+        }
+        val titleBytes = normalized.copyOfRange(0x20, 0x34)
+        return String(titleBytes, Charsets.US_ASCII).trim { it <= ' ' }.takeIf { it.isNotBlank() }
+    }
+
     /**
      * Convert a stored path (plain file path, file://, or content:// URI string) to a Uri
      * that can be granted to another app via FLAG_GRANT_READ_URI_PERMISSION.
