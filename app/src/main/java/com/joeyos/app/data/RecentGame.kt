@@ -407,11 +407,14 @@ object RecentGamesReader {
                 ?.filter { it.isFile && it.extension.lowercase().let { e -> e.startsWith("s") && e.length <= 3 } }
                 ?.forEach { entries += Entry(it.lastModified(), it.nameWithoutExtension.take(6).uppercase(), it.absolutePath) }
 
-            File(dolphinRoot, "GC").listFiles()
-                ?.filter { it.isFile && it.extension.lowercase() == "gci" }
-                ?.forEach { file ->
-                    // GCI filenames are like "01-GALE01-Description.gci" — the game ID is NOT
-                    // the first 6 characters of the filename. Read it from the file's own
+            // GCI memory card exports live nested under region/card subfolders, e.g.
+            // "GC/USA/Card A/01-GMSE-super_mario_sunshine.gci" — walk the whole tree rather
+            // than assuming a fixed depth, since region/card folder names vary.
+            File(dolphinRoot, "GC").walkTopDown()
+                .filter { it.isFile && it.extension.equals("gci", ignoreCase = true) }
+                .forEach { file ->
+                    // The game ID is NOT the first 6 characters of the filename (format is
+                    // "01-GALE01-Description.gci" or similar) — read it from the file's own
                     // 6-byte binary header (4-char game code + 2-char maker code) instead,
                     // since relying on the filename caused unrelated games sharing the same
                     // numeric prefix (e.g. "01-") to collide and silently drop from the list.
