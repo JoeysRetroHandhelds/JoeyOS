@@ -409,7 +409,16 @@ object RecentGamesReader {
 
             File(dolphinRoot, "GC").listFiles()
                 ?.filter { it.isFile && it.extension.lowercase() == "gci" }
-                ?.forEach { entries += Entry(it.lastModified(), it.nameWithoutExtension.take(6).uppercase(), it.absolutePath) }
+                ?.forEach { file ->
+                    // GCI filenames are like "01-GALE01-Description.gci" — the game ID is NOT
+                    // the first 6 characters of the filename. Read it from the file's own
+                    // 6-byte binary header (4-char game code + 2-char maker code) instead,
+                    // since relying on the filename caused unrelated games sharing the same
+                    // numeric prefix (e.g. "01-") to collide and silently drop from the list.
+                    val id = readGciGameId(file) ?: file.nameWithoutExtension.take(6).uppercase()
+                    Log.d(TAG, "readDolphin: gci file=${file.name} id=$id")
+                    entries += Entry(file.lastModified(), id, file.absolutePath)
+                }
 
             File(dolphinRoot, "Wii/title/00010000").listFiles()
                 ?.filter { it.isDirectory }
@@ -430,6 +439,21 @@ object RecentGamesReader {
             }
             .take(depth)
     }
+
+    /** Reads a GameCube memory card file's 6-byte header (4-char game code + 2-char maker code). */
+    private fun readGciGameId(file: File): String? = try {
+        file.inputStream().use { stream ->
+            val header = ByteArray(6)
+            var off = 0
+            while (off < 6) {
+                val n = stream.read(header, off, 6 - off)
+                if (n < 0) return null
+                off += n
+            }
+            val id = String(header, Charsets.US_ASCII)
+            if (id.all { it.isLetterOrDigit() }) id.uppercase() else null
+        }
+    } catch (_: Exception) { null }
 
     private fun hexToAscii4(hex: String): String? {
         if (hex.length != 8) return null
