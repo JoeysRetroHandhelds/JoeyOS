@@ -682,7 +682,8 @@ suspend fun launchRecentGame(
                 NetherSX2Launcher.launch(context, game)
             game.emulatorPackage.startsWith("com.armsx2") ->
                 ARMSX2Launcher.launch(context, game)
-            game.emulatorPackage.startsWith("org.dolphinemu") ->
+            game.emulatorPackage.startsWith("org.dolphinemu") ||
+            game.emulatorPackage.startsWith("com.joeyos.dolphinemu") ->
                 DolphinLauncher.launch(context, game)
             game.emulatorPackage.startsWith("org.azahar_emu") ->
                 AzaharLauncher.launch(context, game)

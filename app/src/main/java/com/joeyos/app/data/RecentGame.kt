@@ -52,6 +52,7 @@ object RecentGamesReader {
         "me.magnum.melonds",
         "me.magnum.melondualds",
         "org.dolphinemu",
+        "com.joeyos.dolphinemu",
         "xyz.aethersx2",
         "net.nicholaswilde.nethersx2",
         "com.armsx2",
@@ -100,7 +101,8 @@ object RecentGamesReader {
             packageName.startsWith("com.retroarch")         -> readRetroArch(packageName, depth)
             packageName.startsWith("me.magnum.melonds") ||
             packageName.startsWith("me.magnum.melondualds") -> readMelonDS(packageName, depth)
-            packageName.startsWith("org.dolphinemu")        -> readDolphin(packageName, depth)
+            packageName.startsWith("org.dolphinemu") ||
+            packageName.startsWith("com.joeyos.dolphinemu") -> readDolphin(packageName, depth)
             packageName.startsWith("xyz.aethersx2") ||
             packageName.startsWith("net.nicholaswilde.nethersx2") -> readNetherSX2(packageName, depth)
             packageName.startsWith("com.armsx2")                  -> readARMSX2(packageName, depth)
@@ -386,8 +388,14 @@ object RecentGamesReader {
 
     private fun readDolphin(packageName: String, depth: Int = 20): List<RecentGame> {
         val roots = storageRoots()
-        val dolphinRoots = roots.mapNotNull { root ->
-            File(root, "Android/data/$packageName/files").takeIf { it.isDirectory }
+        // Standard scoped-storage location, plus "dolphin-emu" at the storage root — some
+        // forks (e.g. DolphinCS) can be configured to save there instead, with the same
+        // subfolder layout (StateSaves/, GC/, Wii/title/00010000/) as Android/data/<pkg>/files.
+        val dolphinRoots = roots.flatMap { root ->
+            listOfNotNull(
+                File(root, "Android/data/$packageName/files").takeIf { it.isDirectory },
+                File(root, "dolphin-emu").takeIf { it.isDirectory }
+            )
         }
         Log.d(TAG, "readDolphin: roots=$dolphinRoots")
 

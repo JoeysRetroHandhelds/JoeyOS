@@ -84,6 +84,7 @@ internal val EMULATOR_NAMES = mapOf(
     "me.magnum.melonds"                to "melonDS",
     "me.magnum.melondualds"            to "MelonDualDS",
     "org.dolphinemu"                   to "Dolphin",
+    "com.joeyos.dolphinemu"            to "DolphinCS",
     "xyz.aethersx2"                    to "AetherSX2",
     "net.nicholaswilde.nethersx2"      to "NetherSX2",
     "com.armsx2"                       to "ARMSX2",
