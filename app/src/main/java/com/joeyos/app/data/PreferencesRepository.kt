@@ -80,18 +80,24 @@ class PreferencesRepository(private val context: Context) {
         context.dataStore.edit { it[DOCK_SORT_ORDER] = value }
     }
 
-    // Stored as "title|||path|||emulatorPackage|||lastPlayed"
+    // Stored as "title|||path|||emulatorPackage|||lastPlayed|||corePath"
     val favoriteGame: Flow<RecentGame?> = context.dataStore.data.map { prefs ->
         val raw = prefs[FAVORITE_GAME] ?: return@map null
         val parts = raw.split("|||")
-        if (parts.size >= 3) RecentGame(parts[0], parts[1], parts[2], parts.getOrNull(3)?.toLongOrNull() ?: 0L)
+        if (parts.size >= 3) RecentGame(
+            title           = parts[0],
+            path            = parts[1],
+            emulatorPackage = parts[2],
+            lastPlayed      = parts.getOrNull(3)?.toLongOrNull() ?: 0L,
+            corePath        = parts.getOrNull(4)?.takeIf { it.isNotEmpty() }
+        )
         else null
     }
 
     suspend fun setFavoriteGame(game: RecentGame?) {
         context.dataStore.edit { prefs ->
             if (game == null) prefs.remove(FAVORITE_GAME)
-            else prefs[FAVORITE_GAME] = "${game.title}|||${game.path}|||${game.emulatorPackage}|||${game.lastPlayed}"
+            else prefs[FAVORITE_GAME] = "${game.title}|||${game.path}|||${game.emulatorPackage}|||${game.lastPlayed}|||${game.corePath ?: ""}"
         }
     }
 

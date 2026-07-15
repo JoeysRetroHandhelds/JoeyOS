@@ -63,8 +63,15 @@ object RetroArchLauncher {
     fun isCoreInstalled(coreName: String, pkg: String = "com.retroarch.aarch64"): Boolean = true
 
     fun launch(context: Context, game: RecentGame, assignments: Map<String, String>): Boolean {
-        val romPath  = RomFinder.resolveRomFromSave(game.path)
-        Log.d(TAG, "launch: game.path=${game.path} romPath=$romPath")
+        // If corePath is a core-name hint (not already a full .so path), use it to restrict
+        // the ROM search to that core's system. Without this, a save file gets matched
+        // against a same-named ROM in ANY system folder (e.g. "Aladdin" exists on both SNES
+        // and Genesis) — the wrong game can launch even though the displayed core is correct.
+        val coreHintSystemFolder = game.corePath
+            ?.takeIf { !it.startsWith("/") }
+            ?.let { systemFolderForCoreHint(it) }
+        val romPath = RomFinder.resolveRomFromSave(game.path, systemFolder = coreHintSystemFolder)
+        Log.d(TAG, "launch: game.path=${game.path} coreHintSystemFolder=$coreHintSystemFolder romPath=$romPath")
         if (romPath == null) return false
 
         val systemId = systemIdFromPath(romPath)
@@ -177,6 +184,18 @@ object RetroArchLauncher {
     private fun systemIdFromPath(romPath: String): String? {
         val folder = File(romPath).parentFile?.name?.lowercase() ?: return null
         return ES_DE_FOLDER_MAP[folder] ?: folder
+    }
+
+    /**
+     * Maps a RetroArch core-name hint (e.g. "snes9x", from a save file's parent folder name)
+     * to the ROM folder it belongs to, by finding which system lists that core.
+     */
+    private fun systemFolderForCoreHint(coreHint: String): String? {
+        val normalized = coreKey(coreHint)
+        val system = ALL_SYSTEMS.firstOrNull { sys ->
+            sys.retroarchCores.any { coreKey(it) == normalized }
+        } ?: return null
+        return system.id
     }
 
 }
