@@ -178,6 +178,29 @@ def existing_entry_count(csv_name: str) -> int:
         return sum(1 for line in f if line.strip() and not line.startswith("#"))
 
 
+def load_existing_csv(csv_name: str) -> dict[str, str]:
+    """
+    Loads the currently-bundled CSV as a starting dict. Multi-region fetchers (e.g. 3DS's
+    US/GB/JP/KR/TW loop) must seed from this before merging in freshly-fetched regions —
+    each region's "unchanged" ETag cache is independent, so if some regions are unchanged
+    (contribute nothing) while others fetch fresh, writing only the freshly-fetched regions
+    would silently discard every entry that came from the unchanged ones.
+    """
+    path = os.path.join(OUT_DIR, csv_name)
+    titles: dict[str, str] = {}
+    if not os.path.isfile(path):
+        return titles
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            gid, _, name = line.partition(",")
+            if gid and name:
+                titles[gid] = name
+    return titles
+
+
 def parse_gametdb_zip(data: bytes, lang: str = "EN") -> dict[str, str]:
     titles: dict[str, str] = {}
     with zipfile.ZipFile(io.BytesIO(data)) as zf:
@@ -340,7 +363,7 @@ def parse_3ds_titleids(data: bytes) -> dict[str, str]:
 
 def fetch_3ds() -> None:
     print("3DS:")
-    titles: dict[str, str] = {}
+    titles: dict[str, str] = load_existing_csv("3ds.csv")
     primary_ok = False
 
     for region_key in ("3ds_titleids_us", "3ds_titleids_gb", "3ds_titleids_jp",
