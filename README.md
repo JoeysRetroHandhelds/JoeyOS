@@ -1,5 +1,7 @@
 # JoeyOS
 
+[![Join our Discord](https://img.shields.io/badge/Discord-Join%20our%20Community-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://joeysrh.link/discord)
+
 An Android home-screen launcher for retro gaming. Shows a customisable wallpaper with a dock of system icons that each launch an assigned emulator app.
 
 It's a very simple launcher - no artwork scraping, no games lists, none of that. You have your emulators, they'll show your most recently played up to 20, you launch and play. Quick, easy, simple. 
