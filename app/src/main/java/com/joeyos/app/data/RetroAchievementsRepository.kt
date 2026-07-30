@@ -7,9 +7,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.SocketTimeoutException
 import java.net.URL
+import java.net.URLEncoder
 import java.net.UnknownHostException
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -41,22 +43,30 @@ sealed class RAResult {
 
 class RetroAchievementsRepository(context: Context) {
 
-    private val masterKey = MasterKey.Builder(context)
-        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-        .build()
+    private val appContext = context.applicationContext
 
-    private val prefs = EncryptedSharedPreferences.create(
-        context,
-        "ra_credentials",
-        masterKey,
-        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-    )
+    // Lazy: creating an EncryptedSharedPreferences instance hits the Android keystore, which
+    // is slow enough to notice. This repository is constructed in the ViewModel factory on
+    // the main thread at every app start, so defer the cost until credentials are actually
+    // read — i.e. until the user opens the Achievements tab.
+    private val prefs by lazy {
+        val masterKey = MasterKey.Builder(appContext)
+            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+            .build()
+        EncryptedSharedPreferences.create(
+            appContext,
+            "ra_credentials",
+            masterKey,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+    }
 
     // Plain (non-encrypted) prefs for non-sensitive cache data
-    private val cachePrefs = context.getSharedPreferences("ra_cache", Context.MODE_PRIVATE)
+    private val cachePrefs by lazy {
+        appContext.getSharedPreferences("ra_cache", Context.MODE_PRIVATE)
+    }
 
-    private var cachedResult: RAAwardsResult? = null
     private val cacheTtlMs = 24 * 60 * 60 * 1000L // 24 hours
 
     val manualRefreshCooldownMs = 30 * 60 * 1000L // 30 minutes
@@ -64,10 +74,26 @@ class RetroAchievementsRepository(context: Context) {
         get() = cachePrefs.getLong(KEY_LAST_MANUAL_REFRESH, 0L)
         private set(v) = cachePrefs.edit().putLong(KEY_LAST_MANUAL_REFRESH, v).apply()
 
-    init {
-        // Warm in-memory cache from disk on construction so TTL survives app restarts
-        cachedResult = cachePrefs.getString(KEY_CACHE, null)?.let { deserializeResult(it) }
-    }
+    // Disk cache is parsed on first access rather than in init, for the same reason as above.
+    // Volatile + double-checked lock: fetchAwards can be invoked from multiple coroutines.
+    @Volatile private var cacheLoaded = false
+    private var cachedResultBacking: RAAwardsResult? = null
+
+    private var cachedResult: RAAwardsResult?
+        get() {
+            if (!cacheLoaded) synchronized(this) {
+                if (!cacheLoaded) {
+                    cachedResultBacking = cachePrefs.getString(KEY_CACHE, null)
+                        ?.let { deserializeResult(it) }
+                    cacheLoaded = true
+                }
+            }
+            return cachedResultBacking
+        }
+        set(value) = synchronized(this) {
+            cachedResultBacking = value
+            cacheLoaded = true
+        }
 
     var username: String
         get() = prefs.getString(KEY_USERNAME, "") ?: ""
@@ -95,30 +121,37 @@ class RetroAchievementsRepository(context: Context) {
 
         return withContext(Dispatchers.IO) {
             try {
+                // Credentials must be URL-encoded — an unencoded username containing a space,
+                // '&', or '#' would otherwise corrupt the query string.
                 val url = URL(
                     "https://retroachievements.org/API/API_GetUserAwards.php" +
-                    "?u=${username}&y=${apiKey}"
+                    "?u=${enc(username)}&y=${enc(apiKey)}"
                 )
                 val conn = url.openConnection() as HttpURLConnection
-                conn.connectTimeout = 10_000
-                conn.readTimeout    = 10_000
-                conn.setRequestProperty("User-Agent", "JoeyOS/1.0")
+                // Always release the connection, including on the non-200 and exception paths.
+                val body = try {
+                    conn.connectTimeout = 10_000
+                    conn.readTimeout    = 10_000
+                    conn.setRequestProperty("User-Agent", "JoeyOS/1.0")
 
-                if (conn.responseCode != 200) {
                     val code = conn.responseCode
-                    return@withContext RAResult.Error(
-                        when (code) {
-                            401, 403 -> "Invalid username or API key"
-                            404      -> "User \"$username\" not found"
-                            429      -> "Too many requests — try again in a few minutes"
-                            in 500..599 -> "RetroAchievements server error — try again later"
-                            else     -> "RetroAchievements returned an unexpected error (HTTP $code)"
-                        }
-                    )
+                    if (code != 200) {
+                        return@withContext RAResult.Error(
+                            when (code) {
+                                401, 403 -> "Invalid username or API key"
+                                404      -> "User \"$username\" not found"
+                                429      -> "Too many requests — try again in a few minutes"
+                                in 500..599 -> "RetroAchievements server error — try again later"
+                                else     -> "RetroAchievements returned an unexpected error (HTTP $code)"
+                            }
+                        )
+                    }
+                    conn.inputStream.bufferedReader().use { it.readText() }
+                } finally {
+                    conn.disconnect()
                 }
 
-                val json = JSONObject(conn.inputStream.bufferedReader().readText())
-                conn.disconnect()
+                val json = JSONObject(body)
 
                 // The API can return HTTP 200 with an error body for bad credentials rather
                 // than a 4xx status.
@@ -167,11 +200,15 @@ class RetroAchievementsRepository(context: Context) {
                 RAResult.Error("No internet connection")
             } catch (e: SocketTimeoutException) {
                 RAResult.Error("Connection timed out — RetroAchievements may be down")
+            } catch (e: IOException) {
+                RAResult.Error("Network error: ${e.message ?: "connection failed"}")
             } catch (e: Exception) {
                 RAResult.Error(e.message ?: "Unknown error")
             }
         }
     }
+
+    private fun enc(value: String): String = URLEncoder.encode(value, "UTF-8")
 
     private fun serializeResult(result: RAAwardsResult): String {
         val obj = JSONObject()

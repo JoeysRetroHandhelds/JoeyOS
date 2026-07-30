@@ -5,8 +5,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.IOException
 import java.net.HttpURLConnection
+import java.net.SocketTimeoutException
 import java.net.URL
+import java.net.URLEncoder
+import java.net.UnknownHostException
 
 data class IBCompletion(
     val gameName: String,
@@ -29,7 +33,11 @@ sealed class IBStatus {
 
 class InfiniteBacklogRepository(context: Context) {
 
-    private val prefs = context.getSharedPreferences("infinitebacklog", Context.MODE_PRIVATE)
+    private val appContext = context.applicationContext
+
+    private val prefs by lazy {
+        appContext.getSharedPreferences("infinitebacklog", Context.MODE_PRIVATE)
+    }
 
     var username: String
         get() = prefs.getString("username", "") ?: ""
@@ -41,7 +49,6 @@ class InfiniteBacklogRepository(context: Context) {
 
     val isConfigured: Boolean get() = username.isNotBlank()
 
-    private var cache: IBResult? = null
     private val cacheTtlMs = 4 * 60 * 60 * 1000L
 
     val manualRefreshCooldownMs = 30 * 60 * 1000L // 30 minutes
@@ -49,9 +56,25 @@ class InfiniteBacklogRepository(context: Context) {
         get() = prefs.getLong(KEY_LAST_MANUAL_REFRESH, 0L)
         private set(v) = prefs.edit().putLong(KEY_LAST_MANUAL_REFRESH, v).apply()
 
-    init {
-        cache = prefs.getString(KEY_CACHE, null)?.let { deserializeResult(it) }
-    }
+    // Parsed on first access rather than in init, so app startup doesn't pay for reading and
+    // JSON-parsing the cache when the Achievements tab may never be opened.
+    @Volatile private var cacheLoaded = false
+    private var cacheBacking: IBResult? = null
+
+    private var cache: IBResult?
+        get() {
+            if (!cacheLoaded) synchronized(this) {
+                if (!cacheLoaded) {
+                    cacheBacking = prefs.getString(KEY_CACHE, null)?.let { deserializeResult(it) }
+                    cacheLoaded = true
+                }
+            }
+            return cacheBacking
+        }
+        set(value) = synchronized(this) {
+            cacheBacking = value
+            cacheLoaded = true
+        }
 
     fun clearCache() {
         cache = null
@@ -103,6 +126,12 @@ class InfiniteBacklogRepository(context: Context) {
                 prefs.edit().putString(KEY_CACHE, serializeResult(result)).apply()
                 if (forceRefresh) lastManualRefreshAt = System.currentTimeMillis()
                 IBStatus.Success(result)
+            } catch (e: UnknownHostException) {
+                IBStatus.Error("No internet connection")
+            } catch (e: SocketTimeoutException) {
+                IBStatus.Error("Connection timed out — Infinite Backlog may be down")
+            } catch (e: IOException) {
+                IBStatus.Error("Network error: ${e.message ?: "connection failed"}")
             } catch (e: Exception) {
                 IBStatus.Error(e.message ?: "Unknown error")
             }
@@ -155,35 +184,57 @@ class InfiniteBacklogRepository(context: Context) {
     } catch (_: Exception) { null }
 
     private fun resolveUserId(username: String): Int? {
-        val conn = URL("https://infinitebacklog.net/api/users/username/$username")
+        // Username goes into a path segment, so it must be encoded — an unencoded '/' or
+        // space would otherwise produce a malformed request URL.
+        val conn = URL("https://infinitebacklog.net/api/users/username/${enc(username)}")
             .openConnection() as HttpURLConnection
-        conn.setRequestProperty("Accept", "application/json")
         return try {
+            conn.applyTimeouts()
+            conn.setRequestProperty("Accept", "application/json")
             if (conn.responseCode != 200) return null
-            JSONObject(conn.inputStream.bufferedReader().readText()).optInt("id", -1).takeIf { it > 0 }
+            conn.inputStream.bufferedReader().use { it.readText() }
+                .let { JSONObject(it).optInt("id", -1) }
+                .takeIf { it > 0 }
         } finally {
             conn.disconnect()
         }
     }
 
+    /**
+     * HttpURLConnection defaults to no timeout at all (0 = infinite), which can hang the
+     * Achievements tab indefinitely on a flaky connection or captive-portal WiFi.
+     */
+    private fun HttpURLConnection.applyTimeouts() {
+        connectTimeout = 10_000
+        readTimeout    = 10_000
+    }
+
+    private fun enc(value: String): String = URLEncoder.encode(value, "UTF-8")
+
     companion object {
         private const val KEY_CACHE               = "ib_cache_json_v2"
         private const val KEY_LAST_MANUAL_REFRESH = "ib_last_manual_refresh"
+        // Safety cap so a misbehaving API that always returns full pages can't loop forever.
+        // 100 pages x 100 per page is far beyond any realistic collection size.
+        private const val MAX_PAGES = 100
     }
 
     private fun fetchAllPages(userId: Int, completionType: String): List<IBCompletion> {
         val results = mutableListOf<IBCompletion>()
         var offset = 0
         val pageSize = 100
-        while (true) {
+        var pagesFetched = 0
+        while (pagesFetched < MAX_PAGES) {
             val url = "https://infinitebacklog.net/api/user_collections" +
-                "?user_id=$userId&completion=$completionType" +
+                "?user_id=$userId&completion=${enc(completionType)}" +
                 "&sort_field=completion_date&sort_order=desc&limit=$pageSize&offset=$offset"
             val conn = URL(url).openConnection() as HttpURLConnection
-            conn.setRequestProperty("Accept", "application/json")
             val page = try {
+                conn.applyTimeouts()
+                conn.setRequestProperty("Accept", "application/json")
                 if (conn.responseCode != 200) return results
-                val array = JSONArray(conn.inputStream.bufferedReader().readText())
+                val body  = conn.inputStream.bufferedReader().use { it.readText() }
+                val array = JSONArray(body)
                 (0 until array.length()).mapNotNull { i ->
                     val obj  = array.getJSONObject(i)
                     val name = obj.optJSONObject("game")?.optString("name")
@@ -196,6 +247,7 @@ class InfiniteBacklogRepository(context: Context) {
                 conn.disconnect()
             }
             results += page
+            pagesFetched++
             if (page.size < pageSize) break
             offset += pageSize
         }

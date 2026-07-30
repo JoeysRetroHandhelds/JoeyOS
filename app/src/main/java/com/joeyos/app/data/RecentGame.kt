@@ -9,6 +9,13 @@ import java.util.concurrent.ConcurrentHashMap
 private const val TAG = "RecentGamesReader"
 private const val CACHE_TTL_MS = 5 * 60 * 1000L
 
+/**
+ * Scans always collect up to this many entries regardless of the caller's requested depth,
+ * so one cached result can serve any later request. The user-facing depth setting maxes out
+ * well below this.
+ */
+private const val MAX_CACHE_DEPTH = 100
+
 data class RecentGame(
     val title: String,
     val path: String,
@@ -24,9 +31,23 @@ object RecentGamesReader {
     private val pkgCacheTime    = ConcurrentHashMap<String, Long>()
     private val pkgCacheResults = ConcurrentHashMap<String, List<RecentGame>>()
 
+    /**
+     * Per-package locks. Scanning is expensive (walking storage, reading ROM headers) and
+     * several callers fire at once on resume — invalidateAndPreWarmRecentGames(),
+     * loadInstalledApps()'s preWarm, and the Dock's per-entry title load — all racing past
+     * the just-cleared cache. Without a lock every one of them repeated the identical scan
+     * concurrently (observed 3-4x duplicate work). Holding a per-package lock means the
+     * first caller scans and the rest wait and reuse its result.
+     */
+    private val pkgLocks = ConcurrentHashMap<String, Any>()
+
+    private fun lockFor(packageName: String): Any =
+        pkgLocks.getOrPut(packageName) { Any() }
+
     /** Clear all cached data so the next read hits the filesystem again. */
     fun invalidateCache() {
         pkgCacheTime.clear()
+        pkgCacheResults.clear()
     }
 
     /**
@@ -34,16 +55,9 @@ object RecentGamesReader {
      * Call this from a background coroutine (e.g., after apps load or on resume).
      */
     fun preWarm(installedApps: List<InstalledApp>, depth: Int = 20) {
-        val now = System.currentTimeMillis()
         installedApps
             .filter { supportsRecentlyPlayed(it.packageName) }
-            .forEach { app ->
-                if (now - (pkgCacheTime[app.packageName] ?: 0L) >= CACHE_TTL_MS) {
-                    val result = readForPackageUncached(app.packageName, depth)
-                    pkgCacheResults[app.packageName] = result
-                    pkgCacheTime[app.packageName] = now
-                }
-            }
+            .forEach { app -> readForPackage(app.packageName, depth) }
     }
 
     private val SUPPORTED_PREFIXES = listOf(
@@ -72,15 +86,29 @@ object RecentGamesReader {
     /** Cache-aware read for a single emulator package. */
     fun readForPackage(packageName: String, depth: Int = 20): List<RecentGame> {
         if (!supportsRecentlyPlayed(packageName)) return emptyList()
-        val now = System.currentTimeMillis()
-        val cachedTime = pkgCacheTime[packageName] ?: 0L
-        if (now - cachedTime < CACHE_TTL_MS) {
-            pkgCacheResults[packageName]?.let { return it.take(depth) }
-        }
-        return readForPackageUncached(packageName, depth).also { result ->
+
+        cachedFor(packageName, depth)?.let { return it }
+
+        // Serialize scans per package so concurrent callers don't duplicate the work.
+        synchronized(lockFor(packageName)) {
+            // Re-check inside the lock — another caller may have populated it while we waited.
+            cachedFor(packageName, depth)?.let { return it }
+
+            // Always scan at MAX_CACHE_DEPTH regardless of the requested depth, so a cached
+            // entry can satisfy any later request. Caching a shallow result under a
+            // depth-agnostic key would otherwise cap every subsequent deeper read.
+            val result = readForPackageUncached(packageName, MAX_CACHE_DEPTH)
             pkgCacheResults[packageName] = result
-            pkgCacheTime[packageName] = now
+            pkgCacheTime[packageName]    = System.currentTimeMillis()
+            return result.take(depth)
         }
+    }
+
+    /** Returns a still-valid cached result trimmed to [depth], or null if stale/absent. */
+    private fun cachedFor(packageName: String, depth: Int): List<RecentGame>? {
+        val cachedTime = pkgCacheTime[packageName] ?: return null
+        if (System.currentTimeMillis() - cachedTime >= CACHE_TTL_MS) return null
+        return pkgCacheResults[packageName]?.take(depth)
     }
 
     /** Cache-aware read across all installed emulators. Uses per-package cache entries. */
@@ -875,12 +903,7 @@ object RecentGamesReader {
     private fun latestModified(dir: File): Long =
         dir.listFiles()?.maxOfOrNull { it.lastModified() } ?: dir.lastModified()
 
-    private fun storageRoots(): List<File> {
-        val roots = mutableListOf(File("/storage/emulated/0"))
-        File("/storage").listFiles()
-            ?.filter { it.isDirectory && it.name != "emulated" && it.name != "self" }
-            ?.forEach { roots += it }
-        return roots
-    }
+    /** Shared with RomFinder — single definition lives there. */
+    private fun storageRoots(): List<File> = RomFinder.storageRoots()
 }
 

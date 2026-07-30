@@ -169,6 +169,24 @@ object RomFinder {
     private val N64_ROM_EXTENSIONS = setOf("z64", "n64", "v64")
 
     /**
+     * Memoized N64 header titles, keyed by file identity (path + mtime + size) so a changed
+     * or replaced ROM is re-read automatically.
+     *
+     * Without this, findN64RomByHeaderTitle re-opened and re-read every ROM in the folder
+     * once per save directory being resolved — with ~80 ROMs and 6 save dirs that's ~480
+     * zip-open-and-read operations per scan, multiplied again by concurrent callers. Values
+     * are wrapped so a ROM with no readable header is cached as a miss rather than retried.
+     */
+    private val headerTitleCache = java.util.concurrent.ConcurrentHashMap<String, Optional<String>>()
+
+    private class Optional<T>(val value: T?)
+
+    private fun cachedHeaderTitle(file: File): String? {
+        val key = "${file.absolutePath}|${file.lastModified()}|${file.length()}"
+        return headerTitleCache.getOrPut(key) { Optional(readN64RomHeaderTitle(file)) }.value
+    }
+
+    /**
      * Finds a ROM in the given system folder whose internal N64 header title matches
      * [headerTitleHint] exactly (case-insensitive, whitespace-trimmed).
      *
@@ -190,7 +208,7 @@ object RomFinder {
             } ?: continue
             val files = systemDir.listFiles()?.filter { it.isFile } ?: continue
             for (file in files) {
-                val title = readN64RomHeaderTitle(file) ?: continue
+                val title = cachedHeaderTitle(file) ?: continue
                 if (title.equals(headerTitleHint, ignoreCase = true)) {
                     Log.d(TAG, "findN64RomByHeaderTitle: matched '$headerTitleHint' -> ${file.absolutePath}")
                     return file.absolutePath
