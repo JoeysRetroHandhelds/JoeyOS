@@ -1,0 +1,111 @@
+# Keeps the RetroAchievements romhack index current (tools/build_rapatches.py), publishing it to
+# this repo's `data` branch, which the app's romhack tool reads from raw.githubusercontent.com.
+#
+# Every 15 minutes it asks whether RAPatches has a new commit (one cheap `git ls-remote`) and stops
+# there when it hasn't. When it has, the build is incremental: archives already read are known by
+# their git blob sha from the formats cache kept on the data branch, so only new or changed ones
+# are read, and the No-Intro dats come from the Actions cache. The data branch is replaced with a
+# single commit each time, so nothing builds up in history, and `master` is never touched.
+name: Romhack index
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+    inputs:
+      full:
+        description: "Rebuild from scratch (ignore the formats cache)"
+        type: boolean
+        default: false
+  push:
+    branches: [master]
+    paths:
+      - "tools/build_rapatches.py"
+      - "tools/nointro.py"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: romhack-index
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GITHUB_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Has RAPatches changed?
+        id: source
+        run: |
+          remote="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          head=$(git ls-remote https://github.com/RetroAchievements/RAPatches.git refs/heads/main | cut -f1)
+          echo "head=$head" >> "$GITHUB_OUTPUT"
+          if git ls-remote --exit-code --heads "$remote" data >/dev/null 2>&1; then
+            git clone --quiet --depth 1 --branch data "$remote" current
+          fi
+          built=$(cat current/source-commit 2>/dev/null || true)
+          # A push to the builder, a manual run or a new RAPatches commit rebuilds; otherwise stop.
+          if [ "$head" = "$built" ] && [ "${{ github.event_name }}" = "schedule" ]; then
+            echo "RAPatches unchanged since the last build ($head)."
+            echo "build=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "build=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Which week is it
+        if: steps.source.outputs.build == 'true'
+        id: week
+        run: echo "week=$(date -u +%G-%V)" >> "$GITHUB_OUTPUT"
+
+      - name: Restore the No-Intro dats
+        if: steps.source.outputs.build == 'true'
+        uses: actions/cache@v4
+        with:
+          path: tools/.cache
+          # One key per week: the dats are fetched fresh once a week and reused by every run in
+          # between. They change rarely; a week-old one only misses brand-new dumps.
+          key: nointro-${{ steps.week.outputs.week }}
+
+      - name: Build the index
+        if: steps.source.outputs.build == 'true'
+        run: |
+          mkdir -p out/cache
+          if [ "${{ inputs.full }}" != "true" ] && [ -f current/cache/formats.json ]; then
+            cp current/cache/formats.json out/cache/formats.json
+          fi
+          python3 tools/build_rapatches.py --out out/ra-patches --formats-cache out/cache/formats.json
+          echo "${{ steps.source.outputs.head }}" > out/source-commit
+
+      - name: Publish to the data branch
+        if: steps.source.outputs.build == 'true'
+        run: |
+          remote="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if [ -d current ] && diff -r out/ra-patches current/ra-patches >/dev/null 2>&1; then
+            # Same index: still record the source commit so the next run can stop early.
+            if [ "$(cat current/source-commit 2>/dev/null)" = "$(cat out/source-commit)" ]; then
+              echo "Romhack index unchanged, nothing to publish."
+              exit 0
+            fi
+          fi
+          cd out
+          printf '%s\n' \
+            "# JoeyOS data" "" \
+            "Generated files the app downloads, rebuilt by the \"Romhack index\" workflow on master." \
+            "Don't edit by hand: each publish replaces this branch with a single commit." "" \
+            "- \`ra-patches/<console>.json\`: RetroAchievements romhacks by base ROM CRC32, from" \
+            "  RetroAchievements' RAPatches repository and the No-Intro dats in libretro-database." \
+            "- \`cache/formats.json\`: what each RAPatches archive holds, by git blob sha, so a" \
+            "  rebuild only reads new archives." \
+            "- \`source-commit\`: the RAPatches commit this was built from." > README.md
+          git init --quiet -b data
+          git add ra-patches cache source-commit README.md
+          git -c user.name="github-actions[bot]" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit --quiet -m "Romhack index from RAPatches ${{ steps.source.outputs.head }}"
+          git push --force --quiet "$remote" data
+          echo "Published $(ls ra-patches | wc -l) consoles to the data branch."

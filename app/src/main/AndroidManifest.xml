@@ -55,7 +55,15 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".UpdateReceiver" android:exported="false" />
+        <!-- In-app updater result. An activity (not a receiver) so JoeyOS can reopen itself
+             after updating: see UpdateStatusActivity. -->
+        <activity
+            android:name=".UpdateStatusActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
     </application>
 

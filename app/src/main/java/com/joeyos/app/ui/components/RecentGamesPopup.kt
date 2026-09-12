@@ -92,6 +92,8 @@ internal val EMULATOR_NAMES = mapOf(
     "xyz.aethersx2"                    to "AetherSX2",
     "net.nicholaswilde.nethersx2"      to "NetherSX2",
     "com.armsx2"                       to "ARMSX2",
+    "com.armsx3"                       to "ARMSX3",
+    "com.flycast.emulator"             to "Flycast",
     "org.azahar_emu"                   to "Azahar",
     "info.cemu"                        to "Cemu",
     "dev.eden"                         to "Eden",
@@ -136,55 +138,28 @@ fun RecentGamesPopup(
     onLaunch: (RecentGame) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val screenH = LocalConfiguration.current.screenHeightDp
     val firstRow = remember { FocusRequester() }
     // Rows load after the popup opens, so focus lands on the first one when they arrive.
-    JoeyDialog(
+    JoeyPopup(
+        title = "Recently Played",
+        hint = "A launch  •  B cancel",
         onDismiss = onDismiss,
+        padded = false,
         focusKey = games.isNotEmpty(),
         initialFocus = if (games.isNotEmpty()) firstRow else null
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(0.55f)
-                .heightIn(max = (screenH * 0.82f).dp)
-                .clip(RoundedCornerShape(20.dp))
-                .background(SheetBg)
-                .border(1.dp, Color.White.copy(alpha = 0.1f), RoundedCornerShape(20.dp))
-                .padding(vertical = 8.dp),
-            verticalArrangement = Arrangement.spacedBy(2.dp)
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 18.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text("Recently Played", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = TextPrimary)
-                Text("↑↓  •  A to launch  •  B cancel", fontSize = 9.sp,
-                    fontFamily = FontFamily.Monospace, color = TextFaint)
-            }
-
-            if (games.isEmpty()) {
-                Text(
-                    "Loading…",
-                    fontSize = 12.sp,
-                    fontFamily = FontFamily.Monospace,
-                    color = TextFaint,
-                    modifier = Modifier.padding(horizontal = 18.dp, vertical = 14.dp)
-                )
-            } else {
-                // The focused row is brought into view by the list itself as the D-pad walks it.
-                LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                    itemsIndexed(games, key = { i, g -> "$i:${g.emulatorPackage}:${g.path}" }) { i, game ->
-                        GameListRow(
-                            index    = i + 1,
-                            game     = game,
-                            onClick  = { onLaunch(game) },
-                            modifier = if (i == 0) Modifier.focusRequester(firstRow) else Modifier
-                        )
-                    }
+        if (games.isEmpty()) {
+            PopupNote("Loading…")
+        } else {
+            // The focused row is brought into view by the list itself as the D-pad walks it.
+            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                itemsIndexed(games, key = { i, g -> "$i:${g.emulatorPackage}:${g.path}" }) { i, game ->
+                    GameListRow(
+                        index    = i + 1,
+                        game     = game,
+                        onClick  = { onLaunch(game) },
+                        modifier = if (i == 0) Modifier.focusRequester(firstRow) else Modifier
+                    )
                 }
             }
         }

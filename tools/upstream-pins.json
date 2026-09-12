@@ -1,0 +1,52 @@
+[
+  {
+    "name": "chdman",
+    "repo": "mamedev/mame",
+    "commit": "5f4a88b1e1811e5e7794357389f68cc01e19ebd3",
+    "binary": "app/src/main/jniLibs/<abi>/libchdman.so",
+    "recipe": "tools/build-chdman.sh",
+    "licence": "app/src/main/assets/licences/gpl-2.0-chdman.txt",
+    "releases": true,
+    "paths": [
+      "src/tools/chdman.cpp",
+      "src/lib/util/chd.cpp",
+      "src/lib/util/chd.h",
+      "src/lib/util/chdcodec.cpp",
+      "src/lib/util/cdrom.cpp",
+      "src/lib/util/cdrom.h"
+    ],
+    "reviewed": []
+  },
+  {
+    "name": "dolphin-tool",
+    "repo": "dolphin-emu/dolphin",
+    "commit": "fa61f77fedb1f804851414a231509c55b8d8ed6c",
+    "binary": "app/src/main/jniLibs/arm64-v8a/libdolphintool.so",
+    "recipe": "tools/build-dolphin-tool.sh",
+    "licence": "app/src/main/assets/licences/gpl-2.0-dolphintool.txt",
+    "releases": false,
+    "paths": [
+      "Source/Core/DolphinTool",
+      "Source/Core/DiscIO"
+    ],
+    "reviewed": []
+  },
+  {
+    "name": "Azahar compressor",
+    "repo": "azahar-emu/azahar",
+    "commit": "b34de55b52ad363d3cea93307d3393e4aa2ee41c",
+    "binary": "app/src/main/jniLibs/arm64-v8a/libazahar.so",
+    "recipe": "tools/build-azahar-compress.sh",
+    "licence": "app/src/main/assets/licences/gpl-2.0-azahar.txt",
+    "releases": true,
+    "paths": [
+      "src/citra_cli",
+      "src/common/zstd_compression.cpp",
+      "src/common/zstd_compression.h",
+      "src/core/loader"
+    ],
+    "reviewed": [
+      "db15d78f"
+    ]
+  }
+]

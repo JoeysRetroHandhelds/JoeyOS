@@ -41,11 +41,12 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        CrashLogger.install(this)
+        AppLog.install(this)
         introComplete = hasPermission() && prefs.getBoolean("intro_done", false)
         hasStoragePermission = hasPermission()
         GameDatabase.init(this)
         enableEdgeToEdge()
+        hideSystemBars()
         setContent {
             JoeyOSTheme {
                 if (introComplete) {
@@ -61,6 +62,23 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    /**
+     * Full screen: no status or navigation bar, like a console's home screen. A swipe in from an
+     * edge shows them for a moment. Re-applied whenever the window gets focus back, since a
+     * notification shade, a permission screen or another app can leave them showing.
+     */
+    private fun hideSystemBars() {
+        androidx.core.view.WindowCompat.getInsetsController(window, window.decorView).apply {
+            systemBarsBehavior = androidx.core.view.WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            hide(androidx.core.view.WindowInsetsCompat.Type.systemBars())
+        }
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) hideSystemBars()
     }
 
     override fun onResume() {
@@ -132,7 +150,7 @@ class MainActivity : ComponentActivity() {
         if (event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0 &&
             KeyEvent.isGamepadButton(event.keyCode) && loggedUnknownKeys.add(event.keyCode)) {
             // A pad button we don't map: log it once so a new device names itself.
-            CrashLogger.logNote(this, "Unmapped gamepad button ${KeyEvent.keyCodeToString(event.keyCode)} " +
+            AppLog.i("Controls", "Unmapped gamepad button ${KeyEvent.keyCodeToString(event.keyCode)} " +
                 "from ${event.device?.name ?: "unknown device"}")
         }
         return super.dispatchKeyEvent(event)

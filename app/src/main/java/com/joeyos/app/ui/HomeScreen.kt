@@ -19,7 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import android.content.Intent
@@ -32,9 +32,11 @@ import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.platform.LocalInputModeManager
 import com.joeyos.app.ui.controls.Control
 import com.joeyos.app.ui.controls.ControlBus
-import com.joeyos.app.CrashLogger
+import com.joeyos.app.AppLog
 import com.joeyos.app.data.AppUpdates
 import com.joeyos.app.data.Aps3eLauncher
+import com.joeyos.app.data.ARMSX3Launcher
+import com.joeyos.app.data.FlycastLauncher
 import com.joeyos.app.data.M64PlusFZLauncher
 import com.joeyos.app.data.AzaharLauncher
 import com.joeyos.app.ui.components.FAVORITE_PACKAGE
@@ -87,6 +89,7 @@ fun HomeScreen(viewModel: HomeViewModel) {
     val recentGamesVersion by viewModel.recentGamesVersion.collectAsStateWithLifecycle()
     val dockPinned        by viewModel.dockPinned.collectAsStateWithLifecycle()
     val dockHidden        by viewModel.dockHidden.collectAsStateWithLifecycle()
+    val biosFolder        by viewModel.biosFolder.collectAsStateWithLifecycle()
 
     var showSettings            by remember { mutableStateOf(false) }
     var showAppDrawer           by remember { mutableStateOf(false) }
@@ -194,20 +197,20 @@ fun HomeScreen(viewModel: HomeViewModel) {
         }
     }
     fun shareCrashLog() {
-        val log = CrashLogger.readRecent(context)
+        val log = AppLog.readRecent(context)
         if (log == null) {
-            Toast.makeText(context, "No crashes logged", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Nothing logged yet", Toast.LENGTH_SHORT).show()
             return
         }
         val send = Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
-            putExtra(Intent.EXTRA_SUBJECT, "JoeyOS crash log")
+            putExtra(Intent.EXTRA_SUBJECT, "JoeyOS log")
             putExtra(Intent.EXTRA_TEXT, log)
         }
         runCatching {
-            context.startActivity(Intent.createChooser(send, "Share crash log").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            context.startActivity(Intent.createChooser(send, "Share log").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }.onFailure {
-            Toast.makeText(context, "No app to share with — log is at /sdcard/JoeyOS/crash.log", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "No app to share with — the log is at /sdcard/JoeyOS/joeyos.log", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -282,8 +285,9 @@ fun HomeScreen(viewModel: HomeViewModel) {
         onDispose { ControlBus.setHandler(null) }
     }
 
-    // B / Back on the home screen opens the App Drawer, as it always has. (Open question:
-    // TV guidance says Back at home should do nothing.) Popups take Back themselves first.
+    // B / Back on the home screen opens the App Drawer. A deliberate exception to the TV guidance
+    // (Back does nothing at home), kept because it's the familiar handheld shortcut — Joey's call,
+    // 2026-09-11. Pages and popups take Back themselves first.
     BackHandler(enabled = !pageOpen) { showAppDrawer = true }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -445,7 +449,9 @@ fun HomeScreen(viewModel: HomeViewModel) {
                 raRepo                    = viewModel.raRepo,
                 ibRepo                    = viewModel.ibRepo,
                 onCheckUpdates               = { checkForUpdates(manual = true) },
-                onShareCrashLog              = ::shareCrashLog
+                onShareCrashLog              = ::shareCrashLog,
+                biosFolder                   = biosFolder,
+                onBiosFolderChange           = viewModel::setBiosFolder
             )
         }
 
@@ -528,7 +534,8 @@ suspend fun launchRecentGame(
     assignments: Map<String, String>,
     viewModel: HomeViewModel
 ) {
-    Log.d("launchRecentGame", "title=${game.title} pkg=${game.emulatorPackage} path=${game.path}")
+    AppLog.i("Launch", "'${game.title}' with ${game.emulatorPackage}" +
+        if (game.path.isNotBlank()) " from ${game.path}" else "")
     // Most launchers resolve the ROM by scanning storage directories (RomFinder.findRomByTitle)
     // on every launch, not just as a fallback — keep that disk I/O off the main thread.
     val launched = withContext(Dispatchers.IO) {
@@ -561,19 +568,27 @@ suspend fun launchRecentGame(
                 DuckStationLauncher.launch(context, game)
             game.emulatorPackage.startsWith("aenu.aps3e") ->
                 Aps3eLauncher.launch(context, game)
+            game.emulatorPackage.startsWith("com.armsx3") ->
+                ARMSX3Launcher.launch(context, game)
+            game.emulatorPackage.startsWith("com.flycast.emulator") ->
+                FlycastLauncher.launch(context, game)
             game.emulatorPackage.startsWith("org.mupen64plusae") ->
                 M64PlusFZLauncher.launch(context, game)
             else -> false
         }
     }
     if (!launched) {
+        AppLog.w("Launch", "'${game.title}': ${game.emulatorPackage}'s launcher couldn't start it, trying a plain open")
         val intent = Intent(Intent.ACTION_VIEW).apply {
             data = Uri.fromFile(File(game.path))
             setPackage(game.emulatorPackage)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         try { context.startActivity(intent) }
-        catch (_: Exception) { viewModel.launchApp(context, game.emulatorPackage); return }
+        catch (e: Exception) {
+            AppLog.w("Launch", "'${game.title}': plain open failed too, opening ${game.emulatorPackage} instead", e)
+            viewModel.launchApp(context, game.emulatorPackage); return
+        }
     }
     // Record the launch so dock sort-by-recent updates regardless of which path ran.
     viewModel.recordLaunchForPackage(game.emulatorPackage)

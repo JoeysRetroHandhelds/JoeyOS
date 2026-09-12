@@ -1,6 +1,7 @@
 ﻿package com.joeyos.app.ui.viewmodel
 
 import android.content.Context
+import com.joeyos.app.AppLog
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
@@ -97,6 +98,13 @@ class HomeViewModel(
         viewModelScope.launch { repo.setFavoriteGame(game) }
     }
 
+    val biosFolder: StateFlow<String> = repo.biosFolder
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), "")
+    fun setBiosFolder(path: String) {
+        AppLog.i("Settings", if (path.isBlank()) "BIOS folder: back to automatic" else "BIOS folder set to $path")
+        viewModelScope.launch { repo.setBiosFolder(path) }
+    }
+
     val dockPinned: StateFlow<Set<String>> = repo.dockPinned
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptySet())
     val dockHidden: StateFlow<Set<String>> = repo.dockHidden
@@ -105,6 +113,7 @@ class HomeViewModel(
     fun setInDock(packageName: String, inDock: Boolean) {
         val isAuto = com.joeyos.app.ui.components.autoDockPackages(_installedApps.value)
             .any { it.packageName == packageName }
+        AppLog.i("Settings", "${if (inDock) "Added to" else "Removed from"} dock: $packageName")
         viewModelScope.launch { repo.setInDock(packageName, inDock, isAuto) }
     }
 
@@ -114,8 +123,10 @@ class HomeViewModel(
     fun launchApp(context: Context, packageName: String) {
         val intent = context.packageManager.getLaunchIntentForPackage(packageName)
         if (intent != null) {
+            AppLog.i("Launch", "Opening app $packageName")
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            context.startActivity(intent)
+            runCatching { context.startActivity(intent) }
+                .onFailure { AppLog.e("Launch", "Couldn't open $packageName", it) }
             viewModelScope.launch {
                 // Record launch for every system that maps to this package so dock sort updates.
                 ALL_SYSTEMS
@@ -123,11 +134,13 @@ class HomeViewModel(
                     .forEach { repo.recordLaunch(it.id) }
             }
         } else {
+            AppLog.w("Launch", "Couldn't open $packageName: no launcher entry (not installed?)")
             Toast.makeText(context, "App not found", Toast.LENGTH_SHORT).show()
         }
     }
 
     fun setAssignment(systemId: String, packageName: String?) {
+        AppLog.i("Settings", "Emulator for $systemId set to ${packageName ?: "not set"}")
         viewModelScope.launch { repo.setAssignment(systemId, packageName) }
     }
 

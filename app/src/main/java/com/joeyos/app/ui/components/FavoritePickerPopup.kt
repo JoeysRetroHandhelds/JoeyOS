@@ -35,67 +35,34 @@ fun FavoritePickerPopup(
     onSelect: (RecentGame) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val screenH = LocalConfiguration.current.screenHeightDp
     fun isCurrent(game: RecentGame) = currentFavorite != null &&
         currentFavorite.title == game.title && currentFavorite.emulatorPackage == game.emulatorPackage
     val currentIndex = games?.indexOfFirst(::isCurrent)?.takeIf { it >= 0 } ?: 0
     val currentRow = remember { FocusRequester() }
 
-    JoeyDialog(
+    JoeyPopup(
+        title = "Set Favorite",
+        hint = "A set  •  B cancel",
         onDismiss = onDismiss,
+        padded = false,
         focusKey = !games.isNullOrEmpty(),
         initialFocus = if (!games.isNullOrEmpty()) currentRow else null
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(0.55f)
-                .heightIn(max = (screenH * 0.82f).dp)
-                .clip(RoundedCornerShape(20.dp))
-                .background(SheetBg)
-                .border(1.dp, Color.White.copy(alpha = 0.1f), RoundedCornerShape(20.dp))
-                .padding(vertical = 8.dp),
-            verticalArrangement = Arrangement.spacedBy(2.dp)
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 18.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text("Set Favorite", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = TextPrimary)
-                Text("↑↓  •  A to set  •  B cancel", fontSize = 9.sp,
-                    fontFamily = FontFamily.Monospace, color = TextFaint)
-            }
-
-            when {
-                games == null -> Text(
-                    "Loading…",
-                    fontSize = 12.sp,
-                    fontFamily = FontFamily.Monospace,
-                    color = TextFaint,
-                    modifier = Modifier.padding(horizontal = 18.dp, vertical = 14.dp)
-                )
-                games.isEmpty() -> Text(
-                    "No recent games found.\nPlay some games first.",
-                    fontSize = 12.sp,
-                    fontFamily = FontFamily.Monospace,
-                    color = TextFaint,
-                    modifier = Modifier.padding(horizontal = 18.dp, vertical = 14.dp)
-                )
-                else -> {
-                    // Start scrolled to the current favourite so its row exists to take focus.
-                    val listState = rememberLazyListState(initialFirstVisibleItemIndex = currentIndex)
-                    LazyColumn(state = listState, modifier = Modifier.fillMaxWidth()) {
-                        itemsIndexed(games, key = { i, g -> "$i:${g.emulatorPackage}:${g.path}" }) { i, game ->
-                            GameListRow(
-                                index     = i + 1,
-                                game      = game,
-                                isCurrent = isCurrent(game),
-                                onClick   = { onSelect(game); onDismiss() },
-                                modifier  = if (i == currentIndex) Modifier.focusRequester(currentRow) else Modifier
-                            )
-                        }
+        when {
+            games == null -> PopupNote("Loading…")
+            games.isEmpty() -> PopupNote("No recent games found.\nPlay some games first.")
+            else -> {
+                // Start scrolled to the current favourite so its row exists to take focus.
+                val listState = rememberLazyListState(initialFirstVisibleItemIndex = currentIndex)
+                LazyColumn(state = listState, modifier = Modifier.fillMaxWidth()) {
+                    itemsIndexed(games, key = { i, g -> "$i:${g.emulatorPackage}:${g.path}" }) { i, game ->
+                        GameListRow(
+                            index     = i + 1,
+                            game      = game,
+                            isCurrent = isCurrent(game),
+                            onClick   = { onSelect(game); onDismiss() },
+                            modifier  = if (i == currentIndex) Modifier.focusRequester(currentRow) else Modifier
+                        )
                     }
                 }
             }

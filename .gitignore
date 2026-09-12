@@ -27,3 +27,4 @@ scripts/.gamedb_last_fetch
 
 # Log files
 *.log
+tools/.cache/

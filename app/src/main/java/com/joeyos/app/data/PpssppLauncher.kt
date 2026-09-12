@@ -1,5 +1,7 @@
 package com.joeyos.app.data
 
+import com.joeyos.app.AppLog
+
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -12,7 +14,7 @@ object PpssppLauncher {
     fun launch(context: Context, game: RecentGame): Boolean {
         val romPath = resolveRomPath(game)
         if (romPath == null) {
-            Log.e(TAG, "launch: could not resolve ROM path for '${game.title}' from '${game.path}'")
+            AppLog.e(TAG, "launch: could not resolve ROM path for '${game.title}' from '${game.path}'")
             return false
         }
 
@@ -29,7 +31,7 @@ object PpssppLauncher {
             context.startActivity(intent)
             true
         } catch (e: Exception) {
-            Log.e(TAG, "launch: startActivity failed", e)
+            AppLog.e(TAG, "launch: startActivity failed", e)
             false
         }
     }

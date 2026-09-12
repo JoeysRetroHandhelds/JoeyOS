@@ -1,5 +1,7 @@
 ﻿package com.joeyos.app.data
 
+import com.joeyos.app.AppLog
+
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -120,7 +122,7 @@ object RetroArchLauncher {
             context.startActivity(intent)
             true
         } catch (e: Exception) {
-            Log.e(TAG, "launch: startActivity failed", e)
+            AppLog.e(TAG, "launch: startActivity failed", e)
             false
         }
     }

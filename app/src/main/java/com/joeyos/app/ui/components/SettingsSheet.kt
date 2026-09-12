@@ -92,9 +92,11 @@ fun SettingsSheet(
     raRepo: RetroAchievementsRepository,
     ibRepo: InfiniteBacklogRepository,
     onCheckUpdates: () -> Unit = {},
-    onShareCrashLog: () -> Unit = {}
+    onShareCrashLog: () -> Unit = {},
+    biosFolder: String = "",
+    onBiosFolderChange: (String) -> Unit = {}
 ) {
-    val tabs = listOf("Appearance", "Emulators", "Achievements")
+    val tabs = listOf("Appearance", "Emulators", "Achievements", "Tools")
     var selectedTab by remember { mutableIntStateOf(0) }
     val tabFocus = remember { List(tabs.size) { FocusRequester() } }
     val scope = rememberCoroutineScope()
@@ -231,9 +233,7 @@ fun SettingsSheet(
                         onDockTitleSizeChange    = onDockTitleSizeChange,
                         modifier                 = Modifier.weight(1f),
                         listState                = panelLists[0],
-                        firstFocus               = panelFirst,
-                        onCheckUpdates           = onCheckUpdates,
-                        onShareCrashLog          = onShareCrashLog
+                        firstFocus               = panelFirst
                     )
                     1 -> EmulatorsPanel(
                         assignments        = assignments,
@@ -248,7 +248,18 @@ fun SettingsSheet(
                         raRepo   = raRepo,
                         ibRepo   = ibRepo,
                         modifier = Modifier.weight(1f),
-                        listState = panelLists[2]
+                        listState = panelLists[2],
+                        firstFocus = panelFirst
+                    )
+                    3 -> ToolsPanel(
+                        installedApps      = installedApps,
+                        biosFolder         = biosFolder,
+                        onBiosFolderChange = onBiosFolderChange,
+                        modifier           = Modifier.weight(1f),
+                        listState          = panelLists[3],
+                        firstFocus         = panelFirst,
+                        onCheckUpdates     = onCheckUpdates,
+                        onShareLog         = onShareCrashLog
                     )
                 }
             }
@@ -318,53 +329,6 @@ private fun ActiveTick(modifier: Modifier = Modifier) {
     }
 }
 
-/** A plain labelled action button (Refresh, Check for updates, …), lit when focused. */
-@Composable
-fun ActionButton(label: String, onClick: () -> Unit, modifier: Modifier = Modifier, fontSize: TextUnit = 12.sp) {
-    val (source, focused) = rememberFocusState()
-    Box(
-        modifier = modifier
-            .clip(RoundedCornerShape(12.dp))
-            .background(if (focused) Color.White.copy(alpha = 0.12f) else Color.White.copy(alpha = 0.06f))
-            .border(if (focused) 2.dp else 1.dp,
-                if (focused) FocusColor else Color.White.copy(alpha = 0.14f), RoundedCornerShape(12.dp))
-            .clickable(interactionSource = source, indication = null, onClick = onClick)
-            .padding(horizontal = 12.dp, vertical = 12.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(label, fontSize = fontSize, fontFamily = FontFamily.Monospace,
-            color = if (focused) Amber else TextPrimary)
-    }
-}
-
-@Composable
-private fun SettingsLabel(text: String) {
-    Text(text, fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
-}
-
-/** A labelled row of [OptionChip]s for one setting. */
-@Composable
-private fun <T> ChoiceRow(
-    label: String,
-    options: List<Pair<T, String>>,
-    current: T,
-    onChange: (T) -> Unit,
-    fontSize: TextUnit = 11.sp
-) {
-    Column {
-        Spacer(Modifier.height(4.dp))
-        SettingsLabel(label)
-        Spacer(Modifier.height(8.dp))
-        val first = remember { FocusRequester() }
-        Row(modifier = Modifier.fillMaxWidth().focusRow(first), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-            options.forEachIndexed { i, (value, text) ->
-                OptionChip(text, current == value, { onChange(value) },
-                    Modifier.weight(1f).then(if (i == 0) Modifier.focusRequester(first) else Modifier), fontSize)
-            }
-        }
-    }
-}
-
 // ── Appearance panel ─────────────────────────────────────────────────────────
 
 @Composable
@@ -390,33 +354,19 @@ fun AppearancePanel(
     onDockTitleSizeChange: (DockTitleSize) -> Unit = {},
     modifier: Modifier = Modifier,
     listState: LazyListState = rememberLazyListState(),
-    firstFocus: FocusRequester? = null,
-    onCheckUpdates: () -> Unit = {},
-    onShareCrashLog: () -> Unit = {}
+    firstFocus: FocusRequester? = null
 ) {
     // A on a custom wallpaper opens its options (use / remove). The ✕ inside the tile can't be
     // reached with the D-pad — it sits within the tile's bounds — so this is the controller way.
     var wallpaperOptions by remember { mutableStateOf<Uri?>(null) }
     wallpaperOptions?.let { uri ->
-        JoeyDialog(onDismiss = { wallpaperOptions = null }) {
-            Column(
-                modifier = Modifier
-                    .widthIn(max = 300.dp)
-                    .clip(RoundedCornerShape(18.dp))
-                    .background(Color(0xFF1A1A2E))
-                    .border(1.dp, Color.White.copy(alpha = 0.12f), RoundedCornerShape(18.dp))
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                Text("Custom wallpaper", fontSize = 15.sp, fontWeight = FontWeight.Bold,
-                    fontFamily = FontFamily.Monospace, color = TextPrimary)
-                DialogButton("Use as wallpaper", {
-                    onWallpaperChange(WallpaperState.Custom(uri)); wallpaperOptions = null
-                }, Modifier.fillMaxWidth())
-                DialogButton("Remove", {
-                    onRemoveWallpaper(uri); wallpaperOptions = null
-                }, Modifier.fillMaxWidth())
-            }
+        JoeyPopup(title = "Custom wallpaper", onDismiss = { wallpaperOptions = null }, padded = false) {
+            PopupRow("Use as wallpaper", {
+                onWallpaperChange(WallpaperState.Custom(uri)); wallpaperOptions = null
+            })
+            PopupRow("Remove", {
+                onRemoveWallpaper(uri); wallpaperOptions = null
+            })
         }
     }
 
@@ -443,7 +393,7 @@ fun AppearancePanel(
         contentPadding = PaddingValues(top = 4.dp, bottom = 28.dp)
     ) {
         // ── Icon size ────────────────────────────────────────────────────
-        item { SettingsLabel("DOCK ICON SIZE") }
+        item { SectionLabel("DOCK ICON SIZE") }
         item {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -477,9 +427,9 @@ fun AppearancePanel(
         item {
             val first = remember { FocusRequester() }
             Row(modifier = Modifier.fillMaxWidth().focusRow(first), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                ActionButton("−", { onSizeChange(steps[(currentStep - 1).coerceAtLeast(0)]) },
+                JoeyButton("−", { onSizeChange(steps[(currentStep - 1).coerceAtLeast(0)]) },
                     Modifier.weight(1f).focusRequester(first), fontSize = 22.sp)
-                ActionButton("+", { onSizeChange(steps[(currentStep + 1).coerceAtMost(steps.lastIndex)]) },
+                JoeyButton("+", { onSizeChange(steps[(currentStep + 1).coerceAtMost(steps.lastIndex)]) },
                     Modifier.weight(1f), fontSize = 22.sp)
             }
         }
@@ -509,7 +459,7 @@ fun AppearancePanel(
         // ── Wallpaper ────────────────────────────────────────────────────
         item {
             Spacer(Modifier.height(4.dp))
-            SettingsLabel("WALLPAPER")
+            SectionLabel("WALLPAPER")
         }
         PRESET_WALLPAPERS.chunked(4).forEach { row ->
             item {
@@ -546,7 +496,7 @@ fun AppearancePanel(
         // ── Custom wallpapers ────────────────────────────────────────────
         item {
             Spacer(Modifier.height(4.dp))
-            SettingsLabel("CUSTOM WALLPAPERS")
+            SectionLabel("CUSTOM WALLPAPERS")
         }
         item {
             // Tile width matches the 4-column preset grid: (availableWidth - 3 gaps) / 4
@@ -593,25 +543,12 @@ fun AppearancePanel(
                         }
                     }
                     item {
-                        ActionButton("+", { imagePicker.launch(arrayOf("image/*")) },
+                        JoeyButton("+", { imagePicker.launch(arrayOf("image/*")) },
                             Modifier.width(tileW).aspectRatio(1.6f).then(
                                 if (customWallpapers.isEmpty()) Modifier.focusRequester(first) else Modifier),
                             fontSize = 22.sp)
                     }
                 }
-            }
-        }
-
-        // ── System ───────────────────────────────────────────────────────
-        item {
-            Spacer(Modifier.height(4.dp))
-            SettingsLabel("SYSTEM")
-        }
-        item {
-            val first = remember { FocusRequester() }
-            Row(modifier = Modifier.fillMaxWidth().focusRow(first), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                ActionButton("Check for updates", onCheckUpdates, Modifier.weight(1f).focusRequester(first))
-                ActionButton("Share crash log", onShareCrashLog, Modifier.weight(1f))
             }
         }
     }
@@ -632,14 +569,15 @@ fun EmulatorsPanel(
     val retroarchInstalled = remember(installedApps) {
         installedApps.any { it.packageName.startsWith("com.retroarch") }
     }
-    val grouped = remember(installedApps, retroarchInstalled) {
+    // One list, A to Z by the console's full name: easier to find a system than by maker.
+    val systems = remember(installedApps, retroarchInstalled) {
         ALL_SYSTEMS
             .filter { sys ->
                 retroarchInstalled &&
                 sys.knownPackages.any { it.startsWith("com.retroarch") } &&
                 sys.retroarchCores.any { RetroArchLauncher.isCoreInstalled(it) }
             }
-            .groupBy { it.category }
+            .sortedBy { it.fullName.lowercase() }
     }
 
     // A on a system opens a picker popup (like Recently Played), focused on the current choice.
@@ -671,7 +609,7 @@ fun EmulatorsPanel(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text("Re-scan installed apps", fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
-            ActionButton(if (refreshing) "…" else "↺  Refresh", {
+            JoeyButton(if (refreshing) "…" else "↺  Refresh", {
                 refreshing = true
                 onRefresh()
                 scope.launch {
@@ -687,24 +625,13 @@ fun EmulatorsPanel(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             contentPadding = PaddingValues(bottom = 28.dp, top = 4.dp)
         ) {
-            grouped.forEach { (category, systems) ->
-                item(key = "header_$category") {
-                    Text(
-                        text       = category.uppercase(),
-                        fontSize   = 10.sp,
-                        fontFamily = FontFamily.Monospace,
-                        color      = TextFaint,
-                        modifier   = Modifier.padding(top = 14.dp, bottom = 2.dp)
-                    )
-                }
-                items(systems, key = { it.id }) { sys ->
-                    EmulatorRow(
-                        system        = sys,
-                        assigned      = assignments[sys.id],
-                        installedApps = installedApps,
-                        onClick       = { pickingFor = sys }
-                    )
-                }
+            items(systems, key = { it.id }) { sys ->
+                EmulatorRow(
+                    system        = sys,
+                    assigned      = assignments[sys.id],
+                    installedApps = installedApps,
+                    onClick       = { pickingFor = sys }
+                )
             }
         }
     }
@@ -720,71 +647,24 @@ private fun EmulatorPickerPopup(
     onChoose: (String?) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val screenH = LocalConfiguration.current.screenHeightDp
     val currentRow = remember { FocusRequester() }
     val currentIsSet = current != null && options.any { it.value == current }
-    JoeyDialog(onDismiss = onDismiss, initialFocus = currentRow) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(0.55f)
-                .heightIn(max = (screenH * 0.82f).dp)
-                .clip(RoundedCornerShape(20.dp))
-                .background(SheetBg)
-                .border(1.dp, Color.White.copy(alpha = 0.1f), RoundedCornerShape(20.dp))
-                .padding(vertical = 8.dp)
+    JoeyPopup(title = system.fullName, hint = "A set  •  B cancel", onDismiss = onDismiss,
+        padded = false, initialFocus = currentRow) {
+        LazyColumn(
+            state = rememberLazyListState(
+                initialFirstVisibleItemIndex = if (currentIsSet) options.indexOfFirst { it.value == current } + 1 else 0),
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 18.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(system.fullName, fontWeight = FontWeight.Bold, fontSize = 15.sp, color = TextPrimary)
-                Text("A to set  •  B cancel", fontSize = 9.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
+            item(key = "notset") {
+                PopupRow("Not set", isCurrent = !currentIsSet, onClick = { onChoose(null) },
+                    modifier = if (!currentIsSet) Modifier.focusRequester(currentRow) else Modifier)
             }
-            LazyColumn(
-                state = rememberLazyListState(
-                    initialFirstVisibleItemIndex = if (currentIsSet) options.indexOfFirst { it.value == current } + 1 else 0),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                item(key = "notset") {
-                    PickerRow("Not set", isCurrent = !currentIsSet, onClick = { onChoose(null) },
-                        modifier = if (!currentIsSet) Modifier.focusRequester(currentRow) else Modifier)
-                }
-                items(options, key = { it.value }) { opt ->
-                    PickerRow(opt.label, isCurrent = current == opt.value, onClick = { onChoose(opt.value) },
-                        modifier = if (current == opt.value) Modifier.focusRequester(currentRow) else Modifier)
-                }
+            items(options, key = { it.value }) { opt ->
+                PopupRow(opt.label, isCurrent = current == opt.value, onClick = { onChoose(opt.value) },
+                    modifier = if (current == opt.value) Modifier.focusRequester(currentRow) else Modifier)
             }
         }
-    }
-}
-
-/** A row in a picker popup: one focus target, amber-lit when focused, ✓ on the current choice. */
-@OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
-@Composable
-private fun PickerRow(label: String, isCurrent: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
-    val (source, focused) = rememberFocusState()
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .focusProperties { left = FocusRequester.Cancel; right = FocusRequester.Cancel }
-            .padding(horizontal = 6.dp)
-            .clip(RoundedCornerShape(10.dp))
-            .background(if (focused) Color.White.copy(alpha = 0.10f) else Color.Transparent)
-            .then(if (focused) Modifier.border(FocusWidth, FocusColor, RoundedCornerShape(10.dp)) else Modifier)
-            .clickable(interactionSource = source, indication = null, onClick = onClick)
-            .padding(horizontal = 12.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(10.dp)
-    ) {
-        Text(if (isCurrent) "✓" else " ", fontSize = 12.sp, color = Amber,
-            fontFamily = FontFamily.Monospace, modifier = Modifier.width(16.dp))
-        Text(label, fontSize = 13.sp, fontFamily = FontFamily.Monospace,
-            color = if (isCurrent) Amber else TextPrimary,
-            maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
-        if (focused) Text("▶", fontSize = 12.sp, color = FocusColor)
     }
 }
 
@@ -806,25 +686,9 @@ fun EmulatorRow(
         else                     -> installedApps.find { it.packageName == assigned }?.label ?: assigned
     }
 
-    val rowShape   = RoundedCornerShape(14.dp)
     val badgeShape = RoundedCornerShape(9.dp)
-    val (source, focused) = rememberFocusState()
-    val highlight  = focused
 
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            // A full-width row has nothing beside it; stop sideways presses jumping elsewhere.
-            .focusProperties { left = FocusRequester.Cancel; right = FocusRequester.Cancel }
-            .clip(rowShape)
-            .background(if (highlight) Color.White.copy(alpha = 0.12f) else Color.White.copy(alpha = 0.04f))
-            .border(if (focused) FocusWidth else 1.dp,
-                if (focused) FocusColor else Color.White.copy(alpha = 0.09f), rowShape)
-            .clickable(interactionSource = source, indication = null, onClick = onClick)
-            .padding(12.dp),
-        verticalAlignment     = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
+    CardRow(onClick = onClick, modifier = modifier) { focused ->
         Box(
             modifier = Modifier
                 .size(34.dp)
@@ -840,7 +704,7 @@ fun EmulatorRow(
             modifier   = Modifier.weight(1f),
             fontWeight = FontWeight.SemiBold,
             fontSize   = 14.sp,
-            color      = TextPrimary
+            color      = if (focused) Amber else TextPrimary
         )
 
         Row(

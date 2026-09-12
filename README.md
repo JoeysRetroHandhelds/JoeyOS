@@ -22,6 +22,9 @@ This was created for my personal use, and while it may work for a lot of people'
 - For Duckstation to work, you must be using Duckstation-Patch (https://github.com/JoeysRetroHandhelds/duckstation-patch) and you must have a folder called DuckStation exactly on your internal storage
 - For APS3E to work, your device must be able to access Android/data storage
 - For M64Plus FZ to work, you must have a folder called M64Plus exactly on your internal storage or SD card 
+- For ARMSX3 to work, you must have a folder called ARMSX3 exactly on your internal storage or SD card (with its recent_games.json inside), or your device must be able to access Android/data storage
+- For Flycast to work, you must have a folder called Flycast on your internal storage or SD card (or whichever home folder you picked in Flycast), or your device must be able to access Android/data storage
+- Bachata S4 (PS4) and XenDroid (Xbox 360) show on the dock and open the emulator, but don't have Recently Played yet
 - No other emulators outside of these have been configured to work
 
 ---
@@ -34,10 +37,19 @@ After installing the APK, press the **Home** button. Android will ask which laun
 
 ## Using the app
 
+JoeyOS runs full screen. Swipe in from an edge to see the status and navigation bars.
+
+- **D-pad** or **L1 / R1** → move along the dock; **L2 / R2** → jump five at a time
+- Press **A** → opens the emulator
 - **Long-press the wallpaper**, tap the **Settings cog** (top-left), or press **Start** → opens Settings
 - **Tap the grid icon** (top-left) or press **B** → opens the App Drawer
 - **Long-press an app** or press **Y** → opens the Recently Played menu
 - Press **X** → launches your most recently played game directly
+- In the App Drawer, press **Start** on an app (or long-press it) → App Info, or add/remove it from the dock
+- In any popup, **A** selects and **B** goes back
+
+### Updates
+JoeyOS checks GitHub for a new version when it starts and every hour after that, and offers to install it. You can also check any time from **Settings → Tools → Check for updates**.
 
 ### Settings → Appearance
 - Adjust dock icon size
@@ -56,3 +68,12 @@ After installing the APK, press the **Home** button. Android will ask which laun
 ### Settings → Achievements
 - Log in with your RetroAchievements and/or InfiniteBacklog account
 - View your beaten games at a glance, broken down by year and by game
+
+### Settings → Tools
+None of the tools ever change or delete your original games.
+- **Check BIOS files**: shows which consoles have the BIOS they need and which are missing one
+- **Patch a ROM**: applies a romhack or translation patch (IPS, UPS, BPS, PPF, APS, xdelta). You name the new file and choose to save it next to the original or in Downloads
+- **Generate .m3u playlists**: turns multi-disc games into one playlist each, so each game shows once. Can be undone
+- **Compress ROMs**: zips cartridge games and converts discs to CHD, GameCube/Wii to RVZ and 3DS to ZCCI. Can be undone
+- **RetroAchievements romhacks**: finds hacks and translations with achievements for the games you own, and creates the patched game for you
+- **Check for updates** and **Share log** (send this to me if something goes wrong)

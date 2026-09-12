@@ -1,5 +1,7 @@
 ﻿package com.joeyos.app.data
 
+import com.joeyos.app.AppLog
+
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -31,7 +33,7 @@ object NetherSX2Launcher {
             Log.d(TAG, "launch: startActivity succeeded")
             true
         } catch (e: Exception) {
-            Log.e(TAG, "launch: startActivity failed", e)
+            AppLog.e(TAG, "launch: startActivity failed", e)
             false
         }
     }

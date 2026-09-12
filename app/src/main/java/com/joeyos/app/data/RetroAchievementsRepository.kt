@@ -1,11 +1,14 @@
-﻿package com.joeyos.app.data
+package com.joeyos.app.data
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.joeyos.app.CrashLogger
+import com.joeyos.app.AppLog
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
@@ -22,11 +25,15 @@ import java.util.Locale
 data class RAAward(
     val title: String,
     val consoleName: String,
-    val awardType: String,       // "Game Beaten", "Mastery/Completion", etc.
+    val awardType: String,       // "Game Beaten", "Mastery/Completion"
     val awardDataExtra: Int,     // 1 = hardcore, 0 = softcore
     val awardedAt: Date,
-    val imageIcon: String
-)
+    val imageIcon: String,
+    val gameId: Int              // for linking to retroachievements.org/game/<id>
+) {
+    val gameUrl: String? get() = if (gameId > 0) "https://retroachievements.org/game/$gameId" else null
+    val iconUrl: String? get() = imageIcon.takeIf { it.isNotBlank() }?.let { "https://media.retroachievements.org$it" }
+}
 
 data class RAAwardsResult(
     val awards: List<RAAward>,
@@ -41,6 +48,41 @@ sealed class RAResult {
     data class Success(val data: RAAwardsResult) : RAResult()
     data class Error(val message: String) : RAResult()
     object NotConfigured : RAResult()
+}
+
+data class RAProgressGame(
+    val gameId: Int,
+    val title: String,
+    val consoleName: String,
+    val numAwarded: Int,
+    val maxPossible: Int,
+    val highestAwardKind: String?,  // "beaten-softcore", "beaten-hardcore", "mastered", "completed", or null
+    val imageIcon: String = ""
+) {
+    val percent: Float get() = if (maxPossible > 0) numAwarded.toFloat() / maxPossible else 0f
+    val isBeaten: Boolean get() = highestAwardKind != null && highestAwardKind.isNotBlank() &&
+        !highestAwardKind.equals("none", ignoreCase = true)
+    val gameUrl: String get() = "https://retroachievements.org/game/$gameId"
+    val iconUrl: String? get() = imageIcon.takeIf { it.isNotBlank() }?.let { "https://media.retroachievements.org$it" }
+}
+
+data class RARecentGame(
+    val gameId: Int,
+    val title: String,
+    val consoleName: String,
+    val imageIcon: String,
+    val lastPlayedMs: Long,
+    val numAchieved: Int,
+    val numPossible: Int
+) {
+    val iconUrl: String? get() = imageIcon.takeIf { it.isNotBlank() }?.let { "https://media.retroachievements.org$it" }
+    val gameUrl: String? get() = if (gameId > 0) "https://retroachievements.org/game/$gameId" else null
+}
+
+sealed class RAProgressResult {
+    data class Success(val games: List<RAProgressGame>, val fetchedAt: Long) : RAProgressResult()
+    data class Error(val message: String) : RAProgressResult()
+    object NotConfigured : RAProgressResult()
 }
 
 class RetroAchievementsRepository(context: Context) {
@@ -61,12 +103,12 @@ class RetroAchievementsRepository(context: Context) {
         try {
             createEncryptedPrefs()
         } catch (e: Exception) {
-            CrashLogger.logNonFatal(appContext, "RA encrypted prefs open", e)
+            AppLog.w("RetroAchievements", "Saved login unreadable, resetting it", e)
             try {
                 appContext.deleteSharedPreferences(CREDENTIALS_FILE)
                 createEncryptedPrefs()
             } catch (e2: Exception) {
-                CrashLogger.logNonFatal(appContext, "RA encrypted prefs recreate", e2)
+                AppLog.e("RetroAchievements", "Encrypted storage unusable, using private prefs", e2)
                 appContext.getSharedPreferences("${CREDENTIALS_FILE}_plain", Context.MODE_PRIVATE)
             }
         }
@@ -85,7 +127,6 @@ class RetroAchievementsRepository(context: Context) {
         )
     }
 
-    // Plain (non-encrypted) prefs for non-sensitive cache data
     private val cachePrefs by lazy {
         appContext.getSharedPreferences("ra_cache", Context.MODE_PRIVATE)
     }
@@ -97,8 +138,6 @@ class RetroAchievementsRepository(context: Context) {
         get() = cachePrefs.getLong(KEY_LAST_MANUAL_REFRESH, 0L)
         private set(v) = cachePrefs.edit().putLong(KEY_LAST_MANUAL_REFRESH, v).apply()
 
-    // Disk cache is parsed on first access rather than in init, for the same reason as above.
-    // Volatile + double-checked lock: fetchAwards can be invoked from multiple coroutines.
     @Volatile private var cacheLoaded = false
     private var cachedResultBacking: RAAwardsResult? = null
 
@@ -131,7 +170,11 @@ class RetroAchievementsRepository(context: Context) {
 
     fun clearCache() {
         cachedResult = null
-        cachePrefs.edit().remove(KEY_CACHE).apply()
+        progressBacking = null
+        progressLoaded = false
+        playtimes.clear(); playtimesLoaded = false; playtimesFetchedAt = 0L
+        gameInfoCache.clear()
+        cachePrefs.edit().remove(KEY_CACHE).remove(KEY_PROGRESS).remove(KEY_PLAYTIMES).apply()
     }
 
     suspend fun fetchAwards(forceRefresh: Boolean = false): RAResult {
@@ -144,14 +187,11 @@ class RetroAchievementsRepository(context: Context) {
 
         return withContext(Dispatchers.IO) {
             try {
-                // Credentials must be URL-encoded — an unencoded username containing a space,
-                // '&', or '#' would otherwise corrupt the query string.
                 val url = URL(
                     "https://retroachievements.org/API/API_GetUserAwards.php" +
                     "?u=${enc(username)}&y=${enc(apiKey)}"
                 )
                 val conn = url.openConnection() as HttpURLConnection
-                // Always release the connection, including on the non-200 and exception paths.
                 val body = try {
                     conn.connectTimeout = 10_000
                     conn.readTimeout    = 10_000
@@ -176,8 +216,6 @@ class RetroAchievementsRepository(context: Context) {
 
                 val json = JSONObject(body)
 
-                // The API can return HTTP 200 with an error body for bad credentials rather
-                // than a 4xx status.
                 json.optString("Error", "").takeIf { it.isNotBlank() }?.let { apiError ->
                     return@withContext RAResult.Error(
                         if (apiError.contains("credentials", ignoreCase = true) ||
@@ -194,7 +232,6 @@ class RetroAchievementsRepository(context: Context) {
                 for (i in 0 until awardsArray.length()) {
                     val obj = awardsArray.getJSONObject(i)
                     val type = obj.optString("AwardType", "")
-                    // Skip non-game awards
                     if (type != "Game Beaten" && type != "Mastery/Completion") continue
                     val dateStr = obj.optString("AwardedAt", "")
                     val date = runCatching { dateFormat.parse(dateStr) }.getOrNull() ?: continue
@@ -204,14 +241,16 @@ class RetroAchievementsRepository(context: Context) {
                         awardType        = type,
                         awardDataExtra   = obj.optInt("AwardDataExtra", 0),
                         awardedAt        = date,
-                        imageIcon        = obj.optString("ImageIcon", "")
+                        imageIcon        = obj.optString("ImageIcon", ""),
+                        // For game awards, AwardData holds the game ID.
+                        gameId           = obj.optString("AwardData", "").toIntOrNull() ?: 0
                     )
                 }
 
                 val result = RAAwardsResult(
-                    awards                   = awards.sortedByDescending { it.awardedAt },
-                    totalAwardsCount         = json.optInt("TotalAwardsCount", 0),
-                    masteryAwardsCount       = json.optInt("MasteryAwardsCount", 0),
+                    awards                    = awards.sortedByDescending { it.awardedAt },
+                    totalAwardsCount          = json.optInt("TotalAwardsCount", 0),
+                    masteryAwardsCount        = json.optInt("MasteryAwardsCount", 0),
                     beatenHardcoreAwardsCount = json.optInt("BeatenHardcoreAwardsCount", 0),
                     beatenSoftcoreAwardsCount = json.optInt("BeatenSoftcoreAwardsCount", 0)
                 )
@@ -231,15 +270,279 @@ class RetroAchievementsRepository(context: Context) {
         }
     }
 
+    // ── Completion progress (for "almost there" games) ────────────────────────
+    @Volatile private var progressLoaded = false
+    private var progressBacking: RAProgressResult.Success? = null
+
+    suspend fun fetchProgress(forceRefresh: Boolean = false): RAProgressResult {
+        if (!isConfigured) return RAProgressResult.NotConfigured
+
+        if (!progressLoaded) synchronized(this) {
+            if (!progressLoaded) {
+                progressBacking = cachePrefs.getString(KEY_PROGRESS, null)?.let { deserializeProgress(it) }
+                progressLoaded = true
+            }
+        }
+        progressBacking?.let {
+            if (!forceRefresh && System.currentTimeMillis() - it.fetchedAt < cacheTtlMs) return it
+        }
+
+        return withContext(Dispatchers.IO) {
+            try {
+                val all = mutableListOf<RAProgressGame>()
+                var offset = 0
+                val pageSize = 500
+                while (true) {
+                    val url = URL(
+                        "https://retroachievements.org/API/API_GetUserCompletionProgress.php" +
+                        "?u=${enc(username)}&y=${enc(apiKey)}&c=$pageSize&o=$offset"
+                    )
+                    val conn = url.openConnection() as HttpURLConnection
+                    val body = try {
+                        conn.connectTimeout = 10_000
+                        conn.readTimeout    = 15_000
+                        conn.setRequestProperty("User-Agent", "JoeyOS/1.0")
+                        val code = conn.responseCode
+                        if (code != 200) return@withContext RAProgressResult.Error(
+                            when (code) {
+                                401, 403 -> "Invalid username or API key"
+                                429      -> "Too many requests — try again in a few minutes"
+                                in 500..599 -> "RetroAchievements server error — try again later"
+                                else     -> "RetroAchievements error (HTTP $code)"
+                            }
+                        )
+                        conn.inputStream.bufferedReader().use { it.readText() }
+                    } finally { conn.disconnect() }
+
+                    val json = JSONObject(body)
+                    val results = json.optJSONArray("Results") ?: break
+                    for (i in 0 until results.length()) {
+                        val g = results.getJSONObject(i)
+                        all += RAProgressGame(
+                            gameId           = g.optInt("GameID", 0),
+                            title            = g.optString("Title", "Unknown"),
+                            consoleName      = g.optString("ConsoleName", ""),
+                            numAwarded       = g.optInt("NumAwarded", 0),
+                            maxPossible      = g.optInt("MaxPossible", 0),
+                            highestAwardKind = g.optString("HighestAwardKind", "").takeIf { it.isNotBlank() && it != "null" },
+                            imageIcon        = g.optString("ImageIcon", "")
+                        )
+                    }
+                    val total = json.optInt("Total", all.size)
+                    offset += pageSize
+                    if (results.length() < pageSize || offset >= total) break
+                }
+
+                val result = RAProgressResult.Success(all, System.currentTimeMillis())
+                progressBacking = result
+                progressLoaded = true
+                cachePrefs.edit().putString(KEY_PROGRESS, serializeProgress(result)).apply()
+                result
+            } catch (e: UnknownHostException) {
+                RAProgressResult.Error("No internet connection")
+            } catch (e: SocketTimeoutException) {
+                RAProgressResult.Error("Connection timed out — RetroAchievements may be down")
+            } catch (e: IOException) {
+                RAProgressResult.Error("Network error: ${e.message ?: "connection failed"}")
+            } catch (e: Exception) {
+                RAProgressResult.Error(e.message ?: "Unknown error")
+            }
+        }
+    }
+
+    private fun serializeProgress(r: RAProgressResult.Success): String {
+        val obj = JSONObject()
+        obj.put("fetchedAt", r.fetchedAt)
+        val arr = JSONArray()
+        r.games.forEach { g ->
+            arr.put(JSONObject().apply {
+                put("gameId", g.gameId); put("title", g.title); put("consoleName", g.consoleName)
+                put("numAwarded", g.numAwarded); put("maxPossible", g.maxPossible)
+                put("highestAwardKind", g.highestAwardKind ?: JSONObject.NULL)
+                put("imageIcon", g.imageIcon)
+            })
+        }
+        obj.put("games", arr)
+        return obj.toString()
+    }
+
+    private fun deserializeProgress(json: String): RAProgressResult.Success? = try {
+        val obj = JSONObject(json)
+        val arr = obj.getJSONArray("games")
+        val games = (0 until arr.length()).map { i ->
+            val g = arr.getJSONObject(i)
+            RAProgressGame(
+                gameId = g.getInt("gameId"), title = g.getString("title"),
+                consoleName = g.getString("consoleName"), numAwarded = g.getInt("numAwarded"),
+                maxPossible = g.getInt("maxPossible"),
+                highestAwardKind = if (g.isNull("highestAwardKind")) null else g.getString("highestAwardKind"),
+                imageIcon = g.optString("imageIcon", "")
+            )
+        }
+        RAProgressResult.Success(games, obj.getLong("fetchedAt"))
+    } catch (_: Exception) { null }
+
+    // Per-game extra info (genre/developer/publisher/released), fetched lazily when a game's
+    // detail sheet opens. Cached in-memory for the session.
+    private val gameInfoCache = java.util.concurrent.ConcurrentHashMap<Int, List<Pair<String, String>>>()
+
+    suspend fun fetchGameInfo(gameId: Int): List<Pair<String, String>> {
+        if (gameId <= 0 || !isConfigured) return emptyList()
+        gameInfoCache[gameId]?.let { return it }
+        return withContext(Dispatchers.IO) {
+            try {
+                // GetGameInfoAndUserProgress carries the metadata AND this user's total playtime.
+                val conn = URL("https://retroachievements.org/API/API_GetGameInfoAndUserProgress.php" +
+                    "?u=${enc(username)}&g=$gameId&y=${enc(apiKey)}").openConnection() as HttpURLConnection
+                val body = try {
+                    conn.connectTimeout = 10_000; conn.readTimeout = 10_000
+                    conn.setRequestProperty("User-Agent", "JoeyOS/1.0")
+                    if (conn.responseCode != 200) return@withContext emptyList()
+                    conn.inputStream.bufferedReader().use { it.readText() }
+                } finally { conn.disconnect() }
+                val j = JSONObject(body)
+                val list = buildList {
+                    formatPlaytime(j.optInt("UserTotalPlaytime", 0))?.let { add("Playtime" to it) }
+                    j.optString("Genre").takeIf { it.isNotBlank() && it != "null" }?.let { add("Genre" to it) }
+                    j.optString("Developer").takeIf { it.isNotBlank() && it != "null" }?.let { add("Developer" to it) }
+                    j.optString("Publisher").takeIf { it.isNotBlank() && it != "null" }?.let { add("Publisher" to it) }
+                    j.optString("Released").takeIf { it.isNotBlank() && it != "null" }?.let { add("Released" to it) }
+                }
+                gameInfoCache[gameId] = list
+                list
+            } catch (_: Exception) { emptyList() }
+        }
+    }
+
+    /** Seconds → "Xh Ym" / "Ym", or null when zero. */
+    private fun formatPlaytime(seconds: Int): String? = seconds.takeIf { it > 0 }?.let {
+        val m = it / 60
+        if (m >= 60) "${m / 60}h ${m % 60}m" else "${m}m"
+    }
+
+    // ── Profile points + recently played ─────────────────────────────────────
+    @Volatile private var pointsCache: Int? = null
+    suspend fun fetchPoints(): Int? {
+        if (!isConfigured) return null
+        pointsCache?.let { return it }
+        return withContext(Dispatchers.IO) {
+            try {
+                val conn = URL("https://retroachievements.org/API/API_GetUserProfile.php?u=${enc(username)}&y=${enc(apiKey)}")
+                    .openConnection() as HttpURLConnection
+                val body = try {
+                    conn.connectTimeout = 10_000; conn.readTimeout = 10_000
+                    conn.setRequestProperty("User-Agent", "JoeyOS/1.0")
+                    if (conn.responseCode != 200) return@withContext null
+                    conn.inputStream.bufferedReader().use { it.readText() }
+                } finally { conn.disconnect() }
+                val j = JSONObject(body)
+                // Softcore-only accounts have 0 hardcore points; softcore points are the meaningful total.
+                val pts = j.optInt("TotalPoints", 0).takeIf { it > 0 } ?: j.optInt("TotalSoftcorePoints", 0)
+                pointsCache = pts; pts
+            } catch (_: Exception) { null }
+        }
+    }
+
+    private var recentCache: List<RARecentGame>? = null
+    private var recentAt = 0L
+    suspend fun fetchRecentlyPlayed(count: Int = 12, forceRefresh: Boolean = false): List<RARecentGame> {
+        if (!isConfigured) return emptyList()
+        recentCache?.let { if (!forceRefresh && System.currentTimeMillis() - recentAt < 30 * 60_000L) return it }
+        return withContext(Dispatchers.IO) {
+            try {
+                val conn = URL("https://retroachievements.org/API/API_GetUserRecentlyPlayedGames.php?u=${enc(username)}&y=${enc(apiKey)}&c=$count")
+                    .openConnection() as HttpURLConnection
+                val body = try {
+                    conn.connectTimeout = 10_000; conn.readTimeout = 10_000
+                    conn.setRequestProperty("User-Agent", "JoeyOS/1.0")
+                    if (conn.responseCode != 200) return@withContext (recentCache ?: emptyList())
+                    conn.inputStream.bufferedReader().use { it.readText() }
+                } finally { conn.disconnect() }
+                val arr = JSONArray(body)
+                val fmt = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
+                val list = (0 until arr.length()).map { i ->
+                    val g = arr.getJSONObject(i)
+                    RARecentGame(
+                        gameId = g.optInt("GameID", 0), title = g.optString("Title", "Unknown"),
+                        consoleName = g.optString("ConsoleName", ""), imageIcon = g.optString("ImageIcon", ""),
+                        lastPlayedMs = runCatching { fmt.parse(g.optString("LastPlayed"))?.time ?: 0L }.getOrDefault(0L),
+                        numAchieved = g.optInt("NumAchieved", 0), numPossible = g.optInt("NumPossibleAchievements", 0)
+                    )
+                }
+                recentCache = list; recentAt = System.currentTimeMillis(); list
+            } catch (_: Exception) { recentCache ?: emptyList() }
+        }
+    }
+
+    // Per-game playtime (seconds), for the Stats hours aggregates. One API call per game, so
+    // fetched in parallel, cached to disk, and only missing ids are fetched on later runs.
+    @Volatile private var playtimesLoaded = false
+    private var playtimes: MutableMap<Int, Int> = mutableMapOf()
+    private var playtimesFetchedAt = 0L
+
+    suspend fun fetchGamePlaytimes(ids: List<Int>, forceRefresh: Boolean = false): Map<Int, Int> {
+        if (!isConfigured) return emptyMap()
+        if (!playtimesLoaded) synchronized(this) {
+            if (!playtimesLoaded) {
+                cachePrefs.getString(KEY_PLAYTIMES, null)?.let { s ->
+                    runCatching {
+                        val o = JSONObject(s); playtimesFetchedAt = o.optLong("fetchedAt")
+                        val m = o.getJSONObject("map"); m.keys().forEach { playtimes[it.toInt()] = m.getInt(it) }
+                    }
+                }
+                playtimesLoaded = true
+            }
+        }
+        val wanted = ids.filter { it > 0 }.distinct()
+        val fresh = System.currentTimeMillis() - playtimesFetchedAt < cacheTtlMs
+        val missing = if (forceRefresh || !fresh) wanted else wanted.filter { it !in playtimes }
+        if (missing.isEmpty()) return playtimes.toMap()
+
+        return withContext(Dispatchers.IO) {
+            var anyStored = false
+            coroutineScope {
+                // Modest concurrency + a pause between waves: RA rate-limits bursts, and a
+                // throttled request used to come back "0" and get cached as real 0 playtime.
+                for (chunk in missing.chunked(4)) {
+                    chunk.map { id -> async { id to fetchOnePlaytime(id) } }.awaitAll()
+                        .forEach { (id, sec) -> if (sec != null) { playtimes[id] = sec; anyStored = true } }  // null = failed, retry later
+                    Thread.sleep(250)
+                }
+            }
+            if (anyStored) {
+                playtimesFetchedAt = System.currentTimeMillis()
+                val out = JSONObject().put("fetchedAt", playtimesFetchedAt)
+                val m = JSONObject(); playtimes.forEach { (k, v) -> m.put(k.toString(), v) }
+                cachePrefs.edit().putString(KEY_PLAYTIMES, out.put("map", m).toString()).apply()
+            }
+            playtimes.toMap()
+        }
+    }
+
+    /** Seconds of playtime, or null when the request failed / was throttled (so it isn't cached as 0). */
+    private fun fetchOnePlaytime(gameId: Int, retry: Boolean = true): Int? {
+        val conn = URL("https://retroachievements.org/API/API_GetGameInfoAndUserProgress.php" +
+            "?u=${enc(username)}&g=$gameId&y=${enc(apiKey)}").openConnection() as HttpURLConnection
+        return try {
+            conn.connectTimeout = 10_000; conn.readTimeout = 15_000
+            conn.setRequestProperty("User-Agent", "JoeyOS/1.0")
+            when (val code = conn.responseCode) {
+                200 -> JSONObject(conn.inputStream.bufferedReader().use { it.readText() }).optInt("UserTotalPlaytime", 0)
+                429 -> { if (retry) { Thread.sleep(1500); fetchOnePlaytime(gameId, retry = false) } else null }
+                else -> null
+            }
+        } catch (_: Exception) { null } finally { conn.disconnect() }
+    }
+
     private fun enc(value: String): String = URLEncoder.encode(value, "UTF-8")
 
     private fun serializeResult(result: RAAwardsResult): String {
         val obj = JSONObject()
-        obj.put("fetchedAt",                  result.fetchedAt)
-        obj.put("totalAwardsCount",           result.totalAwardsCount)
-        obj.put("masteryAwardsCount",         result.masteryAwardsCount)
-        obj.put("beatenHardcoreAwardsCount",  result.beatenHardcoreAwardsCount)
-        obj.put("beatenSoftcoreAwardsCount",  result.beatenSoftcoreAwardsCount)
+        obj.put("fetchedAt",                 result.fetchedAt)
+        obj.put("totalAwardsCount",          result.totalAwardsCount)
+        obj.put("masteryAwardsCount",        result.masteryAwardsCount)
+        obj.put("beatenHardcoreAwardsCount", result.beatenHardcoreAwardsCount)
+        obj.put("beatenSoftcoreAwardsCount", result.beatenSoftcoreAwardsCount)
         val arr = JSONArray()
         result.awards.forEach { award ->
             arr.put(JSONObject().apply {
@@ -249,6 +552,7 @@ class RetroAchievementsRepository(context: Context) {
                 put("awardDataExtra", award.awardDataExtra)
                 put("awardedAt",      award.awardedAt.time)
                 put("imageIcon",      award.imageIcon)
+                put("gameId",         award.gameId)
             })
         }
         obj.put("awards", arr)
@@ -266,7 +570,8 @@ class RetroAchievementsRepository(context: Context) {
                 awardType      = a.getString("awardType"),
                 awardDataExtra = a.getInt("awardDataExtra"),
                 awardedAt      = Date(a.getLong("awardedAt")),
-                imageIcon      = a.getString("imageIcon")
+                imageIcon      = a.getString("imageIcon"),
+                gameId         = a.optInt("gameId", 0)
             )
         }
         RAAwardsResult(
@@ -280,10 +585,12 @@ class RetroAchievementsRepository(context: Context) {
     } catch (_: Exception) { null }
 
     companion object {
-        private const val CREDENTIALS_FILE = "ra_credentials"
-        private const val KEY_USERNAME = "ra_username"
-        private const val KEY_API_KEY  = "ra_api_key"
+        private const val CREDENTIALS_FILE        = "ra_credentials"
+        private const val KEY_USERNAME            = "ra_username"
+        private const val KEY_API_KEY             = "ra_api_key"
         private const val KEY_CACHE               = "ra_cache_json"
+        private const val KEY_PROGRESS            = "ra_progress_json"
+        private const val KEY_PLAYTIMES           = "ra_playtimes_json_v2"
         private const val KEY_LAST_MANUAL_REFRESH = "ra_last_manual_refresh"
     }
 }

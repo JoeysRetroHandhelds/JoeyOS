@@ -1,5 +1,7 @@
 ﻿package com.joeyos.app.data
 
+import com.joeyos.app.AppLog
+
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -20,7 +22,7 @@ object AzaharLauncher {
         val contentUri = try {
             FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", File(romPath))
         } catch (e: Exception) {
-            Log.e(TAG, "launch: FileProvider failed, falling back to file URI", e)
+            AppLog.e(TAG, "launch: FileProvider failed, falling back to file URI", e)
             Uri.fromFile(File(romPath))
         }
 
@@ -41,7 +43,7 @@ object AzaharLauncher {
             Log.d(TAG, "launch: startActivity succeeded")
             true
         } catch (e: Exception) {
-            Log.e(TAG, "launch: startActivity failed", e)
+            AppLog.e(TAG, "launch: startActivity failed", e)
             false
         }
     }

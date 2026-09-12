@@ -1,5 +1,7 @@
 package com.joeyos.app.data
 
+import com.joeyos.app.AppLog
+
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -16,7 +18,7 @@ object M64PlusFZLauncher {
         val romPath = if (game.path.isNotEmpty() && java.io.File(game.path).isFile) game.path
                       else RomFinder.findRomByTitle(game.title, "n64")
         if (romPath == null) {
-            Log.e(TAG, "launch: no ROM found for '${game.title}'")
+            AppLog.e(TAG, "launch: no ROM found for '${game.title}'")
             return false
         }
 
@@ -39,7 +41,7 @@ object M64PlusFZLauncher {
             context.startActivity(intent)
             true
         } catch (e: Exception) {
-            Log.e(TAG, "launch: startActivity failed", e)
+            AppLog.e(TAG, "launch: startActivity failed", e)
             false
         } finally {
             StrictMode.setVmPolicy(oldPolicy)

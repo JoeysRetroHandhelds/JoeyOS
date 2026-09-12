@@ -45,6 +45,8 @@ class PreferencesRepository(private val context: Context) {
         // emulators taken off it (which the dock would otherwise show automatically).
         private val DOCK_PINNED        = stringPreferencesKey("dock_pinned")
         private val DOCK_HIDDEN        = stringPreferencesKey("dock_hidden")
+        // Tools > Check BIOS files: a folder the user chose; empty = use the ones found automatically.
+        private val BIOS_FOLDER        = stringPreferencesKey("bios_folder")
         private fun assignmentKey(systemId: String)   = stringPreferencesKey("assignment_$systemId")
         private fun lastLaunchedKey(systemId: String) = stringPreferencesKey("launched_$systemId")
     }
@@ -103,6 +105,11 @@ class PreferencesRepository(private val context: Context) {
             if (game == null) prefs.remove(FAVORITE_GAME)
             else prefs[FAVORITE_GAME] = "${game.title}|||${game.path}|||${game.emulatorPackage}|||${game.lastPlayed}|||${game.corePath ?: ""}"
         }
+    }
+
+    val biosFolder: Flow<String> = context.dataStore.data.map { prefs -> prefs[BIOS_FOLDER].orEmpty() }
+    suspend fun setBiosFolder(path: String) {
+        context.dataStore.edit { if (path.isBlank()) it.remove(BIOS_FOLDER) else it[BIOS_FOLDER] = path }
     }
 
     val dockPinned: Flow<Set<String>> = context.dataStore.data.map { prefs -> prefs[DOCK_PINNED].toPackageSet() }

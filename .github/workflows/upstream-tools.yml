@@ -1,0 +1,46 @@
+# Monthly check for upstream changes to the native tools JoeyOS bundles (chdman, dolphin-tool,
+# Azahar's 3DS compressor). Runs tools/check_upstream.py against tools/upstream-pins.json and, when
+# something touches a tool's code, opens (or updates) one issue labelled `upstream-tools`.
+# The same finding is never reported twice: the report carries a fingerprint, and a run whose
+# fingerprint is already in the open issue does nothing. Rebuilding stays a manual step.
+name: Bundled tools upstream check
+
+on:
+  schedule:
+    - cron: "0 15 1 * *"   # 1st of every month, 15:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check upstreams
+        id: check
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 tools/check_upstream.py tools/upstream-pins.json > report.md
+
+      - name: Open or update the issue
+        if: steps.check.outputs.flagged == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FINGERPRINT: ${{ steps.check.outputs.fingerprint }}
+        run: |
+          gh label create upstream-tools --color 5319e7 \
+            --description "Bundled native tools: upstream changes to review" 2>/dev/null || true
+          issue=$(gh issue list --label upstream-tools --state open --json number --jq '.[0].number // empty')
+          if [ -z "$issue" ]; then
+            gh issue create --title "Bundled tools: upstream changes to review" \
+              --label upstream-tools --body-file report.md
+          elif gh issue view "$issue" --json body --jq .body | grep -q "upstream-fingerprint: $FINGERPRINT"; then
+            echo "Already reported in #$issue, nothing new."
+          else
+            gh issue edit "$issue" --body-file report.md
+            gh issue comment "$issue" --body "New upstream changes since the last report. The description above is updated."
+          fi

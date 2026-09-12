@@ -59,9 +59,8 @@ val FocusWidth = 2.dp
  * sits nearest the one you came from, which in rows of different widths is rarely the one you
  * expect (found on device: Up from "−" landed on 42, not 32).
  */
-@OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
 fun Modifier.focusRow(first: FocusRequester): Modifier =
-    this.focusRestorer { first }.focusGroup()
+    this.focusRestorer(first).focusGroup()
 
 /** An interaction source plus whether it currently holds focus — the highlight for one element. */
 @Composable

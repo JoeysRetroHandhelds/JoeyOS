@@ -64,7 +64,7 @@ Compose "Focus in Compose", and the Android dialogs guide.
   (decorFitsSystemWindows=false, FLAG_LAYOUT_NO_LIMITS) made it worse. Full-screen content is a
   page in the main window instead.
 
-## Open questions
+## Decisions
 
-- B / Back on the home screen currently opens the App Drawer (unchanged behaviour). TV guidance
-  says Back must never toggle and should do nothing at home.
+- B / Back on the home screen opens the App Drawer. This departs from the TV guidance (Back must
+  not open things and should do nothing at home) on purpose: it's the familiar handheld shortcut.

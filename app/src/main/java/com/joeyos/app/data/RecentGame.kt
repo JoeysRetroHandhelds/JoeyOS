@@ -1,5 +1,7 @@
 ﻿package com.joeyos.app.data
 
+import com.joeyos.app.AppLog
+
 import android.net.Uri
 import android.util.Log
 import org.json.JSONObject
@@ -77,6 +79,8 @@ object RecentGamesReader {
         "com.github.stenzek.duckstation",
         "com.duckstation",
         "aenu.aps3e",
+        "com.armsx3",
+        "com.flycast.emulator",
         "org.mupen64plusae"
     )
 
@@ -141,6 +145,8 @@ object RecentGamesReader {
             packageName.startsWith("com.github.stenzek.duckstation") ||
             packageName.startsWith("com.duckstation")       -> readDuckStation(packageName, depth)
             packageName.startsWith("aenu.aps3e")            -> readPs3(packageName, depth)
+            packageName.startsWith("com.armsx3")            -> readARMSX3(packageName, depth)
+            packageName.startsWith("com.flycast.emulator")  -> readFlycast(packageName, depth)
             packageName.startsWith("org.mupen64plusae")      -> readM64PlusFZ(packageName, depth)
             else -> emptyList()
         }
@@ -319,7 +325,7 @@ object RecentGamesReader {
             Log.d(TAG, "readRetroArchHistory: returning ${games.size} games")
             games
         } catch (e: Exception) {
-            Log.e(TAG, "readRetroArchHistory: exception parsing lpl", e)
+            AppLog.e(TAG, "readRetroArchHistory: exception parsing lpl", e)
             emptyList()
         }
     }
@@ -847,6 +853,167 @@ object RecentGamesReader {
             }
             .take(depth)
     }
+
+    // ── ARMSX3 (PS3) ───────────────────────────────────────────────────────
+
+    /**
+     * ARMSX3 mirrors its recently-played list to `recent_games.json` in its data root for
+     * launchers to read: a JSON array, most recent first, of {uri, title, serial, ext, platform}.
+     * The data root is the app's own external files dir by default, or a folder the user chose.
+     * The file carries order but no timestamps, so the list gets the file's modified time for the
+     * top game and a second less for each one below, to place it against other emulators.
+     * Falls back to PS3 save folders (like APS3E) if the file can't be read.
+     */
+    private fun readARMSX3(packageName: String, depth: Int = 20): List<RecentGame> {
+        val roots = storageRoots().flatMap { root ->
+            listOf(
+                File(root, "Android/data/$packageName/files"),
+                File(root, "Android/data/com.armsx3/files"),
+                File(root, "ARMSX3"),
+            )
+        }.distinctBy { it.absolutePath }
+        // The data folder can have any name. Besides the usual places, take any top-level folder
+        // holding a recent_games.json whose games carry PS3 serials (BLUS30443) — ARMSX2 writes
+        // the same file for PS2 games, whose serials look like SLUS-20312.
+        val anyNamed = storageRoots()
+            .flatMap { root -> root.listFiles()?.filter { it.isDirectory }.orEmpty() }
+            .map { File(it, "recent_games.json") }
+            .filter { it.isFile && it.canRead() && looksLikePs3RecentList(it) }
+        val json = (roots.map { File(it, "recent_games.json") } + anyNamed)
+            .filter { it.isFile && it.canRead() }
+            .maxByOrNull { it.lastModified() }
+        Log.d(TAG, "readARMSX3: recent_games.json=${json?.absolutePath}")
+        if (json != null) {
+            val games = runCatching {
+                val array = org.json.JSONArray(json.readText())
+                val newest = json.lastModified()
+                val seen = mutableSetOf<String>()
+                (0 until array.length()).mapNotNull { i ->
+                    val obj = array.optJSONObject(i) ?: return@mapNotNull null
+                    val uri = obj.optString("uri").takeIf { it.isNotBlank() } ?: return@mapNotNull null
+                    val serial = obj.optString("serial").takeIf { it.isNotBlank() && it != "null" }
+                    val title = obj.optString("title").takeIf { it.isNotBlank() }
+                        ?: serial?.let { GameDatabase.lookupPs3(it) ?: it }
+                        ?: return@mapNotNull null
+                    if (!seen.add(title)) return@mapNotNull null
+                    RecentGame(title, uri, packageName, newest - i * 1000L)
+                }.take(depth)
+            }.onFailure { AppLog.e(TAG, "readARMSX3: bad recent_games.json", it) }.getOrNull()
+            if (!games.isNullOrEmpty()) return games
+        }
+
+        // Fallback: PS3 save folders. No game path here, so launching just opens ARMSX3.
+        val titleIdRegex = Regex("[A-Z]{4}\\d{5}")
+        val saveRoot = roots.map { File(it, "config/dev_hdd0/home/00000001/savedata") }
+            .firstOrNull { it.isDirectory } ?: return emptyList()
+        val seen = mutableSetOf<String>()
+        return (saveRoot.listFiles()?.filter { it.isDirectory } ?: return emptyList())
+            .mapNotNull { dir ->
+                val titleId = titleIdRegex.find(dir.name)?.value ?: return@mapNotNull null
+                Triple(latestModified(dir), titleId, dir)
+            }
+            .sortedByDescending { it.first }
+            .mapNotNull { (time, titleId, _) ->
+                if (!seen.add(titleId)) return@mapNotNull null
+                RecentGame(GameDatabase.lookupPs3(titleId) ?: titleId, "", packageName, time)
+            }
+            .take(depth)
+    }
+
+    private val PS3_SERIAL = Regex("^[A-Z]{4}\\d{5}$")
+    private fun looksLikePs3RecentList(file: File): Boolean = runCatching {
+        val array = org.json.JSONArray(file.readText())
+        (0 until array.length()).any { i ->
+            array.optJSONObject(i)?.optString("serial")?.let { PS3_SERIAL.matches(it) } == true
+        }
+    }.getOrDefault(false)
+
+    // ── Flycast (Dreamcast / NAOMI / Atomiswave) ─────────────────────────────
+
+    /**
+     * Flycast keeps per-game saves in `<home>/data/`: a per-game memory card when that option is
+     * on (the default) — `<product ID>_vmu_save_A1.bin`, or `<game file name>_vmu_save_A1.bin`
+     * for older saves — and save states `<game file name>.state` / `_<n>.state`. The home folder is
+     * the app's external files dir unless the user picked one. Each file's modified time is when
+     * that game last saved.
+     *
+     * `<home>/data/boxart/flycast-gamedb.json` (Flycast's cover-art database, written as games are
+     * scanned) links product IDs and file names to titles and game files; without it the title is
+     * the file name and the game is found in the ROMs folder at launch.
+     */
+    private fun readFlycast(packageName: String, depth: Int = 20): List<RecentGame> {
+        val homes = storageRoots().flatMap { root ->
+            listOf(
+                File(root, "Android/data/$packageName/files"),
+                File(root, "Flycast"),
+                File(root, "flycast"),
+            )
+        } + storageRoots().flatMap { root ->
+            // A user-picked home folder can have any name: take any top-level folder that has
+            // Flycast's own data/boxart database in it.
+            root.listFiles()?.filter { File(it, "data/boxart/flycast-gamedb.json").isFile }.orEmpty()
+        }
+        val dataDirs = homes.map { File(it, "data") }.filter { it.isDirectory }.distinctBy { it.absolutePath }
+        Log.d(TAG, "readFlycast: dataDirs=${dataDirs.map { it.absolutePath }}")
+        if (dataDirs.isEmpty()) return emptyList()
+
+        // Flycast's game database: product ID / file base name -> (title, game file).
+        data class DbGame(val title: String, val file: String)
+        val byId = mutableMapOf<String, DbGame>()
+        val byBase = mutableMapOf<String, DbGame>()
+        dataDirs.map { File(it, "boxart/flycast-gamedb.json") }.filter { it.isFile }.forEach { db ->
+            runCatching {
+                val array = org.json.JSONArray(db.readText())
+                for (i in 0 until array.length()) {
+                    val o = array.optJSONObject(i) ?: continue
+                    val file = o.optString("file_name").takeIf { it.isNotBlank() } ?: continue
+                    val base = Uri.decode(file).substringAfterLast('/').substringBeforeLast('.')
+                    val game = DbGame(o.optString("name").takeIf { it.isNotBlank() } ?: base, file)
+                    o.optString("unique_id").takeIf { it.isNotBlank() }
+                        ?.let { byId[flycastSafeName(it)] = game }
+                    byBase[base] = game
+                }
+            }.onFailure { AppLog.e(TAG, "readFlycast: bad ${db.absolutePath}", it) }
+        }
+
+        val vmuSuffix = "_vmu_save_A1.bin"
+        val stateRegex = Regex("^(.+?)(?:_\\d{1,2})?\\.state$")
+        val latest = mutableMapOf<String, Pair<Long, DbGame?>>()   // key -> (time, db entry)
+        dataDirs.forEach { dir ->
+            dir.listFiles()?.filter { it.isFile }?.forEach { f ->
+                val name = f.name
+                val (key, game) = when {
+                    name.endsWith(vmuSuffix) && !name.startsWith("vmu_save_") -> {
+                        val prefix = name.removeSuffix(vmuSuffix)
+                        prefix to (byId[prefix] ?: byBase[prefix])
+                    }
+                    else -> {
+                        val prefix = stateRegex.find(name)?.groupValues?.get(1) ?: return@forEach
+                        prefix to byBase[prefix]
+                    }
+                }
+                // One entry per game, whether it was found by product ID or by file name.
+                val id = game?.file ?: key
+                val prev = latest[id]
+                if (prev == null || f.lastModified() > prev.first) latest[id] = f.lastModified() to game
+                else if (prev.second == null && game != null) latest[id] = prev.first to game
+            }
+        }
+        val seen = mutableSetOf<String>()
+        return latest.entries
+            .sortedByDescending { it.value.first }
+            .mapNotNull { (key, value) ->
+                val (time, game) = value
+                val title = game?.title ?: key
+                if (!seen.add(title)) return@mapNotNull null
+                RecentGame(title, game?.file.orEmpty(), packageName, time)
+            }
+            .take(depth)
+    }
+
+    /** Flycast replaces these characters with '_' when it names a memory card after a product ID. */
+    private fun flycastSafeName(id: String): String =
+        id.trim().map { if (it in " /\\:*?|<>\"") '_' else it }.joinToString("")
 
     // ── M64Plus FZ (N64) ─────────────────────────────────────────────────────
 

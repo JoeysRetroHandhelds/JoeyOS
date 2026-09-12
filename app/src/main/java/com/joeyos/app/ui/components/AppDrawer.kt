@@ -239,33 +239,8 @@ fun AppDrawer(
 
     // Options for one app (Start, or long-press by touch)
     contextApp?.let { app ->
-        JoeyDialog(onDismiss = { contextApp = null }) {
-            Column(
-                modifier = Modifier
-                    .widthIn(max = 300.dp)
-                    .clip(RoundedCornerShape(18.dp))
-                    .background(Color(0xFF1A1A2E))
-                    .border(1.dp, Color.White.copy(alpha = 0.12f), RoundedCornerShape(18.dp))
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                Text(
-                    text = app.label,
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = FontFamily.Monospace,
-                    color = TextPrimary,
-                    modifier = Modifier.padding(bottom = 2.dp)
-                )
-                val inDock = isInDock(app.packageName)
-                DialogButton(if (inDock) "Remove from dock" else "Add to dock", onClick = {
-                    onSetInDock(app.packageName, !inDock)
-                    Toast.makeText(context,
-                        if (inDock) "${app.label} removed from the dock" else "${app.label} added to the dock",
-                        Toast.LENGTH_SHORT).show()
-                    contextApp = null
-                }, modifier = Modifier.fillMaxWidth())
-                DialogButton("App Info", onClick = {
+        JoeyPopup(title = app.label, onDismiss = { contextApp = null }, padded = false) {
+                PopupRow("App Info", onClick = {
                     contextApp = null
                     context.startActivity(
                         Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
@@ -273,8 +248,15 @@ fun AppDrawer(
                             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         }
                     )
-                }, modifier = Modifier.fillMaxWidth())
-            }
+                })
+                val inDock = isInDock(app.packageName)
+                PopupRow(if (inDock) "Remove from dock" else "Add to dock", onClick = {
+                    onSetInDock(app.packageName, !inDock)
+                    Toast.makeText(context,
+                        if (inDock) "${app.label} removed from the dock" else "${app.label} added to the dock",
+                        Toast.LENGTH_SHORT).show()
+                    contextApp = null
+                })
         }
     }
 }

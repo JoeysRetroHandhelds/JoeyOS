@@ -105,11 +105,13 @@ val ALL_SYSTEMS = listOf(
         retroarchCores = listOf("Genesis Plus GX")),
     RetroSystem("dc",      "DC",  "Sega Dreamcast",              "Sega",
         0xFFEA580C, 0xFF2A0E02,
-        listOf("com.retroarch.aarch64"),
+        listOf("com.flycast.emulator",
+               "com.retroarch.aarch64"),
         retroarchCores = listOf("Flycast")),
     RetroSystem("naomi", "NAOMI", "Sega Naomi / Atomiswave",     "Sega",
         0xFFD97706, 0xFF1C0E00,
-        listOf("com.retroarch.aarch64"),
+        listOf("com.flycast.emulator",
+               "com.retroarch.aarch64"),
         retroarchCores = listOf("Flycast")),
 
     // ── Sony ─────────────────────────────────────────────────────────────────
@@ -131,7 +133,14 @@ val ALL_SYSTEMS = listOf(
         0xFF1E3A8A, 0xFF060C20,
         listOf(
             "aenu.aps3e",
+            "com.armsx3",
             "net.rpcsx",
+        ),
+        restrictToKnown = true),
+    RetroSystem("ps4",  "PS4",  "PlayStation 4",           "Sony",
+        0xFF1F3A93, 0xFF050A1C,
+        listOf(
+            "com.bachatas4.android",   // Bachata S4
         ),
         restrictToKnown = true),
     RetroSystem("psp",  "PSP",  "PlayStation Portable",   "Sony",
@@ -141,6 +150,14 @@ val ALL_SYSTEMS = listOf(
     RetroSystem("vita", "VITA", "PlayStation Vita",        "Sony",
         0xFF0F172A, 0xFF1E3A5F,
         listOf("org.vita3k.emulator")),
+
+    // ── Microsoft ────────────────────────────────────────────────────────────
+    RetroSystem("xbox360", "360", "Xbox 360",               "Microsoft",
+        0xFF107C10, 0xFF03210A,
+        listOf(
+            "xendroid.compose",   // XenDroid
+        ),
+        restrictToKnown = true),
 
     // ── Atari ────────────────────────────────────────────────────────────────
     RetroSystem("a2600", "2600", "Atari 2600",  "Atari",

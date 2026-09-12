@@ -13,14 +13,14 @@ val keystoreProperties = Properties().apply {
 
 android {
     namespace = "com.joeyos.app"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.joeyos.app"
         minSdk = 26
         targetSdk = 34
-        versionCode = 14
-        versionName = "1.0.13"
+        versionCode = 15
+        versionName = "1.0.14"
     }
 
     signingConfigs {
@@ -45,6 +45,16 @@ android {
         compose = true
     }
 
+    // The Compress ROMs tool runs a bundled native program (chdman, shipped as
+    // jniLibs/<abi>/libchdman.so). Android only unpacks native libraries to the executable
+    // nativeLibraryDir when legacy packaging is on; without it the file stays inside the APK and
+    // can't be run.
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -66,19 +76,22 @@ tasks.named("preBuild") {
 }
 
 dependencies {
-    val composeBom = platform("androidx.compose:compose-bom:2024.12.01")
+    val composeBom = platform("androidx.compose:compose-bom:2026.06.01")
     implementation(composeBom)
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    implementation("androidx.activity:activity-compose:1.8.2")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
+    implementation("androidx.activity:activity-compose:1.9.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.3")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.3")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("io.coil-kt:coil-compose:2.6.0")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
+    // RetroAchievements romhacks: some patches in RAPatches are stored as .7z (LZMA2, hence xz).
+    implementation("org.apache.commons:commons-compress:1.26.2")
+    implementation("org.tukaani:xz:1.9")
 
     debugImplementation("androidx.compose.ui:ui-tooling")
 }

@@ -69,6 +69,17 @@ fun JoeyDialog(
         )
     ) {
         val view = LocalView.current
+        // A dialog is its own window with its own bar state: without this, opening a popup
+        // brings the status and navigation bars back over the full-screen home screen.
+        androidx.compose.runtime.SideEffect {
+            (view.parent as? androidx.compose.ui.window.DialogWindowProvider)?.window?.let { window ->
+                androidx.core.view.WindowCompat.setDecorFitsSystemWindows(window, false)
+                androidx.core.view.WindowInsetsControllerCompat(window, view).apply {
+                    systemBarsBehavior = androidx.core.view.WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                    hide(WindowInsetsCompat.Type.systemBars())
+                }
+            }
+        }
         val inputMode = LocalInputModeManager.current
         val focusManager = LocalFocusManager.current
         val keyboard = LocalSoftwareKeyboardController.current

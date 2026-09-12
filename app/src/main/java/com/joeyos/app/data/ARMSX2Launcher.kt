@@ -1,5 +1,7 @@
 package com.joeyos.app.data
 
+import com.joeyos.app.AppLog
+
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -20,7 +22,7 @@ object ARMSX2Launcher {
         )
         val base = context.packageManager.getLaunchIntentForPackage(game.emulatorPackage)
         if (base == null) {
-            Log.e(TAG, "launch: ${game.emulatorPackage} not installed")
+            AppLog.e(TAG, "launch: ${game.emulatorPackage} not installed")
             return false
         }
         val intent = Intent(Intent.ACTION_VIEW).apply {
@@ -38,7 +40,7 @@ object ARMSX2Launcher {
             Log.d(TAG, "launch: startActivity succeeded")
             true
         } catch (e: Exception) {
-            Log.e(TAG, "launch: startActivity failed", e)
+            AppLog.e(TAG, "launch: startActivity failed", e)
             false
         }
     }

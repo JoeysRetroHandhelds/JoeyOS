@@ -5,8 +5,8 @@ import android.content.Intent
 import android.content.pm.PackageInstaller
 import android.net.Uri
 import android.provider.Settings
-import com.joeyos.app.CrashLogger
-import com.joeyos.app.UpdateReceiver
+import com.joeyos.app.AppLog
+import com.joeyos.app.UpdateStatusActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -23,11 +23,16 @@ import java.net.URL
  */
 object AppUpdates {
 
+    private const val TAG = "Updater"
+
     private const val REPO = "JoeysRetroHandhelds/JoeyOS"
     private val ASSET_REGEX = Regex("""JoeyOS-v?([\d.]+)\.apk""", RegexOption.IGNORE_CASE)
     private const val PREFS = "app_updates"
     private const val KEY_LAST_CHECK = "last_check"
-    private const val AUTO_CHECK_INTERVAL_MS = 6 * 60 * 60 * 1000L
+    // Hourly on resume (GitHub allows 60 unauthenticated checks an hour), plus once every time
+    // JoeyOS starts fresh. 6 hours was too long: a release could sit unseen most of a day.
+    private const val AUTO_CHECK_INTERVAL_MS = 60 * 60 * 1000L
+    @Volatile private var checkedThisRun = false
 
     data class Release(
         val versionName: String,
@@ -42,23 +47,32 @@ object AppUpdates {
 
     /** True if an automatic check is due (throttled so resume doesn't hit the API every time). */
     fun autoCheckDue(context: Context): Boolean {
+        if (!checkedThisRun) return true
         val last = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getLong(KEY_LAST_CHECK, 0L)
         return System.currentTimeMillis() - last > AUTO_CHECK_INTERVAL_MS
     }
 
     /** The latest release if it's newer than what's installed, else null (also null on any error). */
     suspend fun newerRelease(context: Context): Release? = withContext(Dispatchers.IO) {
+        val json = runCatching { get("https://api.github.com/repos/$REPO/releases/latest") }
+            .onFailure { AppLog.w(TAG, "Update check failed: ${it.message}") }
+            .getOrNull()
+            ?: return@withContext null.also { AppLog.w(TAG, "Update check: no answer from GitHub") }
+        // Only a check that reached GitHub counts toward the wait; a failed one retries next time.
+        checkedThisRun = true
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit()
             .putLong(KEY_LAST_CHECK, System.currentTimeMillis()).apply()
-        val json = runCatching { get("https://api.github.com/repos/$REPO/releases/latest") }.getOrNull()
-            ?: return@withContext null
         runCatching {
             val root = JSONObject(json)
             val assets = root.optJSONArray("assets") ?: return@runCatching null
             for (i in 0 until assets.length()) {
                 val asset = assets.optJSONObject(i) ?: continue
                 val version = ASSET_REGEX.find(asset.optString("name"))?.groupValues?.get(1) ?: continue
-                if (compareVersions(version, installedVersion(context)) <= 0) return@runCatching null
+                if (compareVersions(version, installedVersion(context)) <= 0) {
+                    AppLog.i(TAG, "Update check: on the latest (installed ${installedVersion(context)}, latest $version)")
+                    return@runCatching null
+                }
+                AppLog.i(TAG, "Update check: $version available (installed ${installedVersion(context)})")
                 return@runCatching Release(
                     versionName = version,
                     notes = root.optString("body").trim(),
@@ -101,7 +115,7 @@ object AppUpdates {
                 target
             }.onFailure {
                 partial.delete()
-                CrashLogger.logNonFatal(context, "update download", it)
+                AppLog.e(TAG, "Update download failed: ${release.versionName}", it)
             }.getOrNull()
         }
 
@@ -126,10 +140,10 @@ object AppUpdates {
                 apk.inputStream().use { it.copyTo(output) }
                 session.fsync(output)
             }
-            session.commit(UpdateReceiver.pendingIntent(context, sessionId).intentSender)
+            session.commit(UpdateStatusActivity.pendingIntent(context, sessionId).intentSender)
         }
         true
-    }.onFailure { CrashLogger.logNonFatal(context, "update install", it) }.getOrDefault(false)
+    }.onFailure { AppLog.e(TAG, "Update install failed to start", it) }.getOrDefault(false)
 
     /** Numeric dotted-version compare: "1.0.13" > "1.0.12", "1.1" > "1.0.99". */
     internal fun compareVersions(a: String, b: String): Int {
