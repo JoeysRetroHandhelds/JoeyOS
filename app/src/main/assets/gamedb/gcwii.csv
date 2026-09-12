@@ -1,4 +1,4 @@
-# GameCube/Wii — GameTDB/Wii
+# GameCube/Wii — niemasd/GCN, GameTDB/Wii
 007E01,Auto Erase Disc
 091E00,Movie-Ch Install Disc Ver. A
 23EE41,Just Dance 2023 Wii Edition
@@ -297,6 +297,7 @@ D33J01,Gekkan Nintendo Tentou Demo 2002.7.1
 D34J01,Gekkan Nintendo Tentou Demo 2002.7.10 Zoukan-gou
 D36A,cIOS36 installer
 D37A,WiiConnect
+D37J01,Gekkan Nintendo Tentou Demo 2002.8.1 (Japan)
 D38A,cIOS38 installer
 D38J01,Gekkan Nintendo Tentou Demo 2002.9.1
 D39A,Ctr Gts DacoTaco Edition
@@ -326,6 +327,8 @@ D46J01,Gekkan Nintendo Tentou Demo 2003.1.1 (Disc B)
 D47J01,Gekkan Nintendo Tentou Demo 2003.2.1
 D48J01,Gekkan Nintendo Tentou Demo 2003.3.1
 D49J01,Gekkan Nintendo Tentou Demo 2003.4.1
+D4BD01,Resident Evil 4 (Germany) (En,Fr,De,Es,It) (Bonus Disc)
+D4BE01,Resident Evil 4 (USA) (Preview Disc)
 D4BE08,Resident Evil 4 (Preview Disc)
 D4BP01,Resident Evil 4 (Bonus Disc)
 D4BU01,Resident Evil 4 (Bonus Disc)
@@ -345,7 +348,7 @@ D55A,PID Extractor
 D55J01,Nintendo GameCube Soft e-Catalog 2003 Enjoy Plus-ban
 D56A,Shopping Channel Fixer
 D56E01,Interactive Multi-Game Demo Disc Version 35
-D56J01,Pokemon Channel: Bangumi Kakuchou Pack
+D56J01,Pokémon Channel: Bangumi Kakuchou Pack
 D57A,Hijill GUI
 D57E01,Interactive Multi-Game Demo Disc Version 34
 D58A,Priiloader HacksDen Edition
@@ -368,6 +371,7 @@ D62E01,Interactive Multi-Game Demo Disc Version 31
 D62J01,Gekkan Nintendo Tentou Demo 2003.8.1
 D63A,3D Maze
 D63E01,Interactive Multi-Game Demo Disc Version 30
+D63J01,Gekkan Nintendo Tentou Demo 2003.9.1 (Japan)
 D64A,Wii64 Emulator
 D64E01,Interactive Multi-Game Demo Disc Version 29
 D64J01,Gekkan Nintendo Tentou Demo 2003.10.1
@@ -376,6 +380,7 @@ D65E01,Interactive Multi-Game Demo Disc Version 28
 D65J01,Gekkan Nintendo Tentou Demo 2003.11.1
 D66A,Secret Maryo Chronicles
 D66E01,Interactive Multi-Game Demo Disc Version 27
+D66J01,Baten Kaitos - Owaranai Tsubasa to Ushinawareta Umi (Japan) (Special Taiken Disc)
 D66JAF,Baten Kaitos: Owaranai Tsubasa to Ushinawareta Umi (Special Taiken Disc)
 D67E01,Interactive Multi-Game Demo Disc Version 26
 D67J01,Gekkan Nintendo Tentou Demo 2003.12.1
@@ -451,18 +456,22 @@ D86A,Firewii
 D86E01,Interactive Multi-Game Demo Disc Version 11
 D86J01,Gekkan Nintendo Tentou Demo 2004.10.1
 D86P01,Interactive Multi-Game Demo Disk: May 2004
+D86U01,Interactive Multi-Game Demo Disk - October 2005 (Australia) (En,Fr,De,Es,It)
 D87A,Tick Tock Boat Race
 D87E01,Nintendo GameCube Preview Disc: May 2003
 D87J01,Gekkan Nintendo Tentou Demo 2004.11.1
 D87P01,Interactive Multi-Game Demo Disk: March 2004
+D87U01,Interactive Multi-Game Demo Disk - February 2005 (Australia) (En,Fr,De,Es,It)
 D88A,Quasi88
 D88E01,Interactive Multi-Game Demo Disc Version 10
 D88J01,Gekkan Nintendo Tentou Demo 2004.12.1
 D88P01,Interactive Multi-Game Demo Disk: November 2003
+D88U01,Interactive Multi-Game Demo Disk - November 2004 (Australia) (En,Fr,De,Es,It)
 D89A,Wiimote LED Flasher
 D89E01,Interactive Multi-Game Demo Disc Version 9
 D89J01,Club Nintendo Original e-Catalog 2004
 D89P01,Interactive Multi-Game Demo Disk: September 2003
+D89U01,Interactive Multi-Game Demo Disk - May 2004 (Australia)
 D8AA,Front SD ELF Loader
 D8BA,GameCube Homebrew Launcher
 D8CA,WiiSend
@@ -483,20 +492,29 @@ D91A,Jenny Thinks
 D92E01,Interactive Multi-Game Demo Disc Version 8
 D92J01,Gekkan Nintendo Tentou Demo 2004-2005 Nenmatsunenshi-gou
 D92P01,Interactive Multi-Game Demo Disk: June 2003
+D92U01,Interactive Multi-Game Demo Disk - March 2004 (Australia)
 D93A,WiiRayTracer
 D93E01,Interactive Multi-Game Demo Disc Version 7
 D93J01,Gekkan Nintendo Tentou Demo 2005.1.1
 D93P01,Interactive Multi-Game Demo Disk: April 2003
+D93U01,Interactive Multi-Game Demo Disk - November 2003 (Australia) (En,Fr,De,Es,It)
 D94A,Nowhere
 D94J01,Gekkan Nintendo Tentou Demo 2005.2.1
 D94P01,Interactive Multi-Game Demo Disk: February 2003
+D94U01,Interactive Multi-Game Demo Disk - September 2003 (Australia)
 D95A,RenderMii
+D95J01,Gekkan Nintendo Tentou Demo 2005.3.1 (Japan)
 D95P01,Interactive Multi-Game Demo Disk: December 2002
+D95U01,Interactive Multi-Game Demo Disk - April 2003 (Australia) (En,Fr,De,Es,It)
 D96A,WiiMotionDemo
+D96J01,Gekkan Nintendo Tentou Demo 2005.4.1 (Japan)
+D96P01,Interactive Multi-Game Demo Disk - November 2002 (Europe) (En,Fr,De,Es,It)
 D97A,Fire
 D97J01,Gekkan Nintendo Tentou Demo 2005.5.1
 D98A,InstallMii
+D98J01,Gekkan Nintendo Tentou Demo 2005.6.1 (Japan)
 D99A,System Channels Updater
+D99J01,Gekkan Nintendo Tentou Demo 2005.7.1 (Japan)
 D9BA,Info
 D9CA,cIOS USB2 Installer
 D9FA,Dump
@@ -541,7 +559,9 @@ DBDA,Bluedump
 DBEA,Beebem Wii
 DBGA,BlastGuy
 DBIA,Boot It
+DBIJ01,Biohazard (Japan) (Movie Demo Disc)
 DBIJ08,Biohazard (Movie Demo Disc)
+DBJJ01,Biohazard (Japan) (Tokubetsuban)
 DBJJ08,Biohazard (Tokubetsu-ban)
 DBKE69,Boom Blox (Demo)
 DBKP69,Boom Blox (Demo)
@@ -551,10 +571,12 @@ DBPA,Balance Board Pro
 DBRA,WiiBrowser
 DBSA,BrawlStats
 DBSBT3,Dragon Ball Budokai Tenkaichi 3 Version Latino
+DBSJ01,Beach Spikers - Virtua Beach Volleyball (Japan) (Taikenban)
 DBTA,Bolt Thrower
 DBUA,Buttoncast
 DBWA,Reversmii
 DBXA,Biniax 2
+DBZJ01,Biohazard Zero - Trial Edition (Japan) (Jitsuen-you Sample)
 DBZJ08,Biohazard Zero: Trial Edition
 DC6A,Frodo (C64-network.org)
 DC7A,Calculate
@@ -601,6 +623,7 @@ DDIA,DiiLC
 DDLA,Disc Loader
 DDMA,DragonMedia Player
 DDOA,DOP-Mii
+DDPJ01,Mr. Driller - Drill Land Event-you Disc (Japan)
 DDRA,Wii Duplicated Channel Remover
 DDSA,DeSmuME
 DDVA,Devolution
@@ -618,6 +641,7 @@ DEEA,Eeeek Eeeeek Hooooook
 DEFA,Fuse
 DEHA,Chess
 DEME,PunEmu
+DEOJ01,Capcom vs. SNK 2 EO (Japan) (Tentou Taikenban)
 DEPA,Pacman
 DERA,Elongated Reptile
 DETA,MPlayer TT
@@ -637,17 +661,21 @@ DFEA,FlipEm
 DFFA,Simple FS Dumper
 DFGA,Smashing!
 DFIA,FCE Ultra GX Channel Installer
+DFIJ01,2002 FIFA World Cup (Japan) (Jitsuen-you Sample)
 DFLA,Starfall
 DFMA,FMyLife
 DFNJ01,Wii Fit (Taikenban)
+DFOEAF,Food Network: Cook or Be Cooked! (Demo)
 DFRA,FridgeMagnets
 DFSA,FSToolbox
+DFSJ01,FIFA 2002 - Road to FIFA World Cup (Japan) (Jitsuen-you Sample)
 DFTA,FTPii
 DFUA,Fuse
 DG3A,Giddy 3
 DG7A,WiiPeng
 DG8A,Abusimbel Deluxe
 DG9A,Garnatron
+DGAJ01,Kidou Senshi Gundam - Senshitachi no Kiseki (Japan) (Special Disc)
 DGAJB2,Kidou Senshi Gundam: Senshi-tachi no Kiseki (Special Disc)
 DGBA,Geexbox
 DGCA,GameCube Backup Launcher
@@ -715,6 +743,7 @@ DKCP01,Darky Kart Riivo
 DKDA,Darkcube
 DKHA,Katakana and Hiragana Practice
 DKKA,KoreanKii
+DKNJ01,Kinnikuman Nisei - Shinsedai Choujin vs. Densetsu Choujin Event-you Disc (Japan)
 DKOA,Komopong
 DKPA,Kidspaint
 DKSA,Stppwii
@@ -741,13 +770,16 @@ DLMA,LoadMii
 DLNA,Lander
 DLOA,Lightsout
 DLPA,Lopan
+DLSE01,Star Wars - Rogue Squadron III - Rebel Strike (USA) (Limited Edition Preview Disc)
 DLSE64,Star Wars: Rogue Squadron III: Rebel Strike (Limited Edition Preview Disc)
+DLSP01,Star Wars - Rogue Squadron III - Rebel Strike (Europe) (En,Fr,De,Es,It) (Limited Edition Preview Disc)
 DLSP64,Star Wars: Rogue Squadron III: Rebel Strike (Demo)
 DLTA,Leveltool
 DLUA,WiiLauncher
 DLXA,Linux Installer
 DLZEPW,Super Smash Bros. Brawl: Phoenix Wings
 DM0A,Pom
+DM2J01,Super Monkey Ball 2 (Japan) (Taikenban)
 DM2J8P,Super Monkey Ball 2 (Taikenban)
 DM5A,Missle Command
 DM7A,Matches
@@ -771,10 +803,12 @@ DMMA,MyMenuify
 DMNA,Magic Number
 DMOA,cMIOS installer
 DMPA,MPlayer CE
+DMPJ01,Mario Party 4 Event-you Disc (Japan)
 DMRA,MIOS Patcher
 DMSA,ShutMiiReboot
 DMSP4Q,SingItStar: Best of Disney
 DMTA,Metronome
+DMTJ01,Disney's Magical Park (Japan) (Jitsuen-you Sample)
 DMUA,Multi Mod Manager
 DMVE26,Dark Mario Vacation
 DMWA,WakeMiiUp
@@ -841,12 +875,15 @@ DPKA,Physco
 DPLA,Priiloader
 DPMA,Music Painter
 DPNA,RPG Pineapple Apocalypse
+DPNJ01,P.N. 03 (Japan) (Demo Eizou)
 DPNP08,P.N. 03 (Demo)
 DPOA,Postloader
+DPOJ01,Phantasy Star Online Episode I & II - Trial Edition (Japan) (Taikenban)
 DPOJ8P,Phantasy Star Online Episode I & II: Trial Edition (Taikenban)
 DPPA,Project Panic
 DPRA,PlasmaRaketti
 DPSA,Playstats
+DPSJ01,Phantasy Star Online Episode III - C.A.R.D. Revolution - Trial Edition (Japan) (Taikenban)
 DPSJ8P,Phantasy Star Online Episode III: C.A.R.D. Revolution: Trial Edition
 DPTA,Two Point Five
 DPVA,PattView Wii
@@ -866,6 +903,7 @@ DQRA,Qrevpak
 DQWA,Quakegx
 DR0A,Rokoban
 DR1A,Wii Whiteboard
+DR2J01,Rune II - Koruten no Kagi no Himitsu (Japan) (Taikenban)
 DR2JCQ,Rune II: Koruten no Kagi no Himitsu (Taikenban)
 DR3A,Death Star Run
 DR4A,Rock Paper Scissors
@@ -908,10 +946,12 @@ DS9A,Minesweeper
 DSAA,Schism Tracker
 DSBA,SpaceBubble
 DSCA,Softchip
+DSCE8P,Sonic CD
 DSDA,Superdump
 DSEA,Settings Editor GUI
 DSFA,Sciifii
 DSFE7U,Muramasa: The Demon Blade (Demo)
+DSFE8P,Sonic The Fighters
 DSGA,SaveGame Manager
 DSHA,SysCheck HacksDen Edition
 DSIA,Simple IOS Patcher
@@ -922,12 +962,15 @@ DSOA,Bermuda Syndrome Wii
 DSPA,Super Star Shooter
 DSQA,Sqrxz
 DSRA,WiiStrobe
+DSRE8P,Sonic R
 DSRJ8P,Sonic to Himitsu no Ring (Taikenban)
 DSSA,RSSMii
 DSTA,Wii Solitaire
+DSTJ01,SSX Tricky (Japan) (Jitsuen-you Sample)
 DSUA,Super Mario War
 DSVA,ScummVM
 DSWA,SuperTux Wii
+DSWJ01,Star Wars - Rogue Squadron II (Japan) (Jitsuen-you Sample)
 DSWJ13,Star Wars: Rogue Squadron II (Jitsuen-you Sample)
 DSXA,Super Pixel Jumper
 DSYA,SysCheck
@@ -994,6 +1037,7 @@ DVPA,Progressive Switch
 DVSA,GameCube Saver
 DVXA,VectrexWii
 DW1A,Intuitwars
+DW3J01,WWE WrestleMania X8 (Japan) (Taikenban)
 DW5A,Marel
 DW6A,Wiicraft
 DW7A,Ravewild
@@ -1048,6 +1092,7 @@ DYAA,Syasokoban
 DYBA,Yabause
 DYCA,Tetricycle
 DYEA,Epilepsii
+DYFJ01,Yu-Gi-Oh! Falsebound Kingdom - Kyokou ni Tozasareta Oukoku (Japan) (Taikenban)
 DYGA,Yog
 DYHA,Hypno Blast
 DYIA,Chippy
@@ -1073,10 +1118,13 @@ DZSA,Szigoy
 DZXA,FBZX Wii
 DZYA,Snake Two
 DZZA,OpenJazz
+E22J01,Gekkan Nintendo Tentou Demo 2005.8.1 (Japan)
 E23J01,Gekkan Nintendo Tentou Demo 2005.9.1
 E24J01,Gekkan Nintendo Tentou Demo 2005.10.1
 E25J01,Gekkan Nintendo Tentou Demo 2005.11.1
+E26J01,Gekkan Nintendo Tentou Demo 2005.12.1 (Japan)
 E27J01,Gekkan Nintendo Tentou Demo 2006.1.1
+E28J01,Gekkan Nintendo Tentou Demo 2006.2.1 (Japan)
 E32J01,Gekkan Nintendo Tentou Demo 2006.4.1
 E34J01,Gekkan Nintendo Tentou Demo 2006.6.1
 E35J01,Gekkan Nintendo Tentou Demo 2006.7.1
@@ -1768,37 +1816,65 @@ G01P01,Super Smash Bros. Melee: SD Remix
 G02E01,Super Smash Bros. Melee: 20XX Training Pack
 G02J01,Super Smash Bros. Melee: 20XX Training Pack
 G02P01,Super Smash Bros. Melee: 20XX Training Pack
+G2BE01,Black & Bruised (USA)
 G2BE5G,Black & Bruised
+G2BP01,Black & Bruised (Europe) (En,Fr,De)
 G2BP7D,Black & Bruised
+G2CD01,True Crime - New York City (Germany)
 G2CD52,True Crime: New York City
+G2CE01,True Crime - New York City (USA)
 G2CE52,True Crime: New York City
+G2CP01,True Crime - New York City (Europe)
 G2CP52,True Crime: New York City
+G2CX01,True Crime - New York City (Europe) (Fr,Es,It)
 G2CX52,True Crime: New York City
+G2DJ01,Digimon Battle Chronicle (Japan)
 G2DJB2,Digimon Battle Chronicle
+G2FD01,Nickelodeon Tak 2 - Der Stab der Traeume (Germany)
 G2FD78,Tak 2: Der Stab der Traeume
+G2FE01,Nickelodeon Tak 2 - The Staff of Dreams (USA)
 G2FE78,Tak 2: The Staff of Dreams
+G2FF01,Nickelodeon Tak 2 - Le Sceptre des Reves (France)
 G2FF78,Tak 2: Le Sceptre des Reves
+G2FP01,Nickelodeon Tak 2 - The Staff of Dreams (Europe)
 G2FP78,Tak 2: The Staff of Dreams
+G2GJ01,Kidou Senshi Gundam - Gundam vs. Z Gundam (Japan)
 G2GJB2,Kidou Senshi Gundam: Gundam vs. Z Gundam
+G2KE01,NHL 2K3 (USA)
 G2KE8P,NHL 2K3
+G2KP01,NHL 2K3 (Europe)
 G2KP8P,NHL 2K3
 G2ME01,Metroid Prime 2: Echoes
 G2MJ01,Metroid Prime 2: Dark Echoes
 G2MK01,Metroid Prime 2: Dark Echoes
 G2MP01,Metroid Prime 2: Echoes
+G2NJ01,Need for Speed - Underground 2 (Japan)
 G2NJ13,Need for Speed: Underground 2
+G2OE01,Prince of Persia - Warrior Within (USA) (En,Fr,Es)
 G2OE41,Prince of Persia: Warrior Within
+G2OP01,Prince of Persia - Warrior Within (Europe) (En,Fr,De,Es,It,Nl)
 G2OP41,Prince of Persia: Warrior Within
+G2PE01,Spirits & Spells (USA)
 G2PE6U,Spirits & Spells
+G2RE01,DreamWorks Shrek - SuperSlam (USA)
 G2RE52,Shrek: SuperSlam
+G2SJ01,Shikigami no Shiro II (Japan)
 G2SJGE,Shikigami no Shiro II
+G2TE01,Tony Hawk's Underground 2 (USA)
 G2TE52,Tony Hawk's Underground 2
+G2TP01,Tony Hawk's Underground 2 (Europe) (En,Fr,De)
 G2TP52,Tony Hawk's Underground 2
+G2VE01,Viewtiful Joe 2 (USA)
 G2VE08,Viewtiful Joe 2
+G2VJ01,Viewtiful Joe 2 - Black Film no Nazo (Japan)
 G2VJ08,Viewtiful Joe 2: Black Film no Nazo
+G2VP01,Viewtiful Joe 2 (Europe) (En,Fr,De,Es,It)
 G2VP08,Viewtiful Joe 2
+G2XE01,Sonic Gems Collection (USA)
 G2XE8P,Sonic Gems Collection
+G2XJ01,Sonic Gems Collection (Japan)
 G2XJ8P,Sonic Gems Collection
+G2XP01,Sonic Gems Collection (Europe) (En,Fr,De,Es,It)
 G2XP8P,Sonic Gems Collection
 G3AD69,De Herr der Ringer: Das dritte Zeitalter
 G3AE69,The Lord of the Rings: The Third Age
@@ -1806,65 +1882,119 @@ G3AF69,Le Seigneur des Anneaux: Le Tiers Age
 G3AJ13,Lord of the Rings: Nakatsu Kuni Daisanki
 G3AP69,The Lord of the Rings: The Third Age
 G3AS69,El Senor de los Anillos: La Tercera Edad
+G3BE01,Serious Sam - Next Encounter (USA) (Rev 1)
 G3BE9G,Serious Sam: Next Encounter
+G3BP01,Serious Sam - Next Encounter (Europe) (En,Fr,De)
 G3BP9G,Serious Sam: Next Encounter
+G3DE01,Carmen Sandiego - The Secret of the Stolen Drums (USA) (En,Fr)
 G3DE6L,Carmen Sandiego: The Secret of the Stolen Drums
+G3DP01,Carmen Sandiego - The Secret of the Stolen Drums (Europe) (En,Fr)
 G3DP6L,Carmen Sandiego: The Secret of the Stolen Drums
+G3DX01,Carmen Sandiego - The Secret of the Stolen Drums (Europe) (De,Es)
 G3DX6L,Carmen Sandiego: The Secret of the Stolen Drums
+G3EE01,XGIII - Extreme G Racing (USA)
 G3EE51,XGIII: Extreme G Racing
+G3EJ01,XGIII - Extreme G Racing (Japan)
 G3EJB0,XGIII: Extreme G Racing
+G3EP01,XGIII - Extreme G Racing (Europe) (En,Fr,De,Es)
 G3EP51,XGIII: Extreme G Racing
+G3FD01,TimeSplitters - Future Perfect (Germany)
 G3FD69,TimeSplitters: Future Perfect
+G3FE01,TimeSplitters - Future Perfect (USA)
 G3FE69,TimeSplitters: Future Perfect
+G3FF01,TimeSplitters - Future Perfect (France)
 G3FF69,TimeSplitters: Future Perfect
+G3FP01,TimeSplitters - Future Perfect (Europe)
 G3FP69,TimeSplitters: Future Perfect
+G3FS01,TimeSplitters - Futuro Perfecto (Spain)
 G3FS69,TimeSplitters: Futuro Perfecto
+G3JE01,Curious George (USA)
 G3JEAF,Curious George
+G3LE01,Super Monkey Ball Adventure (USA)
 G3LE8P,Super Monkey Ball Adventure
+G3LP01,Super Monkey Ball Adventure (Europe) (En,Fr,De,Es,It)
 G3LP8P,Super Monkey Ball Adventure
+G3ME01,Sum of All Fears, The (USA)
 G3ME41,The Sum of All Fears
+G3MP01,Sum of All Fears, The (Europe) (En,Fr,De,Es,It)
 G3MP41,The Sum of All Fears
+G3NJ01,Naruto - Gekitou Ninja Taisen! 3 (Japan)
 G3NJDA,Naruto: Gekitou Ninja Taisen! 3
 G3QEA4,Teenage Mutant Ninja Turtles 3: Mutant Nightmare
+G3RD01,Shrek 2 (Germany)
 G3RD52,Shrek 2
+G3RE01,Shrek 2 (USA)
 G3RE52,Shrek 2
+G3RF01,Shrek 2 (France)
 G3RF52,Shrek 2
+G3RM01,Shrek 2 (Sweden)
 G3RM52,Shrek 2
+G3RP01,Shrek 2 (Europe)
 G3RP52,Shrek 2
+G3SE01,Bust-A-Move 3000 (USA)
 G3SE41,Bust-A-Move 3000
+G3SJ01,Super Puzzle Bobble All Stars (Japan)
 G3SJC0,Super Puzzle Bobble All Stars
+G3SW01,Super Puzzle Bobble All Stars (Korea)
 G3SWC0,Super Puzzle Bobble All Stars
+G3TJ01,Dabitsuku 3 - Derby-ba o Tsukurou! (Japan)
 G3TJ8P,Dabitsuku 3: Derby-ba o Tsukurou!
+G3VE01,NBA Street V3 (USA)
 G3VE69,NBA Street V3
+G3VJ01,NBA Street V3 - Mario de Dunk (Japan)
 G3VJ13,NBA Street V3: Mario de Dunk
+G3VP01,NBA Street V3 (Europe) (En,Fr,De)
 G3VP69,NBA Street V3
+G3XE01,X-Men - The Official Game (USA)
 G3XE52,X-Men: The Official Game
+G3XP01,X-Men - The Official Game (Europe) (En,Fr)
 G3XP52,X-Men: The Official Game
+G3YP01,DreamWorks Shrek - SuperSlam (Europe)
 G3YP52,Shrek: SuperSlam
+G3YX01,DreamWorks Shrek - SuperSlam (Europe) (En,Fr,Es,It)
 G3YX52,Shrek: SuperSlam
+G3YY01,DreamWorks Shrek - SuperSlam (Europe) (De,Nl)
 G3YY52,Shrek: SuperSlam
+G4AE01,Harvest Moon - Magical Melody (USA)
 G4AEE9,Harvest Moon: Magical Melody
+G4AJ01,Bokujou Monogatari - Shiawase no Uta (Japan)
 G4AJ99,Bokujou Monogatari: Shiawase no Uta
 G4BD08,Resident Evil 4
 G4BE08,Resident Evil 4
 G4BJ08,Biohazard 4
 G4BP08,Resident Evil 4
+G4CE01,Charlie and the Chocolate Factory (USA)
 G4CE54,Charlie and the Chocolate Factory
+G4CP01,Charlie and the Chocolate Factory (Europe, Australia) (En,Fr,Es,Nl)
 G4CP54,Charlie and the Chocolate Factory
+G4FD01,FIFA 07 (Germany)
 G4FD69,FIFA 07
+G4FE01,FIFA Soccer 07 (USA) (En,Es)
 G4FE69,FIFA Soccer 07
+G4FF01,FIFA 07 (France)
 G4FF69,FIFA 07
+G4FP01,FIFA 07 (Europe)
 G4FP69,FIFA 07
+G4GE01,Harvest Moon - Another Wonderful Life (USA)
 G4GEE9,Harvest Moon: Another Wonderful Life
+G4GJ01,Bokujou Monogatari - Wonderful Life for Girl (Japan)
 G4GJ99,Bokujou Monogatari: Wonderful Life for Girl
+G4IE01,DreamWorks Shrek - Smash n' Crash Racing (USA)
 G4IE52,Shrek: Smash n' Crash Racing
+G4IP01,DreamWorks Shrek - Smash n' Crash Racing (Europe) (En,Fr,De)
 G4IP52,Shrek: Smash n' Crash Racing
+G4ME01,Sims, The - Bustin' Out (USA)
 G4ME69,The Sims: Bustin' Out
+G4MP01,Sims, The - Bustin' Out (Europe) (En,Fr,De,Es,It,Nl)
 G4MP69,The Sims: Bustin' Out
 G4NEDA,Naruto Gektiou Ninja Taisen! 4 [Eng]
+G4NJ01,Naruto - Gekitou Ninja Taisen! 4 (Japan)
 G4NJDA,Naruto: Gekitou Ninja Taisen! 4
+G4OE01,Sims 2, The - Pets (USA)
 G4OE69,The Sims 2: Pets
+G4OP01,Sims 2, The - Pets (Europe) (En,Fr,De)
 G4OP69,The Sims 2: Pets
+G4PJ01,Sims, The (Japan)
 G4PJ13,The Sims
 G4QE01,Super Mario Strikers
 G4QJ01,Super Mario Strikers
@@ -1873,47 +2003,83 @@ G4SE01,The Legend of Zelda: Four Swords Adventures
 G4SJ01,Zelda no Densetsu: 4-tsu no Tsurugi+
 G4SK01,The Legend of Zelda: Four Swords +
 G4SP01,The Legend of Zelda: Four Swords Adventures
+G4WJ01,Bokujou Monogatari - Shiawase no Uta for World (Japan)
 G4WJ99,Bokujou Monogatari: Shiawase no Uta for World
+G4ZE01,Sims 2, The (USA)
 G4ZE69,The Sims 2
+G4ZP01,Sims 2, The (Europe) (En,Fr,De,Nl)
 G4ZP69,The Sims 2
+G5BE01,Strike Force Bowling (USA)
 G5BE4Z,Strike Force Bowling
+G5DE01,Scooby-Doo! Unmasked (USA) (En,Fr)
 G5DE78,Scooby-Doo! Unmasked
+G5DP01,Scooby-Doo! Unmasked (Europe) (En,Fr,Es,It)
 G5DP78,Scooby-Doo! Unmasked
+G5NE01,Namco Museum 50th Anniversary (USA)
 G5NEAF,Namco Museum 50th Anniversary
+G5NP01,Namco Museum 50th Anniversary (Europe) (En,Fr,De,Es,It)
 G5NP69,Namco Museum 50th Anniversary
+G5SE01,Spyro - A Hero's Tail (USA)
 G5SE7D,Spyro: A Hero's Tail
+G5SP01,Spyro - A Hero's Tail (Europe) (En,Fr,De,Es,It,Nl)
 G5SP7D,Spyro: A Hero's Tail
 G5TE69,Tiger Woods PGA Tour 2005
 G5TP69,Tiger Woods PGA Tour 2005
+G62E01,Major League Baseball 2K6 (USA)
 G62E54,Major League Baseball 2K6
+G63E01,Tom Clancy's Rainbow Six 3 (USA)
 G63E41,Tom Clancy's Rainbow Six 3
+G63P01,Tom Clancy's Rainbow Six 3 (Europe) (En,Fr,De,Es,It)
 G63P41,Tom Clancy's Rainbow Six 3
+G6FD01,FIFA Fussball-Weltmeisterschaft Deutschland 2006 (Germany)
 G6FD69,FIFA Fussball-Weltmeisterschaft Deutschland 2006
+G6FE01,FIFA World Cup Germany 2006 (USA)
 G6FE69,FIFA World Cup Germany 2006
+G6FF01,FIFA World Cup Germany 2006 (France)
 G6FF69,FIFA World Cup Germany 2006
+G6FP01,FIFA World Cup Germany 2006 (Europe)
 G6FP69,FIFA World Cup Germany 2006
+G6GE01,FIFA World Cup Germany 2006 (Latin America)
 G6GE69,2006 FIFA World Cup
+G6ME01,Madden NFL 06 (USA)
 G6ME69,Madden NFL 06
+G6MP01,Madden NFL 06 (Europe)
 G6MP69,Madden NFL 06
+G6NE01,NBA Live 06 (USA)
 G6NE69,NBA Live 06
+G6NP01,NBA Live 06 (Europe) (En,Fr)
 G6NP69,NBA Live 06
+G6QE01,Mega Man Anniversary Collection (USA, Canada) (Rev 1)
 G6QE08,Mega Man Anniversary Collection
+G6SE01,Legend of Spyro, The - A New Beginning (USA)
 G6SE7D,The Legend of Spyro: A New Beginning
+G6SP01,Legend of Spyro, The - A New Beginning (Europe) (En,Fr,De,Es,It,Nl)
 G6SP7D,The Legend of Spyro: A New Beginning
+G6TE01,Teen Titans (USA) (En,Fr)
 G6TE5G,Teen Titans
+G6TP01,Teen Titans (France) (En,Fr)
 G6TP78,Teen Titans
+G6WE01,Tiger Woods PGA Tour 06 (USA)
 G6WE69,Tiger Woods PGA Tour 06
+G6WP01,Tiger Woods PGA Tour 06 (Europe) (En,Fr,De)
 G6WP69,Tiger Woods PGA Tour 06
+G7FE01,FIFA Soccer 07 (Latin America)
 G7FE69,FIFA Soccer 07
+G7ME01,Madden NFL 07 (USA)
 G7ME69,Madden NFL 07
+G89E01,Pac-Man World Rally (USA)
 G89EAF,Pac-Man World Rally
+G8FE01,Virtua Quest (USA)
 G8FE8P,Virtua Quest
+G8FJ01,Virtua Fighter Cyber Generation - Judgment Six no Yabou (Japan)
 G8FJ8P,Virtua Fighter Cyber Generation: Judgment Six no Yabou
 G8ME01,Paper Mario: The Thousand-Year Door
 G8MJ01,Paper Mario RPG
 G8MK01,Paper Mario RPG
 G8MP01,Paper Mario: The Thousand-Year Door
+G8OJ01,Bobobo-bo Bo-bobo - Dasshutsu!! Hajike Royale (Japan)
 G8OJ18,Bobobo-bo Bo-bobo: Dasshutsu!! Hajike Royale
+G8SJ01,Battle Stadium D.O.N (Japan)
 G8SJAF,Battle Stadium D.O.N
 G8WE01,Battalion Wars
 G8WJ01,Totsugeki!! Famicom Wars
@@ -1929,30 +2095,55 @@ G98E01,Interactive Multi-Game Demo Disc: January 2002
 G98P01,Interactive Multi-Game Demo Disk: May 2002
 G99E01,Interactive Multi-Game Demo Disc: October 2001
 G99P01,Interactive Multi-Game Demo Disk: March 2002
+G9BE01,Mark Davis Pro Bass Challenge (USA)
 G9BEE9,Mark Davis Pro Bass Challenge
+G9KJ01,Jikkyou Powerful Pro Yakyuu 9 - Ketteiban (Japan)
 G9KJCM,Jikkyou Powerful Pro Yakyuu 9: Ketteiban
+G9RD01,Crash Tag Team Racing (Germany)
 G9RD7D,Crash Tag Team Racing
+G9RE01,Crash Tag Team Racing (USA)
 G9RE7D,Crash Tag Team Racing
+G9RF01,Crash Tag Team Racing (France)
 G9RF7D,Crash Tag Team Racing
+G9RH01,Crash Tag Team Racing (Netherlands)
 G9RH7D,Crash Tag Team Racing
+G9RJ01,Crash Bandicoot - Gatchanko World (Japan)
 G9RJ7D,Crash Bandicoot: Gatchanko World
+G9RP01,Crash Tag Team Racing (Europe, Australia)
 G9RP7D,Crash Tag Team Racing
+G9SE01,Sonic Heroes (USA) (En,Ja,Fr,De,Es,It)
 G9SE8P,Sonic Heroes
+G9SJ01,Sonic Heroes (Japan) (En,Ja,Fr,De,Es,It)
 G9SJ8P,Sonic Heroes
+G9SP01,Sonic Heroes (Europe) (En,Ja,Fr,De,Es,It)
 G9SP8P,Sonic Heroes
+G9TD01,DreamWorks Grosse Haie - Kleine Fische (Germany)
 G9TD52,Grosse Haie: Kleine Fische
+G9TE01,DreamWorks Shark Tale (USA)
 G9TE52,Shark Tale
+G9TF01,DreamWorks Gang de Requins (France)
 G9TF52,Gang de Requins
+G9TI01,DreamWorks Shark Tale (Italy)
 G9TI52,Shark Tale
+G9TJ01,DreamWorks Shark Tale (Japan)
 G9TJC0,Shark Tale
+G9TP01,DreamWorks Shark Tale (Europe)
 G9TP52,Shark Tale
+GA2E01,All-Star Baseball 2002 (USA)
 GA2E51,All-Star Baseball 2002
+GA3E01,All-Star Baseball 2003 featuring Derek Jeter (USA)
 GA3E51,All-Star Baseball 2003 featuring Derek Jeter
+GA3J01,All-Star Baseball 2003 featuring Derek Jeter (Japan)
 GA3J51,All-Star Baseball 2003 featuring Derek Jeter
+GA4E01,All-Star Baseball 2004 featuring Derek Jeter (USA)
 GA4E51,All-Star Baseball 2004 featuring Derek Jeter
+GA7E01,Backyard Sports - Baseball 2007 (USA)
 GA7E70,Backyard Sports: Baseball 2007
+GAAJ01,Disney's Mickey to Minnie Trick & Chase (Japan)
 GAAJ08,Mickey to Minnie Trick & Chase
+GABE01,Zatch Bell! Mamodo Fury (USA)
 GABEAF,Zatch Bell! Mamodo Fury
+GABJ01,Konjiki no Gashbell!! Go! Go! Mamono Fight!! (Japan)
 GABJB2,Konjiki no Gashbell!! Go! Go! Mamono Fight!!
 GACE01,Super Smash Bros. Melee: Akaneia Build
 GACE0A,Super Smash Bros. Melee: ACE Build
@@ -1963,370 +2154,672 @@ GAFE01,Animal Crossing
 GAFJ01,Doubutsu no Mori +
 GAFP01,Animal Crossing
 GAFU01,Animal Crossing
+GAGP01,Asterix & Obelix XXL (Europe) (En,Fr,De,Es,It)
 GAGP70,Asterix & Obelix XXL
+GAHE01,Alien Hominid (USA)
 GAHEGG,Alien Hominid
 GAKE01,Beyond Melee
 GAKE5D,Midway Arcade Treasures
 GALE01,Super Smash Bros. Melee
 GALJ01,Dairantou Smash Brothers DX
 GALP01,Super Smash Bros. Melee
+GAME01,Army Men - Sarge's War (USA)
 GAME5H,Army Men: Sarge's War
+GANE01,Animaniacs - The Great Edgar Hunt (USA)
 GANE7U,Animaniacs: The Great Edgar Hunt
+GANP01,Animaniacs - The Great Edgar Hunt (Europe) (En,Fr,De,Es,It)
 GANP7U,Animaniacs: The Great Edgar Hunt
+GAPE01,American Chopper 2 - Full Throttle (USA)
 GAPE52,American Chopper 2: Full Throttle
+GAQE01,Aquaman - Battle for Atlantis (USA)
 GAQE6S,Aquaman: Battle for Atlantis
+GARE01,Army Men - RTS (USA)
 GARE5H,Army Men: RTS
+GASJ01,Sonic Adventure DX (Japan) (En,Ja,Fr,De,Es)
 GASJ8P,Sonic Adventure DX
+GATE01,ATV - Quad Power Racing 2 (USA)
 GATE51,ATV: Quad Power Racing 2
+GATP01,ATV - Quad Power Racing 2 (Europe) (En,Fr,De,Es,It)
 GATP51,ATV: Quad Power Racing 2
+GAUE01,Auto Modellista (USA)
 GAUE08,Auto Modellista
+GAUJ01,Auto Modellista - U.S.-tuned (Japan)
 GAUJ08,Auto Modellista: U.S.-tuned
+GAVE01,Nickelodeon Avatar - The Last Airbender (USA)
 GAVE78,Avatar: The Last Airbender
+GAVY01,Nickelodeon Avatar - The Legend of Aang (Europe) (En,Fr,Nl)
 GAVY78,Avatar: The Legend of Aang
+GAXE01,Ant Bully, The (USA) (En,Fr)
 GAXE5D,The Ant Bully
+GAYE01,Midway Arcade Treasures 2 (USA)
 GAYE41,Just Pride
 GAYE5D,Midway Arcade Treasures 2
+GAZD01,Harry Potter und der Gefangene von Askaban (Germany)
 GAZD69,Harry Potter und der Gefangene von Askaban
+GAZE01,Harry Potter and the Prisoner of Azkaban (USA)
 GAZE69,Harry Potter and the Prisoner of Azkaban
+GAZF01,Harry Potter et le Prisonnier d'Azkaban (France)
 GAZF69,Harry Potter et le Prisonnier d'Azkaban
+GAZH01,Harry Potter en de gevangene van Azkaban (Netherlands)
 GAZH69,Harry Potter en de gevangene van Azkaban
+GAZI01,Harry Potter e il Prigioniero di Azkaban (Italy)
 GAZI69,Harry Potter e il Prigioniero di Azkaban
+GAZJ01,Harry Potter to Azkaban no Shuujin (Japan)
 GAZJ13,Harry Potter to Azkaban no Shuujin
+GAZM01,Harry Potter och fangen fran Azkaban (Sweden)
 GAZM69,Harry Potter och fangen fran Azkaban
+GAZP01,Harry Potter and the Prisoner of Azkaban (Europe)
 GAZP69,Harry Potter and the Prisoner of Azkaban
+GAZS01,Harry Potter y el prisionero de Azkaban (Spain)
 GAZS69,Harry Potter y el prisionero de Azkaban
+GB2J01,Bomberman Land 2 (Japan)
 GB2J18,Bomberman Land 2
+GB3E01,BMX XXX (USA)
 GB3E51,BMX XXX
+GB3P01,BMX XXX (Europe) (En,Fr,De,Es)
 GB3P51,BMX XXX
+GB4E01,Burnout 2 - Point of Impact (USA)
 GB4E51,Burnout 2: Point of Impact
+GB4P01,Burnout 2 - Point of Impact (Europe) (En,Fr,De,Es,It)
 GB4P51,Burnout 2: Point of Impact
+GBAE01,NBA 2K2 (USA)
 GBAE8P,NBA 2K2
+GBDE01,BloodRayne (USA)
 GBDE5G,BloodRayne
+GBDF01,BloodRayne (France)
 GBDF7D,BloodRayne
+GBDP01,BloodRayne (Europe)
 GBDP7D,BloodRayne
+GBDS01,BloodRayne (Spain)
 GBDS7D,BloodRayne
+GBFE01,Backyard Football (USA)
 GBFE70,Backyard Football
+GBGE01,Bomberman Generation (USA)
 GBGE5G,Bomberman Generation
+GBGJ01,Bomberman Generation (Japan)
 GBGJ18,Bomberman Generation
+GBGP01,Bomberman Generation (Europe) (En,Fr,De)
 GBGP7D,Bomberman Generation
+GBHD01,Mystic Heroes (Germany)
 GBHDC8,Mystic Heroes
+GBHE01,Mystic Heroes (USA)
 GBHEC8,Mystic Heroes
+GBHF01,Mystic Heroes (France)
 GBHFC8,Mystic Heroes
+GBHJ01,Battle Houshin (Japan)
 GBHJC8,Battle Houshin
+GBHP01,Mystic Heroes (Europe)
 GBHPC8,Mystic Heroes
 GBIE08,Resident Evil
 GBIJ08,Biohazard
 GBIK08,Biohazard
 GBIP08,Resident Evil
+GBKE01,Backyard Baseball (USA)
 GBKE70,Backyard Baseball
+GBLE01,Bloody Roar - Primal Fury (USA)
 GBLE52,Bloody Roar: Primal Fury
+GBLP01,Bloody Roar - Primal Fury (Europe)
 GBLP52,Bloody Roar: Primal Fury
+GBME01,Batman - Dark Tomorrow (USA) (Rev 1)
 GBME7F,Batman: Dark Tomorrow
+GBMJ01,Batman - Dark Tomorrow (Japan)
 GBMJ28,Batman: Dark Tomorrow
+GBMP01,Batman - Dark Tomorrow (Europe) (En,Fr,De,Es,It) (Rev 1)
 GBMP7F,Batman: Dark Tomorrow
+GBNJ01,Warrior Blade - Rastan vs. Barbarian (Japan)
 GBNJC0,Warrior Blade: Rastan vs. Barbarian
+GBOE01,Burnout (USA)
 GBOE51,Burnout
+GBOP01,Burnout (Europe) (En,Fr,De,Es,It)
 GBOP51,Burnout
+GBPJ01,Baseball 2003, The - Battle Ball Park Sengen Perfect Play Pro Yakyuu (Japan)
 GBPJCM,The Baseball 2003: Battle Ball Park Sengen Perfect Play Pro Yakyuu
+GBQE01,Nickelodeon Rocket Power - Beach Bandits (USA)
 GBQE78,Rocket Power: Beach Bandits
+GBQP01,Nickelodeon Rocket Power - Beach Bandits (Europe)
 GBQP78,Rocket Power: Beach Bandits
+GBRJ01,Bloody Roar - Extreme (Japan)
 GBRJ18,Bloody Roar: Extreme
+GBSE01,Beach Spikers - Virtua Beach Volleyball (USA)
 GBSE8P,Beach Spikers: Virtua Beach Volleyball
+GBSJ01,Beach Spikers - Virtua Beach Volleyball (Japan) (Rev 1)
 GBSJ8P,Beach Spikers: Virtua Beach Volleyball
+GBSP01,Beach Spikers - Virtua Beach Volleyball (Europe) (En,Fr,De,Es,It)
 GBSP8P,Beach Spikers: Virtua Beach Volleyball
+GBTE01,Beyblade VForce - Super Tournament Battle (USA)
 GBTE70,Beyblade VForce: Super Tournament Battle
+GBTJ01,Bakuten Shoot Beyblade 2002 - Nettou! Magne Tag Battle! (Japan)
 GBTJA7,Bakuten Shoot Beyblade 2002: Nettou! Magne Tag Battle!
+GBTP01,Beyblade VForce - Super Tournament Battle (Europe) (En,Fr,De,Es,It)
 GBTP70,Beyblade VForce: Super Tournament Battle
+GBVE01,Batman - Vengeance (USA) (En,Fr,Es)
 GBVE41,Batman: Vengeance
+GBVP01,Batman - Vengeance (Europe) (En,Fr,De,Es,It)
 GBVP41,Batman: Vengeance
+GBWD01,Star Wars - Bounty Hunter (Germany)
 GBWD64,Star Wars: Bounty Hunter
+GBWE01,Star Wars - Bounty Hunter (USA)
 GBWE64,Star Wars: Bounty Hunter
+GBWF01,Star Wars - Bounty Hunter (France)
 GBWF64,Star Wars: Bounty Hunter
+GBWI01,Star Wars - Bounty Hunter (Italy)
 GBWI64,Star Wars: Bounty Hunter
+GBWP01,Star Wars - Bounty Hunter (Europe)
 GBWP64,Star Wars: Bounty Hunter
+GBWS01,Star Wars - Bounty Hunter (Spain)
 GBWS64,Star Wars: Bounty Hunter
+GBXE01,Dave Mirra Freestyle BMX 2 (USA)
 GBXE51,Dave Mirra Freestyle BMX 2
+GBXP01,Dave Mirra Freestyle BMX 2 (Europe)
 GBXP51,Dave Mirra Freestyle BMX 2
+GBYE01,Super Bubble Pop (USA)
 GBYE0A,Super Bubble Pop
 GBZE08,Resident Evil Zero
 GBZJ08,Biohazard Zero
 GBZP08,Resident Evil Zero
+GC2E01,Conflict - Desert Storm II - Back to Baghdad (USA)
 GC2E9G,Conflict: Desert Storm II: Back to Baghdad
+GC2P01,Conflict - Desert Storm II (Europe) (En,Fr,De,Es,It)
 GC2P75,Conflict: Desert Storm II
+GC3D01,Scooby-Doo! Fluch der Folianten (Germany)
 GC3D78,Scooby-Doo! Fluch der Folianten
+GC3E01,Scooby-Doo! Mystery Mayhem (USA)
 GC3E78,Scooby-Doo! Mystery Mayhem
+GC3F01,Scooby-Doo! Le Livre des Tenebres (France)
 GC3F78,Scooby-Doo! Le Livre des Tenebres
+GC3P01,Scooby-Doo! Mystery Mayhem (Europe)
 GC3P78,Scooby-Doo! Mystery Mayhem
 GC4EBN,Shinseiki GPX Cyber Formula Road to the EVOLUTION
+GC4J01,Future GPX Cyber Formula - Road to the Evolution (Japan)
 GC4JBN,Future GPX Cyber Formula: Road to the Evolution
+GC5P01,Cocoto Kart Racer (Europe) (En,Fr,De,Es,It)
 GC5PNK,Cocoto Kart Racer
 GC6E01,Pokemon Colosseum
 GC6J01,Pokemon Colosseum
 GC6P01,Pokemon Colosseum
+GC7P01,Cocoto Platform Jumper (Europe) (En,Fr,De,Es,It)
 GC7PNK,Cocoto Platform Jumper
+GC8J01,Crash Bandicoot - Bakusou! Nitro Kart (Japan)
 GC8JA4,Crash Bandicoot: Bakusou! Nitro Kart
 GC9P6S,Conan
+GCAE01,Cubix Robots for Everyone - Showdown (USA)
 GCAE5H,Cubix Robots for Everyone: Showdown
+GCBE01,Crash Bandicoot - The Wrath of Cortex (USA)
 GCBE7D,Crash Bandicoot: The Wrath of Cortex
+GCBJ01,Crash Bandicoot 4 - Sakuretsu! Majin Power (Japan)
 GCBJA4,Crash Bandicoot 4: Sakuretsu! Majin Power
+GCBP01,Crash Bandicoot - The Wrath of Cortex (Europe) (En,Fr,De,Es,It,Nl)
 GCBP7D,Crash Bandicoot: The Wrath of Cortex
 GCCE01,Final Fantasy Crystal Chronicles
+GCCJ01,Final Fantasy Crystal Chronicles (Japan)
 GCCJGC,Final Fantasy Crystal Chronicles
 GCCP01,Final Fantasy Crystal Chronicles
 GCDE08,Resident Evil: Code: Veronica X
 GCDJ08,Biohazard: Code: Veronica: Kanzenban
 GCDK08,Biohazard Code: Veronica Complete
 GCDP08,Resident Evil: Code: Veronica X
+GCEE01,Tom Clancy's Splinter Cell (USA)
 GCEE41,Tom Clancy's Splinter Cell
+GCEP01,Tom Clancy's Splinter Cell (Europe) (En,Fr,De,Es,It)
 GCEP41,Tom Clancy's Splinter Cell
+GCFE01,Conflict - Desert Storm (USA)
 GCFE9G,Conflict: Desert Storm
+GCFP01,Conflict - Desert Storm (Europe) (En,Fr,De,Es,It)
 GCFP75,Conflict: Desert Storm
+GCGE01,Charlie's Angels (USA) (En,Fr)
 GCGE41,Charlie's Angels
+GCGP01,Charlie's Angels (Europe) (En,Fr,De)
 GCGP41,Charlie's Angels
+GCHE01,WWE Crush Hour (USA)
 GCHE78,WWE Crush Hour
+GCHP01,WWE Crush Hour (Europe)
 GCHP78,WWE Crush Hour
+GCIE01,Sims, The (USA)
 GCIE69,The Sims
+GCIP01,Sims, The (Europe) (En,Fr,De,Es,It)
 GCIP69,The Sims
 GCJE41,Tom Clancy's Splinter Cell: Chaos Theory
 GCJP41,Tom Clancy's Splinter Cell: Chaos Theory
+GCLE01,Cel Damage (USA)
 GCLE69,Cel Damage
+GCLP01,Cel Damage (Europe)
 GCLP69,Cel Damage
+GCMJ01,Muscle Champion - Kinniku-jima no Kessen (Japan)
 GCMJA4,Muscle Champion: Kinniku-jima no Kessen
+GCNE01,Crash Nitro Kart (USA)
 GCNE7D,Crash Nitro Kart
+GCNP01,Crash Nitro Kart (Europe)
 GCNP7D,Crash Nitro Kart
+GCOD01,Call of Duty - Finest Hour (Germany)
 GCOD52,Call of Duty: Finest Hour
+GCOE01,Call of Duty - Finest Hour (USA)
 GCOE52,Call of Duty: Finest Hour
+GCOF01,Call of Duty - Finest Hour (France)
 GCOF52,Call of Duty: Finest Hour
+GCOP01,Call of Duty - Finest Hour (Europe)
 GCOP52,Call of Duty: Finest Hour
+GCPE01,Casper - Spirit Dimensions (USA)
 GCPE6S,Casper: Spirit Dimensions
+GCPP01,Casper - Spirit Dimensions (Europe) (En,Fr,De,Es,It)
 GCPP6S,Casper: Spirit Dimensions
+GCQD01,Buffy im Bann der Daemonen - Chaos Bleeds (Germany)
 GCQD7D,Buffy im Bann der Daemonen: Chaos Bleeds
+GCQE01,Buffy the Vampire Slayer - Chaos Bleeds (USA)
 GCQE7D,Buffy the Vampire Slayer: Chaos Bleeds
+GCQF01,Buffy contre les Vampires - Chaos Bleeds (France)
 GCQF7D,Buffy contre les Vampires: Chaos Bleeds
+GCQP01,Buffy the Vampire Slayer - Chaos Bleeds (Europe)
 GCQP7D,Buffy the Vampire Slayer: Chaos Bleeds
 GCREBM,Xeno Crisis
 GCRJBM,Xeno Crisis
 GCRPBM,Xeno Crisis
+GCSE01,SRS - Street Racing Syndicate (USA)
 GCSEAF,SRS: Street Racing Syndicate
+GCSP01,SRS - Street Racing Syndicate (Europe) (En,Fr,De,Es,It)
 GCSPAF,SRS: Street Racing Syndicate
+GCTE01,Crazy Taxi (USA)
 GCTE51,Crazy Taxi
+GCTJ01,Crazy Taxi (Japan)
 GCTJ8P,Crazy Taxi
+GCTP01,Crazy Taxi (Europe) (En,Fr,De,Es)
 GCTP51,Crazy Taxi
+GCUE01,NCAA Football 2005 (USA)
 GCUE69,NCAA Football 2005
+GCVE01,Cubivore - Survival of the Fittest (USA)
 GCVEEB,Cubivore: Survival of the Fittest
+GCWJ01,Mahou no Pumpkin - An to Greg no Daibouken (Japan)
 GCWJBL,Mahou no Pumpkin: An to Greg no Daibouken
+GCWP01,Castleween (Europe) (En,Fr,De,Es,It)
 GCWP6X,Castleween
+GCZE01,Catwoman (USA)
 GCZE69,Catwoman
+GCZP01,Catwoman (Europe) (En,Fr,De,Es,It,Nl)
 GCZP69,Catwoman
+GD4E01,Dinotopia - The Sunstone Odyssey (USA)
 GD4E6S,Dinotopia: The Sunstone Odyssey
+GD5J01,Dragon Drive - D-Masters Shot (Japan)
 GD5JB2,Dragon Drive: D-Masters Shot
+GD6E01,Digimon Rumble Arena 2 (USA)
 GD6EB2,Digimon Rumble Arena 2
+GD6P01,Digimon Rumble Arena 2 (Europe) (En,Fr,De,Es)
 GD6P70,Digimon Rumble Arena 2
+GD7E01,Dragon Ball Z - Budokai (USA)
 GD7E70,Dragon Ball Z: Budokai
+GD7P01,Dragon Ball Z - Budokai (Europe) (En,Fr,De,Es,It)
 GD7PB2,Dragon Ball Z: Budokai
+GD9E01,Drome Racers (USA)
 GD9E69,Drome Racers
+GD9P01,Drome Racers (Europe) (En,Fr,De,Es,It,Nl,Sv,Da)
 GD9P69,Drome Racers
+GDAJ01,Doraemon - Minna de Asobou! Miniland (Japan)
 GDAJE5,Doraemon: Minna de Asobou! Miniland
 GDBJ01,Doubutsu Banchou
+GDCE01,Speed Kings (USA)
 GDCE51,Speed Kings
+GDCP01,Speed Kings (Europe) (En,Fr,De,Es,It)
 GDCP51,Speed Kings
+GDDE01,Disney's Donald Duck - Goin' Quackers (USA) (En,Fr)
 GDDE41,Disney's Donald Duck: Goin' Quackers
+GDDP01,Disney's Donald Duck - Quack Attack (Europe) (En,Fr,De,Es,It)
 GDDP41,Donald Duck: Quack Attack
+GDED01,Baldur's Gate - Dark Alliance (Germany)
 GDED71,Baldur's Gate: Dark Alliance
+GDEE01,Baldur's Gate - Dark Alliance (USA)
 GDEE71,Baldur's Gate: Dark Alliance
+GDEF01,Baldur's Gate - Dark Alliance (France)
 GDEF71,Baldur's Gate: Dark Alliance
+GDEP01,Baldur's Gate - Dark Alliance (Europe) (Rev 1)
 GDEP71,Baldur's Gate: Dark Alliance
+GDFE01,Defender (USA)
 GDFE5D,Defender
+GDFP01,Defender - For All Mankind (Europe) (En,Fr,De,Es,It)
 GDFP5D,Defender: For All Mankind
+GDGE01,Dragon's Lair 3D - Return to the Lair (USA)
 GDGE7H,Dragon's Lair 3D: Return to the Lair
+GDGP01,Dragon's Lair 3D - Special Edition (Europe) (En,Fr,De,Es,It)
 GDGP78,Dragon's Lair 3D: Special Edition
+GDIE01,Die Hard - Vendetta (USA)
 GDIE7D,Die Hard: Vendetta
+GDIP01,Die Hard - Vendetta (Europe) (En,Fr)
 GDIP7D,Die Hard: Vendetta
+GDIX01,Die Hard - Vendetta (Germany) (En,De)
 GDIX7D,Die Hard: Vendetta
+GDIY01,Die Hard - Vendetta (Europe) (Es,It)
 GDIY7D,Die Hard: Vendetta
+GDJE01,Digimon World 4 (USA)
 GDJEB2,Digimon World 4
+GDJJ01,Digimon World X (Japan)
 GDJJB2,Digimon World X
+GDKE01,Disney Sports - Soccer (USA)
 GDKEA4,Sports: Soccer
+GDKJ01,Disney Sports - Soccer (Japan)
 GDKJA4,Sports: Soccer
+GDKP01,Disney Sports - Football (Europe) (En,Fr,De,Es,It)
 GDKPA4,Disney Sports: Football
+GDLE01,Disney Sports - Basketball (USA)
 GDLEA4,Sports: Basketball
+GDLJ01,Disney Sports - Basketball (Japan)
 GDLJA4,Sports: Basketball
+GDLP01,Disney Sports - Basketball (Europe) (En,Fr,De,Es,It)
 GDLPA4,Sports: Basketball
 GDME01,Disney's Magical Mirror Starring Mickey Mouse
 GDMJ01,Disney's Mickey Mouse no Fushigi na Kagami
 GDMP01,Disney's Magical Mirror starring Mickey Mouse
+GDNJ01,Dokapon DX - Wataru Sekai wa Oni Darake (Japan)
 GDNJE8,Dokapon DX: Wataru Sekai wa Oni Darake
+GDOP01,Disney's Donald Duck PK (Europe) (En,Fr,De,Es,It)
 GDOP41,Donald Duck PK
 GDPEAF,Mr. Driller: Drill Land
+GDPJ01,Mr. Driller - Drill Land (Japan)
 GDPJAF,Mr. Driller: Drill Land
+GDQE01,Darkened Skye (USA)
 GDQE7L,Darkened Skye
+GDQP01,Darkened Skye (Europe) (En,Fr,De)
 GDQP6S,Darkened Skye
+GDRE01,Dead to Rights (USA)
 GDREAF,Dead to Rights
+GDRP01,Dead to Rights (Europe) (En,Fr,Es,It)
 GDRP69,Dead to Rights
+GDSE01,Dark Summit (USA)
 GDSE78,Dark Summit
+GDSP01,Dark Summit (Europe) (En,Fr,De)
 GDSP78,Dark Summit
+GDTE01,Def Jam - Vendetta (USA)
 GDTE69,Def Jam: Vendetta
+GDTP01,Def Jam - Vendetta (Europe)
 GDTP69,Def Jam: Vendetta
+GDUJ01,Duel Masters - Nettou! Battle Arena (Japan)
 GDUJA7,Duel Masters: Nettou! Battle Arena
+GDVE01,Driven (USA) (En,Fr,De,Es,It)
 GDVE6L,Driven
+GDVP01,Driven (Europe) (En,Fr,De,Es,It)
 GDVP6L,Driven
+GDWE01,Disney Sports - Football (USA)
 GDWEA4,Sports: Football
+GDWJ01,Disney Sports - American Football (Japan)
 GDWJA4,Sports: American Football
 GDXE01,Kirby Air Ride Deluxe
 GDXE8P,Sonic Riders DX
 GDXEA4,Sports: Skateboarding
+GDXJ01,Disney Sports - Skateboarding (Japan)
 GDXJA4,Sports: Skateboarding
+GDXP01,Disney Sports - Skateboarding (Europe) (En,Fr,De,Es,It)
 GDXPA4,Sports: Skateboarding
+GE3E01,Midway Arcade Treasures 3 (USA)
 GE3E5D,Midway Arcade Treasures 3
+GE4E01,4x4 Evo 2 (USA)
 GE4E7D,4x4 Evo 2
+GE5E01,TMNT - Mutant Melee (USA)
 GE5EA4,TMNT: Mutant Melee
+GE6J01,Eisei Meijin VI (Japan)
 GE6JA4,Eisei Meijin VI
+GE9E01,Ed, Edd n Eddy - The Mis-Edventures (USA) (En,Fr)
 GE9E5D,Ed, Edd n Eddy: The Mis-Edventures
+GEAE01,Skies of Arcadia - Legends (USA)
 GEAE8P,Skies of Arcadia: Legends
+GEAJ01,Eternal Arcadia Legends (Japan)
 GEAJ8P,Eternal Arcadia Legends
 GEAK8P,Eternal Arcadia Legends
+GEAP01,Skies of Arcadia - Legends (Europe) (En,Fr,De,Es)
 GEAP8P,Skies of Arcadia: Legends
+GEBE01,Evolution Snowboarding (USA)
 GEBEA4,Evolution Snowboarding
+GEBP01,Evolution Snowboarding (Europe) (En,Fr,De)
 GEBPA4,Evolution Snowboarding
 GEDE01,Eternal Darkness: Sanity's Requiem
 GEDJ01,Eternal Darkness: Manekareta 13-nin
 GEDP01,Eternal Darkness: Sanity's Requiem
 GEDW01,Eternal Darkness: Sanity's Requiem
+GEGJ01,Giant Egg - Billy Hatcher no Daibouken (Japan) (Rev 1)
 GEGJ8P,Giant Egg: Billy Hatcher no Daibouken
+GEJJ01,Jikkyou Powerful Pro Yakyuu 11 Chou Ketteiban (Japan)
 GEJJCM,Jikkyou Powerful Pro Yakyuu 11 Chou Ketteiban
+GEME01,Egg Mania - Eggstreme Madness (USA) (Rev 1)
 GEME7F,Egg Mania: Eggstreme Madness
+GEMJ01,Egg Mania - Tsukande! Mawashite! Dossun Puzzle!! (Japan) (Rev 1)
 GEMJ28,Egg Mania: Tsukande! Mawashite! Dossun Puzzle!!
+GEMP01,Eggo Mania (Europe) (En,Fr,De)
 GEMP7F,Eggo Mania
+GEND01,007 - Alles oder Nichts (Germany)
 GEND69,007: Alles oder Nichts
+GENE01,007 - Everything or Nothing (USA)
 GENE69,007: Everything or Nothing
+GENF01,007 - Quitte ou Double (France)
 GENF69,007: Quitte ou Double
+GENJ01,007 - Everything or Nothing (Japan)
 GENJ13,007: Everything or Nothing
+GENP01,007 - Everything or Nothing (Europe) (En,It,Nl,Sv)
 GENP69,James Bond 007: Everything or Nothing
+GENS01,007 - Todo o Nada (Spain)
 GENS69,007: Todo o Nada
+GEOE01,Capcom vs. SNK 2 EO (USA)
 GEOE08,Capcom vs. SNK 2 EO
+GEOJ01,Capcom vs. SNK 2 EO (Japan) (Rev 1)
 GEOJ08,Capcom vs. SNK 2 EO
+GEOP01,Capcom vs. SNK 2 EO - Millionaire Fighting 2001 (Europe)
 GEOP08,Capcom vs. SNK 2 EO: Millionaire Fighting 2001
+GESE01,Evolution Skateboarding (USA)
 GESEA4,Evolution Skateboarding
+GESJ01,Evolution Skateboarding (Japan)
 GESJA4,Evolution Skateboarding
+GESP01,Evolution Skateboarding (Europe) (En,Fr,De)
 GESPA4,Evolution Skateboarding
+GEVJ01,Shinki Sekai Evolutia (Japan)
 GEVJ0M,Shinki Sekai Evolutia
+GEWE01,Evolution Worlds (USA)
 GEWE41,Evolution Worlds
+GEWP01,Evolution Worlds (Europe)
 GEWP41,Evolution Worlds
+GEXE01,Disney's Extreme Skate Adventure (USA)
 GEXE52,Disney's Extreme Skate Adventure
+GEXP01,Disney's Extreme Skate Adventure (Europe)
 GEXP52,Disney's Extreme Skate Adventure
+GEXX01,Disney's Extreme Skate Adventure (Europe) (Fr,De)
 GEXX52,Disney's Extreme Skate Adventure
+GEXY01,Disney's Extreme Skate Adventure (Europe) (Es,It)
 GEXY52,Disney's Extreme Skate Adventure
+GEYE01,Fight Night Round 2 (USA)
 GEYE69,Fight Night Round 2
+GEYJ01,Fight Night Round 2 (Japan)
 GEYJ13,Fight Night Round 2
+GEYP01,Fight Night Round 2 (Europe) (En,Fr,De)
 GEYP69,Fight Night Round 2
+GEZE01,Billy Hatcher and the Giant Egg (USA)
 GEZE8P,Billy Hatcher and the Giant Egg
+GEZP01,Billy Hatcher and the Giant Egg (Europe) (En,Ja,Fr,De,Es,It)
 GEZP8P,Billy Hatcher and the Giant Egg
+GF2E01,F1 2002 (USA) (En,Fr,De,It)
 GF2E69,F1 2002
+GF2P01,F1 2002 (Europe) (En,Fr,De,It)
 GF2P69,F1 2002
+GF3E01,NFL 2K3 (USA)
 GF3E8P,NFL 2K3
+GF3P01,NFL 2K3 (Europe)
 GF3P8P,NFL 2K3
+GF4D01,Fantastic 4 (Germany)
 GF4D52,Fantastic 4
+GF4E01,Fantastic 4 (USA)
 GF4E52,Fantastic 4
+GF4F01,4 Fantastiques, Les (France)
 GF4F52,Le 4 Fantastiquess
+GF4H01,Fantastic 4 (Netherlands)
 GF4H52,Fantastic 4
+GF4I01,Fantastici 4, I (Italy)
 GF4I52,Fantastici 4, I
+GF4P01,Fantastic 4 (Europe)
 GF4P52,Fantastic 4
+GF4S01,Fantastic 4 (Spain)
 GF4S52,Fantastic 4
+GF5D01,FIFA Football 2005 (Germany)
 GF5D69,FIFA Football 2005
+GF5E01,FIFA Soccer 2005 (USA) (En,Es)
 GF5E69,FIFA Soccer 2005
+GF5F01,FIFA Football 2005 (France)
 GF5F69,FIFA Football 2005
+GF5H01,FIFA Football 2005 (Netherlands)
 GF5H69,FIFA Football 2005
+GF5I01,FIFA Football 2005 (Italy)
 GF5I69,FIFA Football 2005
+GF5P01,FIFA Football 2005 (Europe)
 GF5P69,FIFA Football 2005
+GF5S01,FIFA Football 2005 (Spain)
 GF5S69,FIFA Football 2005
+GF6D01,FIFA 06 (Germany)
 GF6D69,FIFA 06
+GF6E01,FIFA Soccer 06 (USA)
 GF6E69,FIFA Soccer 06
+GF6F01,FIFA 06 (France)
 GF6F69,FIFA 06
+GF6H01,FIFA 06 (Netherlands)
 GF6H69,FIFA 06
+GF6I01,FIFA 06 (Italy)
 GF6I69,FIFA 06
+GF6P01,FIFA 06 (Europe)
 GF6P69,FIFA 06
+GF6S01,FIFA 06 (Spain)
 GF6S69,FIFA 06
 GF7E01,Star Fox: Assault
 GF7J01,Star Fox: Assault
 GF7P01,Star Fox: Assault
+GF8E01,FIFA Street (USA) (En,Es)
 GF8E69,FIFA Street
+GF8P01,FIFA Street (Europe) (En,Fr,De)
 GF8P69,FIFA Street
+GFAD01,FIFA Football 2003 (Germany)
 GFAD69,FIFA Football 2003
+GFAE01,FIFA Soccer 2003 (USA)
 GFAE69,FIFA Soccer 2003
+GFAF01,FIFA Football 2003 (France)
 GFAF69,FIFA Football 2003
+GFAI01,FIFA Football 2003 (Italy)
 GFAI69,FIFA Football 2003
+GFAJ01,FIFA 2003 - European Football (Japan)
 GFAJ13,FIFA 2003: European Football
+GFAP01,FIFA Football 2003 (Europe)
 GFAP69,FIFA Football 2003
+GFAS01,FIFA Football 2003 (Spain)
 GFAS69,FIFA Football 2003
+GFBE01,FireBlade (USA)
 GFBE5D,FireBlade
+GFBP01,FireBlade (Europe) (En,Fr,De,Es,It)
 GFBP5D,FireBlade
+GFCP01,F1 Career Challenge (Europe) (En,Fr,De,It)
 GFCP69,F1 Career Challenge
+GFDD01,Freedom Fighters (Germany)
 GFDD69,Freedom Fighters
+GFDE01,Freedom Fighters (USA)
 GFDE69,Freedom Fighters
+GFDF01,Freedom Fighters (France)
 GFDF69,Freedom Fighters
+GFDP01,Freedom Fighters (Europe)
 GFDP69,Freedom Fighters
 GFEE01,Fire Emblem: Path of Radiance
 GFEJ01,Fire Emblem: Souen no Kiseki
 GFEK01,Fire Emblem: Souen no Kiseki
 GFEP01,Fire Emblem: Path of Radiance
 GFFE5D,Freaky Flyers
+GFGE01,Frogger Beyond (USA)
 GFGEA4,Frogger Beyond
+GFGJ01,Frogger (Japan)
 GFGJA4,Frogger
+GFGP01,Frogger Beyond (Europe) (En,Fr,De,Es,It)
 GFGPA4,Frogger Beyond
+GFHP01,Neighbours from Hell (Europe) (En,Fr,De,Es,It)
 GFHP6V,Neighbours from Hell
+GFIE01,2002 FIFA World Cup (USA)
 GFIE69,2002 FIFA World Cup
+GFIJ01,2002 FIFA World Cup (Japan)
 GFIJ13,2002 FIFA World Cup
+GFJE01,FIFA Soccer 06 (Latin America)
 GFJE69,FIFA Soccer 06
+GFKE01,Freekstyle (USA)
 GFKE69,Freekstyle
+GFKP01,Freekstyle (Europe) (En,Fr,De)
 GFKP69,Freekstyle
+GFMJ01,Family Stadium 2003 (Japan)
 GFMJAF,Family Stadium 2003
+GFNJ01,Disney-Pixar Finding Nemo (Japan)
 GFNJG2,Finding Nemo
+GFOE01,Fairly OddParents, The - Shadow Showdown (USA)
 GFOE78,The Fairly OddParents: Shadow Showdown
+GFPE01,Frogger - Ancient Shadow (USA) (En,Es)
 GFPEA4,Frogger: Ancient Shadow
+GFQE01,Frogger's Adventures - The Rescue (USA)
 GFQEA4,Frogger's Adventures: The Rescue
+GFSD01,2002 FIFA World Cup (Germany)
 GFSD69,2002 FIFA World Cup
+GFSE01,FIFA Soccer 2002 (USA)
 GFSE69,FIFA Soccer 2002
+GFSF01,2002 FIFA World Cup (France)
 GFSF69,2002 FIFA World Cup
+GFSJ01,FIFA 2002 - Road to FIFA World Cup (Japan) (En,Ja)
 GFSJ13,FIFA 2002: Road to FIFA World Cup
+GFSP01,2002 FIFA World Cup (Europe)
 GFSP69,2002 FIFA World Cup
+GFSX01,2002 FIFA World Cup (Europe) (Fr,Nl)
 GFSX69,2002 FIFA World Cup
 GFTE01,Mario Golf: Toadstool Tour
 GFTJ01,Mario Golf: Family Tour
 GFTP01,Mario Golf: Toadstool Tour
+GFUE01,Future Tactics - The Uprising (USA)
 GFUE4Z,Future Tactics: The Uprising
+GFUP01,Future Tactics - The Uprising (Europe) (En,Fr,De,Es,It)
 GFUP6V,Future Tactics: The Uprising
+GFVE01,NFL Blitz Pro (USA)
 GFVE5D,NFL Blitz Pro
+GFWE01,Fairly OddParents, The - Breakin' da Rules (USA)
 GFWE78,The Fairly OddParents: Breakin' da Rules
+GFXE01,Freestyle Metal X (USA)
 GFXE5D,Freestyle Metal X
+GFYE01,FIFA Street 2 (USA) (En,Es)
 GFYE69,FIFA Street 2
+GFYP01,FIFA Street 2 (Europe) (En,Fr,De)
 GFYP69,FIFA Street 2
 GFZE01,F-Zero GX
 GFZJ01,F-Zero GX
 GFZJ8P,F-Zero AX
 GFZP01,F-Zero GX
+GG2E01,Trigger Man (USA)
 GG2E4Z,Trigger Man
+GG4E01,Gotcha Force (USA)
 GG4E08,Gotcha Force
+GG4J01,Gotcha Force (Japan)
 GG4J08,Gotcha Force
+GG4P01,Gotcha Force (Europe) (En,Fr,De)
 GG4P08,Gotcha Force
+GG5E01,Cabela's Big Game Hunter 2005 Adventures (USA)
 GG5E52,Cabela's Big Game Hunter 2005 Adventures
+GGAJ01,Kidou Senshi Gundam - Senshitachi no Kiseki (Japan)
 GGAJB2,Kidou Senshi Gundam: Senshi-tachi no Kiseki
+GGCE01,Goblin Commander - Unleash the Horde (USA)
 GGCE0A,Goblin Commander: Unleash the Horde
+GGCP01,Goblin Commander - Unleash the Horde (Europe) (En,Fr,De)
 GGCP0A,Goblin Commander: Unleash the Horde
+GGEE01,Beyond Good & Evil (USA) (En,Es)
 GGEE41,Beyond Good & Evil
+GGEP01,Beyond Good & Evil (Europe) (En,Es)
 GGEP41,Beyond Good & Evil
+GGEX01,Beyond Good & Evil (Europe) (De,It)
 GGEX41,Beyond Good & Evil
+GGEY01,Beyond Good & Evil (Europe) (Fr,Nl)
 GGEY41,Beyond Good & Evil
 GGFJ01,Giftpia
 GGIJ13,GoldenEye: Dark Agent
+GGKJ01,Konjiki no Gashbell!! Yuujou Tag Battle - Full Power (Japan)
 GGKJB2,Konjiki no Gashbell!! Yuujou Tag Battle: Full Power
+GGNE01,Grim Adventures of Billy & Mandy, The (USA)
 GGNE5D,The Grim Adventures of Billy & Mandy
 GGPE01,Mario Kart Arcade GP
 GGPE02,Mario Kart Arcade GP 2
+GGPJ01,SD Gundam - Gashapon Wars (Japan)
 GGPJ02,Mario Kart Arcade GP 2
 GGPJAF,SD Gundam: Gashapon Wars
 GGPJB2,SD Gundam Gashapon Wars
+GGRD01,Tom Clancy's Ghost Recon (Germany)
 GGRD41,Tom Clancy's Ghost Recon
+GGRE01,Tom Clancy's Ghost Recon (USA)
 GGRE41,Tom Clancy's Ghost Recon
+GGRP01,Tom Clancy's Ghost Recon (Europe) (En,Fr,Es,It)
 GGRP41,Tom Clancy's Ghost Recon
 GGSEA4,Metal Gear Solid: The Twin Snakes
 GGSJA4,Metal Gear Solid: The Twin Snakes
@@ -2334,269 +2827,507 @@ GGSPA4,Metal Gear Solid: The Twin Snakes
 GGTE01,Chibi-Robo!
 GGTJ01,Chibi-Robo!
 GGTP01,Chibi-Robo!
+GGVD01,Nickelodeon SpongeBob Schwammkopf - Der Film (Germany)
 GGVD78,SpongeBob Schwammkopf: Der Film
+GGVE01,Nickelodeon The SpongeBob SquarePants Movie (USA) (Rev 1)
 GGVE78,The SpongeBob SquarePants Movie
+GGVP01,Nickelodeon The SpongeBob SquarePants Movie (Europe)
 GGVP78,The SpongeBob SquarePants Movie
+GGVX01,Nickelodeon The SpongeBob SquarePants Movie (Europe) (Fr,Nl)
 GGVX78,The SpongeBob SquarePants Movie
+GGYE01,Tom Clancy's Ghost Recon 2 (USA) (En,Fr,Es)
 GGYE41,Tom Clancy's Ghost Recon 2
+GGYP01,Tom Clancy's Ghost Recon 2 (Europe) (En,Fr,De,Es,It)
 GGYP41,Tom Clancy's Ghost Recon 2
+GGZE01,DreamWorks Madagascar (USA) (Rev 1)
 GGZE52,Madagascar
+GGZH01,DreamWorks Madagascar (Netherlands)
 GGZH52,Madagascar
+GGZI01,DreamWorks Madagascar (Italy)
 GGZI52,Madagascar
+GGZJ01,DreamWorks Madagascar (Japan)
 GGZJB2,Madagascar
+GGZP01,DreamWorks Madagascar (UK)
 GGZP52,Madagascar
+GGZS01,DreamWorks Madagascar (Spain)
 GGZS52,Madagascar
+GGZX01,DreamWorks Madagascar (Europe) (Fr,De)
 GGZX52,Madagascar
+GH2E01,Need for Speed - Hot Pursuit 2 (USA)
 GH2E41,Just Dance GH2
 GH2E69,Need for Speed: Hot Pursuit 2
+GH2P01,Need for Speed - Hot Pursuit 2 (Europe) (En,Fr,De)
 GH2P69,Need for Speed: Hot Pursuit 2
+GH3E01,NHL 2003 (USA)
 GH3E69,NHL 2003
+GH3P01,NHL 2003 (Europe) (En,Fr,De,Sv,Fi,Cs)
 GH3P69,NHL 2003
+GH4D01,Harry Potter und der Feuerkelch (Germany)
 GH4D69,Harry Potter und der Feuerkelch
+GH4E01,Harry Potter and the Goblet of Fire (USA)
 GH4E69,Harry Potter and the Goblet of Fire
+GH4F01,Harry Potter et la Coupe de Feu (France)
 GH4F69,Harry Potter et la Coupe de Feu
+GH4H01,Harry Potter en de Vuurbeker (Netherlands)
 GH4H69,Harry Potter en de Vuurbeker
+GH4I01,Harry Potter e il Calice di Fuoco (Italy)
 GH4I69,Harry Potter e il Calice di Fuoco
+GH4J01,Harry Potter to Honoo no Goblet (Japan)
 GH4J13,Harry Potter to Honoo no Goblet
+GH4M01,Harry Potter och den flammande baegaren (Sweden)
 GH4M69,Harry Potter och den flammande baegaren
+GH4P01,Harry Potter and the Goblet of Fire (Europe)
 GH4P69,Harry Potter and the Goblet of Fire
+GH4S01,Harry Potter y el Caliz de Fuego (Spain)
 GH4S69,Harry Potter y el Caliz de Fuego
+GH5D01,DreamWorks Ab durch die Hecke (Germany)
 GH5D52,Ab durch die Hecke
+GH5E01,DreamWorks Over the Hedge (USA)
 GH5E52,Over the Hedge
+GH5F01,DreamWorks Nos Voisins, les Hommes (France)
 GH5F52,Nos Voisins, les Hommes
+GH5P01,DreamWorks Over the Hedge (Europe)
 GH5P52,Over the Hedge
+GH6E01,Hello Kitty - Roller Rescue (USA)
 GH6EAF,Hello Kitty: Roller Rescue
+GH6P01,Hello Kitty - Roller Rescue (Europe) (En,Fr,De,Es,It)
 GH6P7N,Hello Kitty: Roller Rescue
+GH7E01,Happy Feet (USA) (En,Fr)
 GH7E5D,Happy Feet
+GH9P01,Tony Hawk's American Wasteland (Europe) (En,Fr,De,Es,It)
 GH9P52,Tony Hawk's American Wasteland
+GHAE01,Resident Evil 2 (USA)
 GHAE08,Resident Evil 2
+GHAJ01,Biohazard 2 (Japan)
 GHAJ08,Biohazard 2
+GHAP01,Resident Evil 2 (Europe) (En,Fr,De,Es,It)
 GHAP08,Resident Evil 2
+GHBE01,Hobbit, The - The Prelude to the Lord of the Rings (USA)
 GHBE7D,The Hobbit: The Prelude to the Lord of the Rings
+GHBP01,Hobbit, The - The Prelude to the Lord of the Rings (Europe) (En,Fr,De,Es,It)
 GHBP7D,The Hobbit: The Prelude to the Lord of the Rings
+GHCD01,Disneys Himmel und Huhn (Germany)
 GHCD4Q,Disneys Himmel und Huhn
+GHCE01,Disney's Chicken Little (USA)
 GHCE4Q,Chicken Little
+GHCF01,Disney Chicken Little (France)
 GHCF4Q,Chicken Little
+GHCJ01,Disney's Chicken Little (Japan)
 GHCJG9,Chicken Little
+GHCP01,Disney's Chicken Little (Europe)
 GHCP4Q,Chicken Little
+GHEJ01,Homeland (Japan)
 GHEJ91,Homeland
+GHFE01,Pinball Hall of Fame - The Gottlieb Collection (USA)
 GHFE4Z,Pinball Hall of Fame: The Gottlieb Collection
+GHGE01,Go! Go! Hypergrind (USA)
 GHGEEB,Go! Go! Hypergrind
+GHKD01,Hulk (Germany)
 GHKD7D,Hulk
+GHKE01,Hulk (USA)
 GHKE7D,Hulk
+GHKF01,Hulk (France)
 GHKF7D,Hulk
+GHKP01,Hulk (Europe)
 GHKP7D,Hulk
+GHKS01,Hulk (Spain)
 GHKS7D,Hulk
+GHLE01,Harry Potter and the Sorcerer's Stone (USA) (En,Es) (Rev 1)
 GHLE69,Harry Potter and the Sorcerer's Stone
+GHLJ01,Harry Potter to Kenja no Ishi (Japan) (En,Ja)
 GHLJ13,Harry Potter to Kenja no Ishi
+GHLP01,Harry Potter and the Philosopher's Stone (Europe) (En,Nl) (Rev 1)
 GHLP69,Harry Potter and the Philosopher's Stone
+GHLX01,Harry Potter and the Philosopher's Stone (Europe) (En,Sv) (Rev 1)
 GHLX69,Harry Potter and the Philosopher's Stone
+GHLY01,Harry Potter and the Philosopher's Stone (Europe) (Fr,De) (Rev 1)
 GHLY69,Harry Potter and the Philosopher's Stone
+GHLZ01,Harry Potter and the Philosopher's Stone (Europe) (Es,It) (Rev 1)
 GHLZ69,Harry Potter and the Philosopher's Stone
+GHMD01,Hitman 2 - Silent Assassin (Germany)
 GHMD4F,Hitman 2: Silent Assassin
+GHME01,Hitman 2 - Silent Assassin (USA)
 GHME4F,Hitman 2: Silent Assassin
+GHMF01,Hitman 2 - Silent Assassin (France)
 GHMF4F,Hitman 2: Silent Assassin
+GHMP01,Hitman 2 - Silent Assassin (Europe)
 GHMP4F,Hitman 2: Silent Assassin
+GHNE01,Hunter - The Reckoning (USA)
 GHNE71,Hunter: The Reckoning
+GHNX01,Hunter - The Reckoning (Europe) (En,Fr,De)
 GHNX71,Hunter: The Reckoning
+GHPE01,Street Hoops (USA)
 GHPE52,Street Hoops
+GHQE01,Simpsons, The - Hit & Run (USA)
 GHQE7D,The Simpsons: Hit & Run
+GHQP01,Simpsons, The - Hit & Run (Europe) (En,Fr,De)
 GHQP7D,The Simpsons: Hit & Run
+GHRE01,Hot Wheels - World Race (USA) (Rev 1)
 GHRE78,Hot Wheels: World Race
+GHRP01,Hot Wheels - World Race (Europe)
 GHRP78,Hot Wheels: World Race
+GHSE01,Harry Potter and the Chamber of Secrets (USA)
 GHSE69,Harry Potter and the Chamber of Secrets
+GHSJ01,Harry Potter to Himitsu no Heya (Japan)
 GHSJ13,Harry Potter to Himitsu no Heya
+GHSP01,Harry Potter and the Chamber of Secrets (Europe)
 GHSP69,Harry Potter and the Chamber of Secrets
+GHSX01,Harry Potter and the Chamber of Secrets (Europe) (Es,It,Pt)
 GHSX69,Harry Potter and the Chamber of Secrets
+GHSY01,Harry Potter and the Chamber of Secrets (Europe) (En,Fr,De)
 GHSY69,Harry Potter and the Chamber of Secrets
+GHTJ01,Hikaru no Go 3 (Japan)
 GHTJA4,Hikaru no Go 3
+GHUE01,Incredible Hulk, The - Ultimate Destruction (USA)
 GHUE7D,The Incredible Hulk: Ultimate Destruction
+GHUF01,Incredible Hulk, The - Ultimate Destruction (France)
 GHUF7D,The Incredible Hulk: Ultimate Destruction
+GHUP01,Incredible Hulk, The - Ultimate Destruction (Europe) (En,Es,It)
 GHUP7D,The Incredible Hulk: Ultimate Destruction
+GHVE01,Disney's Hide & Sneak (USA) (Rev 1)
 GHVE08,Disney's Hide & Sneak
+GHVP01,Disney's Hide & Sneak (Europe) (En,Fr,De)
 GHVP08,Disney's Hide & Sneak
+GHWE01,Hot Wheels - Velocity X (USA)
 GHWE78,Hot Wheels: Velocity X
+GHWP01,Hot Wheels - Velocity X (Europe)
 GHWP78,Hot Wheels: Velocity X
+GHYE01,Disney's The Haunted Mansion (USA)
 GHYE6S,The Haunted Mansion
+GHZE01,NHL Hitz Pro (USA)
 GHZE5D,NHL Hitz Pro
+GI2J01,Momotarou Dentetsu 12 - Nishi Nihon-hen mo Arimasse! (Japan)
 GI2J18,Momotarou Dentetsu 12: Nishi Nihon-hen mo Arimasse!
+GIAE01,Ice Age 2 - The Meltdown (USA)
 GIAE7D,Ice Age 2: The Meltdown
+GIAP01,Ice Age 2 - The Meltdown (Europe) (En,Fr,De)
 GIAP7D,Ice Age 2: The Meltdown
+GIBE01,Italian Job, The (USA)
 GIBE4F,The Italian Job
+GIBP01,Italian Job, The (Europe) (En,Fr,De,Es,It)
 GIBP4F,The Italian Job
+GICD01,Disney-Pixar Die Unglaublichen (Germany)
 GICD78,Die Unglaublichen
+GICE01,Disney-Pixar The Incredibles (USA)
 GICE78,The Incredibles
+GICF01,Disney-Pixar Les Indestructibles (France)
 GICF78,Les Indestructibles
+GICH01,Disney-Pixar The Incredibles (Netherlands)
 GICH78,The Incredibles
+GICJ01,Disney-Pixar Mr. Incredible (Japan)
 GICJG9,Mr. Incredible
+GICP01,Disney-Pixar The Incredibles (Europe)
 GICP78,The Incredibles
+GIFJ01,Generation of Chaos Exceed - Yami no Koujo Roze (Japan)
 GIFJDQ,Generation of Chaos Exceed: Yami no Koujo Roze
+GIGJ01,Bleach GC - Tasogare ni Mamieru Shinigami (Japan)
 GIGJ8P,Bleach GC: Tasogare ni Mamieru Shinigami
+GIHD01,Scooby-Doo! Nacht der 100 Schrecken (Germany)
 GIHD78,Scooby-Doo! Nacht der 100 Schrecken
+GIHE01,Scooby-Doo! Night of 100 Frights (USA)
 GIHE78,Scooby-Doo! Night of 100 Frights
+GIHF01,Scooby-Doo! La Nuit des 100 Frissons (France)
 GIHF78,Scooby-Doo! La Nuit des 100 Frissons
+GIHP01,Scooby-Doo! Night of 100 Frights (Europe)
 GIHP78,Scooby-Doo! Night of 100 Frights
+GIIJ01,Momotarou Dentetsu 11 - Black Bonby Shutsugen! no Maki (Japan)
 GIIJ18,Momotarou Dentetsu 11: Black Bonby Shutsugen! no Maki
+GIJE01,Space Raiders (USA)
 GIJEFP,Space Raiders
+GIJJ01,Space Raiders (Japan)
 GIJJC0,Space Raiders
+GIJK01,Space Raiders (Korea)
 GIJKC0,Space Raiders
+GIKE01,Ikaruga (USA)
 GIKE70,Ikaruga
+GIKJ01,Ikaruga (Japan)
 GIKJ70,Ikaruga
+GIKP01,Ikaruga (Europe)
 GIKP70,Ikaruga
+GILE01,Aggressive Inline (USA)
 GILE51,Aggressive Inline
+GILP01,Aggressive Inline (Europe) (En,Fr,De,Es)
 GILP51,Aggressive Inline
+GINE01,Batman Begins (USA)
 GINE69,Batman Begins
+GINX01,Batman Begins (Europe) (En,Fr,De,Es,Nl)
 GINX69,Batman Begins
+GIOJ01,Jikkyou Powerful Pro Yakyuu 10 Chou Ketteiban - 2003 Memorial (Japan)
 GIOJCM,Jikkyou Powerful Pro Yakyuu 10 Chou Ketteiban: 2003 Memorial
+GIPE01,Shonen Jump's One Piece - Pirates' Carnival (USA)
 GIPEAF,Shonen Jump's One Piece: Pirates' Carnival
+GIPJ01,One Piece - Pirates Carnival (Japan)
 GIPJB2,One Piece: Pirates Carnival
+GIQE01,Disney-Pixar The Incredibles - Rise of the Underminer (USA)
 GIQE78,The Incredibles: Rise of the Underminer
+GIQJ01,Disney-Pixar Mr. Incredible - Kyouteki Underminer Toujou (Japan)
 GIQJ8P,Mr. Incredible: Kyouteki Underminer Toujou
+GIQX01,Disney-Pixar The Incredibles - Rise of the Underminer (Europe) (En,Fr)
 GIQX78,The Incredibles: Rise of the Underminer
+GIQY01,Disney-Pixar The Incredibles - Rise of the Underminer (Europe) (Fr,De)
 GIQY78,The Incredibles: Rise of the Underminer
+GISE01,Second Sight (USA)
 GISE36,Second Sight
+GISP01,Second Sight (Europe) (En,Fr,De,Es,It)
 GISP36,Second Sight
 GITE01,Geist
 GITP01,Geist
+GIVE01,Intellivision Lives! (USA)
 GIVE4Z,Intellivision Lives!
+GIZE01,Ty the Tasmanian Tiger - Night of the Quinkan (USA)
 GIZE52,TY the Tasmanian Tiger: Night of the Quinkan
+GJ2J01,Jikkyou World Soccer 2002 (Japan)
 GJ2JCM,Jikkyou World Soccer 2002
+GJ2P01,International Superstar Soccer 2 (Europe) (En,Fr,De,Es,It)
 GJ2PA4,International Superstar Soccer 2
+GJ3P01,International Superstar Soccer 3 (Europe) (En,Fr,De,Es,It)
 GJ3PA4,International Superstar Soccer 3
+GJBE01,Bomberman Jetters (USA)
 GJBE18,Bomberman Jetters
 GJBE5G,Bomberman Jetters
+GJBJ01,Bomberman Jetters (Japan)
 GJBJ18,Bomberman Jetters
+GJCE01,Samurai Jack - The Shadow of Aku (USA)
 GJCE8P,Samurai Jack: The Shadow of Aku
+GJCP01,Samurai Jack - The Shadow of Aku (Europe) (En,Fr,De,Es,It)
 GJCP8P,Samurai Jack: The Shadow of Aku
+GJDE01,Judge Dredd - Dredd vs. Death (USA)
 GJDE5S,Judge Dredd: Dredd vs. Death
+GJDX01,Judge Dredd - Dredd vs. Death (Germany) (En,De)
 GJDX7D,Judge Dredd: Dredd vs. Death
+GJDY01,Judge Dredd - Dredd vs. Death (Europe) (En,Fr)
 GJDY7D,Judge Dredd: Dredd vs. Death
+GJFE01,Nickelodeon The Adventures of Jimmy Neutron - Boy Genius - Jet Fusion (USA)
 GJFE78,The Adventures of Jimmy Neutron: Boy Genius: Jet Fusion
+GJFP01,Nickelodeon The Adventures of Jimmy Neutron - Boy Genius - Jet Fusion (Europe)
 GJFP78,The Adventures of Jimmy Neutron: Boy Genius: Jet Fusion
+GJKD01,Star Wars - Jedi Knight II - Jedi Outcast (Germany)
 GJKD52,Star Wars: Jedi Knight II: Jedi Outcast
+GJKE01,Star Wars - Jedi Knight II - Jedi Outcast (USA)
 GJKE52,Star Wars: Jedi Knight II: Jedi Outcast
+GJKF01,Star Wars - Jedi Knight II - Jedi Outcast (France)
 GJKF52,Star Wars: Jedi Knight II: Jedi Outcast
+GJKP01,Star Wars - Jedi Knight II - Jedi Outcast (Europe)
 GJKP52,Star Wars: Jedi Knight II: Jedi Outcast
+GJND01,Nickelodeon Jimmy Neutron - Der mutige Erfinder (Germany)
 GJND78,Jimmy Neutron: Der mutige Erfinder
+GJNE01,Nickelodeon Jimmy Neutron - Boy Genius (USA)
 GJNE78,Jimmy Neutron: Boy Genius
+GJNP01,Nickelodeon Jimmy Neutron - Boy Genius (Europe)
 GJNP78,Jimmy Neutron: Boy Genius
+GJPJ01,Jikkyou Powerful Pro Yakyuu 11 (Japan)
 GJPJCM,Jikkyou Powerful Pro Yakyuu 11
+GJSJ01,Hudson Selection Vol. 2 - Star Soldier (Japan)
 GJSJ18,Hudson Selection Vol. 2: Star Soldier
+GJUD01,Tak und die Macht des Juju (Germany)
 GJUD78,Tak und die Macht des Juju
+GJUE01,Tak and the Power of Juju (Korea)
 GJUE78,Tak and the Power of Juju
+GJUF01,Tak & Le Pouvoir de Juju (France)
 GJUF78,Tak & Le Pouvoir de Juju
+GJUP01,Tak and the Power of Juju (Europe)
 GJUP78,Tak and the Power of Juju
+GJWE01,Nickelodeon Tak - The Great Juju Challenge (USA)
 GJWE78,Tak: The Great Juju Challenge
+GJWP01,Nickelodeon Tak - The Great Juju Challenge (Europe) (En,De)
 GJWP78,Tak: The Great Juju Challenge
+GJXE01,Vexx (USA)
 GJXE51,Vexx
+GJXP01,Vexx (Europe) (En,Fr,De,Es,It)
 GJXP51,Vexx
+GJYE01,Nickelodeon Jimmy Neutron - Boy Genius - Attack of the Twonkies (USA)
 GJYE78,Jimmy Neutron: Boy Genius: Attack of the Twonkies
+GJYP01,Nickelodeon Jimmy Neutron - Boy Genius - Attack of the Twonkies (Europe)
 GJYP78,Jimmy Neutron: Boy Genius: Attack of the Twonkies
+GJZE01,SeaWorld Adventure Parks - Shamu's Deep Sea Adventures (USA)
 GJZE52,SeaWorld Adventure Parks: Shamu's Deep Sea Adventures
+GJZP01,SeaWorld Adventure Parks - Shamu's Deep Sea Adventures (Europe)
 GJZP52,SeaWorld Adventure Parks: Shamu's Deep Sea Adventures
+GK2D01,Spider-Man 2 (Germany)
 GK2D52,Spider-Man 2
+GK2E01,Spider-Man 2 (USA)
 GK2E52,Spider-Man 2
+GK2F01,Spider-Man 2 (France)
 GK2F52,Spider-Man 2
+GK2I01,Spider-Man 2 (Italy)
 GK2I52,Spider-Man 2
+GK2P01,Spider-Man 2 (Europe)
 GK2P52,Spider-Man 2
+GK3E01,NBA 2K3 (USA)
 GK3E8P,NBA 2K3
+GK3P01,NBA 2K3 (Europe)
 GK3P8P,NBA 2K3
 GK4E01,Baten Kaitos Origins
 GK4J01,Baten Kaitos II: Hajimari no Tsubasa to Kamigami no Shishi
+GK5E01,Monster House (USA) (En,Fr)
 GK5E78,Monster House
+GK5P01,Monster House (Europe)
 GK5P78,Monster House
+GK5X01,Monster House (Europe) (En,Fr,De,Es,It)
 GK5X78,Monster House
+GK6J01,Croket! Ban-King no Kiki o Sukue (Japan) (Rev 1)
 GK6JA4,Croket! Ban-King no Kiki o Sukue
 GK7E08,Killer7
 GK7J08,Killer7
 GK7P08,Killer7
+GK9E01,Karaoke Revolution Party (USA)
 GK9EA4,Karaoke Revolution Party
+GKAE01,Amazing Island (USA)
 GKAE8P,Amazing Island
+GKAJ01,Kaijuu no Shima - Amazing Island (Japan)
 GKAJ8P,Kaijuu no Shima: Amazing Island
 GKBEAF,Baten Kaitos: Eternal Wings and the Lost Ocean
 GKBJAF,Baten Kaitos: Owaranai Tsubasa to Ushinawareta Umi
 GKBPAF,Baten Kaitos: Eternal Wings and the Lost Ocean
+GKCJ01,Kidou Senshi Gundam - Senshitachi no Kiseki - Kadokawa Shoten Rengou Kikaku Tokubetsu-hen (Japan)
 GKCJG2,Kidou Senshi Gundam: Senshi-tachi no Kiseki: Kadokawa Shoten Rengou Kikaku Tokubetsu-hen
 GKDJ01,Kyojin no Doshin
 GKDP01,Doshin the Giant
+GKEJ01,Jikkyou Powerful Pro Yakyuu 12 - Ketteiban (Japan)
 GKEJA4,Jikkyou Powerful Pro Yakyuu 12: Ketteiban
+GKFE01,Chaos Field (USA)
 GKFEGG,Chaos Field
+GKFJ01,Chaos Field Expanded (Japan) (Rev 2)
 GKFJMS,Chaos Field Expanded
 GKGE01,Donkey Konga
 GKGJ01,Donkey Konga
 GKGP01,Donkey Konga
+GKHE01,King Arthur (USA)
 GKHEA4,King Arthur
+GKHP01,King Arthur (Europe) (En,Fr,De,Es,It)
 GKHPA4,King Arthur
+GKJD01,Disney-Pixar Cars (Germany)
 GKJD78,Cars
+GKJE01,Disney-Pixar Cars (USA)
 GKJE78,Cars
+GKJF01,Disney-Pixar Cars (France)
 GKJF78,Cars
+GKJH01,Disney-Pixar Cars (Netherlands)
 GKJH78,Cars
+GKJJ01,Disney-Pixar Cars (Japan)
 GKJJ78,Cars
+GKJP01,Disney-Pixar Cars (Europe)
 GKJP78,Cars
+GKJS01,Disney-Pixar Cars (Spain)
 GKJS78,Cars
+GKKE01,Knockout Kings 2003 (USA)
 GKKE69,Knockout Kings 2003
+GKKP01,Knockout Kings 2003 (Europe) (En,Fr,De)
 GKKP69,Knockout Kings 2003
+GKLD01,Herr der Ringe, Der - Die Rueckkehr des Koenigs (Germany)
 GKLD69,De Herr der Ringer: Die Rueckkehr des Koenigs
+GKLE01,Lord of the Rings, The - The Return of the King (USA)
 GKLE69,The Lord of the Rings: The Return of the King
+GKLF01,Seigneur des Anneaux, Le - Le Retour du Roi (France)
 GKLF69,Le Seigneur des Anneaux: Le Retour du Roi
+GKLI01,Signore degli Anelli, Il - Il Ritorno del Re (Italy)
 GKLI69,Il Signore degli Anelli: Il ritorno del Re
+GKLJ01,Lord of the Rings - Ou no Kikan (Japan)
 GKLJ13,Lord of the Rings: Ou no Kikan
+GKLP01,Lord of the Rings, The - The Return of the King (Europe) (En,Nl,Sv)
 GKLP69,The Lord of the Rings: The Return of the King
+GKLS01,Senor de los Anillos, El - El Retorno del Rey (Spain)
 GKLS69,El Senor de los Anillos: El Retorno del Rey
+GKME01,Prince of Persia - The Two Thrones (USA) (En,Fr,Es)
 GKME41,Prince of Persia: The Two Thrones
+GKMP01,Prince of Persia - The Two Thrones (Europe) (En,Fr,De,Es,It) (Rev 1)
 GKMP41,Prince of Persia: The Two Thrones
+GKNE01,Ultimate Muscle - Legends vs. New Generation (USA)
 GKNEB2,Ultimate Muscle: Legends vs. New Generation
+GKNJ01,Kinnikuman Nisei - Shinsedai Choujin vs. Densetsu Choujin (Japan)
 GKNJB2,Kinnikuman Nisei: Shinsedai Choujin vs. Densetsu Choujin
+GKOE01,Kao the Kangaroo - Round 2 (USA)
 GKOE70,Kao the Kangaroo: Round 2
+GKOP01,Kao the Kangaroo - Round 2 (Europe) (En,Fr,De,Es,It)
 GKOP6V,Kao the Kangaroo: Round 2
+GKPJ01,Jikkyou Powerful Pro Yakyuu 12 (Japan)
 GKPJ6E,Mario Kart Arcade GP
 GKPJA4,Jikkyou Powerful Pro Yakyuu 12
 GKQE01,Kururin Squash!
 GKQJ01,Kururin Squash!
 GKREB2,Ribbit King Plus! (Bonus Disc)
+GKRJ01,Kero Kero King DX (Japan)
 GKRJB2,Kero Kero King DX
+GKRP01,Ribbit King (Europe) (En,Fr,De,Es,It)
 GKRPB2,Ribbit King
+GKSE01,Kelly Slater's Pro Surfer (USA)
 GKSE52,Kelly Slater's Pro Surfer
+GKSP01,Kelly Slater's Pro Surfer (Europe, Australia)
 GKSP52,Kelly Slater's Pro Surfer
+GKSX01,Kelly Slater's Pro Surfer (Europe) (En,Fr,De)
 GKSX52,Kelly Slater's Pro Surfer
+GKTJ01,Captain Tsubasa - Ougon Sedai no Chousen (Japan) (Rev 1)
 GKTJA4,Captain Tsubasa: Ougon Sedai no Chousen
+GKUE01,Scaler (USA) (En,Fr)
 GKUE9G,Scaler
+GKWJ01,Dream Mix TV - World Fighters (Japan)
 GKWJ18,Dream Mix TV: World Fighters
+GKXJ01,Kiwame Mahjong DX II - The 4th MONDO21Cup Competition (Japan)
 GKXJE7,Kiwame Mahjong DX II: The 4th MONDO21Cup Competition
 GKYE01,Kirby Air Ride
 GKYJ01,Kirby's Airride
 GKYP01,Kirby Air Ride
+GKZD01,Codename - Kids Next Door - Operation - V.I.D.E.O.S.P.I.E.L. (Germany)
 GKZD54,Codename: Kids Next Door: Operation: V.I.D.E.O.S.P.I.E.L.
+GKZE01,Codename - Kids Next Door - Operation - V.I.D.E.O.G.A.M.E. (USA)
 GKZE9G,Codename: Kids Next Door: Operation: V.I.D.E.O.G.A.M.E.
+GKZP01,Codename - Kids Next Door - Operation - V.I.D.E.O.G.A.M.E. (Europe)
 GKZP54,Codename: Kids Next Door: Operation: V.I.D.E.O.G.A.M.E.
+GL2E01,Legends of Wrestling II (USA)
 GL2E51,Legends of Wrestling II
+GL2P01,Legends of Wrestling II (Europe)
 GL2P51,Legends of Wrestling II
 GL3EE8,Lupin the Third - Lost Treasure Under the Sea
 GL3JE8,Lupin III: Umi ni Kieta Hihou
+GL5E01,LEGO Star Wars - The Video Game (USA)
 GL5E4F,LEGO Star Wars: The Video Game
+GL5P01,LEGO Star Wars - The Video Game (Europe)
 GL5P4F,LEGO Star Wars: The Video Game
+GL5X01,LEGO Star Wars - The Video Game (Europe) (Fr,De)
 GL5X4F,LEGO Star Wars: The Video Game
+GL7E01,LEGO Star Wars II - The Original Trilogy (USA)
 GL7E64,LEGO Star Wars II: The Original Trilogy
+GL7P01,LEGO Star Wars II - The Original Trilogy (Europe) (En,Fr,De,Da)
 GL7P64,LEGO Star Wars II: The Original Trilogy
+GL8D01,Lara Croft Tomb Raider - Legend (Germany)
 GL8D4F,Lara Croft Tomb Raider: Legend
+GL8E01,Lara Croft Tomb Raider - Legend (USA)
 GL8E4F,Lara Croft Tomb Raider: Legend
+GL8F01,Lara Croft Tomb Raider - Legend (France)
 GL8F4F,Lara Croft Tomb Raider: Legend
+GL8P01,Lara Croft Tomb Raider - Legend (Europe)
 GL8P4F,Lara Croft Tomb Raider: Legend
+GLBE01,Home Run King (USA)
 GLBE8P,Home Run King
+GLCD01,Lemony Snicket - Raetselhafte Ereignisse (Germany)
 GLCD52,Lemony Snicket: Raetselhafte Ereignisse
+GLCE01,Lemony Snicket's A Series of Unfortunate Events (USA)
 GLCE52,Lemony Snicket's A Series of Unfortunate Events
+GLCF01,Desastreuses Aventures des Orphelins Baudelaire, Les - D'Apres Lemony Snicket (France)
 GLCF52,Le Desastreuses Aventures des Orphelins Baudelaires: D'Apres Lemony Snicket
+GLCP01,Lemony Snicket's A Series of Unfortunate Events (Europe)
 GLCP52,Lemony Snicket's A Series of Unfortunate Events
+GLCS01,Serie de Catastroficas Desdichas de Lemony Snicket, Una (Spain)
 GLCS52,Una Serie de Catastroficas Desdichas de Lemony Snicket
+GLEE01,Resident Evil 3 - Nemesis (USA)
 GLEE08,Resident Evil 3: Nemesis
+GLEJ01,Biohazard 3 - Last Escape (Japan)
 GLEJ08,Biohazard 3: Last Escape
+GLEP01,Resident Evil 3 - Nemesis (Europe) (En,Fr,De,Es,It)
 GLEP08,Resident Evil 3: Nemesis
+GLGP01,Largo Winch - Empire Under Threat (Europe) (En,Fr,De,Es,It)
 GLGP41,Largo Winch: Empire Under Threat
+GLHE01,DreamWorks & Aardman Flushed Away (USA)
 GLHEG9,Flushed Away
+GLHP01,DreamWorks & Aardman Flushed Away (Europe) (En,Fr,De,Es,It)
 GLHPG9,Flushed Away
+GLIJ01,Special Jinsei Game (Japan)
 GLIJA7,Special Jinsei Game
+GLJJ01,Radirgy Generic (Japan)
 GLJJMS,Radirgy Generic
+GLLE01,Disney-Pixar Ratatouille (USA)
 GLLE78,Ratatouille
+GLLF01,Disney-Pixar Ratatouille (France)
 GLLF78,Ratatouille
 GLME01,Luigi's Mansion
 GLME02,Luigi's Mansion: First-Person Optimized
@@ -2610,46 +3341,83 @@ GLMLFG,Luigi's Final Ghosthunt
 GLMN64,Project Reality (Demo)
 GLMP01,Luigi's Mansion
 GLMPR1,Project Reality (Full Version)
+GLNE01,Looney Tunes - Back in Action (USA)
 GLNE69,Looney Tunes: Back in Action
+GLNP01,Looney Tunes - Back in Action (Europe) (En,Fr,De,Es,It)
 GLNP69,Looney Tunes: Back in Action
+GLOD01,Herr der Ringe, Der - Die zwei Tuerme (Germany)
 GLOD69,De Herr der Ringer: Die zwei Tuerme
+GLOE01,Lord of the Rings, The - The Two Towers (USA)
 GLOE69,The Lord of the Rings: The Two Towers
+GLOF01,Seigneur des Anneaux, Le - Les Deux Tours (France)
 GLOF69,Le Seigneur des Anneaux: Les Deux Tours
+GLOI01,Signore degli Anelli, Il - Le Due Torri (Italy)
 GLOI69,Il Signore degli Anelli: Le Due Torri
+GLOJ01,Lord of the Rings - Futatsu no Tou (Japan)
 GLOJ13,Lord of the Rings: Futatsu no Tou
+GLOP01,Lord of the Rings, The - The Two Towers (Europe) (En,Nl)
 GLOP69,The Lord of the Rings: The Two Towers
+GLOS01,Senor de los Anillos, El - Las Dos Torres (Spain)
 GLOS69,El Senor de los Anillos: Las Dos Torres
+GLQE01,Tom Clancy's Rainbow Six - Lockdown (USA)
 GLQE41,Tom Clancy's Rainbow Six: Lockdown
+GLQP01,Tom Clancy's Rainbow Six - Lockdown (Europe) (En,Fr,De,Es,It)
 GLQP41,Tom Clancy's Rainbow Six: Lockdown
+GLRD01,Star Wars - Rogue Squadron III - Rebel Strike (Germany) (En,De)
 GLRD64,Star Wars: Rogue Squadron III: Rebel Strike
+GLRE01,Star Wars - Rogue Squadron III - Rebel Strike (USA) (En,Fr,De,Es,It)
 GLRE64,Star Wars: Rogue Squadron III: Rebel Strike
+GLRF01,Star Wars - Rogue Squadron III - Rebel Strike (France) (En,Fr)
 GLRF64,Star Wars: Rogue Squadron III: Rebel Strike
+GLRP01,Star Wars - Rogue Squadron III - Rebel Strike (Europe) (En,Fr,De,Es,It)
 GLRP64,Star Wars: Rogue Squadron III: Rebel Strike
+GLSD01,Gladius (Germany)
 GLSD64,Gladius
 GLSE01,Super Luigi Sunshine
 GLSE64,Gladius
+GLSF01,Gladius (France)
 GLSF64,Gladius
+GLSP01,Gladius (Europe) (En,Es,It)
 GLSP64,Gladius
+GLUE01,Lotus Challenge (USA)
 GLUE7U,Lotus Challenge
+GLVD01,Chroniken von Narnia, Die - Der Koenig von Narnia (Germany)
 GLVD4Q,Die Chroniken von Narnia: Der Koenig von Narnia
+GLVE01,Chronicles of Narnia, The - The Lion, the Witch and the Wardrobe (USA)
 GLVE4Q,The Chronicles of Narnia: The Lion, the Witch and the Wardrobe
+GLVF01,Monde de Narnia, Le - Chapitre 1 - Le Lion, la Sorciere Blanche et l'Armoire Magique (France)
 GLVF4Q,Le Monde de Narnia: Chapitre 1: Le Lion, la Sorciere Blanche et l'Armoire Magique
+GLVP01,Chronicles of Narnia, The - The Lion, the Witch and the Wardrobe (Europe)
 GLVP4Q,The Chronicles of Narnia: The Lion, the Witch and the Wardrobe
+GLWE01,Legends of Wrestling (USA)
 GLWE51,Legends of Wrestling
+GLWP01,Legends of Wrestling (Europe)
 GLWP51,Legends of Wrestling
+GLXJ01,Legend of Golfer (Japan)
 GLXJ29,Legend of Golfer
+GLYE01,NBA Live 2005 (USA)
 GLYE69,NBA Live 2005
+GLYP01,NBA Live 2005 (Europe) (En,Fr)
 GLYP69,NBA Live 2005
+GLZD01,007 - Liebesgruesse aus Moskau (Germany)
 GLZD69,007: Liebesgruesse aus Moskau
+GLZE01,007 - From Russia with Love (USA)
 GLZE69,007: From Russia with Love
+GLZF01,007 - Bons Baisers de Russie (France)
 GLZF69,007: Bons Baisers de Russie
+GLZP01,007 - From Russia with Love (Europe)
 GLZP69,007: From Russia with Love
+GM2E01,Super Monkey Ball 2 (USA)
 GM2E8P,Super Monkey Ball 2
 GM2EBJ,Monkeyed Ball 2: Witty Subtitle
 GM2EDX,Super Monkey Ball Deluxe
+GM2J01,Super Monkey Ball 2 (Japan)
 GM2J8P,Super Monkey Ball 2
+GM2P01,Super Monkey Ball 2 (Europe) (En,Fr,De,Es,It)
 GM2P8P,Super Monkey Ball 2
+GM3E01,Madden NFL 2003 (USA)
 GM3E69,Madden NFL 2003
+GM3P01,Madden NFL 2003 (Europe)
 GM3P69,Madden NFL 2003
 GM4E01,Mario Kart: Double Dash!!
 GM4E05,Mario Kart: Double Dash!! Plus
@@ -2658,45 +3426,82 @@ GM4E64,M64 MKDD EXTENDED v2.0
 GM4J01,Mario Kart: Double Dash!!
 GM4K01,Mario Kart: Double Dash!!
 GM4P01,Mario Kart: Double Dash!!
+GM5D01,Metal Arms - Glitch in the System (Germany)
 GM5D7D,Metal Arms: Glitch in the System
+GM5E01,Metal Arms - Glitch in the System (USA)
 GM5E7D,Metal Arms: Glitch in the System
+GM5F01,Metal Arms - Glitch in the System (France)
 GM5F7D,Metal Arms: Glitch in the System
+GM5P01,Metal Arms - Glitch in the System (Europe)
 GM5P7D,Metal Arms: Glitch in the System
+GM6E01,Medabots Infinity (USA)
 GM6EE9,Medabots Infinity
+GM6J01,Medarot Brave (Japan) (Rev 1)
 GM6JE9,Medarot Brave
+GM6P01,Medabots Infinity (Europe) (En,Fr,De,Nl)
 GM6PE9,Medabots Infinity
 GM8E01,Metroid Prime
 GM8J01,Metroid Prime
 GM8K01,Metroid Prime
 GM8P01,Metroid Prime
+GM9E01,Muppets - Party Cruise (USA)
 GM9E6S,Muppets: Party Cruise
+GMAE01,Mary-Kate and Ashley - Sweet 16 - Licensed to Drive (USA)
 GMAE51,Mary-Kate and Ashley: Sweet 16: Licensed to Drive
+GMAP01,Mary-Kate and Ashley - Sweet 16 - Licensed to Drive (Europe)
 GMAP51,Mary-Kate and Ashley: Sweet 16: Licensed to Drive
+GMBE01,Super Monkey Ball (USA)
 GMBE8P,Super Monkey Ball
+GMBJ01,Super Monkey Ball (Japan) (Rev 2)
 GMBJ8P,Super Monkey Ball
+GMBP01,Super Monkey Ball (Europe) (En,Fr,De,Es,It)
 GMBP8P,Super Monkey Ball
+GMDE01,Madden NFL 2002 (USA)
 GMDE69,Madden NFL 2002
+GMEE01,Men in Black II - Alien Escape (USA)
 GMEE70,Men in Black II: Alien Escape
+GMEP01,Men in Black II - Alien Escape (Europe) (En,Fr,De,Es,It)
 GMEP70,Men in Black II: Alien Escape
+GMFD01,Medal of Honor - Frontline (Germany)
 GMFD69,Medal of Honor: Frontline
+GMFE01,Medal of Honor - Frontline (USA)
 GMFE69,Medal of Honor: Frontline
+GMFF01,Medal of Honor - En Premiere Ligne (France)
 GMFF69,Medal of Honor: En Premiere Ligne
+GMFI01,Medal of Honor - Frontline (Italy)
 GMFI69,Medal of Honor: Frontline
+GMFP01,Medal of Honor - Frontline (Europe)
 GMFP69,Medal of Honor: Frontline
+GMFS01,Medal of Honor - Frontline (Spain)
 GMFS69,Medal of Honor: Frontline
+GMHE01,Mat Hoffman's Pro BMX 2 (USA)
 GMHE52,Mat Hoffman's Pro BMX 2
+GMHF01,Mat Hoffman's Pro BMX 2 (France)
+GMHP01,Mat Hoffman's Pro BMX 2 (Europe)
 GMHP52,Mat Hoffman's Pro BMX 2
+GMIE01,Mission - Impossible - Operation Surma (USA)
 GMIE70,Mission: Impossible: Operation Surma
+GMIJ01,Mission - Impossible - Operation Surma (Japan)
 GMIJ70,Mission: Impossible: Operation Surma
+GMIP01,Mission - Impossible - Operation Surma (Europe) (En,Fr,De,Es,It)
 GMIP70,Mission: Impossible: Operation Surma
+GMJE01,Monster Jam - Maximum Destruction (USA)
 GMJE41,Monster Jam: Maximum Destruction
+GMJP01,Monster Jam - Maximum Destruction (Europe)
 GMJP41,Monster Jam: Maximum Destruction
+GMKD01,Mortal Kombat - Deadly Alliance (Germany) (En,Fr,De,Es,It)
 GMKD5D,Mortal Kombat: Deadly Alliance
+GMKE01,Mortal Kombat - Deadly Alliance (USA)
 GMKE5D,Mortal Kombat: Deadly Alliance
+GMKP01,Mortal Kombat - Deadly Alliance (Europe) (En,Fr,De,Es,It)
 GMKP5D,Mortal Kombat: Deadly Alliance
+GMLE01,ESPN MLS ExtraTime 2002 (USA)
 GMLEA4,ESPN MLS ExtraTime 2002
+GMNE01,Disney-Pixar Monsters, Inc. - Scream Arena (USA)
 GMNE78,Monsters, Inc.: Scream Arena
+GMNP01,Disney-Pixar Monsters, Inc. - Scream Arena (Europe) (En,Fr,De,Es,It)
 GMNP78,Monsters, Inc.: Scream Arena
+GMOP01,Micro Machines (Europe) (En,Fr,De,Es,It)
 GMOP70,Micro Machines
 GMPE01,Mario Party 4
 GMPE02,Mario Party 4 Widescreen
@@ -2704,9 +3509,13 @@ GMPEDX,Mario Party 4 Deluxe
 GMPJ01,Mario Party 4
 GMPP01,Mario Party 4
 GMPW01,Mario Party 4
+GMQE01,Monopoly Party (USA)
 GMQE70,Monopoly Party
+GMQP01,Monopoly Party (Europe) (En,Fr,De,Es,It)
 GMQP70,Monopoly Party
+GMRE01,Big Air Freestyle (USA)
 GMRE70,Big Air Freestyle
+GMRP01,Big Air Freestyle (Europe) (En,Fr,De,Es,It)
 GMRP70,Big Air Freestyle
 GMSE01,Super Mario Sunshine
 GMSE02,Super Mario Sunshine Multiplayer
@@ -2716,124 +3525,227 @@ GMSE05,Super Mario Solarshine
 GMSJ01,Super Mario Sunshine
 GMSK01,Super Mario Sunshine
 GMSP01,Super Mario Sunshine
+GMTE01,Disney's Party (USA)
 GMTE69,Disney's Party
+GMTJ01,Disney's Magical Park (Japan)
 GMTJ18,Magical Park
+GMTP01,Disney's Party (Europe) (En,Fr,De,Es,It)
 GMTP69,Disney's Party
+GMUE01,Dr. Muto (USA)
 GMUE5D,Dr. Muto
+GMWD01,Minority Report - Everybody Runs (Germany)
 GMWD52,Minority Report: Everybody Runs
+GMWE01,Minority Report - Everybody Runs (USA)
 GMWE52,Minority Report: Everybody Runs
+GMWF01,Minority Report - Le Futur vous Rattrape (France)
 GMWF52,Minority Report: Le Futur vous Rattrape
+GMWP01,Minority Report - Everybody Runs (Europe)
 GMWP52,Minority Report: Everybody Runs
 GMXE70,Enter the Matrix
 GMXJB2,Enter the Matrix
 GMXP70,Enter the Matrix
+GMYJ01,Gekitou Pro Yakyuu - Mizushima Shinji All Stars vs. Pro Yakyuu (Japan)
 GMYJ8P,Gekitou Pro Yakyuu: Mizushima Shinji All Stars vs. Pro Yakyuu
+GMZE01,Monster 4x4 - Masters of Metal (USA)
 GMZE41,Monster 4x4: Masters of Metal
+GN2E01,NASCAR - Dirt to Daytona (USA)
 GN2E70,NASCAR: Dirt to Daytona
+GN3E01,NHL Hitz 2003 (USA)
 GN3E5D,NHL Hitz 2003
+GN3P01,NHL Hitz 2003 (Europe)
 GN3P5D,NHL Hitz 2003
+GN4E01,NASCAR 2005 - Chase for the Cup (USA)
 GN4E69,NASCAR 2005: Chase for the Cup
+GN5E01,NHL 2005 (USA) (En,Fr)
 GN5E69,NHL 2005
+GN5P01,NHL 2005 (Europe) (En,Fr,De)
 GN5P69,NHL 2005
+GN6E01,NHL 06 (USA) (En,Fr)
 GN6E69,NHL 06
+GN6P01,NHL 06 (Europe) (En,Fr)
 GN6P69,NHL 06
+GN7E01,NFL Street 2 (USA)
 GN7E69,NFL Street 2
+GN7P01,NFL Street 2 (Europe)
 GN7P69,NFL Street 2
+GN8E01,NBA Live 2004 (USA)
 GN8E69,NBA Live 2004
+GN8P01,NBA Live 2004 (Europe) (En,Fr,De,Es,It)
 GN8P69,NBA Live 2004
+GN9E01,Nickelodeon Party Blast (USA)
 GN9E70,Party Blast
+GNAE01,NCAA College Football 2K3 (USA)
 GNAE8P,NCAA College Football 2K3
 GNBE01,NBA Courtside 2002
 GNBJ01,NBA Courtside 2002
 GNBP01,NBA Courtside 2002
+GNCE01,NASCAR Thunder 2003 (USA)
 GNCE69,NASCAR Thunder 2003
+GNDD01,Need for Speed - Underground (Germany)
 GNDD69,Need for Speed: Underground
+GNDE01,Need for Speed - Underground (USA)
 GNDE69,Need for Speed: Underground
+GNDF01,Need for Speed - Underground (France)
 GNDF69,Need for Speed: Underground
+GNDJ01,Need for Speed - Underground (Japan)
 GNDJ13,Need for Speed: Underground
+GNDP01,Need for Speed - Underground (Europe)
 GNDP69,Need for Speed: Underground
+GNED01,Disney-Pixar Findet Nemo (Germany)
 GNED78,Findet Nemo
+GNEE01,Disney-Pixar Finding Nemo (USA)
 GNEE78,Finding Nemo
+GNEF01,Disney-Pixar Le Monde de Nemo (France)
 GNEF78,Le Monde de Nemo
+GNEK01,Disney-Pixar Nemo-reul Chajaseo (Korea)
 GNEK78,Nemo-reul Chajaseo
+GNEP01,Disney-Pixar Finding Nemo (Europe)
 GNEP78,Finding Nemo
+GNES01,Disney-Pixar Buscando a Nemo (Spain)
 GNES78,Buscando a Nemo
+GNFE01,NFL Blitz 2002 (USA)
 GNFE5D,NFL Blitz 2002
+GNGE01,NCAA Football 2003 (USA)
 GNGE69,NCAA Football 2003
+GNHE01,NHL Hitz 2002 (USA)
 GNHE5d,NHL Hitz 2002
+GNHP01,NHL Hitz 2002 (Europe) (Rev 1)
 GNHP5D,NHL Hitz 2002
 GNIEA4,Teenage Mutant Ninja Turtles 2: Battle Nexus
 GNIPA4,Teenage Mutant Ninja Turtles 2: Battle Nexus
+GNJE01,I-Ninja (USA)
 GNJEAF,I-Ninja
+GNKE01,NCAA College Basketball 2K3 (USA)
 GNKE8P,NCAA College Basketball 2K3
+GNLE01,NBA Live 2003 (USA)
 GNLE69,NBA Live 2003
 GNLE82,Mario Kart Arcade GP 2
+GNLF01,NBA Live 2003 (France)
 GNLJ82,Mario Kart Arcade GP 2
+GNLP01,NBA Live 2003 (Europe) (En,Fr,De,Es,It)
 GNLP69,NBA Live 2003
+GNME01,Namco Museum (USA)
 GNMEAF,Namco Museum
+GNNE01,NFL Street (USA)
 GNNE69,NFL Street
+GNNP01,NFL Street (Europe)
 GNNP69,NFL Street
+GNOE01,Nicktoons Unite! (USA)
 GNOE78,Nicktoons Unite!
+GNOX01,Nickelodeon SpongeBob SquarePants and Friends Unite! (Europe) (En,Fr,De,Nl)
 GNOX78,SpongeBob SquarePants and Friends Unite!
+GNPP01,Nickelodeon Party Blast (Europe) (En,Fr,De,Es,It)
 GNPP70,Party Blast
+GNQE01,Madden NFL 2005 (USA)
 GNQE69,Madden NFL 2005
+GNQP01,Madden NFL 2005 (Europe)
 GNQP69,Madden NFL 2005
+GNRE01,Naruto - Clash of Ninja (USA)
 GNREDA,Naruto: Clash of Ninja
+GNRJ01,Naruto - Gekitou Ninja Taisen! (Japan)
 GNRJDA,Naruto: Gekitou Ninja Taisen!
+GNSE01,NBA Street (USA)
 GNSE69,NBA Street
+GNSJ01,NBA Street (Japan)
 GNSJ13,NBA Street
+GNUE01,Naruto - Clash of Ninja 2 (USA)
 GNUEDA,Naruto: Clash of Ninja 2
+GNUJ01,Naruto - Gekitou Ninja Taisen! 2 (Japan)
 GNUJDA,Naruto: Gekitou Ninja Taisen! 2
+GNUP01,Naruto - Clash of Ninja - European Version (Europe) (En,Fr,De,Es,It)
 GNUPDA,Naruto: Clash of Ninja - European Version
+GNVE01,NHL 2004 (USA)
 GNVE69,NHL 2004
+GNVP01,NHL 2004 (Europe) (En,Fr,De,Sv,Fi)
 GNVP69,NHL 2004
+GNWE01,Def Jam - Fight for NY (USA)
 GNWE69,Def Jam: Fight for NY
+GNWP01,Def Jam - Fight for NY (Europe) (En,Fr)
 GNWP69,Def Jam: Fight for NY
+GNXE01,NCAA Football 2004 (USA)
 GNXE69,NCAA Football 2004
+GNZE01,NBA Street Vol. 2 (USA)
 GNZE69,NBA Street Vol. 2
+GNZP01,NBA Street Vol. 2 (Europe) (En,Fr)
 GNZP69,NBA Street Vol. 2
+GO2D01,Blood Omen 2 - The Legacy of Kain Series (Germany)
 GO2D4F,Blood Omen 2: The Legacy of Kain Series
+GO2E01,Blood Omen 2 - The Legacy of Kain Series (USA)
 GO2E4F,Blood Omen 2: The Legacy of Kain Series
+GO2F01,Blood Omen 2 - The Legacy of Kain Series (France)
 GO2F4F,Blood Omen 2: The Legacy of Kain Series
+GO2P01,Blood Omen 2 - The Legacy of Kain Series (Europe)
 GO2P4F,Blood Omen 2: The Legacy of Kain Series
+GO3E01,NFL Blitz 2003 (USA)
 GO3E5D,NFL Blitz 2003
+GO7D01,007 - Nightfire (Germany)
 GO7D69,007: Nightfire
+GO7E01,007 - Nightfire (USA)
 GO7E69,007: Nightfire
+GO7F01,007 - Nightfire (France)
 GO7F69,007: Nightfire
+GO7P01,007 - Nightfire (Europe) (En,It,Nl,Sv)
 GO7P69,James Bond 007: Nightfire
+GO7S01,007 - Nightfire (Spain)
 GO7S69,007: Nightfire
+GOAE01,Cabela's Outdoor Adventures (USA)
 GOAE52,Cabela's Outdoor Adventures
+GOBE01,Bad Boys - Miami Takedown (USA)
 GOBE4Z,Bad Boys: Miami Takedown
+GOBP01,Bad Boys II (Europe) (En,Fr,De,Es,It)
 GOBP7N,Bad Boys II
+GOCE01,RoadKill (USA)
 GOCE5D,RoadKill
+GODJ01,Ohenro-San - Hosshin no Dojo (Awa Kuni) Hen (Japan)
 GODJGA,Ohenro-San: Hosshin no Dojo
+GOFE01,Outlaw Golf (USA)
 GOFE7L,Outlaw Golf
+GOFP01,Outlaw Golf (Europe) (En,Fr,De)
 GOFP6S,Outlaw Golf
+GOGJ01,One Piece - Grand Battle! 3 (Japan)
 GOGJB2,One Piece: Grand Battle! 3
 GOME01,Mario Power Tennis
 GOMJ01,Mario Tennis GC
 GOMP01,Mario Power Tennis
+GOND01,Medal of Honor - European Assault (Germany)
 GOND69,Medal of Honor: European Assault
+GONE01,Medal of Honor - European Assault (USA)
 GONE69,Medal of Honor: European Assault
+GONF01,Medal of Honor - Les Faucons de Guerre (France)
 GONF69,Medal of Honor: Les Faucons de Guerre
+GONJ01,Medal of Honor - Europa Kyoushuu (Japan)
 GONJ13,Medal of Honor: Europa Kyoushuu
+GONP01,Medal of Honor - European Assault (Europe)
 GONP69,Medal of Honor: European Assault
 GOOE01,Odama
 GOOJ01,Odama
 GOOP01,Odama
+GOPE01,Shonen Jump's One Piece - Grand Battle (USA)
 GOPEB2,Shonen Jump's One Piece: Grand Battle
+GOPJ01,One Piece - Grand Battle! Rush (Japan)
 GOPJB2,One Piece: Grand Battle! Rush
+GOQE01,Shonen Jump's One Piece - Grand Adventure (USA)
 GOQE82,Shonen Jump's One Piece: Grand Adventure
 GOQEAF,Shonen Jump's One Piece: Grand Adventure
+GOSE01,Open Season (USA) (En,Fr,Es)
 GOSE41,Open Season
+GOSP01,Open Season (Europe) (En,Fr,Es)
 GOSP41,Open Season
+GOSX01,Open Season (Europe) (En,Fr,De,Es,It)
 GOSX41,Open Season
+GOTJ01,From TV Animation One Piece - Treasure Battle! (Japan)
 GOTJB2,From TV Animation One Piece: Treasure Battle!
+GOUP01,Cocoto Funfair (Europe) (En,Fr,De,Es,It)
 GOUPNK,Cocoto Funfair
+GOWD01,Need for Speed - Most Wanted (Germany)
 GOWD69,Need for Speed: Most Wanted
+GOWE01,Need for Speed - Most Wanted (USA)
 GOWE69,Need for Speed: Most Wanted
+GOWF01,Need for Speed - Most Wanted (France)
 GOWF69,Need for Speed: Most Wanted
+GOWJ01,Need for Speed - Most Wanted (Japan)
 GOWJ13,Need for Speed: Most Wanted
+GOWP01,Need for Speed - Most Wanted (Europe)
 GOWP69,Need for Speed: Most Wanted
 GOYD69,GoldenEye: Rogue Agent
 GOYE69,GoldenEye: Rogue Agent
@@ -2841,10 +3753,15 @@ GOYF69,GoldenEye: Au Service du Mal
 GOYP69,GoldenEye: Rogue Agent
 GOYS69,GoldenEye: Agente Corrupto
 GOZED3,The Legend of Zelda: Ocarina of Time 1.0
+GP2E01,Pac-Man World 2 (USA)
 GP2EAF,Pac-Man World 2
+GP2P01,Pac-Man World 2 (Europe) (En,Fr,De,Es,It)
 GP2P69,Pac-Man World 2
+GP3E01,Polar Express, The (USA)
 GP3E78,The Polar Express
+GP3P01,Polar Express, The (Europe) (En,Fr,De,Es,It)
 GP3P78,The Polar Express
+GP4J01,Hudson Selection Vol. 3 - PC Genjin - Pithecanthropus Computerurus (Japan)
 GP4J18,Hudson Selection Vol. 3: PC Genjin: Pithecanthropus Computerurus
 GP5E01,Mario Party 5
 GP5E02,Mario Party 5+ Base Patch
@@ -2862,86 +3779,152 @@ GP7E02,Mario Party 7 CPU Only
 GP7E03,Mario Party 7 Widescreen
 GP7J01,Mario Party 7
 GP7P01,Mario Party 7
+GP8E01,Pac-Man World 3 (USA)
 GP8EAF,Pac-Man World 3
+GP8P01,Pac-Man World 3 (Europe) (En,Fr,De,Es,It)
 GP8P69,Pac-Man World 3
+GP9E01,Rogue Ops (USA)
 GP9E7F,Rogue Ops
+GP9J01,Rogue Ops (Japan)
 GP9J28,Rogue Ops
+GP9P01,Rogue Ops (Europe) (En,Fr,De,Es,It,Nl) (Rev 1)
 GP9P7F,Rogue Ops
-GPAE01,Pokemon Channel
-GPAJ01,Pokemon Channel: Pikachu to Issho!
-GPAP01,Pokemon Channel
-GPAU01,Pokemon Channel
+GPAE01,Pokémon Channel
+GPAJ01,Pokémon Channel: Pikachu to Issho!
+GPAP01,Pokémon Channel
+GPAU01,Pokémon Channel
+GPDE01,Dakar 2 (USA) (En,Fr,De,Es,It)
 GPDE51,Dakar 2: The World's Ultimate Rally
+GPDP01,Dakar 2 (Europe) (En,Fr,De,Es,It)
 GPDP51,Dakar 2
+GPEJ01,Pool Edge (Japan)
 GPEJ2Q,Pool Edge
+GPHD01,Pitfall - The Lost Expedition (Germany)
 GPHD52,Pitfall: The Lost Expedition
+GPHE01,Pitfall - The Lost Expedition (USA)
 GPHE52,Pitfall: The Lost Expedition
+GPHF01,Pitfall - The Lost Expedition (France)
 GPHF52,Pitfall: The Lost Expedition
+GPHP01,Pitfall - The Lost Expedition (Europe)
 GPHP52,Pitfall: The Lost Expedition
 GPIE01,Pikmin
 GPIJ01,Pikmin
 GPIP01,Pikmin
+GPJJ01,Jikkyou Powerful Pro Yakyuu 10 (Japan)
 GPJJCM,Jikkyou Powerful Pro Yakyuu 10
+GPKE01,Disney's PK - Out of the Shadows (USA) (En,Fr,De,It)
 GPKE41,PK: Out of the Shadows
+GPLD01,Disneys Ferkels grosses Abenteuer-Spiel (Germany)
 GPLD9G,Disneys Ferkels grosses Abenteuer-Spiel
+GPLE01,Disney's Piglet's Big Game (USA)
 GPLE9G,Piglet's Big Game
+GPLF01,Disney Les Aventures de Porcinet (France)
 GPLF9G,Les Aventures de Porcinet
+GPLP01,Disney's Piglet's Big Game (Europe)
 GPLP9G,Piglet's Big Game
+GPME01,Pac-Man Fever (USA)
 GPMEAF,Pac-Man Fever
+GPNE01,P.N. 03 (USA)
 GPNE08,P.N. 03
+GPNJ01,P.N. 03 (Japan)
 GPNJ08,P.N. 03
+GPNP01,P.N. 03 (Europe) (En,Fr,De,Es,It)
 GPNP08,P.N. 03
+GPOE01,Phantasy Star Online Episode I & II (USA) (En,Ja,Fr,De,Es)
 GPOE8P,Phantasy Star Online Episode I & II Plus
+GPOJ01,Phantasy Star Online Episode I & II (Japan) (En,Ja,Fr,De,Es) (Rev 2)
 GPOJ8P,Phantasy Star Online Episode I & II Plus
+GPOP01,Phantasy Star Online Episode I & II (Europe) (En,Ja,Fr,De,Es)
 GPOP8P,Phantasy Star Online Episode I & II
+GPPJ01,Jikkyou Powerful Pro Yakyuu 9 (Japan)
 GPPJCM,Jikkyou Powerful Pro Yakyuu 9
+GPQE01,Powerpuff Girls, The - Relish Rampage - Pickled Edition (USA)
 GPQE6L,The Powerpuff Girls: Relish Rampage: Pickled Edition
+GPQP01,Powerpuff Girls, The - Relish Rampage - Pickled Edition (Europe) (En,Fr,De,Es)
 GPQP6L,The Powerpuff Girls: Relish Rampage: Pickled Edition
+GPRE01,Pool Paradise (USA)
 GPRE7U,Pool Paradise
+GPRP01,Pool Paradise (Europe) (En,Fr,De,Es,It)
 GPRP7U,Pool Paradise
+GPSE01,Phantasy Star Online Episode III - C.A.R.D. Revolution (USA) (En,Ja)
 GPSE8P,Phantasy Star Online Episode III: C.A.R.D. Revolution
+GPSJ01,Phantasy Star Online Episode III - C.A.R.D. Revolution (Japan)
 GPSJ8P,Phantasy Star Online Episode III: C.A.R.D. Revolution
+GPSP01,Phantasy Star Online Episode III - C.A.R.D. Revolution (Europe) (En,Ja,Fr,De,Es)
 GPSP8P,Phantasy Star Online Episode III: C.A.R.D. Revolution
+GPTE01,Prince of Persia - The Sands of Time (USA) (En,Fr,Es)
 GPTE41,Prince of Persia: The Sands of Time
+GPTP01,Prince of Persia - The Sands of Time (Europe) (En,Fr,De,Es,It)
 GPTP41,Prince of Persia: The Sands of Time
+GPUE01,Puyo Pop Fever (USA) (En,Ja,Fr,De,Es,It)
 GPUE8P,Puyo Pop Fever
+GPUP01,Puyo Pop Fever (Europe) (En,Fr,De,Es,It)
 GPUP8P,Puyo Pop Fever
 GPVE01,Pikmin 2
 GPVJ01,Pikmin 2
 GPVP01,Pikmin 2
+GPWE01,Spawn - Armageddon (USA)
 GPWEAF,Spawn: Armageddon
+GPWP01,Spawn - Armageddon (Europe) (En,Fr,De,Es,It)
 GPWP69,Spawn: Armageddon
 GPXE01,Pokemon Box: Ruby & Sapphire
 GPXJ01,Pokemon Box: Ruby & Sapphire
 GPXP01,Pokemon Box: Ruby & Sapphire
+GPYJ01,Puyo Puyo Fever (Japan) (En,Ja,Fr,De,Es,It)
 GPYJ8P,Puyo Puyo Fever
 GPZE01,Nintendo Puzzle Collection
 GPZJ01,Nintendo Puzzle Collection
+GQ4D01,Nick SpongeBob Schwammkopf - Die Kreatur aus der Krossen Krabbe (Germany)
 GQ4D78,Nick SpongeBob Schwammkopf: Die Kreatur aus der Krossen Krabbe
+GQ4E01,Nickelodeon SpongeBob SquarePants - Creature from the Krusty Krab (USA)
 GQ4E78,SpongeBob SquarePants: Creature from the Krusty Krab
+GQ4F01,Nickelodeon Bob L'eponge - La Creature du Crabe Croustillant (France)
 GQ4F78,Bob L'eponge: La Creature du Crabe Croustillant
+GQ4H01,Nickelodeon SpongeBob SquarePants - Creatuur van de Krokante Krab (Netherlands)
 GQ4H78,SpongeBob SquarePants: Creatuur van de Krokante Krab
+GQ4P01,Nickelodeon SpongeBob SquarePants - Creature from the Krusty Krab (Europe)
 GQ4P78,SpongeBob SquarePants: Creature from the Krusty Krab
+GQ8E01,Madden NFL 08 (USA)
 GQ8E69,Madden NFL 08
+GQAJ01,Choro Q! (Japan)
 GQAJA7,Choro Q!
+GQBE01,NFL QB Club 2002 (USA)
 GQBE51,NFL QB Club 2002
+GQCD01,Call of Duty 2 - Big Red One (Germany)
 GQCD52,Call of Duty 2: Big Red One
+GQCE01,Call of Duty 2 - Big Red One (USA)
 GQCE52,Call of Duty 2: Big Red One
+GQCF01,Call of Duty 2 - Big Red One (France)
 GQCF52,Call of Duty 2: Big Red One
+GQCI01,Call of Duty 2 - Big Red One (Italy)
 GQCI52,Call of Duty 2: Big Red One
+GQCP01,Call of Duty 2 - Big Red One (Europe)
 GQCP52,Call of Duty 2: Big Red One
+GQCS01,Call of Duty 2 - Big Red One (Spain)
 GQCS52,Call of Duty 2: Big Red One
+GQFF01,Franklin - Un anniversaire surprise (France)
 GQFFFK,Franklin: Un anniversaire surprise
+GQLE01,Nick Jr. Dora the Explorer - Journey to the Purple Planet (USA)
 GQLE9G,Nick Jr. Dora the Explorer: Journey to the Purple Planet
+GQLP01,Nick Jr. Dora the Explorer - Journey to the Purple Planet (Europe) (En,Fr)
 GQLP54,Nick Jr. Dora the Explorer: Journey to the Purple Planet
+GQNE01,Mortal Kombat - Deception (USA)
 GQNE5D,Mortal Kombat: Deception
+GQPE01,Nickelodeon SpongeBob SquarePants - Battle for Bikini Bottom (USA)
 GQPE78,SpongeBob SquarePants: Battle for Bikini Bottom
+GQPP01,Nickelodeon SpongeBob SquarePants - Battle for Bikini Bottom (Europe)
 GQPP78,SpongeBob SquarePants: Battle for Bikini Bottom
+GQQD01,Nickelodeon SpongeBob Schwammkopf - Film ab! (Germany)
 GQQD78,SpongeBob Schwammkopf: Film ab!
+GQQE01,Nickelodeon SpongeBob SquarePants - Lights, Camera, Pants! (USA)
 GQQE78,SpongeBob SquarePants: Lights, Camera, Pants!
+GQQF01,Nickelodeon Bob L'eponge - Silence on Tourne ! (France)
 GQQF78,Bob L'eponge: Silence on Tourne !
+GQQH01,Nickelodeon SpongeBob SquarePants - Licht uit, Camera aan! (Netherlands)
 GQQH78,SpongeBob SquarePants: Licht uit, Camera aan!
+GQQP01,Nickelodeon SpongeBob SquarePants - Lights, Camera, Pants! (Europe)
 GQQP78,SpongeBob SquarePants: Lights, Camera, Pants!
+GQRJ01,Hudson Selection Vol. 1 - Cubic Lode Runner (Japan)
 GQRJ18,Hudson Selection Vol. 1: Cubic Lode Runner
 GQSDAF,Tales of Symphonia
 GQSEAF,Tales of Symphonia
@@ -2949,270 +3932,512 @@ GQSFAF,Tales of Symphonia
 GQSIAF,Tales of Symphonia
 GQSPAF,Tales of Symphonia
 GQSSAF,Tales of Symphonia
+GQTE01,Walt Disney Pictures Presents Meet the Robinsons (USA)
 GQTE4Q,Meet the Robinsons
+GQWE01,Harry Potter - Quidditch World Cup (USA) (En,Fr,Es)
 GQWE69,Harry Potter: Quidditch World Cup
+GQWJ01,Harry Potter - Quidditch World Cup (Japan)
 GQWJ13,Harry Potter: Quidditch World Cup
+GQWP01,Harry Potter - Quidditch World Cup (Europe) (En,Nl,Sv)
 GQWP69,Harry Potter: Quidditch World Cup
+GQWX01,Harry Potter - Quidditch World Cup (Europe) (Fr,De,Es,It)
 GQWX69,Harry Potter: Quidditch World Cup
+GQXE01,Madden NFL 2004 (USA)
 GQXE69,Madden NFL 2004
+GQXP01,Madden NFL 2004 (Europe)
 GQXP69,Madden NFL 2004
 GQZJ01,Densetsu no Quiz-ou Kettei-sen
+GR2E01,Lost Kingdoms II (USA)
 GR2E52,Lost Kingdoms II
+GR2J01,Rune II - Koruten no Kagi no Himitsu (Japan)
 GR2JCQ,Rune II: Koruten no Kagi no Himitsu
+GR2P01,Lost Kingdoms II (Europe) (En,Fr,De)
 GR2P52,Lost Kingdoms II
+GR3E01,RedCard 20-03 (USA)
 GR3E5D,RedCard 20-03
+GR4E01,MC Groovz Dance Craze (USA, Canada)
 GR4EMZ,MC Groovz Dance Craze
+GR4P01,MC Groovz Dance Craze (Europe) (En,Fr,De,Es,It)
 GR4PMZ,MC Groovz Dance Craze
+GR5J01,RoboCop - Aratanaru Kiki (Japan)
 GR5J1K,RoboCop: Aratanaru Kiki
+GR6D01,Bratz - Rock Angelz (Germany)
 GR6D78,Bratz: Rock Angelz
+GR6E01,Bratz - Rock Angelz (USA)
 GR6E78,Bratz: Rock Angelz
+GR6F01,Bratz - Rock Angelz (France)
 GR6F78,Bratz: Rock Angelz
+GR6P01,Bratz - Rock Angelz (Europe)
 GR6P78,Bratz: Rock Angelz
 GR8D69,Medal of Honor: Rising Sun
 GR8E69,Medal of Honor: Rising Sun
 GR8F69,Medal of Honor: Soleil Levant
 GR8P69,Medal of Honor: Rising Sun
+GR9E01,Reign of Fire (USA)
 GR9E6L,Reign of Fire
+GR9P01,Reign of Fire (Europe) (En,Fr,De,Es,It)
 GR9P6L,Reign of Fire
+GRAE01,Rally Championship (USA)
 GRAE5Z,Rally Championship
+GRAP01,Rally Championship (Europe) (En,Fr,De,Es,It) (Rev 1)
 GRAP75,Rally Championship
+GRBE01,Robotech - Battlecry (USA)
 GRBE6S,Robotech: Battlecry
+GRBP01,Robotech - Battlecry (Europe) (En,Fr,De,Es,It)
 GRBP6S,Robotech: Battlecry
+GRDP01,RedCard (Europe) (En,Fr,De,Es,It)
 GRDP5D,RedCard
+GREE01,Mega Man Network Transmission (USA)
 GREE08,Mega Man Network Transmission
+GREJ01,Rockman EXE Transmission (Japan) (Rev 1)
 GREJ08,Rockman EXE Transmission
+GREP01,Mega Man Network Transmission (Europe)
 GREP08,Mega Man Network Transmission
+GRFD01,Red Faction II (Germany)
 GRFD78,Red Faction II
+GRFE01,Red Faction II (USA)
 GRFE78,Red Faction II
+GRFF01,Red Faction II (France)
 GRFF78,Red Faction II
+GRFP01,Red Faction II (Europe)
 GRFP78,Red Faction II
+GRHE01,Rayman 3 - Hoodlum Havoc (USA) (En,Fr,De,Es,It)
 GRHE41,Rayman 3: Hoodlum Havoc
+GRHP01,Rayman 3 - Hoodlum Havoc (Europe) (En,Fr,De,Es,It)
 GRHP41,Rayman 3: Hoodlum Havoc
+GRJE01,R-Racing Evolution (USA)
 GRJEAF,R-Racing Evolution
+GRJJ01,R-Racing Evolution - Life in the Fast Lane (Japan)
 GRJJAF,R-Racing Evolution: Life in the Fast Lane
+GRJP01,R-Racing (Europe) (En,Fr,De,Es,It)
 GRJP69,R: Racing
+GRKE01,Rocky (USA)
 GRKE41,Rocky
+GRKP01,Rocky (Europe) (En,Fr,De,Es,It)
 GRKP7G,Rocky
+GRLE01,Pro Rally 2002 (USA) (En,Fr,Es)
 GRLE41,Pro Rally 2002
+GRLP01,Pro Rally 2002 (Europe) (En,Fr,De,Es,It)
 GRLP41,Pro Rally 2002
+GRMJ01,Monopoly - Mezase!! Daifugou Jinsei!! (Japan) (Rev 1)
 GRMJDA,Monopoly: Mezase!! Daifugou Jinsei!!
+GRNE01,Lost Kingdoms (USA)
 GRNE52,Lost Kingdoms
+GRNJ01,Rune (Japan)
 GRNJCQ,Rune
+GRNP01,Lost Kingdoms (Europe) (En,Fr)
 GRNP52,Lost Kingdoms
+GROE01,Road Trip - The Arcade Edition (USA)
 GROE5Z,Road Trip: The Arcade Edition
+GROP01,Gadget Racers (Europe) (En,Fr,De,Es,It)
 GROP7J,Gadget Racers
+GRQE01,City Racer (USA)
 GRQE41,City Racer
+GRRE01,Nickelodeon Rugrats - Royal Ransom (USA)
 GRRE78,Rugrats: Royal Ransom
+GRRF01,Nickelodeon Les Razmoket - La Rancon Royale (France)
 GRRF78,Les Razmoket: La Rancon Royale
+GRRP01,Nickelodeon Rugrats - Royal Ransom (Europe)
 GRRP78,Rugrats: Royal Ransom
+GRSE01,Soulcalibur II (USA)
 GRSEAF,Soulcalibur II
+GRSJ01,Soulcalibur II (Japan) (Rev 1)
 GRSJAF,Soulcalibur II
+GRSP01,Soulcalibur II (Europe) (En,Fr,De,Es,It)
 GRSPAF,Soulcalibur II
+GRUE01,Power Rangers - Dino Thunder (USA)
 GRUE78,Power Rangers: Dino Thunder
+GRUF01,Power Rangers - Dino Tonnerre (France)
 GRUF78,Power Rangers: Dino Tonnerre
+GRUP01,Power Rangers - Dino Thunder (Europe)
 GRUP78,Power Rangers: Dino Thunder
+GRVE01,Rave Master (USA)
 GRVEA4,Rave Master
+GRVJ01,Groove Adventure Rave - Fighting Live (Japan)
 GRVJA4,Groove Adventure Rave: Fighting Live
+GRWJ01,Super Robot Taisen GC (Japan)
 GRWJD9,Super Robot Taisen GC
+GRYE01,Rayman Arena (USA) (En,Fr,Es)
 GRYE41,Rayman Arena
 GRZJ13,Medal of Honor: Rising Sun
+GS2D01,Summoner - A Goddess Reborn (Germany)
 GS2D78,Summoner: A Goddess Reborn
+GS2E01,Summoner - A Goddess Reborn (USA)
 GS2E78,Summoner: A Goddess Reborn
+GS2F01,Summoner - La Deesse Reincarnee (France)
 GS2F78,Summoner: La Deesse Reincarnee
+GS2P01,Summoner - A Goddess Reborn (Europe)
 GS2P78,Summoner: A Goddess Reborn
+GS3E01,SX Superstar (USA)
 GS3E51,SX Superstar
+GS3P01,SX Superstar (Europe) (En,Fr,De,Es)
 GS3P51,SX Superstar
+GS7E01,MLB SlugFest 2004 (USA)
 GS7E5D,MLB SlugFest 2004
+GS8E01,Spyro - Enter the Dragonfly (USA, Canada)
 GS8E7D,Spyro: Enter the Dragonfly
+GS8P01,Spyro - Enter the Dragonfly (Europe) (En,Fr,De,Es,It,Nl)
 GS8P7D,Spyro: Enter the Dragonfly
+GS9E01,Shrek Extra Large (USA)
 GS9E6S,Shrek Extra Large
+GS9P01,Shrek Extra Large (Europe) (En,Fr,De,Es,It)
 GS9P6S,Shrek Extra Large
 GSAE01,Star Fox Adventures
 GSAJ01,Star Fox Adventures
 GSAP01,Star Fox Adventures
+GSBJ01,Sonic Adventure 2 - Battle (Japan) (En,Ja,Fr,De,Es)
 GSBJ8P,Sonic Adventure 2: Battle
+GSCE01,Jeremy McGrath Supercross World (USA)
 GSCE51,Jeremy McGrath Supercross World
+GSCP01,Jeremy McGrath Supercross World (Europe) (En,Fr,De,Es,It)
 GSCP51,Jeremy McGrath Supercross World
+GSDE01,Smashing Drive (USA)
 GSDEAF,Smashing Drive
+GSEJ01,Shaman King - Soul Fight (Japan) (Rev 1)
 GSEJB2,Shaman King: Soul Fight
+GSGE01,MLB SlugFest 2003 (USA)
 GSGE5D,MLB SlugFest 2003
+GSHE01,SpyHunter (USA)
 GSHE5D,SpyHunter
+GSHP01,SpyHunter (Europe) (En,Fr,De,Es,It)
 GSHP5D,SpyHunter
+GSKE01,Scorpion King, The - Rise of the Akkadian (USA)
 GSKE7D,The Scorpion King: Rise of the Akkadian
+GSKP01,Scorpion King, The - Rise of the Akkadian (Europe) (En,Fr,De,Es,It)
 GSKP7D,The Scorpion King: Rise of the Akkadian
+GSMD01,Spider-Man (Germany)
 GSMD52,Spider-Man
 GSME01,Super Mario 128
 GSME52,Spider-Man
+GSMF01,Spider-Man (France)
 GSMF52,Spider-Man
+GSMJ01,Spider-Man (Japan)
 GSMJ08,Spider-Man
+GSMP01,Spider-Man (Europe)
 GSMP52,Spider-Man
+GSNE01,Sonic Adventure 2 - Battle (USA) (En,Ja,Fr,De,Es)
 GSNE8P,Sonic Adventure 2: Battle
+GSNP01,Sonic Adventure 2 - Battle (Europe) (En,Ja,Fr,De,Es)
 GSNP8P,Sonic Adventure 2: Battle
+GSOE01,Sonic Mega Collection (USA)
 GSOE8P,Sonic Mega Collection
+GSOJ01,Sonic Mega Collection (Japan)
 GSOJ8P,Sonic Mega Collection
+GSOP01,Sonic Mega Collection (Europe) (En,Fr,De,Es,It)
 GSOP8P,Sonic Mega Collection
+GSPE01,Simpsons, The - Road Rage (USA)
 GSPE69,The Simpsons: Road Rage
+GSPP01,Simpsons, The - Road Rage (Europe) (En,Fr,De)
 GSPP69,The Simpsons: Road Rage
+GSQE01,Nickelodeon SpongeBob SquarePants - Revenge of the Flying Dutchman (USA)
 GSQE78,SpongeBob SquarePants: Revenge of the Flying Dutchman
+GSQP01,Nickelodeon SpongeBob SquarePants - Revenge of the Flying Dutchman (Europe)
 GSQP78,SpongeBob SquarePants: Revenge of the Flying Dutchman
+GSRE01,Smuggler's Run - Warzones (USA)
 GSRE7S,Smuggler's Run: Warzones
+GSRP01,Smuggler's Run - Warzones (Europe) (En,Fr,De,It)
 GSRP7S,Smuggler's Run: Warzones
+GSSE01,Sega Soccer Slam (USA)
 GSSE8P,Sega Soccer Slam
+GSSJ01,Sega Soccer Slam (Japan)
 GSSJ8P,Sega Soccer Slam
+GSSP01,Sega Soccer Slam (Europe)
 GSSP8P,Sega Soccer Slam
+GSTE01,SSX Tricky (USA)
 GSTE69,SSX Tricky
+GSTJ01,SSX Tricky (Japan)
 GSTJ13,SSX Tricky
+GSTP01,SSX Tricky (Europe) (En,Fr,De)
 GSTP69,SSX Tricky
+GSUE01,Superman - Shadow of Apokolips (USA)
 GSUE70,Superman: Shadow of Apokolips
+GSUP01,Superman - Shadow of Apokolips (Europe) (En,Fr,De,Es,It)
 GSUP70,Superman: Shadow of Apokolips
+GSVE01,MX SuperFly (USA)
 GSVE78,MX SuperFly
+GSVP01,MX SuperFly (Europe)
 GSVP78,MX SuperFly
+GSWD01,Star Wars - Rogue Squadron II - Rogue Leader (Germany)
 GSWD64,Star Wars: Rogue Squadron II: Rogue Leader
+GSWE01,Star Wars - Rogue Squadron II - Rogue Leader (USA)
 GSWE64,Star Wars: Rogue Squadron II: Rogue Leader
+GSWF01,Star Wars - Rogue Squadron II - Rogue Leader (France)
 GSWF64,Star Wars: Rogue Squadron II: Rogue Leader
+GSWI01,Star Wars - Rogue Squadron II - Rogue Leader (Italy)
 GSWI64,Star Wars: Rogue Squadron II: Rogue Leader
+GSWJ01,Star Wars - Rogue Squadron II (Japan)
 GSWJ13,Star Wars: Rogue Squadron II
+GSWP01,Star Wars - Rogue Squadron II - Rogue Leader (Europe)
 GSWP64,Star Wars: Rogue Squadron II: Rogue Leader
+GSWS01,Star Wars - Rogue Squadron II - Rogue Leader (Spain)
 GSWS64,Star Wars: Rogue Squadron II: Rogue Leader
+GSXD01,Star Wars - The Clone Wars (Germany)
 GSXD64,Star Wars: The Clone Wars
+GSXE01,Star Wars - The Clone Wars (USA)
 GSXE64,Star Wars: The Clone Wars
+GSXF01,Star Wars - The Clone Wars (France)
 GSXF64,Star Wars: The Clone Wars
+GSXI01,Star Wars - La Guerra dei Cloni (Italy)
 GSXI64,Star Wars: La Guerra dei Cloni
+GSXJ01,Star Wars - The Clone Wars (Japan)
 GSXJ13,Star Wars: The Clone Wars
+GSXP01,Star Wars - The Clone Wars (Europe)
 GSXP64,Star Wars: The Clone Wars
+GSXS01,Star Wars - Las Guerras Clon (Spain)
 GSXS64,Star Wars: Las Guerras Clon
+GSYE01,Shrek Super Party (USA)
 GSYE6S,Shrek Super Party
+GSYP01,Shrek Super Party (Europe) (En,Fr,De,Es,It)
 GSYP6S,Shrek Super Party
+GSZP01,Speed Challenge - Jacques Villeneuve's Racing Vision (Europe) (En,Fr)
 GSZP41,Speed Challenge: Jacques Villeneuve's Racing Vision
+GT2J01,Tengai Makyou II - Manji Maru (Japan)
 GT2J18,Tengai Makyou II: Manji Maru
+GT3D01,Tony Hawk's Pro Skater 3 (Germany)
 GT3D52,Tony Hawk's Pro Skater 3
+GT3E01,Tony Hawk's Pro Skater 3 (USA)
 GT3E52,Tony Hawk's Pro Skater 3
+GT3F01,Tony Hawk's Pro Skater 3 (France)
 GT3F52,Tony Hawk's Pro Skater 3
+GT3J01,Tony Hawk's Pro Skater 3 (Japan)
 GT3J52,Tony Hawk's Pro Skater 3
+GT3P01,Tony Hawk's Pro Skater 3 (Europe)
 GT3P52,Tony Hawk's Pro Skater 3
+GT4D01,Tony Hawk's Pro Skater 4 (Germany)
 GT4D52,Tony Hawk's Pro Skater 4
+GT4E01,Tony Hawk's Pro Skater 4 (USA)
 GT4E52,Tony Hawk's Pro Skater 4
+GT4F01,Tony Hawk's Pro Skater 4 (France)
 GT4F52,Tony Hawk's Pro Skater 4
+GT4P01,Tony Hawk's Pro Skater 4 (Europe)
 GT4P52,Tony Hawk's Pro Skater 4
+GT5E01,Starsky & Hutch (USA)
 GT5E7N,Starsky & Hutch
+GT5P01,Starsky & Hutch (Europe) (En,Fr,De,Es,It)
 GT5P7N,Starsky & Hutch
+GT6E01,Terminator 3 - The Redemption (USA)
 GT6E70,Terminator 3: The Redemption
+GT6J01,Terminator 3 - The Redemption (Japan)
 GT6J70,Terminator 3: The Redemption
+GT6P01,Terminator 3 - The Redemption (Europe) (En,Fr,De,Es,It)
 GT6P70,Terminator 3: The Redemption
+GT7E01,Tom Clancy's Splinter Cell - Pandora Tomorrow (USA) (Rev 1)
 GT7E41,Tom Clancy's Splinter Cell: Pandora Tomorrow
+GT7P01,Tom Clancy's Splinter Cell - Pandora Tomorrow (Europe)
 GT7P41,Tom Clancy's Splinter Cell: Pandora Tomorrow
+GT7X01,Tom Clancy's Splinter Cell - Pandora Tomorrow (Europe) (Fr,De,Es,It)
 GT7X41,Tom Clancy's Splinter Cell: Pandora Tomorrow
+GT8E01,Big Mutha Truckers (USA)
 GT8E78,Big Mutha Truckers
+GT8P01,Big Mutha Truckers (Europe) (En,Fr,De,Es,It)
 GT8P7N,Big Mutha Truckers
+GTAE01,Top Angler - Real Bass Fishing (USA)
 GTAE5S,Top Angler: Real Bass Fishing
+GTAP01,Top Angler - Real Bass Fishing (Europe)
 GTAP5S,Top Angler: Real Bass Fishing
+GTBJ01,NHK Tensai Bit-kun - Glamon Battle (Japan)
 GTBJC0,NHK Tensai Bit-kun: Glamon Battle
+GTCJ01,GT Cube (Japan)
 GTCJBL,GT Cube
 GTDE01,Super Smash Bros. Melee: TurboDX
 GTDE52,Tony Hawk's Underground
+GTDP01,Tony Hawk's Underground (Europe) (En,Fr,De)
 GTDP52,Tony Hawk's Underground
 GTEE01,1080 Avalanche
 GTEJ01,1080 Silver Storm
 GTEP01,1080 Avalanche
+GTEW01,1080 Avalanche (Korea)
+GTFE01,Teenage Mutant Ninja Turtles (USA)
 GTFEA4,Teenage Mutant Ninja Turtles
+GTFP01,Teenage Mutant Ninja Turtles (Europe) (En,Fr,De,Es,It)
 GTFPA4,Teenage Mutant Ninja Turtles
+GTGE01,Top Gun - Combat Zones (USA)
 GTGE60,Top Gun: Combat Zones
+GTGJ01,Top Gun - Ace of the Sky (Japan)
 GTGJ1K,Top Gun: Ace of the Sky
+GTGP01,Top Gun - Combat Zones (Europe) (En,Fr,De,Es,It,Nl)
 GTGP60,Top Gun: Combat Zones
+GTHJ01,Charinko Hero (Japan) (Rev 1)
 GTHJD9,Charinko Hero
+GTIE01,Tiger Woods PGA Tour 2003 (USA)
 GTIE69,Tiger Woods PGA Tour 2003
+GTIP01,Tiger Woods PGA Tour 2003 (Europe)
 GTIP69,Tiger Woods PGA Tour 2003
+GTJE01,Tom and Jerry in War of the Whiskers (USA)
 GTJE5L,Tom and Jerry in War of the Whiskers
+GTKD01,Turok - Evolution (Germany)
 GTKD51,Turok: Evolution
+GTKE01,Turok - Evolution (USA)
 GTKE51,Turok: Evolution
+GTKP01,Turok - Evolution (Europe) (En,Fr,Es,It)
 GTKP51,Turok: Evolution
+GTLE01,True Crime - Streets of LA (USA)
 GTLE52,True Crime: Streets of LA
+GTLP01,True Crime - Streets of LA (UK)
 GTLP52,True Crime: Streets of LA
+GTLX01,True Crime - Streets of LA (Europe) (En,Fr,De)
 GTLX52,True Crime: Streets of LA
 GTME01,Super Smash Bros. Melee Training Mode
+GTMJ01,Mutsu to Nohohon (Japan)
 GTMJDA,Mutsu to Nohohon
+GTNJ01,Hudson Selection Vol. 4 - Takahashi-Meijin no Boukenjima (Japan)
 GTNJ18,Hudson Selection Vol. 4: Takahashi-Meijin no Boukenjima
 GTOJAF,Tales of Symphonia
+GTPP01,Knights of the Temple - Infernal Crusade (Europe) (En,Fr,De,Es)
 GTPP6S,Knights of the Temple: Infernal Crusade
+GTQE01,Tonka - Rescue Patrol (USA)
 GTQE6S,Tonka: Rescue Patrol
+GTRE01,Tetris Worlds (USA)
 GTRE78,Tetris Worlds
+GTRJ01,Tetris Worlds (Japan)
 GTRJ8N,Tetris Worlds
+GTRP01,Tetris Worlds (Europe) (En,Fr,De)
 GTRP78,Tetris Worlds
+GTSE01,TimeSplitters 2 (Korea)
 GTSE4F,TimeSplitters 2
+GTSP01,TimeSplitters 2 (Europe) (En,Fr,De,Es,It)
 GTSP4F,TimeSplitters 2
+GTUE01,Tube Slider - The Championship of Future Formula (USA)
 GTUE8G,Tube Slider: The Championship of Future Formula
+GTVE01,TransWorld Surf - Next Wave (USA)
 GTVE70,TransWorld Surf: Next Wave
+GTWE01,Taz - Wanted (USA) (En,Fr,De,Es,It)
 GTWE70,Taz: Wanted
+GTWP01,Taz - Wanted (Europe) (En,Fr,De,Es,It)
 GTWP70,Taz: Wanted
+GTYE01,Ty the Tasmanian Tiger (USA)
 GTYE69,TY the Tasmanian Tiger
+GTYP01,Ty the Tasmanian Tiger (Europe) (En,Fr,De,Es,It)
 GTYP69,Ty the Tasmanian Tiger
+GTZE01,Disney's Tarzan - Untamed (USA) (En,Fr)
 GTZE41,Tarzan: Untamed
+GTZP01,Disney's Tarzan - Freeride (Europe) (En,Fr,De,Es,It)
 GTZP41,Tarzan: Freeride
 GU2D78,2 Games in 1: Die Unglaublichen + Findet Nemo
 GU2F78,2 Games in 1: Les Indestructibles + Le Monde de Nemo
 GU3D78,2 Games in 1: Nickelodeon SpongeBob Schwammkopf: Der Film + Nickelodeon Tak 2: Der Stab der Traeume
 GU3X78,2 Games in 1: Bob L'eponge: Le Film + Tak 2: Le Sceptre des Reves
 GU4Y78,2 Games in 1: Nickelodeon SpongeBob Schwammkopf: Der Film + Nickelodeon SpongeBob Schwammkopf: Schlacht um Bikini Bottom
+GU6E01,Nicktoons - Battle for Volcano Island (USA)
 GU6E78,Nicktoons: Battle for Volcano Island
+GUBE01,Urbz, The - Sims in the City (USA)
 GUBE69,The Urbz: Sims in the City
+GUBJ01,Urbz, The - Sims in the City (Japan)
 GUBJ13,The Urbz: Sims in the City
+GUBP01,Urbz, The - Sims in the City (Europe) (En,Fr,De,Es,Nl)
 GUBP69,The Urbz: Sims in the City
+GUCD01,UEFA Champions League 2004-2005 (Germany)
 GUCD69,UEFA Champions League 2004-2005
+GUCF01,UEFA Champions League 2004-2005 (France)
 GUCF69,UEFA Champions League 2004-2005
+GUCP01,UEFA Champions League 2004-2005 (Europe)
 GUCP69,UEFA Champions League 2004-2005
+GUFE01,UFC - Throwdown (USA)
 GUFE4Z,UFC: Throwdown
+GUFJ01,UFC - Ultimate Fighting Championship 2 - Tapout - Final Spec (Japan)
 GUFJ08,UFC: Ultimate Fighting Championship 2: Tapout: Final Spec
+GUFP01,UFC - Throwdown (Europe)
 GUFP4Z,UFC: Throwdown
+GUGD01,Need for Speed - Underground 2 (Germany)
 GUGD69,Need for Speed: Underground 2
+GUGE01,Need for Speed - Underground 2 (USA)
 GUGE69,Need for Speed: Underground 2
+GUGF01,Need for Speed - Underground 2 (France)
 GUGF69,Need for Speed: Underground 2
+GUGP01,Need for Speed - Underground 2 (Europe, Australia)
 GUGP69,Need for Speed: Underground 2
+GUMD01,Gun (Germany) (En,De)
 GUMD52,Gun
+GUME01,Gun (USA)
 GUME52,Gun
+GUMP01,Gun (Europe) (En,Fr,Es,It)
 GUMP52,Gun
+GUNE01,Gauntlet - Dark Legacy (USA)
 GUNE5D,Gauntlet: Dark Legacy
+GUNP01,Gauntlet - Dark Legacy (Europe) (En,Fr,De)
 GUNP5D,Gauntlet: Dark Legacy
+GUPE01,Shadow the Hedgehog (USA) (En,Ja,Fr,De,Es,It)
 GUPE8P,Shadow the Hedgehog
+GUPJ01,Shadow the Hedgehog (Japan) (En,Ja,Fr,De,Es,It)
 GUPJ8P,Shadow the Hedgehog
+GUPP01,Shadow the Hedgehog (Europe) (En,Ja,Fr,De,Es,It)
 GUPP8P,Shadow the Hedgehog
 GUPR8P,Shadow the Hedgehog: Reloaded
 GUPX8P,Shadow the Hedgehog SX
+GUSE01,Universal Studios Theme Park Adventure (USA)
 GUSE7F,Universal Studios Theme Park Adventure
+GUSJ01,Universal Studios Japan Adventure (Japan)
 GUSJ28,Universal Studios Japan Adventure
+GUSP01,Universal Studios Theme Park Adventure (Europe) (En,Fr,De,Es)
 GUSP7F,Universal Studios Theme Park Adventure
+GUTD01,Ultimate Spider-Man (Germany)
 GUTD52,Ultimate Spider-Man
+GUTE01,Ultimate Spider-Man (USA)
 GUTE52,Ultimate Spider-Man
+GUTF01,Ultimate Spider-Man (France)
 GUTF52,Ultimate Spider-Man
+GUTI01,Ultimate Spider-Man (Italy)
 GUTI52,Ultimate Spider-Man
+GUTJ01,Ultimate Spider-Man (Japan)
 GUTJC0,Ultimate Spider-Man
+GUTP01,Ultimate Spider-Man (Europe)
 GUTP52,Ultimate Spider-Man
+GUTS01,Ultimate Spider-Man (Spain)
 GUTS52,Ultimate Spider-Man
+GUVE01,Freestyle Street Soccer (USA) (En,Es)
 GUVE51,Freestyle Street Soccer
+GUVP01,Urban Freestyle Soccer (Europe) (En,Fr,De,Es,It)
 GUVP51,Urban Freestyle Soccer
+GUYE01,Need for Speed - Underground 2 (Latin America)
+GUZE01,Batman - Rise of Sin Tzu (USA) (En,Fr,Es)
 GUZE41,Batman: Rise of Sin Tzu
+GUZP01,Batman - Rise of Sin Tzu (Europe) (En,Fr,De,Es,It)
 GUZP41,Batman: Rise of Sin Tzu
+GV3J01,V-Rally 3 (Japan) (En,Ja,Fr,De,Es,It)
 GV3J70,V-Rally 3
+GV3P01,V-Rally 3 (Europe) (En,Fr,De,Es,It)
 GV3P70,V-Rally 3
+GV4E01,MVP Baseball 2005 (USA)
 GV4E69,MVP Baseball 2005
+GVCE01,Viewtiful Joe - Red Hot Rumble (USA)
 GVCE08,Viewtiful Joe: Red Hot Rumble
+GVCJ01,Viewtiful Joe - Battle Carnival (Japan)
 GVCJ08,Viewtiful Joe: Battle Carnival
+GVCP01,Viewtiful Joe - Red Hot Rumble (Europe) (En,Fr,De,Es,It)
 GVCP08,Viewtiful Joe: Red Hot Rumble
+GVDE01,Bratz - Forever Diamondz (USA)
 GVDE78,Bratz: Forever Diamondz
+GVDP01,Bratz - Forever Diamondz (Europe) (En,Fr)
 GVDP78,Bratz: Forever Diamondz
+GVFJ01,Viewtiful Joe Revival (Japan)
 GVFJ08,Viewtiful Joe Revival
+GVHE01,Bionicle Heroes (USA) (Rev 1)
 GVHE4F,Bionicle Heroes
+GVJE01,Viewtiful Joe (USA)
 GVJE08,Viewtiful Joe
+GVJJ01,Viewtiful Joe (Japan)
 GVJJ08,Viewtiful Joe
+GVJP01,Viewtiful Joe (Europe) (En,Fr,De,Es,It)
 GVJP08,Viewtiful Joe
+GVKE01,Cabela's Dangerous Hunts 2 (USA)
 GVKE52,Cabela's Dangerous Hunts 2
+GVLD01,Marvel Nemesis - Rise of the Imperfects (Germany)
 GVLD69,Marvel Nemesis: Rise of the Imperfects
+GVLE01,Marvel Nemesis - Rise of the Imperfects (USA)
 GVLE69,Marvel Nemesis: Rise of the Imperfects
+GVLF01,Marvel Nemesis - L'Avenement des Imparfaits (France)
 GVLF69,Marvel Nemesis: L'Avenement des Imparfaits
+GVLP01,Marvel Nemesis - Rise of the Imperfects (Europe)
 GVLP69,Marvel Nemesis: Rise of the Imperfects
+GVMP01,Super Bust-A-Move All Stars (Europe) (En,Fr,De,Es,It)
 GVMP41,Super Bust-A-Move All Stars
+GVOE01,Bionicle (USA)
 GVOE69,Bionicle
+GVOP01,Bionicle (Europe) (En,Fr,De,Es,It,Da)
 GVOP69,Bionicle
+GVPE01,MVP Baseball 2004 (USA)
 GVPE69,MVP Baseball 2004
+GVRE01,Grooverider - Slot Car Thunder (USA)
 GVRE7H,Grooverider: Slot Car Thunder
 GVS32E,Virtua Striker 3 Ver. 2002
 GVS32J,Virtua Striker 3 Ver.2002 (Triforce)
@@ -3220,129 +4445,232 @@ GVS45E,Virtua Striker 4
 GVS45J,Virtua Striker 4
 GVS46E,Virtua Striker 4 Ver.2006
 GVS46J,Virtua Striker 4 Ver.2006
+GVSE01,Virtua Striker 2002 (USA)
 GVSE8P,Virtua Striker 2002
+GVSJ01,Virtua Striker 3 Ver. 2002 (Japan)
 GVSJ8P,Virtua Striker 3 Ver. 2002
 GVSJ9P,Virtua Striker 4 Ver.2006
+GVSP01,Virtua Striker 3 Ver. 2002 (Europe) (En,Fr,De,Es,It)
 GVSP8P,Virtua Striker 3 Ver. 2002
+GVWJ01,Gakuen Toshi Varanoir - Roses (Japan)
 GVWJDQ,Gakuen Toshi Varanoir: Roses
+GW2E01,WWE Day of Reckoning 2 (USA)
 GW2E78,WWE Day of Reckoning 2
+GW2P01,WWE Day of Reckoning 2 (Europe) (Rev 1)
 GW2P78,WWE Day of Reckoning 2
+GW3E01,WWE WrestleMania X8 (USA)
 GW3E78,WWE WrestleMania X8
+GW3J01,WWE WrestleMania X8 (Japan)
 GW3JG2,WWE WrestleMania X8
+GW3P01,WWE WrestleMania X8 (Europe)
 GW3P78,WWE WrestleMania X8
 GW4E69,Tiger Woods PGA Tour 2004
 GW4P69,Tiger Woods PGA Tour 2004
+GW5D01,Need for Speed - Carbon (Germany)
 GW5D69,Need for Speed: Carbon
+GW5E01,Need for Speed - Carbon (USA)
 GW5E69,Need for Speed: Carbon
+GW5F01,Need for Speed - Carbon (France)
 GW5F69,Need for Speed: Carbon
+GW5P01,Need for Speed - Carbon (Europe)
 GW5P69,Need for Speed: Carbon
+GW6J01,World Soccer Winning Eleven 6 - Final Evolution (Japan)
 GW6JEM,World Soccer Winning Eleven 6: Final Evolution
+GW7D01,007 - Agent im Kreuzfeuer (Germany)
 GW7D69,007: Agent im Kreuzfeuer
+GW7E01,007 - Agent Under Fire (USA)
 GW7E69,007: Agent Under Fire
+GW7F01,007 - Espion pour Cible (France)
 GW7F69,007: Espion pour Cible
+GW7P01,007 - Agent Under Fire (Europe)
 GW7P69,007: Agent Under Fire
+GW8E01,World Series of Poker (USA) (Rev 1)
 GW8E52,World Series of Poker
+GW9E01,WWE WrestleMania XIX (Korea)
 GW9E78,WWE WrestleMania XIX
+GW9J01,WWE WrestleMania XIX (Japan)
 GW9JG2,WWE WrestleMania XIX
+GW9P01,WWE WrestleMania XIX (Europe, Australia)
 GW9P78,WWE WrestleMania XIX
+GWAD01,Spartan - Total Warrior (Germany)
 GWAD8P,Spartan: Total Warrior
+GWAE01,Spartan - Total Warrior (USA)
 GWAE8P,Spartan: Total Warrior
+GWAF01,Spartan - Total Warrior (France)
 GWAF8P,Spartan: Total Warrior
+GWAP01,Spartan - Total Warrior (Europe) (En,Es,It)
 GWAP8P,Spartan: Total Warrior
+GWBE01,Worms Blast (USA) (En,Fr,Es)
 GWBE41,Worms Blast
+GWBP01,Worms Blast (Europe) (En,Fr,De,Es,It)
 GWBP41,Worms Blast
+GWDP01,World Racing (Europe) (En,Fr,De,Es,It)
 GWDP6S,World Racing
+GWEE01,18 Wheeler - American Pro Trucker (USA)
 GWEE51,18 Wheeler: American Pro Trucker
+GWEJ01,18 Wheeler - American Pro Trucker (Japan)
 GWEJB0,18 Wheeler: American Pro Trucker
+GWEP01,18 Wheeler - American Pro Trucker (Europe) (En,Fr,De,Es)
 GWEP8P,18 Wheeler: American Pro Trucker
+GWGE01,Swingerz Golf (Korea)
 GWGE4F,Swingerz Golf
+GWGJ01,Wai Wai Golf (Japan)
 GWGJ4F,Wai Wai Golf
+GWGP01,Ace Golf (Europe) (En,Fr)
 GWGP4F,Ace Golf
+GWHE01,Disney's Winnie the Pooh's Rumbly Tumbly Adventure (USA) (En,Fr,Es)
 GWHE41,Winnie the Pooh's Rumbly Tumbly Adventure
+GWHP01,Disney's Winnie the Pooh's Rumbly Tumbly Adventure (Europe) (En,Fr,De,Es,It,Nl)
 GWHP41,Winnie the Pooh's Rumbly Tumbly Adventure
+GWJE01,Tony Hawk's American Wasteland (USA)
 GWJE52,Tony Hawk's American Wasteland
+GWKE01,Peter Jackson's King Kong - The Official Game of the Movie (USA) (En,Fr,Es)
 GWKE41,Peter Jackson's King Kong: The Official Game of the Movie
+GWKP01,Peter Jackson's King Kong - The Official Game of the Movie (Europe) (En,Fr,De,Es,It,Nl,Sv,No,Da,Fi)
 GWKP41,Peter Jackson's King Kong: The Official Game of the Movie
+GWLE01,Wallace & Gromit in Project Zoo (USA)
 GWLE6L,Wallace & Gromit in Project Zoo
+GWLP01,Wallace & Gromit in Project Zoo (UK)
 GWLP6L,Wallace & Gromit in Project Zoo
+GWLX01,Wallace & Gromit in Project Zoo (Europe) (En,Fr,De,Es,It)
 GWLX6L,Wallace & Gromit in Project Zoo
+GWME01,Worms 3D (USA) (En,Fr)
 GWME51,Worms 3D
+GWMP01,Worms 3D (Europe) (En,Fr,De,Es,It)
 GWMP8P,Worms 3D
+GWOE01,Blowout (USA)
 GWOE5G,Blowout
+GWPE01,WWE Day of Reckoning (USA)
 GWPE78,WWE Day of Reckoning
+GWPJ01,WWE Day of Reckoning (Japan)
 GWPJG2,WWE Day of Reckoning
+GWPP01,WWE Day of Reckoning (Europe)
 GWPP78,WWE Day of Reckoning
+GWQE01,Wreckless - The Yakuza Missions (USA)
 GWQE52,Wreckless: The Yakuza Missions
+GWQP01,Wreckless - The Yakuza Missions (Europe, Australia) (En,Fr,De)
 GWQP52,Wreckless: The Yakuza Missions
 GWRE01,Wave Race: Blue Storm
 GWRJ01,Wave Race: Blue Storm
 GWRP01,Wave Race: Blue Storm
+GWSE01,ESPN International Winter Sports 2002 (USA)
 GWSEA4,ESPN International Winter Sports 2002
+GWSJ01,Hyper Sports 2002 Winter (Japan)
 GWSJA4,Hyper Sports 2002 Winter
+GWSP01,ESPN International Winter Sports (Europe) (En,Fr,De,It)
 GWSPA4,ESPN International Winter Sports
+GWTE01,WTA Tour Tennis (USA)
 GWTEA4,WTA Tour Tennis
+GWTJ01,WTA Tour Tennis Pro Evolution (Japan)
 GWTJA4,WTA Tour Tennis Pro Evolution
+GWTP01,Pro Tennis WTA Tour (Europe)
 GWTPA4,Pro Tennis WTA Tour
+GWUE01,Whirl Tour (USA)
 GWUE7D,Whirl Tour
+GWUP01,Whirl Tour (Europe) (En,Fr,De,Es,It)
 GWUP7D,Whirl Tour
+GWVE01,X2 - Wolverine's Revenge (USA)
 GWVE52,X2: Wolverine's Revenge
+GWVP01,X-Men 2 - Wolverine's Revenge (Europe)
 GWVP52,X-Men 2: Wolverine's Revenge
+GWVX01,X-Men 2 - Wolverine's Revenge (Europe) (Fr,De,Es)
 GWVX52,X-Men 2: Wolverine's Revenge
 GWWE01,Wario World
 GWWJ01,Wario World
 GWWP01,Wario World
+GWXJ01,Star Wars - Rogue Squadron III (Japan)
 GWXJ13,Star Wars: Rogue Squadron III
 GWYE41,Tom Clancy's Splinter Cell: Double Agent
 GWYX41,Tom Clancy's Splinter Cell: Double Agent
 GWZE01,Dance Dance Revolution: Mario Mix
 GWZJ01,Dance Dance Revolution with Mario
 GWZP01,Dancing Stage Mario Mix
+GX2D01,X-Men Legends II - Rise of Apocalypse (Germany)
 GX2D52,X-Men Legends II: Rise of Apocalypse
 GX2E01,Pokémon XG: Next Gen
 GX2E52,X-Men Legends II: Rise of Apocalypse
+GX2P01,X-Men Legends II - Rise of Apocalypse (Europe) (En,Fr,It)
 GX2P52,X-Men Legends II: Rise of Apocalypse
+GX2S01,X-Men Legends II - El Ascenso de Apocalipsis (Spain)
 GX2S52,X-Men Legends II: El Ascenso de Apocalipsis
+GX3E01,XIII (USA) (En,Fr,Es)
 GX3E41,XIII
+GX3P01,XIII (Europe)
 GX3P41,XIII
+GX3X01,XIII (Europe) (Fr,De,Es,It)
 GX3X41,XIII
+GXAE01,XGRA - Extreme G Racing Association (USA)
 GXAE51,XGRA: Extreme G Racing Association
+GXAP01,XGRA - Extreme G Racing Association (Europe) (En,Fr,De,Es,It)
 GXAP51,XGRA: Extreme G Racing Association
+GXBE01,SSX 3 (USA)
 GXBE69,SSX 3
+GXBJ01,SSX 3 (Japan)
 GXBJ13,SSX 3
+GXBP01,SSX 3 (Europe) (En,Fr,De,Es)
 GXBP69,SSX 3
 GXCE01,Custom Robo
 GXCJ01,Custom Robo: Battle Revolution
+GXEE01,Sonic Riders (USA) (En,Ja,Fr,De,Es,It)
 GXEE8P,Sonic Riders
+GXEJ01,Sonic Riders (Japan) (En,Ja,Fr,De,Es,It)
 GXEJ8P,Sonic Riders
+GXEP01,Sonic Riders (Europe) (En,Ja,Fr,De,Es,It)
 GXEP8P,Sonic Riders
+GXFD01,FIFA Football 2004 (Germany)
 GXFD69,FIFA Football 2004
+GXFE01,FIFA Soccer 2004 (USA)
 GXFE69,FIFA Soccer 2004
+GXFF01,FIFA Football 2004 (France)
 GXFF69,FIFA Football 2004
+GXFI01,FIFA Football 2004 (Italy)
 GXFI69,FIFA Football 2004
+GXFP01,FIFA Football 2004 (Europe)
 GXFP69,FIFA Football 2004
+GXFS01,FIFA Football 2004 (Spain)
 GXFS69,FIFA Football 2004
+GXGE01,Mega Man X Collection (USA)
 GXGE08,Mega Man X Collection
+GXLE01,X-Men Legends (USA)
 GXLE52,X-Men Legends
+GXLP01,X-Men Legends (Europe)
 GXLP52,X-Men Legends
+GXLX01,X-Men Legends (Europe) (En,Fr,De)
 GXLX52,X-Men Legends
+GXME01,X-Men - Next Dimension (USA)
 GXME52,X-Men: Next Dimension
+GXMP01,X-Men - Next Dimension (Europe)
 GXMP52,X-Men: Next Dimension
+GXNE01,Rampage - Total Destruction (USA)
 GXNE5D,Rampage: Total Destruction
+GXOE01,SSX on Tour (USA)
 GXOE69,SSX on Tour
+GXOJ01,SSX on Tour with Mario (Japan)
 GXOJ13,SSX on Tour with Mario
+GXOP01,SSX on Tour (Europe)
 GXOP69,SSX on Tour
+GXOX01,SSX on Tour (Europe) (En,Fr,De)
 GXOX69,SSX on Tour
+GXPE01,Sphinx and the Cursed Mummy (USA)
 GXPE78,Sphinx and the Cursed Mummy
+GXPP01,Sphinx and the Cursed Mummy (Europe) (En,Fr,De,Es,It)
 GXPP78,Sphinx and the Cursed Mummy
+GXQF01,Taxi 3 - Le Jeu (France)
 GXQF41,Taxi 3 : Le Jeu
 GXQP41,Taxi 3: The Game
+GXRE01,Mega Man X - Command Mission (USA)
 GXRE08,Mega Man X: Command Mission
+GXRJ01,Rockman X - Command Mission (Japan)
 GXRJ08,Rockman X: Command Mission
+GXRP01,Mega Man X - Command Mission (Europe) (En,Fr,De)
 GXRP08,Mega Man X: Command Mission
+GXSE01,Sonic Adventure DX - Director's Cut (USA) (En,Ja,Fr,De,Es)
 GXSE8P,Sonic Adventure DX: Director's Cut
+GXSP01,Sonic Adventure DX - Director's Cut (Europe) (En,Ja,Fr,De,Es) (Rev 1)
 GXSP8P,Sonic Adventure DX: Director's Cut
 GXSRTE,Sonic Riders Tournament Edition
 GXTE8P,Sonic Riders Tournament Edition
+GXUE01,Surf's Up (USA) (En,Fr,Es)
 GXUE41,Surf's Up
 GXXE01,Pokemon XD: Gale of Darkness
 GXXJ01,Pokemon XD: Yami no Kaze Dark Lugia
@@ -3352,60 +4680,100 @@ GY2J01,Donkey Konga 2: Hit Song Parade
 GY2P01,Donkey Konga 2
 GY3E01,Donkey Konga 3
 GY3J01,Donkey Konga 3: Tabehoudai! Haru Mogitate 50-kyoku
+GYAD01,Tierisch verrueckte Bauernhof, Der (Germany)
 GYAD78,De Tierisch verrueckte Bauernhofr
+GYAE01,Nickelodeon Barnyard (USA)
 GYAE78,Barnyard
+GYAP01,Nickelodeon Barnyard (Europe)
 GYAP78,Barnyard
+GYAX01,Nickelodeon Barnyard (Europe) (Fr,Es,It,Nl)
 GYAX78,Barnyard
 GYBE01,Donkey Kong Jungle Beat
 GYBJ01,Donkey Kong Jungle Beat
 GYBP01,Donkey Kong Jungle Beat
+GYFE01,Yu-Gi-Oh! The Falsebound Kingdom (USA)
 GYFEA4,Yu-Gi-Oh! The Falsebound Kingdom
+GYFJ01,Yu-Gi-Oh! Falsebound Kingdom - Kyokou ni Tozasareta Oukoku (Japan)
 GYFJA4,Yu-Gi-Oh! Falsebound Kingdom: Kyokou ni Tozasareta Oukoku
+GYFP01,Yu-Gi-Oh! The Falsebound Kingdom (Europe) (En,Fr,De,Es,It)
 GYFPA4,Yu-Gi-Oh! The Falsebound Kingdom
+GYKE01,Zatch Bell! Mamodo Battles (USA)
 GYKEB2,Zatch Bell! Mamodo Battles
+GYKJ01,Konjiki no Gashbell!! Yuujou Tag Battle 2 (Japan)
 GYKJB2,Konjiki no Gashbell!! Yuujou Tag Battle 2
+GYMJ01,Jikkyou Powerful Major League (Japan)
 GYMJA4,Jikkyou Powerful Major League
 GYQE01,Mario Superstar Baseball
 GYQJ01,Super Mario Stadium: Miracle Baseball
 GYQP01,Mario Superstar Baseball
+GYRE01,TMNT (USA) (En,Fr,Es)
 GYRE41,TMNT
+GYRP01,TMNT (Europe) (En,Fr,De,Es,It)
 GYRP41,TMNT
+GYTE01,Ty the Tasmanian Tiger 2 - Bush Rescue (USA)
 GYTE69,TY the Tasmanian Tiger 2: Bush Rescue
+GYTP01,Ty the Tasmanian Tiger 2 - Bush Rescue (Europe) (En,Fr,De)
 GYTP69,TY the Tasmanian Tiger 2: Bush Rescue
+GYWD01,Harvest Moon - A Wonderful Life (Germany)
 GYWDE9,Harvest Moon: A Wonderful Life
+GYWE01,Harvest Moon - A Wonderful Life (USA)
 GYWEE9,Harvest Moon: A Wonderful Life
+GYWJ01,Bokujou Monogatari - Wonderful Life (Japan)
 GYWJ99,Bokujou Monogatari: Wonderful Life
+GYWP01,Harvest Moon - A Wonderful Life (Europe)
 GYWPE9,Harvest Moon: A Wonderful Life
 GZ2E01,The Legend of Zelda: Twilight Princess
 GZ2J01,Zelda no Densetsu: Twilight Princess
 GZ2K01,Zelda no Densetsu: Twilight Princess
 GZ2P01,The Legend of Zelda: Twilight Princess
+GZ3E01,Dragon Ball Z - Budokai 2 (USA)
 GZ3E70,Dragon Ball Z: Budokai 2
+GZ3P01,Dragon Ball Z - Budokai 2 (Europe) (En,Fr,De,Es,It)
 GZ3PB2,Dragon Ball Z: Budokai 2
 GZBEB2,Zatch Bell! Go! Go! Mamodo Fight!!
+GZBJ01,Dragon Ball Z (Japan)
 GZBJB2,Dragon Ball Z
+GZCE01,ZooCube (USA)
 GZCE51,ZooCube
+GZCJ01,ZooCube (Japan)
 GZCJB0,ZooCube
+GZCP01,ZooCube (Europe) (En,Fr,De,Es,It)
 GZCP51,ZooCube
+GZDE01,Godzilla - Destroy All Monsters Melee (USA)
 GZDE70,Godzilla: Destroy All Monsters Melee
+GZDJ01,Godzilla - Kaijuu Dairantou (Japan)
 GZDJ70,Godzilla: Kaijuu Dairantou
+GZDP01,Godzilla - Destroy All Monsters Melee (Europe) (En,Fr,De,Es,It)
 GZDP70,Godzilla: Destroy All Monsters Melee
+GZEE01,Dragon Ball Z - Sagas (USA)
 GZEE70,Dragon Ball Z: Sagas
+GZFJ01,Rei Fighter Gekitsui Senki (Japan)
 GZFJBP,Rei Fighter Gekitsui Senki
+GZHJ01,Zoids - Full Metal Crash (Japan)
 GZHJDA,Zoids: Full Metal Crash
 GZLE01,The Legend of Zelda: The Wind Waker
 GZLJ01,Zelda no Densetsu: Kaze no Takt
 GZLK01,Zelda no Densetsu: Kaze no Takuto
 GZLP01,The Legend of Zelda: The Wind Waker
+GZMP01,Butt-Ugly Martians - Zoom or Doom! (Europe) (En,Fr,De,Es,It)
 GZMP7D,Butt-Ugly Martians: Zoom or Doom!
+GZOJ01,Zoids Vs. (Japan) (Rev 1)
 GZOJDA,Zoids Vs.
+GZPE01,Zapper (USA)
 GZPE70,Zapper
+GZPP01,Zapper (Europe) (En,Fr,De,Es,It,Nl) (Rev 1)
 GZPP70,Zapper
+GZQE01,Robots (USA)
 GZQE7D,Robots
+GZQJ01,Robots (Japan)
 GZQJ7D,Robots
+GZQP01,Robots (Europe) (En,Fr,De,Es,It)
 GZQP7D,Robots
+GZSE01,Zoids - Battle Legends (USA)
 GZSE70,Zoids: Battle Legends
+GZSJ01,Zoids Vs. II (Japan)
 GZSJDA,Zoids Vs. II
+GZVJ01,Zoids Vs. III (Japan)
 GZVJDA,Zoids Vs. III
 GZWE01,WarioWare, Inc.: Mega Party Game$!
 GZWJ01,Atsumare!! Made in Wario
@@ -4244,6 +5612,7 @@ ONKELZ,SingItStar Böhse Onkelz PAL
 OSCW,Open Shop Channel
 OTFPSI,Sing IT: Operación triunfo
 P2ME01,Metroid Prime 2: Echoes (Bonus Disc)
+P4BJ01,Biohazard 4 (Japan) (En,Ja) (Taikenban)
 P4BJ08,Biohazard 4 (Taikenban)
 PA2J,Yokai Douchuuki
 PA3J,Salamander
@@ -4414,6 +5783,7 @@ PCOE,Psychosis
 PCOJ,Paranoia
 PCOP,Psychosis
 PCPJ,Power Eleven
+PCPJ01,Pac-Man Vs. (Japan) (Club Nintendo Genteiban)
 PCQJ,Psycho Chaser
 PCRJ,Break In
 PCRL,Break In
@@ -4429,6 +5799,7 @@ PCVP,World Class Baseball
 PCWJ,Image Fight
 PCXJ,Power League IV
 PCYJ,Wallaby!! Usagi no Kuni no Kangaroo Race
+PD5J01,Dragon Drive - D-Masters Shot (Japan) (Anime Disc)
 PD5JB2,Dragon Drive: D-Masters Shot (Anime Disc)
 PDAJ,Nekketsu Koukou Dodgeball Bu - PC Bangaihen
 PDCJ,Dai Makaimura
@@ -4442,8 +5813,10 @@ PDJJ,Street Fighter II Dash - Champion Edition
 PDJL,Street Fighter II - Champion Edition
 PDJN,Street Fighter II - Champion Edition
 PDUE01,Another Super Mario Bros. Wii
+PGPJ01,SD Gundam - Gashapon Wars (Japan) (Taikenban)
 PGPJB2,SD Gundam: Gashapon Wars (Taikenban)
 PGSJ01,Metal Gear Solid: The Twin Snakes: Special Disc
+PHEJ01,Homeland (Japan) (Test Disc)
 PHEJ91,Homeland (Test Disc)
 PIKE25,Pikmin 251
 PIKECC,Colossal Caverns
@@ -5141,6 +6514,7 @@ RCKPGN,Alan Hansen's Sports Challenge
 RCLE4Q,Disney's Chicken Little: Ace in Action
 RCLP4Q,Disney's Chicken Little: Ace in Action
 RCME13,Mario Kart Wii HoopaN13
+RCMJTO,Retro Rewind
 RCOC99,Meitantei Conan: Tsuioku no Mirage
 RCOJ99,Meitantei Conan: Tsuioku no Mirage
 RCOKZF,Case Closed: The Mirapolis Investigation
@@ -6160,6 +7534,7 @@ RMCJBR,Mario Kart Brown
 RMCJCT,Mario Kart Wii CTGP Revolution
 RMCJL1,Luma's CT Pack
 RMCJT1,Wiimms Intermezzo
+RMCJTO,Retro Rewind
 RMCJYP,Yoshi's Racing Resort Plus
 RMCK,Mario Kart Channel
 RMCK01,Mario Kart Wii
@@ -6252,6 +7627,7 @@ RMCPIK,Insane Kart Wii
 RMCPL1,Luma's CT Pack
 RMCPT1,Wiimms Intermezzo
 RMCPT2,Mario Kart Wii - Japanese Regional
+RMCPTO,Retro Rewind
 RMCPVP,Variety Pack
 RMCPYC,Yoshi's Racing Resort Plus
 RMCPYP,Yoshi's Racing Resort Plus
@@ -6901,7 +8277,7 @@ RTJP68,Star Trek: Conquest
 RTKE5Z,Octomania
 RTKJDQ,Sharuui Takoron
 RTKK8M,Modu Hamkke Takoron
-RTLE18,Fishing Master World Tour
+RTLE18,Fishing Master: World Tour
 RTLJ18,Mezase!! Tsuri Master: Sekai ni Challenge-hen
 RTME41,TMNT
 RTME70,Dragon ball Z Budokai Tenkaichi 3 WII TSM
@@ -7641,6 +9017,7 @@ SC7P52,Call of Duty: Black Ops
 SC7S52,Call of Duty: Black Ops
 SC7Z52,Call of Duty: Black Ops
 SC8E01,Wii Play: Motion
+SC8E02,You Play: Motion
 SC8J01,Wii Remocon Plus: Variety
 SC8K01,Wii Remocon Plusro Jeulgineun: Variety Game Box
 SC8P01,Wii Play: Motion
@@ -7788,7 +9165,7 @@ SERJ91,Epic Mickey 2: Futatsu no Chikara
 SERK8M,Epic Mickey 2: The Power of Two
 SERP4Q,Disney Epic Mickey 2: The Power of Two
 SERV4Q,Disney Epic Mickey 2: The Power of Two
-SESEWR,Sesame Street: Ready, Set, Grover! with Elmo: The Videogame
+SESEWR,Sesame Street: Ready, Set, Grover!
 SESPWR,Sesame Street: Ready, Set, Grover! The Videogame
 SESUWR,Sesame Street: Ready, Set, Grover! The Videogame
 SEUPEY,Retro City Rampage DX
@@ -7903,10 +9280,10 @@ SGSESZ,Family GameShow
 SGSP7J,Family GameShow
 SGTEFS,My Personal Golf Trainer with IMG Academies and David Leadbetter
 SGTPUG,My Personal Golf Trainer with IMG Academies and David Leadbetter
-SGUE4Q,Guilty Party: Mystery Fun for Everyone!
-SGVEAF,GO VACATION
+SGUE4Q,Disney Guilty Party
+SGVEAF,Go Vacation
 SGVJAF,GO VACATION
-SGVPAF,GO VACATION
+SGVPAF,Go Vacation
 SGWD7K,Bibi Blocksberg: Das grosse Hexenbesen-Rennen!
 SGXE41,Battle of Giants: Dinosaurs Strike
 SGXP41,Combat of Giants: Dinosaurs Strike
@@ -8151,7 +9528,7 @@ SL2026,Just Dance 2026 Edition
 SL2J01,Zero: Shinku no Chou
 SL2P01,Project Zero 2: Wii Edition
 SL2PUD,Project Zero 2: Wii Edition Undub
-SL3ENR,Don Bluth Presents Dragon's Lair Trilogy
+SL3ENR,Dragon's Lair Trilogy
 SL4PAF,Los 40 Principales: Karaoke Party
 SL5DKM,Let's Sing 2019: Mit Deutschen Hits
 SL5FKM,Let's Sing 2019: Hits Francais et Internationaux
@@ -8607,7 +9984,7 @@ SNGPLG,Get Fit with Mel B
 SNHE69,Need for Speed: Hot Pursuit
 SNHJ13,Need for Speed: Hot Pursuit
 SNHP69,Need for Speed: Hot Pursuit
-SNIE54,Nickelodeon Nicktoons MLB
+SNIE54,Nicktoons MLB
 SNJE69,NBA Jam
 SNJP69,NBA Jam
 SNKP54,Nickelodeon Fit
@@ -8800,9 +10177,9 @@ SRYJAF,Fitness Party
 SRYPAF,ExerBeat: Gym Class Workout
 SRZE8P,Sonic Riders: Regravitified
 SS2PFR,Winter Sports 2012: Feel the Spirit
-SS3EWR,Sesame Street: Elmo's A-to-Zoo Adventure: The Videogame
+SS3EWR,Sesame Street: Elmo's A-to-Zoo Adventure
 SS3UWR,Sesame Street: Elmo's A-to-Zoo Adventure: The Videogame
-SS4EWR,Sesame Street: Cookie's Counting Carnival: The Videogame
+SS4EWR,Sesame Street: Cookie's Counting Carnival
 SS4UWR,Sesame Street: Cookie's Counting Carnival: The Videogame
 SS5ENR,Satisfashion: Rock the Runway
 SS6UHS,AFL: Game of the Year Edition
@@ -8857,7 +10234,7 @@ SSQW01,Mario Party 9
 SSRE20,Wild West Shootout
 SSRPXT,Wild West Shootout
 SSSE01,New Super Mario Bros. Wii: Summer Sun
-SSSEWR,Sesame Street: Elmo's Musical Monsterpiece: The Videogame
+SSSEWR,Sesame Street: Elmo's Musical Monsterpiece
 SSTEG9,Kid Adventures: Sky Captain
 SSTPY5,Stunt Flyer: Hero of the Skies
 SSUES5,Sushi Go Round

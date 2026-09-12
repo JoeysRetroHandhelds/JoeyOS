@@ -1,52 +1,51 @@
-﻿package com.joeyos.app.ui.components
+package com.joeyos.app.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.material3.Text
 import com.joeyos.app.data.RecentGame
 import com.joeyos.app.ui.theme.*
 
+/**
+ * Pick the game for the Favorite dock tile. [games] is null while it loads. Focus opens on the
+ * current favourite, so the D-pad starts from what's already chosen.
+ */
 @Composable
 fun FavoritePickerPopup(
-    games: List<RecentGame>,
+    games: List<RecentGame>?,
     currentFavorite: RecentGame?,
-    selectedIndex: Int = 0,
     onSelect: (RecentGame) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val listState = rememberLazyListState()
-    LaunchedEffect(selectedIndex) {
-        if (games.isNotEmpty()) listState.animateScrollToItem(selectedIndex.coerceIn(0, games.lastIndex))
-    }
     val screenH = LocalConfiguration.current.screenHeightDp
+    fun isCurrent(game: RecentGame) = currentFavorite != null &&
+        currentFavorite.title == game.title && currentFavorite.emulatorPackage == game.emulatorPackage
+    val currentIndex = games?.indexOfFirst(::isCurrent)?.takeIf { it >= 0 } ?: 0
+    val currentRow = remember { FocusRequester() }
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black.copy(alpha = 0.6f))
-                .clickable(onClick = onDismiss)
-        )
+    JoeyDialog(
+        onDismiss = onDismiss,
+        focusKey = !games.isNullOrEmpty(),
+        initialFocus = if (!games.isNullOrEmpty()) currentRow else null
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth(0.55f)
@@ -69,87 +68,37 @@ fun FavoritePickerPopup(
                     fontFamily = FontFamily.Monospace, color = TextFaint)
             }
 
-            if (games.isEmpty()) {
-                Text(
+            when {
+                games == null -> Text(
+                    "Loading…",
+                    fontSize = 12.sp,
+                    fontFamily = FontFamily.Monospace,
+                    color = TextFaint,
+                    modifier = Modifier.padding(horizontal = 18.dp, vertical = 14.dp)
+                )
+                games.isEmpty() -> Text(
                     "No recent games found.\nPlay some games first.",
                     fontSize = 12.sp,
                     fontFamily = FontFamily.Monospace,
                     color = TextFaint,
                     modifier = Modifier.padding(horizontal = 18.dp, vertical = 14.dp)
                 )
-            } else {
-                LazyColumn(
-                    state          = listState,
-                    modifier       = Modifier.fillMaxWidth(),
-                    contentPadding = PaddingValues(vertical = 0.dp)
-                ) {
-                    itemsIndexed(games) { i, game ->
-                        val isCurrent = currentFavorite?.title == game.title &&
-                                        currentFavorite.emulatorPackage == game.emulatorPackage
-                        FavoritePickerRow(
-                            index      = i + 1,
-                            game       = game,
-                            isCurrent  = isCurrent,
-                            isSelected = i == selectedIndex,
-                            onClick    = { onSelect(game); onDismiss() }
-                        )
+                else -> {
+                    // Start scrolled to the current favourite so its row exists to take focus.
+                    val listState = rememberLazyListState(initialFirstVisibleItemIndex = currentIndex)
+                    LazyColumn(state = listState, modifier = Modifier.fillMaxWidth()) {
+                        itemsIndexed(games, key = { i, g -> "$i:${g.emulatorPackage}:${g.path}" }) { i, game ->
+                            GameListRow(
+                                index     = i + 1,
+                                game      = game,
+                                isCurrent = isCurrent(game),
+                                onClick   = { onSelect(game); onDismiss() },
+                                modifier  = if (i == currentIndex) Modifier.focusRequester(currentRow) else Modifier
+                            )
+                        }
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun FavoritePickerRow(
-    index: Int,
-    game: RecentGame,
-    isCurrent: Boolean,
-    isSelected: Boolean,
-    onClick: () -> Unit
-) {
-    val context = LocalContext.current
-    val subtitle = remember(game.emulatorPackage, game.corePath) { gameSubtitle(context, game) }
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(if (isSelected) Color.White.copy(alpha = 0.10f) else Color.Transparent)
-            .clickable(onClick = onClick)
-            .padding(horizontal = 18.dp, vertical = 9.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .size(28.dp)
-                .clip(RoundedCornerShape(8.dp))
-                .background(Amber.copy(alpha = 0.18f))
-                .border(1.dp, AmberSoft, RoundedCornerShape(8.dp)),
-            contentAlignment = Alignment.Center
-        ) {
-            if (isCurrent)
-                Text("★", fontSize = 12.sp, color = Amber)
-            else
-                Text("$index", fontSize = 11.sp, fontFamily = FontFamily.Monospace,
-                    color = Amber, fontWeight = FontWeight.Bold)
-        }
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                game.title,
-                fontSize = 13.sp,
-                color = TextPrimary,
-                fontWeight = FontWeight.Medium,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            Text(
-                subtitle,
-                fontSize = 9.sp,
-                fontFamily = FontFamily.Monospace,
-                color = TextFaint,
-                maxLines = 1
-            )
-        }
-        if (isSelected) Text("▶", fontSize = 12.sp, color = Amber)
     }
 }

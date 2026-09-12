@@ -4,17 +4,33 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.Settings
+import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.ImeAction
+import kotlinx.coroutines.launch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -23,7 +39,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -32,82 +47,121 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import com.joeyos.app.data.InstalledApp
+import com.joeyos.app.ui.controls.Control
+import androidx.activity.compose.BackHandler
 import com.joeyos.app.ui.theme.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+/**
+ * All installed apps, full screen. A real Dialog window (JoeyDialog), so focus stays inside it
+ * and returns to the dock icon you left when it closes. Focus opens on the first app; the search
+ * box is a normal stop above the grid (Up from the top row) and never pops the keyboard on open.
+ * Start on an app opens its options (App Info), as long-press does by touch.
+ */
 @Composable
 fun AppDrawer(
     installedApps: List<InstalledApp>,
     onLaunch: (String) -> Unit,
     onDismiss: () -> Unit,
-    selectedIndex: Int = -1,
-    onFilteredCountChange: (Int) -> Unit = {},
-    onSelectedPackageChange: (String?) -> Unit = {},
-    onColumnCountChange: (Int) -> Unit = {}
+    isInDock: (String) -> Boolean = { false },
+    onSetInDock: (String, Boolean) -> Unit = { _, _ -> }
 ) {
-    // Match GridCells.Adaptive(96.dp) with 12dp padding each side + 4dp spacing
-    val screenWidthDp = LocalConfiguration.current.screenWidthDp
-    val cols = remember(screenWidthDp) { ((screenWidthDp - 24) / 100).coerceAtLeast(1) }
-    LaunchedEffect(cols) { onColumnCountChange(cols) }
     var query by remember { mutableStateOf("") }
     val filtered = remember(query, installedApps) {
         if (query.isBlank()) installedApps
         else installedApps.filter { it.label.contains(query, ignoreCase = true) }
     }
-    LaunchedEffect(filtered.size) { onFilteredCountChange(filtered.size) }
-    LaunchedEffect(selectedIndex, filtered.size) {
-        onSelectedPackageChange(filtered.getOrNull(selectedIndex)?.packageName)
-    }
-    val gridState = rememberLazyGridState()
-    LaunchedEffect(selectedIndex) {
-        if (selectedIndex >= 0 && filtered.isNotEmpty())
-            gridState.animateScrollToItem(selectedIndex.coerceIn(0, filtered.lastIndex))
-    }
-
+    var focusedApp by remember { mutableStateOf<InstalledApp?>(null) }
     var contextApp by remember { mutableStateOf<InstalledApp?>(null) }
+    val firstApp = remember { FocusRequester() }
     val context = LocalContext.current
+    val keyboard = LocalSoftwareKeyboardController.current
+    val scope = rememberCoroutineScope()
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(SheetBg)
-            .systemBarsPadding()
+    val gridState = rememberLazyGridState()
+    var typing by remember { mutableStateOf(false) }
+    val fieldFocus = remember { FocusRequester() }
+    val boxFocus = remember { FocusRequester() }
+    /**
+     * Down from the full-width search box goes to the first result. Left to itself, focus search
+     * picks the app nearest the box's centre (found on device), so this one step is explicit.
+     * The grid is scrolled to the top first, so the first result exists to take focus.
+     */
+    fun goToFirstResult() {
+        if (filtered.isEmpty()) return
+        scope.launch {
+            gridState.scrollToItem(0)
+            withFrameNanos { }
+            runCatching { firstApp.requestFocus() }
+        }
+    }
+    /** Leave typing: hide the keyboard and land on the search box, or on the first result. */
+    fun stopTyping(toResults: Boolean) {
+        keyboard?.hide()
+        typing = false
+        if (toResults && filtered.isNotEmpty()) goToFirstResult()
+        else scope.launch {
+            withFrameNanos { }
+            runCatching { boxFocus.requestFocus() }
+        }
+    }
+
+    JoeyPage(
+        onClose      = onDismiss,
+        focusKey     = installedApps.isNotEmpty(),
+        initialFocus = if (filtered.isNotEmpty()) firstApp else null,
+        onControl    = { control ->
+            if (control == Control.Options) focusedApp?.let { contextApp = it }
+            true
+        }
     ) {
-        Column(modifier = Modifier.fillMaxSize()) {
+        // While typing, B / Back stops typing first (registered after the page's own handler).
+        BackHandler(enabled = typing) { stopTyping(toResults = false) }
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(SheetBg)
+                .systemBarsPadding()
+        ) {
+            // Header
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 18.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("All Apps", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = TextPrimary)
+                Text("A open  •  Start options  •  B close", fontSize = 9.sp,
+                    fontFamily = FontFamily.Monospace, color = TextFaint)
+            }
 
-                // Header
+            // Search box. Two states, the TV way: landing on it only highlights it (the overlay
+            // is the focus stop); A — or a tap — starts typing and opens the keyboard. While
+            // typing, B or Back leaves typing, and the keyboard's Done goes to results. The D-pad
+            // belongs to the on-screen keyboard while it's up (that's how you type without touch).
+            // (Found on device: a plain text field popped the keyboard just by being landed on,
+            // and swallowed B and Down.)
+            val boxInteraction = remember { MutableInteractionSource() }
+            val boxFocused by boxInteraction.collectIsFocusedAsState()
+            val fieldInteraction = remember { MutableInteractionSource() }
+            val fieldFocused by fieldInteraction.collectIsFocusedAsState()
+            val lit = boxFocused || fieldFocused
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 18.dp)
+                    .padding(bottom = 10.dp)
+            ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 18.dp, vertical = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text("All Apps", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = TextPrimary)
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(Color.White.copy(alpha = 0.07f))
-                            .clickable(onClick = onDismiss)
-                            .padding(horizontal = 14.dp, vertical = 6.dp)
-                    ) {
-                        Text("✕", color = TextFaint, fontSize = 16.sp)
-                    }
-                }
-
-                // Search bar
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 18.dp)
-                        .padding(bottom = 10.dp)
                         .clip(RoundedCornerShape(12.dp))
-                        .background(Color.White.copy(alpha = 0.07f))
-                        .border(1.dp, Color.White.copy(alpha = 0.12f), RoundedCornerShape(12.dp))
+                        .background(Color.White.copy(alpha = if (lit) 0.12f else 0.07f))
+                        .border(if (lit) 2.dp else 1.dp,
+                            if (lit) Amber else Color.White.copy(alpha = 0.12f), RoundedCornerShape(12.dp))
                         .padding(horizontal = 14.dp, vertical = 10.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -116,99 +170,110 @@ fun AppDrawer(
                         value = query,
                         onValueChange = { query = it },
                         singleLine = true,
+                        interactionSource = fieldInteraction,
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                        keyboardActions = KeyboardActions(onDone = { stopTyping(toResults = true) }),
                         textStyle = TextStyle(
                             color = TextPrimary,
                             fontSize = 14.sp,
                             fontFamily = FontFamily.Monospace
                         ),
                         decorationBox = { inner ->
-                            if (query.isEmpty()) Text("Search apps…", fontSize = 14.sp,
-                                fontFamily = FontFamily.Monospace, color = TextFaint)
+                            if (query.isEmpty()) Text(
+                                if (typing) "Type to search…" else "Search apps…  (A to type)",
+                                fontSize = 14.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
                             inner()
                         },
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier
+                            .weight(1f)
+                            .focusRequester(fieldFocus)
+                            .focusProperties { canFocus = typing }
+
                     )
                 }
+                if (!typing) {
+                    Box(
+                        modifier = Modifier
+                            .matchParentSize()
+                            .focusRequester(boxFocus)
+                            .onPreviewKeyEvent { e ->
+                                if (e.key == Key.DirectionDown && filtered.isNotEmpty()) {
+                                    if (e.type == KeyEventType.KeyDown) goToFirstResult()
+                                    true
+                                } else false
+                            }
+                            .clickable(interactionSource = boxInteraction, indication = null) { typing = true }
+                    )
+                }
+            }
+            LaunchedEffect(typing) {
+                if (typing) {
+                    withFrameNanos { }
+                    runCatching { fieldFocus.requestFocus() }
+                    keyboard?.show()
+                }
+            }
 
-                // App grid
-                LazyVerticalGrid(
-                    columns = GridCells.Adaptive(minSize = 96.dp),
-                    state   = gridState,
-                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    items(filtered, key = { it.packageName }) { app ->
-                        val idx = filtered.indexOf(app)
-                        AppGridItem(
-                            app         = app,
-                            isSelected  = idx == selectedIndex,
-                            onClick     = { onLaunch(app.packageName) },
-                            onLongClick = { contextApp = app }
-                        )
-                    }
+            // App grid. Keyed by package, so focus follows an app if the list changes; the grid
+            // brings the focused app into view itself as the D-pad walks it.
+            LazyVerticalGrid(
+                columns = GridCells.Adaptive(minSize = 96.dp),
+                state = gridState,
+                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                modifier = Modifier.fillMaxSize()
+            ) {
+                itemsIndexed(filtered, key = { _, app -> app.packageName }) { i, app ->
+                    AppGridItem(
+                        app         = app,
+                        onClick     = { onLaunch(app.packageName) },
+                        onLongClick = { contextApp = app },
+                        onFocused   = { focusedApp = app },
+                        modifier    = if (i == 0) Modifier.focusRequester(firstApp) else Modifier
+                    )
                 }
             }
         }
+    }
 
-    // Long-press context menu
+    // Options for one app (Start, or long-press by touch)
     contextApp?.let { app ->
-        Dialog(
-            onDismissRequest = { contextApp = null },
-            properties = DialogProperties(usePlatformDefaultWidth = false)
-        ) {
-            Box(
+        JoeyDialog(onDismiss = { contextApp = null }) {
+            Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Black.copy(alpha = 0.6f))
-                    .clickable(indication = null, interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }) { contextApp = null },
-                contentAlignment = Alignment.Center
+                    .widthIn(max = 300.dp)
+                    .clip(RoundedCornerShape(18.dp))
+                    .background(Color(0xFF1A1A2E))
+                    .border(1.dp, Color.White.copy(alpha = 0.12f), RoundedCornerShape(18.dp))
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                Column(
-                    modifier = Modifier
-                        .widthIn(max = 300.dp)
-                        .clip(RoundedCornerShape(18.dp))
-                        .background(Color(0xFF1A1A2E))
-                        .border(1.dp, Color.White.copy(alpha = 0.12f), RoundedCornerShape(18.dp))
-                        .clickable(indication = null, interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }) {}
-                ) {
-                    // App name header
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 20.dp, vertical = 16.dp)
-                    ) {
-                        Text(
-                            text = app.label,
-                            fontSize = 15.sp,
-                            fontWeight = FontWeight.Bold,
-                            fontFamily = FontFamily.Monospace,
-                            color = TextPrimary
-                        )
-                    }
-
-                    HorizontalDivider(color = Color.White.copy(alpha = 0.08f))
-
-                    // App Info
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                contextApp = null
-                                context.startActivity(
-                                    Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                                        data = Uri.fromParts("package", app.packageName, null)
-                                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                    }
-                                )
-                            }
-                            .padding(horizontal = 20.dp, vertical = 16.dp)
-                    ) {
-                        Text("App Info", fontSize = 14.sp, fontFamily = FontFamily.Monospace, color = TextPrimary)
-                    }
-
-                }
+                Text(
+                    text = app.label,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Monospace,
+                    color = TextPrimary,
+                    modifier = Modifier.padding(bottom = 2.dp)
+                )
+                val inDock = isInDock(app.packageName)
+                DialogButton(if (inDock) "Remove from dock" else "Add to dock", onClick = {
+                    onSetInDock(app.packageName, !inDock)
+                    Toast.makeText(context,
+                        if (inDock) "${app.label} removed from the dock" else "${app.label} added to the dock",
+                        Toast.LENGTH_SHORT).show()
+                    contextApp = null
+                }, modifier = Modifier.fillMaxWidth())
+                DialogButton("App Info", onClick = {
+                    contextApp = null
+                    context.startActivity(
+                        Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                            data = Uri.fromParts("package", app.packageName, null)
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        }
+                    )
+                }, modifier = Modifier.fillMaxWidth())
             }
         }
     }
@@ -216,7 +281,15 @@ fun AppDrawer(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun AppGridItem(app: InstalledApp, isSelected: Boolean = false, onClick: () -> Unit, onLongClick: () -> Unit = {}) {
+fun AppGridItem(
+    app: InstalledApp,
+    onClick: () -> Unit,
+    onLongClick: () -> Unit = {},
+    onFocused: () -> Unit = {},
+    modifier: Modifier = Modifier
+) {
+    val interaction = remember { MutableInteractionSource() }
+    val isSelected by interaction.collectIsFocusedAsState()
     val context = LocalContext.current
     val icon by produceState<ImageBitmap?>(null, app.packageName) {
         value = withContext(Dispatchers.IO) {
@@ -234,11 +307,14 @@ fun AppGridItem(app: InstalledApp, isSelected: Boolean = false, onClick: () -> U
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
+            .onFocusChanged { if (it.isFocused) onFocused() }
             .clip(RoundedCornerShape(12.dp))
             .then(if (isSelected) Modifier.background(Color.White.copy(alpha = 0.12f)) else Modifier)
-            .border(1.dp, if (isSelected) Color.White.copy(alpha = 0.35f) else Color.Transparent, RoundedCornerShape(12.dp))
-            .combinedClickable(onClick = onClick, onLongClick = onLongClick)
+            .border(if (isSelected) 2.dp else 1.dp, if (isSelected) Amber else Color.Transparent, RoundedCornerShape(12.dp))
+            // One clickable node = one focus target.
+            .combinedClickable(interactionSource = interaction, indication = null,
+                onClick = onClick, onLongClick = onLongClick)
             .padding(vertical = 10.dp, horizontal = 6.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(6.dp)

@@ -14,27 +14,21 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.lifecycleScope
 import com.joeyos.app.ui.HomeScreen
 import com.joeyos.app.ui.IntroScreen
 import com.joeyos.app.ui.theme.JoeyOSTheme
 import com.joeyos.app.ui.viewmodel.HomeViewModel
-import kotlin.math.abs
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlin.time.Duration.Companion.milliseconds
+import com.joeyos.app.ui.controls.Control
+import com.joeyos.app.ui.controls.ControlBus
+import com.joeyos.app.ui.controls.Controls
 
 class MainActivity : ComponentActivity() {
 
     private val vm: HomeViewModel by viewModels { HomeViewModel.Factory(applicationContext) }
 
-    private var lastStickMs   = 0L
     private var lastEventTime = -1L
-    private var longPressAJob: Job? = null
 
     private fun hasPermission() =
         Build.VERSION.SDK_INT < Build.VERSION_CODES.R || Environment.isExternalStorageManager()
@@ -43,11 +37,11 @@ class MainActivity : ComponentActivity() {
 
     private var introComplete        by mutableStateOf(false)
     private var hasStoragePermission by mutableStateOf(false)
-    private var introSelectedIdx     by mutableIntStateOf(0)
     private var introHomeDone        by mutableStateOf(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        CrashLogger.install(this)
         introComplete = hasPermission() && prefs.getBoolean("intro_done", false)
         hasStoragePermission = hasPermission()
         GameDatabase.init(this)
@@ -61,7 +55,6 @@ class MainActivity : ComponentActivity() {
                         onGrantAccess = ::openStoragePermissionSettings,
                         onSetHomeApp  = ::openHomeAppSettings,
                         onContinue    = ::completeIntro,
-                        selectedIdx   = introSelectedIdx,
                         grantDone     = hasStoragePermission,
                         homeDone      = introHomeDone
                     )
@@ -106,70 +99,50 @@ class MainActivity : ComponentActivity() {
     // ── Key events ────────────────────────────────────────────────────────────
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        // On the intro screen handle D-pad navigation and A to activate.
-        if (!introComplete) {
-            val maxIdx = if (hasStoragePermission) 2 else 1
-            if (event.action == KeyEvent.ACTION_DOWN) {
-                when (event.keyCode) {
-                    KeyEvent.KEYCODE_DPAD_UP,
-                    KeyEvent.KEYCODE_BUTTON_L1 -> {
-                        introSelectedIdx = (introSelectedIdx - 1).coerceAtLeast(0)
-                        return true
-                    }
-                    KeyEvent.KEYCODE_DPAD_DOWN,
-                    KeyEvent.KEYCODE_BUTTON_R1 -> {
-                        introSelectedIdx = (introSelectedIdx + 1).coerceAtMost(maxIdx)
-                        return true
-                    }
+        return dispatchNormalised(event)
+    }
+
+    /**
+     * The new input layer (docs/input-rewrite.md). Hardware is cleaned up here and nothing else:
+     *  - A / Select become DPAD centre and B becomes Back, so `clickable` and `BackHandler` answer
+     *    the pad with no handler of ours. A is sent as a press on release, so holding it can never
+     *    turn into a long-press — one button, one job.
+     *  - The app's own buttons (Start, X, Y, shoulders, Menu) become one intent on the ControlBus.
+     *  - Everything else — the D-pad, a remote's centre and Back — passes straight through to the
+     *    focus system.
+     */
+    private fun dispatchNormalised(event: KeyEvent): Boolean {
+        Controls.translate(event.keyCode)?.let { keyCode ->
+            if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+                if (event.action == KeyEvent.ACTION_UP && !event.isCanceled) {
+                    super.dispatchKeyEvent(event.withKeyCode(keyCode, KeyEvent.ACTION_DOWN))
+                    super.dispatchKeyEvent(event.withKeyCode(keyCode, KeyEvent.ACTION_UP))
                 }
-            }
-            if (event.keyCode == KeyEvent.KEYCODE_BUTTON_A && event.action == KeyEvent.ACTION_UP) {
-                when (introSelectedIdx) {
-                    0 -> openStoragePermissionSettings()
-                    1 -> openHomeAppSettings()
-                    2 -> completeIntro()
-                }
+            } else {
+                super.dispatchKeyEvent(event.withKeyCode(keyCode, event.action))
             }
             return true
         }
-
-        // Long-press A: start a timer on DOWN; if it fires before UP → LongPressA.
-        // If UP arrives first → short press → emit regular A.
-        if (event.keyCode == KeyEvent.KEYCODE_BUTTON_A) {
-            when (event.action) {
-                KeyEvent.ACTION_DOWN -> {
-                    if (event.repeatCount == 0) {
-                        longPressAJob?.cancel()
-                        longPressAJob = lifecycleScope.launch {
-                            delay(500.milliseconds)
-                            vm.onLongPressA()
-                            longPressAJob = null
-                        }
-                    }
-                    return true
-                }
-                KeyEvent.ACTION_UP -> {
-                    if (longPressAJob?.isActive == true) {
-                        longPressAJob?.cancel()
-                        longPressAJob = null
-                        vm.onControllerKey(KeyEvent.KEYCODE_BUTTON_A)
-                    }
-                    return true
-                }
-            }
+        Controls.intentFor(event.keyCode)?.let { control ->
+            // Both edges are consumed, so Android never synthesises a fallback from a button
+            // we took (an unhandled Start's fallback is a confirm on whatever is focused).
+            if (event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0) ControlBus.dispatch(control)
+            return true
         }
-
-        if (event.action == KeyEvent.ACTION_DOWN) {
-            when (event.keyCode) {
-                KeyEvent.KEYCODE_DPAD_LEFT  -> { vm.onDpadHorizontal(-1); return true }
-                KeyEvent.KEYCODE_DPAD_RIGHT -> { vm.onDpadHorizontal(+1); return true }
-                KeyEvent.KEYCODE_DPAD_UP    -> { vm.onDpadVertical(-1);   return true }
-                KeyEvent.KEYCODE_DPAD_DOWN  -> { vm.onDpadVertical(+1);   return true }
-            }
-            if (vm.onControllerKey(event.keyCode)) return true
+        if (event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0 &&
+            KeyEvent.isGamepadButton(event.keyCode) && loggedUnknownKeys.add(event.keyCode)) {
+            // A pad button we don't map: log it once so a new device names itself.
+            CrashLogger.logNote(this, "Unmapped gamepad button ${KeyEvent.keyCodeToString(event.keyCode)} " +
+                "from ${event.device?.name ?: "unknown device"}")
         }
         return super.dispatchKeyEvent(event)
     }
+
+    private val loggedUnknownKeys = mutableSetOf<Int>()
+
+    private fun KeyEvent.withKeyCode(keyCode: Int, action: Int) = KeyEvent(
+        downTime, eventTime, action, keyCode, 0, metaState, deviceId, scanCode, flags, source
+    )
 
     // ── Motion events (analog sticks) ─────────────────────────────────────────
 
@@ -202,29 +175,20 @@ class MainActivity : ComponentActivity() {
         if (event.eventTime == lastEventTime) return
         lastEventTime = event.eventTime
 
-        val now = System.currentTimeMillis()
-
-        // Triggers → L2/R2 (AXIS_LTRIGGER=17, AXIS_RTRIGGER=18; also check AXIS_BRAKE/GAS)
         val lt = maxOf(event.getAxisValue(MotionEvent.AXIS_LTRIGGER), event.getAxisValue(MotionEvent.AXIS_BRAKE))
         val rt = maxOf(event.getAxisValue(MotionEvent.AXIS_RTRIGGER), event.getAxisValue(MotionEvent.AXIS_GAS))
-        if (now - lastStickMs > 180) {
-            if (lt > 0.5f) { vm.onControllerKey(KeyEvent.KEYCODE_BUTTON_L2); lastStickMs = now }
-            else if (rt > 0.5f) { vm.onControllerKey(KeyEvent.KEYCODE_BUTTON_R2); lastStickMs = now }
-        }
 
-        // Sticks → L1/R1 (dock step navigation)
-        val x = floatArrayOf(
-            event.getAxisValue(MotionEvent.AXIS_X),
-            event.getAxisValue(MotionEvent.AXIS_Z),
-            event.getAxisValue(MotionEvent.AXIS_RX),
-            event.getAxisValue(MotionEvent.AXIS_RUDDER),
-            event.getAxisValue(MotionEvent.AXIS_WHEEL),
-        ).maxByOrNull { abs(it) } ?: 0f
-
-        if (abs(x) > 0.35f && now - lastStickMs > 180) {
-            val key = if (x < 0f) KeyEvent.KEYCODE_BUTTON_L1 else KeyEvent.KEYCODE_BUTTON_R1
-            vm.onControllerKey(key)
-            lastStickMs = now
-        }
+        // The left stick is left to Android, which already turns an unhandled stick into D-pad
+        // presses for the focus system. Analogue triggers become the L2/R2 intents once per pull
+        // (edge, not repeat).
+        val ltDown = lt > 0.5f
+        val rtDown = rt > 0.5f
+        if (ltDown && !triggerLHeld) ControlBus.dispatch(Control.PagePrev)
+        if (rtDown && !triggerRHeld) ControlBus.dispatch(Control.PageNext)
+        triggerLHeld = ltDown
+        triggerRHeld = rtDown
     }
+
+    private var triggerLHeld = false
+    private var triggerRHeld = false
 }

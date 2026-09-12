@@ -19,9 +19,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
+import androidx.activity.compose.BackHandler
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.input.InputMode
+import androidx.compose.ui.platform.LocalInputModeManager
+import com.joeyos.app.ui.controls.Control
+import com.joeyos.app.ui.controls.ControlBus
+import com.joeyos.app.CrashLogger
+import com.joeyos.app.data.AppUpdates
 import com.joeyos.app.data.Aps3eLauncher
 import com.joeyos.app.data.M64PlusFZLauncher
 import com.joeyos.app.data.AzaharLauncher
@@ -45,7 +57,6 @@ import com.joeyos.app.ui.components.*
 import com.joeyos.app.ui.components.buildDockEntries
 import com.joeyos.app.ui.components.FavoritePickerPopup
 import com.joeyos.app.ui.components.RecentGamesPopup
-import com.joeyos.app.ui.viewmodel.ControllerEvent
 import com.joeyos.app.ui.viewmodel.HomeViewModel
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.Dispatchers
@@ -56,6 +67,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
+@OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
 @Composable
 fun HomeScreen(viewModel: HomeViewModel) {
     val context        = LocalContext.current
@@ -67,62 +79,36 @@ fun HomeScreen(viewModel: HomeViewModel) {
     val dockSortOrder     by viewModel.dockSortOrder.collectAsStateWithLifecycle()
     val favoriteGame      by viewModel.favoriteGame.collectAsStateWithLifecycle()
     val lastLaunched      by viewModel.lastLaunched.collectAsStateWithLifecycle()
-    val selectedDockIndex by viewModel.selectedDockIndex.collectAsStateWithLifecycle()
     val showRecentBadge   by viewModel.showRecentBadge.collectAsStateWithLifecycle()
     val clockFormat       by viewModel.clockFormat.collectAsStateWithLifecycle()
     val recentDepth       by viewModel.recentDepth.collectAsStateWithLifecycle()
     val dockBgOpacity     by viewModel.dockBgOpacity.collectAsStateWithLifecycle()
     val dockTitleSize     by viewModel.dockTitleSize.collectAsStateWithLifecycle()
     val recentGamesVersion by viewModel.recentGamesVersion.collectAsStateWithLifecycle()
+    val dockPinned        by viewModel.dockPinned.collectAsStateWithLifecycle()
+    val dockHidden        by viewModel.dockHidden.collectAsStateWithLifecycle()
 
     var showSettings            by remember { mutableStateOf(false) }
-    var settingsTab             by remember { mutableIntStateOf(0) }
-    var settingsSelectedIndex   by remember { mutableIntStateOf(-1) }
-    var settingsItemCount       by remember { mutableIntStateOf(0) }
     var showAppDrawer           by remember { mutableStateOf(false) }
-    var appDrawerCols           by remember { mutableIntStateOf(4) }
-    var selectedAppDrawer       by remember { mutableIntStateOf(0) }
-    var appDrawerFilteredCount  by remember { mutableIntStateOf(0) }
-    var appDrawerSelectedPkg    by remember { mutableStateOf<String?>(null) }
     var showRecentGames         by remember { mutableStateOf(false) }
     var recentGames             by remember { mutableStateOf<List<RecentGame>>(emptyList()) }
-    var selectedRecent          by remember { mutableIntStateOf(0) }
     var showFavoritePicker      by remember { mutableStateOf(false) }
-    var favoritePickerGames     by remember { mutableStateOf<List<RecentGame>>(emptyList()) }
-    var selectedFavoritePicker  by remember { mutableIntStateOf(0) }
-    var settingsActivateTick     by remember { mutableIntStateOf(0) }
-    var settingsNavGrid          by remember { mutableStateOf<List<Int>?>(null) }
-    var settingsDropdownSystemId by remember { mutableStateOf<String?>(null) }
-    var dropdownItemCount        by remember { mutableIntStateOf(0) }
-    var dropdownSelectedIndex    by remember { mutableIntStateOf(0) }
-    var dropdownActivateTick     by remember { mutableIntStateOf(0) }
+    var favoritePickerGames     by remember { mutableStateOf<List<RecentGame>?>(null) }
 
-    val settingsTabCount = 3
+    // ── In-app updater ────────────────────────────────────────────────────
+    var update                   by remember { mutableStateOf<AppUpdates.Release?>(null) }
+    var updateDownloading        by remember { mutableStateOf(false) }
+    var updateProgress           by remember { mutableFloatStateOf(0f) }
+    // APK downloaded while "Install unknown apps" was off — installed on the next resume once granted.
+    var pendingInstall           by remember { mutableStateOf<java.io.File?>(null) }
 
-    val currentShowSettings          by rememberUpdatedState(showSettings)
-    val currentShowAppDrawer         by rememberUpdatedState(showAppDrawer)
-    val currentSelectedAppDrawer     by rememberUpdatedState(selectedAppDrawer)
-    val currentAppDrawerCount        by rememberUpdatedState(appDrawerFilteredCount)
-    val currentAppDrawerPkg          by rememberUpdatedState(appDrawerSelectedPkg)
-    val currentSettingsTab           by rememberUpdatedState(settingsTab)
-    val currentShowRecent            by rememberUpdatedState(showRecentGames)
-    val currentSelectedRecent        by rememberUpdatedState(selectedRecent)
-    val currentRecentGames           by rememberUpdatedState(recentGames)
-    val currentShowFavoritePicker    by rememberUpdatedState(showFavoritePicker)
-    val currentSelectedFavPicker     by rememberUpdatedState(selectedFavoritePicker)
-    val currentFavPickerGames        by rememberUpdatedState(favoritePickerGames)
-    val currentDrawerCols            by rememberUpdatedState(appDrawerCols)
-    val currentSettingsSelectedIndex by rememberUpdatedState(settingsSelectedIndex)
-    val currentSettingsItemCount     by rememberUpdatedState(settingsItemCount)
-    val currentSettingsNavGrid       by rememberUpdatedState(settingsNavGrid)
-    val currentDropdownOpen          by rememberUpdatedState(settingsDropdownSystemId != null)
-    val currentDropdownSelected      by rememberUpdatedState(dropdownSelectedIndex)
-    val currentDropdownCount         by rememberUpdatedState(dropdownItemCount)
+    // ── Dock focus (the new input layer) ──────────────────────────────────
+    // The focused icon is tracked by package, never by position, so a re-sort can't strand it.
+    var focusedDockPkg           by remember { mutableStateOf<String?>(null) }
+    val dockFocusRequesters      = remember { mutableMapOf<String, FocusRequester>() }
 
     val dockListState     = rememberLazyListState()
-    val settingsListState = rememberLazyListState()
     val scope             = rememberCoroutineScope()
-    val currentSettingsListState by rememberUpdatedState(settingsListState)
 
     val effectiveIconSize = if (dockIconSize > 0) dockIconSize else {
         val dpi = context.resources.displayMetrics.densityDpi
@@ -131,296 +117,174 @@ fun HomeScreen(viewModel: HomeViewModel) {
 
 
     LaunchedEffect(Unit) { viewModel.loadInstalledApps(context) }
-    LaunchedEffect(settingsTab) {
-        settingsSelectedIndex = -1
-        settingsNavGrid = null
-        settingsDropdownSystemId = null
-        dropdownSelectedIndex = 0
-        dropdownItemCount = 0
-    }
-    // Reset selection when the tab's item count grows due to async data loading,
-    // so a previously-selected index doesn't silently point to a different action.
-    LaunchedEffect(settingsItemCount) {
-        if (settingsSelectedIndex >= settingsItemCount) settingsSelectedIndex = -1
-    }
-
     // Mirror Dock.kt's entry list so the A-button handler targets the same tiles.
-    val dockEntries = remember(installedApps, lastLaunched, dockSortOrder) {
-        buildDockEntries(installedApps, lastLaunched, dockSortOrder)
+    val dockEntries = remember(installedApps, lastLaunched, dockSortOrder, dockPinned, dockHidden) {
+        buildDockEntries(installedApps, lastLaunched, dockSortOrder, dockPinned, dockHidden)
     }
 
-    // When a game launches (lastLaunched updates), snap the dock selection to that emulator's
-    // new position so returning to the home screen keeps the highlight on what was just used.
-    LaunchedEffect(lastLaunched) {
-        if (lastLaunched.isEmpty()) return@LaunchedEffect
-        val topSystemId = lastLaunched.entries.maxByOrNull { it.value }?.key ?: return@LaunchedEffect
-        val sys = com.joeyos.app.data.ALL_SYSTEMS.firstOrNull { it.id == topSystemId } ?: return@LaunchedEffect
-        // Resolve the package from dockEntries (already built) rather than scanning installedApps again.
-        val idx = dockEntries.indexOfFirst { entry ->
-            sys.knownPackages.any { entry.packageName.startsWith(it) }
-        }
-        if (idx < 0) return@LaunchedEffect
-        viewModel.setSelectedDockIndex(idx)
-        dockListState.animateScrollToItem(idx)
-    }
     val currentDockEntries by rememberUpdatedState(dockEntries)
-    val density = context.resources.displayMetrics.density
 
-    // 2D grid helpers for Appearance panel navigation
-    fun flatToRowCol(grid: List<Int>, idx: Int): Pair<Int, Int> {
-        var rem = idx.coerceAtLeast(0)
-        for ((r, count) in grid.withIndex()) {
-            if (rem < count) return r to rem
-            rem -= count
-        }
-        return grid.lastIndex to (grid.last() - 1).coerceAtLeast(0)
+
+    // Where focus starts: the emulator you last played, else the first emulator, else Favorite.
+    fun defaultDockPkg(): String? {
+        val entries = currentDockEntries
+        val topSystemId = lastLaunched.entries.maxByOrNull { it.value }?.key
+        val sys = com.joeyos.app.data.ALL_SYSTEMS.firstOrNull { it.id == topSystemId }
+        return entries.firstOrNull { e -> sys?.knownPackages?.any { e.packageName.startsWith(it) } == true }?.packageName
+            ?: entries.getOrNull(2)?.packageName
+            ?: entries.firstOrNull()?.packageName
     }
-    fun rowColToFlat(grid: List<Int>, row: Int, col: Int) = grid.take(row).sum() + col
 
-    // Controller events. Routes contextually based on which overlay is open.
-    LaunchedEffect(Unit) {
-        viewModel.controllerEvents.collect { event ->
-            suspend fun openRecentGames(packageName: String) {
-                if (!RecentGamesReader.supportsRecentlyPlayed(packageName)) return
-                Log.d("HomeScreen", "openRecentGames: called for pkg=$packageName")
-                recentGames = emptyList(); selectedRecent = 0; showRecentGames = true
-                val games = withContext(Dispatchers.IO) { RecentGamesReader.readForPackage(packageName, recentDepth) }
-                Log.d("HomeScreen", "openRecentGames: got ${games.size} games")
-                if (games.isNotEmpty()) recentGames = games else showRecentGames = false
-            }
-            suspend fun openAllRecentGames() {
-                recentGames = emptyList(); selectedRecent = 0; showRecentGames = true
-                val games = withContext(Dispatchers.IO) { RecentGamesReader.readAll(installedApps, recentDepth) }
-                if (games.isNotEmpty()) recentGames = games else showRecentGames = false
-            }
-            suspend fun openFavoritePicker() {
-                favoritePickerGames = emptyList(); selectedFavoritePicker = 0; showFavoritePicker = true
-                val games = withContext(Dispatchers.IO) { RecentGamesReader.readAll(installedApps) }
-                favoritePickerGames = games
-            }
+    val inputModeManager = LocalInputModeManager.current
+    /** Moves focus to a dock icon by identity, scrolling it into the list first if needed. */
+    suspend fun focusDock(pkg: String?) {
+        val entries = currentDockEntries
+        val idx = entries.indexOfFirst { it.packageName == pkg }
+        if (idx < 0) return
+        if (dockListState.layoutInfo.visibleItemsInfo.none { it.index == idx }) dockListState.scrollToItem(idx)
+        withFrameNanos { }
+        inputModeManager.requestInputMode(InputMode.Keyboard)
+        runCatching { dockFocusRequesters[entries[idx].packageName]?.requestFocus() }
+    }
 
-            fun scrollIfNeeded() {
-                scope.launch {
-                    val newIdx = viewModel.selectedDockIndex.value
-                    val visible = dockListState.layoutInfo.visibleItemsInfo
-                    val isVisible = visible.any { it.index == newIdx }
-                    if (newIdx == 0 || !isVisible) dockListState.animateScrollToItem(newIdx.coerceAtLeast(0))
-                }
-            }
-            fun navLeft() {
-                when {
-                    currentShowSettings -> settingsTab = (currentSettingsTab - 1).coerceAtLeast(0)
-                    else -> { viewModel.shiftDockIndex(-1); scrollIfNeeded() }
-                }
-            }
-            fun navRight() {
-                when {
-                    currentShowSettings -> settingsTab = (currentSettingsTab + 1).coerceAtMost(settingsTabCount - 1)
-                    else -> { viewModel.shiftDockIndex(+1); scrollIfNeeded() }
-                }
-            }
+    // Settings and the App Drawer are pages drawn over the home screen; while one is open the
+    // dock is kept out of focus, and focus comes back to the icon you left when it closes.
+    val pageOpen = showSettings || showAppDrawer
 
-            fun settingsNavUp() {
-                val grid = currentSettingsNavGrid
-                if (grid != null) {
-                    val cur = currentSettingsSelectedIndex
-                    if (cur < 0) { settingsSelectedIndex = 0; return }
-                    val (row, col) = flatToRowCol(grid, cur)
-                    val newRow = (row - 1).coerceAtLeast(0)
-                    settingsSelectedIndex = rowColToFlat(grid, newRow, col.coerceAtMost(grid[newRow] - 1))
-                } else if (currentSettingsItemCount > 0) {
-                    settingsSelectedIndex = (currentSettingsSelectedIndex - 1).coerceAtLeast(0)
-                } else {
-                    scope.launch { currentSettingsListState.animateScrollBy(-200f) }
-                }
-            }
-            fun settingsNavDown() {
-                val grid = currentSettingsNavGrid
-                if (grid != null) {
-                    val cur = currentSettingsSelectedIndex
-                    if (cur < 0) { settingsSelectedIndex = 0; return }
-                    val (row, col) = flatToRowCol(grid, cur)
-                    val newRow = (row + 1).coerceAtMost(grid.lastIndex)
-                    settingsSelectedIndex = rowColToFlat(grid, newRow, col.coerceAtMost(grid[newRow] - 1))
-                } else if (currentSettingsItemCount > 0) {
-                    settingsSelectedIndex = (currentSettingsSelectedIndex + 1).coerceAtMost(currentSettingsItemCount - 1)
-                } else {
-                    scope.launch { currentSettingsListState.animateScrollBy(200f) }
-                }
-            }
-            fun settingsNavLeft() {
-                val grid = currentSettingsNavGrid
-                val cur = currentSettingsSelectedIndex
-                if (grid != null && cur >= 0) {
-                    val (row, col) = flatToRowCol(grid, cur)
-                    settingsSelectedIndex = rowColToFlat(grid, row, (col - 1).coerceAtLeast(0))
-                } else navLeft()
-            }
-            fun settingsNavRight() {
-                val grid = currentSettingsNavGrid
-                val cur = currentSettingsSelectedIndex
-                if (grid != null && cur >= 0) {
-                    val (row, col) = flatToRowCol(grid, cur)
-                    settingsSelectedIndex = rowColToFlat(grid, row, (col + 1).coerceAtMost(grid[row] - 1))
-                } else navRight()
-            }
+    // Always keep something focused on the home screen, so a press always has a target: on start
+    // and whenever a page closes. (Popups are real Dialogs, which hand focus back by themselves.)
+    LaunchedEffect(pageOpen, dockEntries.isNotEmpty()) {
+        if (pageOpen || dockEntries.isEmpty()) return@LaunchedEffect
+        val keep = focusedDockPkg?.takeIf { p -> dockEntries.any { it.packageName == p } }
+        focusDock(keep ?: defaultDockPkg())
+    }
+    // Focus follows the icon when the dock re-sorts after a launch; keep that icon on screen.
+    LaunchedEffect(dockEntries) {
+        val idx = dockEntries.indexOfFirst { it.packageName == focusedDockPkg }
+        if (idx >= 0 && dockListState.layoutInfo.visibleItemsInfo.none { it.index == idx }) {
+            dockListState.animateScrollToItem(idx)
+        }
+    }
 
-            when (event) {
-                ControllerEvent.DpadUp -> when {
-                    currentShowFavoritePicker ->
-                        selectedFavoritePicker = (currentSelectedFavPicker - 1).coerceAtLeast(0)
-                    currentShowRecent ->
-                        selectedRecent = (currentSelectedRecent - 1).coerceAtLeast(0)
-                    currentShowAppDrawer ->
-                        selectedAppDrawer = (currentSelectedAppDrawer - currentDrawerCols).coerceAtLeast(0)
-                    currentShowSettings && currentDropdownOpen ->
-                        dropdownSelectedIndex = (currentDropdownSelected - 1).coerceAtLeast(0)
-                    currentShowSettings -> settingsNavUp()
-                }
-                ControllerEvent.DpadDown -> when {
-                    currentShowFavoritePicker ->
-                        selectedFavoritePicker = (currentSelectedFavPicker + 1).coerceAtMost(currentFavPickerGames.lastIndex.coerceAtLeast(0))
-                    currentShowRecent ->
-                        selectedRecent = (currentSelectedRecent + 1).coerceAtMost(currentRecentGames.lastIndex.coerceAtLeast(0))
-                    currentShowAppDrawer ->
-                        selectedAppDrawer = (currentSelectedAppDrawer + currentDrawerCols).coerceAtMost((currentAppDrawerCount - 1).coerceAtLeast(0))
-                    currentShowSettings && currentDropdownOpen ->
-                        dropdownSelectedIndex = (currentDropdownSelected + 1).coerceAtMost((currentDropdownCount - 1).coerceAtLeast(0))
-                    currentShowSettings -> settingsNavDown()
-                }
-                // L1 always changes settings tab (or dock); DpadLeft does within-row nav in Appearance
-                ControllerEvent.L1 -> when {
-                    currentShowFavoritePicker ->
-                        selectedFavoritePicker = (currentSelectedFavPicker - 1).coerceAtLeast(0)
-                    currentShowRecent ->
-                        selectedRecent = (currentSelectedRecent - 1).coerceAtLeast(0)
-                    currentShowAppDrawer ->
-                        selectedAppDrawer = (currentSelectedAppDrawer - 1).coerceAtLeast(0)
-                    else -> navLeft()
-                }
-                ControllerEvent.DpadLeft -> when {
-                    currentShowFavoritePicker ->
-                        selectedFavoritePicker = (currentSelectedFavPicker - 1).coerceAtLeast(0)
-                    currentShowRecent ->
-                        selectedRecent = (currentSelectedRecent - 1).coerceAtLeast(0)
-                    currentShowAppDrawer ->
-                        selectedAppDrawer = (currentSelectedAppDrawer - 1).coerceAtLeast(0)
-                    currentShowSettings && currentDropdownOpen -> { /* dropdown items are vertical only */ }
-                    currentShowSettings -> settingsNavLeft()
-                    else -> navLeft()
-                }
-                ControllerEvent.R1 -> when {
-                    currentShowFavoritePicker ->
-                        selectedFavoritePicker = (currentSelectedFavPicker + 1).coerceAtMost(currentFavPickerGames.lastIndex.coerceAtLeast(0))
-                    currentShowRecent ->
-                        selectedRecent = (currentSelectedRecent + 1).coerceAtMost(currentRecentGames.lastIndex.coerceAtLeast(0))
-                    currentShowAppDrawer ->
-                        selectedAppDrawer = (currentSelectedAppDrawer + 1).coerceAtMost((currentAppDrawerCount - 1).coerceAtLeast(0))
-                    else -> navRight()
-                }
-                ControllerEvent.DpadRight -> when {
-                    currentShowFavoritePicker ->
-                        selectedFavoritePicker = (currentSelectedFavPicker + 1).coerceAtMost(currentFavPickerGames.lastIndex.coerceAtLeast(0))
-                    currentShowRecent ->
-                        selectedRecent = (currentSelectedRecent + 1).coerceAtMost(currentRecentGames.lastIndex.coerceAtLeast(0))
-                    currentShowAppDrawer ->
-                        selectedAppDrawer = (currentSelectedAppDrawer + 1).coerceAtMost((currentAppDrawerCount - 1).coerceAtLeast(0))
-                    currentShowSettings && currentDropdownOpen -> { /* dropdown items are vertical only */ }
-                    currentShowSettings -> settingsNavRight()
-                    else -> navRight()
-                }
-                ControllerEvent.L2 -> scope.launch {
-                    dockListState.animateScrollBy(-(effectiveIconSize * 5f * density))
-                }
-                ControllerEvent.R2 -> scope.launch {
-                    dockListState.animateScrollBy(effectiveIconSize * 5f * density)
-                }
-                ControllerEvent.A -> {
-                    Log.d("HomeScreen", "A pressed: showRecent=$currentShowRecent showFav=$currentShowFavoritePicker showDrawer=$currentShowAppDrawer showSettings=$currentShowSettings dropdown=$currentDropdownOpen")
-                    when {
-                    currentShowFavoritePicker -> {
-                        val game = currentFavPickerGames.getOrNull(currentSelectedFavPicker)
-                        if (game != null) { viewModel.setFavoriteGame(game); showFavoritePicker = false }
-                    }
-                    currentShowRecent -> {
-                        val game = currentRecentGames.getOrNull(currentSelectedRecent)
-                        if (game != null) { showRecentGames = false; launchRecentGame(context, game, assignments, viewModel) }
-                    }
-                    currentShowAppDrawer -> {
-                        val pkg = currentAppDrawerPkg
-                        if (pkg != null) { showAppDrawer = false; viewModel.launchApp(context, pkg) }
-                    }
-                    currentShowSettings && currentDropdownOpen -> dropdownActivateTick++
-                    currentShowSettings -> settingsActivateTick++
-                    else -> {
-                        val idx     = selectedDockIndex
-                        val entries = currentDockEntries
-                        if (idx in entries.indices) {
-                            when (val pkg = entries[idx].packageName) {
-                                FAVORITE_PACKAGE -> {
-                                    val fav = favoriteGame
-                                    if (fav != null) launchRecentGame(context, fav, assignments, viewModel)
-                                    else openFavoritePicker()
-                                }
-                                RECENT_ALL_PACKAGE -> {
-                                    val top = withContext(Dispatchers.IO) { RecentGamesReader.readAll(installedApps) }.firstOrNull()
-                                    if (top != null) launchRecentGame(context, top, assignments, viewModel)
-                                }
-                                else -> viewModel.launchApp(context, pkg)
-                            }
-                        }
-                    }
-                } // end when (A)
-                } // end A -> { }
-                ControllerEvent.X -> {
-                    val idx     = selectedDockIndex
-                    val entries = currentDockEntries
-                    when {
-                        idx !in entries.indices -> {
-                            val top = withContext(Dispatchers.IO) { RecentGamesReader.readAll(installedApps) }.firstOrNull()
-                            if (top != null) launchRecentGame(context, top, assignments, viewModel)
-                        }
-                        entries[idx].packageName == RECENT_ALL_PACKAGE -> {
-                            val top = withContext(Dispatchers.IO) { RecentGamesReader.readAll(installedApps) }.firstOrNull()
-                            if (top != null) launchRecentGame(context, top, assignments, viewModel)
-                        }
-                        entries[idx].packageName == FAVORITE_PACKAGE -> {
-                            val fav = favoriteGame
-                            if (fav != null) launchRecentGame(context, fav, assignments, viewModel)
-                        }
-                        else -> {
-                            val pkg = entries[idx].packageName
-                            val top = withContext(Dispatchers.IO) { RecentGamesReader.readForPackage(pkg) }.firstOrNull()
-                            if (top != null) launchRecentGame(context, top, assignments, viewModel)
-                        }
-                    }
-                }
-                ControllerEvent.Y -> {
-                    val idx     = selectedDockIndex
-                    val entries = currentDockEntries
-                    when {
-                        idx !in entries.indices                         -> openAllRecentGames()
-                        entries[idx].packageName == RECENT_ALL_PACKAGE -> openAllRecentGames()
-                        entries[idx].packageName == FAVORITE_PACKAGE   -> openFavoritePicker()
-                        else -> openRecentGames(entries[idx].packageName)
-                    }
-                }
-                ControllerEvent.LongPressA -> { /* unused */ }
-                ControllerEvent.B -> when {
-                    currentShowFavoritePicker -> showFavoritePicker = false
-                    currentShowRecent         -> showRecentGames = false
-                    currentShowAppDrawer      -> showAppDrawer = false
-                    currentShowSettings && currentDropdownOpen -> settingsDropdownSystemId = null
-                    currentShowSettings       -> { showSettings = false; settingsTab = 0 }
-                    else                      -> { showAppDrawer = true; selectedAppDrawer = 0 }
-                }
-                ControllerEvent.Start -> {
-                    if (currentShowSettings) { showSettings = false; settingsTab = 0 }
-                    else showSettings = true
-                }
+    fun startUpdate(release: AppUpdates.Release) {
+        if (updateDownloading) return
+        scope.launch {
+            updateDownloading = true; updateProgress = 0f
+            val apk = AppUpdates.download(context, release) { updateProgress = it }
+            updateDownloading = false
+            if (apk == null) {
+                Toast.makeText(context, "Update download failed", Toast.LENGTH_LONG).show()
+                return@launch
+            }
+            update = null
+            if (AppUpdates.canInstall(context)) AppUpdates.install(context, apk)
+            else {
+                pendingInstall = apk
+                Toast.makeText(context, "Allow JoeyOS to install apps, then come back", Toast.LENGTH_LONG).show()
+                AppUpdates.requestInstallPermission(context)
             }
         }
     }
+    fun checkForUpdates(manual: Boolean) {
+        scope.launch {
+            if (manual) Toast.makeText(context, "Checking for updates…", Toast.LENGTH_SHORT).show()
+            val release = AppUpdates.newerRelease(context)
+            if (release != null) update = release
+            else if (manual) Toast.makeText(context, "You're on the latest version", Toast.LENGTH_SHORT).show()
+        }
+    }
+    fun shareCrashLog() {
+        val log = CrashLogger.readRecent(context)
+        if (log == null) {
+            Toast.makeText(context, "No crashes logged", Toast.LENGTH_SHORT).show()
+            return
+        }
+        val send = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, "JoeyOS crash log")
+            putExtra(Intent.EXTRA_TEXT, log)
+        }
+        runCatching {
+            context.startActivity(Intent.createChooser(send, "Share crash log").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        }.onFailure {
+            Toast.makeText(context, "No app to share with — log is at /sdcard/JoeyOS/crash.log", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event != Lifecycle.Event.ON_RESUME) return@LifecycleEventObserver
+            pendingInstall?.let { apk ->
+                if (AppUpdates.canInstall(context)) { pendingInstall = null; AppUpdates.install(context, apk) }
+            }
+            if (update == null && !updateDownloading && AppUpdates.autoCheckDue(context)) checkForUpdates(manual = false)
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+    }
+
+    // ── Dock actions ──────────────────────────────────────────────────────
+    suspend fun openRecentGames(packageName: String) {
+        if (!RecentGamesReader.supportsRecentlyPlayed(packageName)) return
+        recentGames = emptyList(); showRecentGames = true
+        val games = withContext(Dispatchers.IO) { RecentGamesReader.readForPackage(packageName, recentDepth) }
+        if (games.isNotEmpty()) recentGames = games else showRecentGames = false
+    }
+    suspend fun openAllRecentGames() {
+        recentGames = emptyList(); showRecentGames = true
+        val games = withContext(Dispatchers.IO) { RecentGamesReader.readAll(installedApps, recentDepth) }
+        if (games.isNotEmpty()) recentGames = games else showRecentGames = false
+    }
+    suspend fun openFavoritePicker() {
+        favoritePickerGames = null; showFavoritePicker = true
+        val games = withContext(Dispatchers.IO) { RecentGamesReader.readAll(installedApps) }
+        favoritePickerGames = games
+    }
+    /** Y: Recently Played for the focused emulator, all of them on Recent, the picker on Favorite. */
+    suspend fun openDockSecondary(pkg: String?) = when (pkg) {
+        null, RECENT_ALL_PACKAGE -> openAllRecentGames()
+        FAVORITE_PACKAGE         -> openFavoritePicker()
+        else                     -> openRecentGames(pkg)
+    }
+    /** X: launch the focused emulator's most recent game (the favourite on Favorite). */
+    suspend fun quickLaunch(pkg: String?) {
+        val game = when (pkg) {
+            FAVORITE_PACKAGE -> favoriteGame
+            null, RECENT_ALL_PACKAGE -> withContext(Dispatchers.IO) { RecentGamesReader.readAll(installedApps) }.firstOrNull()
+            else -> withContext(Dispatchers.IO) { RecentGamesReader.readForPackage(pkg) }.firstOrNull()
+        }
+        if (game != null) launchRecentGame(context, game, assignments, viewModel)
+    }
+    /** L1/R1 step one icon, L2/R2 a page of five, by identity. */
+    fun stepDock(delta: Int) {
+        val entries = currentDockEntries
+        if (entries.isEmpty()) return
+        val cur = entries.indexOfFirst { it.packageName == focusedDockPkg }.coerceAtLeast(0)
+        val target = entries[(cur + delta).coerceIn(0, entries.lastIndex)].packageName
+        scope.launch { focusDock(target) }
+    }
+
+    // The one owner of the app's own buttons while the home screen is in charge.
+    DisposableEffect(Unit) {
+        ControlBus.setHandler { control ->
+            when (control) {
+                Control.Options     -> showSettings = true
+                Control.QuickLaunch -> { scope.launch { quickLaunch(focusedDockPkg) } }
+                Control.Recent      -> { scope.launch { openDockSecondary(focusedDockPkg) } }
+                Control.StepPrev    -> stepDock(-1)
+                Control.StepNext    -> stepDock(+1)
+                Control.PagePrev    -> stepDock(-5)
+                Control.PageNext    -> stepDock(+5)
+            }
+            true
+        }
+        onDispose { ControlBus.setHandler(null) }
+    }
+
+    // B / Back on the home screen opens the App Drawer, as it always has. (Open question:
+    // TV guidance says Back at home should do nothing.) Popups take Back themselves first.
+    BackHandler(enabled = !pageOpen) { showAppDrawer = true }
 
     Box(modifier = Modifier.fillMaxSize()) {
 
@@ -444,7 +308,7 @@ fun HomeScreen(viewModel: HomeViewModel) {
             verticalAlignment     = Alignment.Top
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                AppDrawerButton { showAppDrawer = true; selectedAppDrawer = 0 }
+                AppDrawerButton { showAppDrawer = true }
                 SettingsGearButton { showSettings = true }
             }
             if (clockFormat != com.joeyos.app.data.ClockFormat.HIDDEN) {
@@ -462,7 +326,7 @@ fun HomeScreen(viewModel: HomeViewModel) {
                         val fav = favoriteGame
                         if (fav != null) scope.launch { launchRecentGame(context, fav, assignments, viewModel) }
                         else {
-                            favoritePickerGames = emptyList(); selectedFavoritePicker = 0; showFavoritePicker = true
+                            favoritePickerGames = null; showFavoritePicker = true
                             scope.launch {
                                 val games = withContext(Dispatchers.IO) { RecentGamesReader.readAll(installedApps) }
                                 favoritePickerGames = games
@@ -483,17 +347,20 @@ fun HomeScreen(viewModel: HomeViewModel) {
                 .navigationBarsPadding()
                 .padding(bottom = 10.dp),
             favoriteTitle       = favoriteGame?.title,
-            selectedIndex       = selectedDockIndex,
+            focusedPackage      = focusedDockPkg,
+            onFocusedChange     = { focusedDockPkg = it },
+            focusRequesters     = dockFocusRequesters,
+            focusEnabled        = !pageOpen,
             onEmulatorLongClick = { pkg ->
                 scope.launch {
                     when (pkg) {
                         FAVORITE_PACKAGE -> {
-                            favoritePickerGames = emptyList(); selectedFavoritePicker = 0; showFavoritePicker = true
+                            favoritePickerGames = null; showFavoritePicker = true
                             val games = withContext(Dispatchers.IO) { RecentGamesReader.readAll(installedApps) }
                             favoritePickerGames = games
                         }
                         RECENT_ALL_PACKAGE -> {
-                            recentGames = emptyList(); selectedRecent = 0; showRecentGames = true
+                            recentGames = emptyList(); showRecentGames = true
                             val games = withContext(Dispatchers.IO) { RecentGamesReader.readAll(installedApps, recentDepth) }
                             if (games.isNotEmpty()) recentGames = games else showRecentGames = false
                         }
@@ -501,7 +368,7 @@ fun HomeScreen(viewModel: HomeViewModel) {
                             if (!RecentGamesReader.supportsRecentlyPlayed(pkg)) {
                                 viewModel.launchApp(context, pkg)
                             } else {
-                                recentGames = emptyList(); selectedRecent = 0; showRecentGames = true
+                                recentGames = emptyList(); showRecentGames = true
                                 val games = withContext(Dispatchers.IO) { RecentGamesReader.readForPackage(pkg, recentDepth) }
                                 if (games.isNotEmpty()) recentGames = games else showRecentGames = false
                             }
@@ -522,7 +389,6 @@ fun HomeScreen(viewModel: HomeViewModel) {
         if (showRecentGames) {
             RecentGamesPopup(
                 games         = recentGames,
-                selectedIndex = selectedRecent,
                 onLaunch      = { game -> showRecentGames = false; scope.launch { launchRecentGame(context, game, assignments, viewModel) } },
                 onDismiss     = { showRecentGames = false }
             )
@@ -533,7 +399,6 @@ fun HomeScreen(viewModel: HomeViewModel) {
             FavoritePickerPopup(
                 games           = favoritePickerGames,
                 currentFavorite = favoriteGame,
-                selectedIndex   = selectedFavoritePicker,
                 onSelect        = { game -> viewModel.setFavoriteGame(game) },
                 onDismiss       = { showFavoritePicker = false }
             )
@@ -545,10 +410,8 @@ fun HomeScreen(viewModel: HomeViewModel) {
                 installedApps             = installedApps,
                 onLaunch                  = { pkg -> showAppDrawer = false; viewModel.launchApp(context, pkg) },
                 onDismiss                 = { showAppDrawer = false },
-                selectedIndex             = selectedAppDrawer,
-                onFilteredCountChange     = { appDrawerFilteredCount = it },
-                onSelectedPackageChange   = { appDrawerSelectedPkg = it },
-                onColumnCountChange       = { appDrawerCols = it }
+                isInDock                  = { pkg -> dockEntries.any { it.packageName == pkg } },
+                onSetInDock               = viewModel::setInDock
             )
         }
 
@@ -578,22 +441,22 @@ fun HomeScreen(viewModel: HomeViewModel) {
                 onDockBgOpacityChange     = viewModel::setDockBgOpacity,
                 onDockTitleSizeChange     = viewModel::setDockTitleSize,
                 onRefreshApps             = { viewModel.loadInstalledApps(context) },
-                onDismiss             = { showSettings = false; settingsTab = 0 },
-                raRepo                       = viewModel.raRepo,
-                ibRepo                       = viewModel.ibRepo,
-                selectedTab                  = settingsTab,
-                onTabChange                  = { settingsTab = it },
-                listState                    = settingsListState,
-                settingsSelectedIndex        = settingsSelectedIndex,
-                onSettingsItemCountChange    = { settingsItemCount = it },
-                onSettingsNavGridChange      = { settingsNavGrid = it },
-                activateTick                 = settingsActivateTick,
-                dropdownSystemId             = settingsDropdownSystemId,
-                onDropdownSystemChange       = { settingsDropdownSystemId = it },
-                onDropdownOpen               = { dropdownItemCount = it; dropdownSelectedIndex = 0 },
-                onDropdownClose              = { dropdownItemCount = 0 },
-                dropdownSelectedIndex        = dropdownSelectedIndex,
-                dropdownActivateTick         = dropdownActivateTick
+                onDismiss                 = { showSettings = false },
+                raRepo                    = viewModel.raRepo,
+                ibRepo                    = viewModel.ibRepo,
+                onCheckUpdates               = { checkForUpdates(manual = true) },
+                onShareCrashLog              = ::shareCrashLog
+            )
+        }
+
+        update?.let { release ->
+            UpdatePrompt(
+                release          = release,
+                installedVersion = AppUpdates.installedVersion(context),
+                downloading      = updateDownloading,
+                progress         = updateProgress,
+                onUpdate         = { startUpdate(release) },
+                onLater          = { update = null }
             )
         }
     }

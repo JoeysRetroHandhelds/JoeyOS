@@ -44,9 +44,7 @@ fun RetroAchievementsTab(
     raRepo: RetroAchievementsRepository,
     ibRepo: InfiniteBacklogRepository,
     modifier: Modifier = Modifier,
-    selectedItemIndex: Int = -1,
-    onItemCountChange: (Int) -> Unit = {},
-    activateTick: Int = 0
+    listState: androidx.compose.foundation.lazy.LazyListState = rememberLazyListState()
 ) {
     val scope = rememberCoroutineScope()
 
@@ -159,94 +157,11 @@ fun RetroAchievementsTab(
         }
     }
 
-    // ── Nav count ─────────────────────────────────────────────────────────────
-    // RA not logged in:  [0 = Fetch]
-    // RA logged in:      [0 = Refresh, 1 = Logout, 2 = Year◀, 3 = Year▶, 4 = Toggle]
-    // IB not connected:  [raCount+0 = Connect]
-    // IB connected:      [raCount+0 = Refresh, raCount+1 = Year◀, raCount+2 = Year▶, raCount+3 = Toggle]
-    val raNavCount = if (isRALoggedIn) 5 else 1
-    val ibNavCount = if (ibIsSuccess) 4 else 1
-    // The "Total Beaten" table has no controls, but it still needs a nav stop — otherwise
-    // dpad-down clamps at the IB toggle forever and the section below it is unreachable
-    // without a touchscreen. Pressing A on this stop is a no-op (see activateTick below).
-    val hasCombinedSection = combinedBeatenByYear.isNotEmpty()
-    val navCount   = raNavCount + ibNavCount + if (hasCombinedSection) 1 else 0
-    LaunchedEffect(navCount) { onItemCountChange(navCount) }
-
     val maxYear = Calendar.getInstance().get(Calendar.YEAR)
 
-    LaunchedEffect(activateTick) {
-        if (activateTick == 0) return@LaunchedEffect
-        if (selectedItemIndex < raNavCount) {
-            if (isRALoggedIn) {
-                when (selectedItemIndex) {
-                    0 -> raRefresh(force = true)
-                    1 -> { username = ""; apiKey = ""; raRepo.username = ""; raRepo.apiKey = ""; raRepo.clearCache(); raResult = null }
-                    2 -> if (selectedYear > 2000) selectedYear--
-                    3 -> if (selectedYear < maxYear) { selectedYear++; raListExpanded = true }
-                    4 -> raListExpanded = !raListExpanded
-                }
-            } else {
-                if (selectedItemIndex == 0 && username.isNotBlank() && apiKey.isNotBlank() && !raLoading) {
-                    raRefresh(force = true)
-                }
-            }
-        } else {
-            when (selectedItemIndex - raNavCount) {
-                0 -> if (ibIsSuccess) ibRefresh(true) else if (ibUsername.isNotBlank()) ibConnect()
-                1 -> if (ibYear > (ibData?.completionsByYear?.keys?.minOrNull() ?: 2010)) ibYear--
-                2 -> if (ibYear < maxYear) ibYear++
-                3 -> ibListExpanded = !ibListExpanded
-            }
-        }
-    }
-
-    fun isNav(idx: Int) = selectedItemIndex == idx
-
-    // ── D-pad auto-scroll ─────────────────────────────────────────────────────
-    // LazyColumn item layout (indices shift based on RA login state):
-    //   RA not logged in:  0=RA label, 1=username, 2=apiKey, 3=Fetch(nav0), [4=error?], N=IB label…
-    //   RA logged in:      0=RA label, 1=status(nav0,1), 2=stats label, 3=stats row,
-    //                      4=year selector(nav2,3), 5=toggle(nav4), 6=anim list, 7=IB label…
-    val listState = rememberLazyListState()
-    LaunchedEffect(selectedItemIndex) {
-        if (selectedItemIndex < 0) return@LaunchedEffect
-        // Trailing "Total Beaten" nav stop — scroll all the way to the bottom of the list
-        // rather than computing its exact item index (it's the last thing rendered).
-        if (hasCombinedSection && selectedItemIndex == navCount - 1) {
-            val lastIndex = listState.layoutInfo.totalItemsCount - 1
-            if (lastIndex >= 0) listState.animateScrollToItem(lastIndex)
-            return@LaunchedEffect
-        }
-        val ibSectionStart = when {
-            isRALoggedIn -> 7
-            raResult is RAResult.Error -> 5
-            else -> 4
-        }
-        val target = when {
-            selectedItemIndex < raNavCount -> when {
-                !isRALoggedIn || selectedItemIndex <= 1 -> 0
-                selectedItemIndex <= 3 -> 3   // year nav: show stats area
-                else -> 4                      // toggle: show awards-by-year
-            }
-            else -> {
-                val ibIdx = selectedItemIndex - raNavCount
-                if (ibIsSuccess) {
-                    val hasYearChips = ibData?.completionsByYear?.isNotEmpty() == true
-                    when (ibIdx) {
-                        0    -> ibSectionStart            // IB Refresh
-                        1, 2 -> ibSectionStart + if (hasYearChips) 2 else 1  // IB year nav
-                        3    -> ibSectionStart + if (hasYearChips) 3 else 2  // IB toggle
-                        else -> ibSectionStart
-                    }
-                } else {
-                    ibSectionStart   // IB Connect form
-                }
-            }
-        }
-        listState.animateScrollToItem(target.coerceAtLeast(0))
-    }
-
+    // Every control is a focus stop lit by its real focus; the list follows focus by itself.
+    // Read-only rows (awards, beaten games, the totals table) are stops too, so the D-pad can
+    // reach the bottom of the tab.
     LazyColumn(
         state          = listState,
         modifier       = modifier.fillMaxSize(),
@@ -281,13 +196,11 @@ fun RetroAchievementsTab(
                                 else          -> "Refresh"
                             },
                             enabled       = !raLoading && raCanRefresh,
-                            isNavSelected = isNav(0),
                             onClick       = { raRefresh(force = true) }
                         )
                         RAButton(
                             label         = "Logout",
                             enabled       = true,
-                            isNavSelected = isNav(1),
                             onClick       = {
                                 username = ""; apiKey = ""
                                 raRepo.username = ""; raRepo.apiKey = ""
@@ -332,7 +245,6 @@ fun RetroAchievementsTab(
                     RAButton(
                         label         = if (raLoading) "Loading…" else "Fetch",
                         enabled       = username.isNotBlank() && apiKey.isNotBlank() && !raLoading,
-                        isNavSelected = isNav(0),
                         onClick       = { raRefresh(force = true) }
                     )
                 }
@@ -367,9 +279,7 @@ fun RetroAchievementsTab(
                     selected     = selectedYear,
                     minYear      = 2000,
                     maxYear      = maxYear,
-                    onChange     = { selectedYear = it; raListExpanded = true },
-                    prevSelected = isNav(2),
-                    nextSelected = isNav(3)
+                    onChange     = { selectedYear = it; raListExpanded = true }
                 )
             }
 
@@ -381,14 +291,14 @@ fun RetroAchievementsTab(
                     RAStatChip("★ $masteryCount mastered", Color(0xFFD97706))
                 }
                 Spacer(Modifier.height(6.dp))
-                val toggleNavSel = isNav(4)
+                val (toggleSource, toggleNavSel) = rememberFocusState()
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(10.dp))
                         .background(if (toggleNavSel) Color.White.copy(alpha = 0.10f) else Color.White.copy(alpha = 0.05f))
-                        .then(if (toggleNavSel) Modifier.border(1.dp, Color.White.copy(alpha = 0.5f), RoundedCornerShape(10.dp)) else Modifier)
-                        .clickable { raListExpanded = !raListExpanded }
+                        .then(if (toggleNavSel) Modifier.border(2.dp, FocusColor, RoundedCornerShape(10.dp)) else Modifier)
+                        .clickable(interactionSource = toggleSource, indication = null) { raListExpanded = !raListExpanded }
                         .padding(horizontal = 14.dp, vertical = 10.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
@@ -467,13 +377,11 @@ fun RetroAchievementsTab(
                                 else          -> "Refresh"
                             },
                             enabled       = !ibLoading && ibCanRefresh,
-                            isNavSelected = isNav(raNavCount),
                             onClick       = { ibRefresh(true) }
                         )
                         RAButton(
                             label         = "Disconnect",
                             enabled       = true,
-                            isNavSelected = false,
                             onClick       = { ibDisconnect() }
                         )
                     }
@@ -514,22 +422,20 @@ fun RetroAchievementsTab(
                     selected     = ibYear,
                     minYear      = ibData.completionsByYear.keys.minOrNull() ?: 2010,
                     maxYear      = maxYear,
-                    onChange     = { ibYear = it; ibListExpanded = true },
-                    prevSelected = isNav(raNavCount + 1),
-                    nextSelected = isNav(raNavCount + 2)
+                    onChange     = { ibYear = it; ibListExpanded = true }
                 )
             }
 
             item {
                 val yearCompletions = ibData.completionsByYear[ibYear] ?: emptyList()
-                val ibToggleNavSel = isNav(raNavCount + 3)
+                val (ibToggleSource, ibToggleNavSel) = rememberFocusState()
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(10.dp))
                         .background(if (ibToggleNavSel) Color.White.copy(alpha = 0.10f) else Color.White.copy(alpha = 0.05f))
-                        .then(if (ibToggleNavSel) Modifier.border(1.dp, Color.White.copy(alpha = 0.5f), RoundedCornerShape(10.dp)) else Modifier)
-                        .clickable { ibListExpanded = !ibListExpanded }
+                        .then(if (ibToggleNavSel) Modifier.border(2.dp, FocusColor, RoundedCornerShape(10.dp)) else Modifier)
+                        .clickable(interactionSource = ibToggleSource, indication = null) { ibListExpanded = !ibListExpanded }
                         .padding(horizontal = 14.dp, vertical = 10.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
@@ -589,7 +495,6 @@ fun RetroAchievementsTab(
                     RAButton(
                         label         = if (ibLoading) "Loading…" else "Connect",
                         enabled       = ibUsername.isNotBlank() && !ibLoading,
-                        isNavSelected = isNav(raNavCount),
                         onClick       = { ibConnect() }
                     )
                 }
@@ -689,56 +594,50 @@ internal fun RATextField(
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
         Text(label, fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(10.dp))
-                .background(Color.White.copy(alpha = 0.06f))
-                .border(1.dp, Color.White.copy(alpha = 0.12f), RoundedCornerShape(10.dp))
-                .padding(horizontal = 14.dp, vertical = 10.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            BasicTextField(
-                value         = value,
-                onValueChange = onValueChange,
-                singleLine    = true,
-                visualTransformation = if (isPassword && !showPassword)
-                    PasswordVisualTransformation() else VisualTransformation.None,
-                keyboardOptions = KeyboardOptions(keyboardType = if (isPassword) KeyboardType.Password else KeyboardType.Text),
-                textStyle = TextStyle(
-                    color      = TextPrimary,
-                    fontSize   = 13.sp,
-                    fontFamily = FontFamily.Monospace
-                ),
-                decorationBox = { inner ->
-                    if (value.isEmpty()) Text(label, fontSize = 13.sp,
-                        fontFamily = FontFamily.Monospace, color = TextFaint)
-                    inner()
-                },
-                modifier = Modifier.weight(1f)
-            )
-            if (isPassword && onToggleShow != null) {
-                Text(
-                    if (showPassword) "hide" else "show",
-                    fontSize = 10.sp,
-                    fontFamily = FontFamily.Monospace,
-                    color = TextFaint,
-                    modifier = Modifier.clickable(onClick = onToggleShow).padding(start = 8.dp)
-                )
-            }
-        }
+        ControllerTextField(
+            value         = value,
+            onValueChange = onValueChange,
+            placeholder   = label,
+            isPassword    = isPassword,
+            showPassword  = showPassword,
+            trailing      = if (isPassword && onToggleShow != null) {
+                {
+                    val (source, focused) = rememberFocusState()
+                    Text(
+                        if (showPassword) "hide" else "show",
+                        fontSize = 10.sp,
+                        fontFamily = FontFamily.Monospace,
+                        color = if (focused) Amber else TextFaint,
+                        modifier = Modifier
+                            .clickable(interactionSource = source, indication = null, onClick = onToggleShow)
+                            .padding(start = 8.dp)
+                    )
+                }
+            } else null
+        )
     }
 }
 
+/** A text button (Fetch, Refresh, Logout, Connect): amber-ringed when focused, like every control. */
 @Composable
-internal fun RAButton(label: String, enabled: Boolean, isNavSelected: Boolean = false, onClick: () -> Unit) {
+internal fun RAButton(label: String, enabled: Boolean, onClick: () -> Unit) {
     val shape = RoundedCornerShape(10.dp)
+    val (source, focused) = rememberFocusState()
     Box(
         modifier = Modifier
             .clip(shape)
-            .background(if (enabled) Color(0xFFE5A00D) else Color.White.copy(alpha = 0.06f))
-            .then(if (isNavSelected) Modifier.border(2.dp, if (enabled) Color.Black.copy(alpha = 0.35f) else Color.White.copy(alpha = 0.65f), shape) else Modifier)
-            .then(if (enabled) Modifier.clickable(onClick = onClick) else Modifier)
+            .background(when {
+                !enabled -> Color.White.copy(alpha = 0.06f)
+                focused  -> Amber.copy(alpha = 0.30f)
+                else     -> Amber.copy(alpha = 0.16f)
+            })
+            .border(if (focused) FocusWidth else 1.dp,
+                when {
+                    focused  -> FocusColor
+                    enabled  -> AmberSoft
+                    else     -> Color.White.copy(alpha = 0.10f)
+                }, shape)
+            .then(if (enabled) Modifier.clickable(interactionSource = source, indication = null, onClick = onClick) else Modifier)
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
         Text(
@@ -746,7 +645,7 @@ internal fun RAButton(label: String, enabled: Boolean, isNavSelected: Boolean = 
             fontSize = 12.sp,
             fontFamily = FontFamily.Monospace,
             fontWeight = FontWeight.Bold,
-            color = if (enabled) Color.Black else TextFaint
+            color = if (enabled) Amber else TextFaint
         )
     }
 }
@@ -771,10 +670,10 @@ internal fun YearSelector(
     selected: Int,
     minYear: Int,
     maxYear: Int,
-    onChange: (Int) -> Unit,
-    prevSelected: Boolean = false,
-    nextSelected: Boolean = false
+    onChange: (Int) -> Unit
 ) {
+    val (prevSource, prevSelected) = rememberFocusState()
+    val (nextSource, nextSelected) = rememberFocusState()
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -788,7 +687,8 @@ internal fun YearSelector(
                 prevEnabled                -> TextPrimary
                 else                       -> TextFaint
             },
-            modifier = if (prevEnabled) Modifier.clickable { onChange(selected - 1) } else Modifier
+            modifier = (if (prevEnabled) Modifier.clickable(interactionSource = prevSource, indication = null) { onChange(selected - 1) } else Modifier)
+                .padding(horizontal = 6.dp)
         )
         Text(
             "$selected",
@@ -806,7 +706,8 @@ internal fun YearSelector(
                 nextEnabled                -> TextPrimary
                 else                       -> TextFaint
             },
-            modifier = if (nextEnabled) Modifier.clickable { onChange(selected + 1) } else Modifier
+            modifier = (if (nextEnabled) Modifier.clickable(interactionSource = nextSource, indication = null) { onChange(selected + 1) } else Modifier)
+                .padding(horizontal = 6.dp)
         )
     }
 }
@@ -854,6 +755,7 @@ private fun IBCompletionRow(completion: IBCompletion) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .readOnlyFocus()
             .clip(RoundedCornerShape(10.dp))
             .background(Color.White.copy(alpha = 0.04f))
             .padding(horizontal = 12.dp, vertical = 9.dp),
@@ -895,6 +797,7 @@ private fun CombinedBeatenRow(year: Int, raCount: Int, ibCount: Int) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .readOnlyFocus()
             .clip(RoundedCornerShape(10.dp))
             .background(Color.White.copy(alpha = 0.04f))
             .padding(horizontal = 12.dp, vertical = 9.dp),
@@ -952,6 +855,7 @@ private fun RAAwardRow(award: RAAward) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .readOnlyFocus()
             .clip(RoundedCornerShape(10.dp))
             .background(Color.White.copy(alpha = 0.04f))
             .padding(horizontal = 12.dp, vertical = 9.dp),

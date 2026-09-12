@@ -7,11 +7,15 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -129,23 +133,17 @@ internal fun gameSubtitle(context: Context, game: RecentGame): String {
 @Composable
 fun RecentGamesPopup(
     games: List<RecentGame>,
-    selectedIndex: Int,
     onLaunch: (RecentGame) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val listState = rememberLazyListState()
-    LaunchedEffect(selectedIndex) {
-        if (games.isNotEmpty()) listState.animateScrollToItem(selectedIndex.coerceIn(0, games.lastIndex))
-    }
     val screenH = LocalConfiguration.current.screenHeightDp
-
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black.copy(alpha = 0.6f))
-                .clickable(onClick = onDismiss)
-        )
+    val firstRow = remember { FocusRequester() }
+    // Rows load after the popup opens, so focus lands on the first one when they arrive.
+    JoeyDialog(
+        onDismiss = onDismiss,
+        focusKey = games.isNotEmpty(),
+        initialFocus = if (games.isNotEmpty()) firstRow else null
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth(0.55f)
@@ -170,24 +168,21 @@ fun RecentGamesPopup(
 
             if (games.isEmpty()) {
                 Text(
-                    "No recent games found.",
+                    "Loading…",
                     fontSize = 12.sp,
                     fontFamily = FontFamily.Monospace,
                     color = TextFaint,
                     modifier = Modifier.padding(horizontal = 18.dp, vertical = 14.dp)
                 )
             } else {
-                LazyColumn(
-                    state          = listState,
-                    modifier       = Modifier.fillMaxWidth(),
-                    contentPadding = PaddingValues(vertical = 0.dp)
-                ) {
-                    itemsIndexed(games) { i, game ->
-                        RecentGameRow(
-                            index        = i + 1,
-                            game         = game,
-                            isSelected   = i == selectedIndex,
-                            onClick      = { onLaunch(game) }
+                // The focused row is brought into view by the list itself as the D-pad walks it.
+                LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                    itemsIndexed(games, key = { i, g -> "$i:${g.emulatorPackage}:${g.path}" }) { i, game ->
+                        GameListRow(
+                            index    = i + 1,
+                            game     = game,
+                            onClick  = { onLaunch(game) },
+                            modifier = if (i == 0) Modifier.focusRequester(firstRow) else Modifier
                         )
                     }
                 }
@@ -196,16 +191,35 @@ fun RecentGamesPopup(
     }
 }
 
+/**
+ * A game row in a vertical popup list: one clickable node (one focus target), lit when focused.
+ * Left/right are cancelled on the row itself — a full-width row has nothing beside it, and an
+ * unanswered sideways press would otherwise fall to a geometric search that jumps to the top
+ * row (found in Chameleon). Shared by Recently Played and the favourite picker.
+ */
+@OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
 @Composable
-private fun RecentGameRow(index: Int, game: RecentGame, isSelected: Boolean, onClick: () -> Unit) {
+internal fun GameListRow(
+    index: Int,
+    game: RecentGame,
+    onClick: () -> Unit,
+    isCurrent: Boolean = false,
+    modifier: Modifier = Modifier
+) {
     val context = LocalContext.current
     val subtitle = remember(game.emulatorPackage, game.corePath) { gameSubtitle(context, game) }
+    val interaction = remember { MutableInteractionSource() }
+    val isSelected by interaction.collectIsFocusedAsState()
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
+            .focusProperties { left = FocusRequester.Cancel; right = FocusRequester.Cancel }
+            .padding(horizontal = 6.dp)
+            .clip(RoundedCornerShape(10.dp))
             .background(if (isSelected) Color.White.copy(alpha = 0.10f) else Color.Transparent)
-            .clickable(onClick = onClick)
-            .padding(horizontal = 18.dp, vertical = 9.dp),
+            .then(if (isSelected) Modifier.border(FocusWidth, FocusColor, RoundedCornerShape(10.dp)) else Modifier)
+            .clickable(interactionSource = interaction, indication = null, onClick = onClick)
+            .padding(horizontal = 12.dp, vertical = 9.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
@@ -217,7 +231,8 @@ private fun RecentGameRow(index: Int, game: RecentGame, isSelected: Boolean, onC
                 .border(1.dp, AmberSoft, RoundedCornerShape(8.dp)),
             contentAlignment = Alignment.Center
         ) {
-            Text("$index", fontSize = 11.sp, fontFamily = FontFamily.Monospace,
+            if (isCurrent) Text("★", fontSize = 12.sp, color = Amber)
+            else Text("$index", fontSize = 11.sp, fontFamily = FontFamily.Monospace,
                 color = Amber, fontWeight = FontWeight.Bold)
         }
         Column(modifier = Modifier.weight(1f)) {

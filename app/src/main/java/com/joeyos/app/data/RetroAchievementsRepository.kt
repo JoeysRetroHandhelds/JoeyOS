@@ -1,6 +1,8 @@
 ﻿package com.joeyos.app.data
 
 import android.content.Context
+import android.content.SharedPreferences
+import com.joeyos.app.CrashLogger
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import kotlinx.coroutines.Dispatchers
@@ -49,13 +51,34 @@ class RetroAchievementsRepository(context: Context) {
     // is slow enough to notice. This repository is constructed in the ViewModel factory on
     // the main thread at every app start, so defer the cost until credentials are actually
     // read — i.e. until the user opens the Achievements tab.
-    private val prefs by lazy {
+    //
+    // Opening the encrypted store throws (AEADBadTagException / KeyStoreException etc.) when
+    // the keystore key no longer matches the file — e.g. credentials restored from a backup
+    // onto a new device, or a corrupted keystore entry. That used to crash the app on opening
+    // the Achievements tab. Recover by wiping the unreadable store (the user just re-enters
+    // their API key); if the keystore is unusable altogether, fall back to plain private prefs.
+    private val prefs: SharedPreferences by lazy {
+        try {
+            createEncryptedPrefs()
+        } catch (e: Exception) {
+            CrashLogger.logNonFatal(appContext, "RA encrypted prefs open", e)
+            try {
+                appContext.deleteSharedPreferences(CREDENTIALS_FILE)
+                createEncryptedPrefs()
+            } catch (e2: Exception) {
+                CrashLogger.logNonFatal(appContext, "RA encrypted prefs recreate", e2)
+                appContext.getSharedPreferences("${CREDENTIALS_FILE}_plain", Context.MODE_PRIVATE)
+            }
+        }
+    }
+
+    private fun createEncryptedPrefs(): SharedPreferences {
         val masterKey = MasterKey.Builder(appContext)
             .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
             .build()
-        EncryptedSharedPreferences.create(
+        return EncryptedSharedPreferences.create(
             appContext,
-            "ra_credentials",
+            CREDENTIALS_FILE,
             masterKey,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
@@ -257,6 +280,7 @@ class RetroAchievementsRepository(context: Context) {
     } catch (_: Exception) { null }
 
     companion object {
+        private const val CREDENTIALS_FILE = "ra_credentials"
         private const val KEY_USERNAME = "ra_username"
         private const val KEY_API_KEY  = "ra_api_key"
         private const val KEY_CACHE               = "ra_cache_json"

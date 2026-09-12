@@ -12,7 +12,12 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -50,28 +55,43 @@ const val FAVORITE_PACKAGE   = "com.joeyos.app.FAVORITE"
 const val RECENT_ALL_PACKAGE = "com.joeyos.app.RECENT_ALL"
 
 /**
- * Build dock entries by scanning every system's known packages against installed apps.
- * This shows all relevant emulators the user has installed, regardless of assignments.
- * Deduplicates so RetroArch only appears once even though many systems use it.
- * The global recently played tile is always pinned at position 0.
+ * The emulators the dock shows automatically: every system's known packages matched against
+ * installed apps, deduplicated so RetroArch appears once even though many systems use it.
+ */
+fun autoDockPackages(installedApps: List<InstalledApp>): List<InstalledApp> {
+    val seen = mutableSetOf<String>()
+    val result = mutableListOf<InstalledApp>()
+    ALL_SYSTEMS.forEach { sys ->
+        sys.knownPackages.forEach { known ->
+            val match = installedApps.firstOrNull { it.packageName.startsWith(known) }
+            if (match != null && seen.add(match.packageName)) result += match
+        }
+    }
+    return result
+}
+
+/**
+ * Build dock entries: the automatic emulators (minus any taken off in the App Drawer), plus any
+ * apps added from the App Drawer. Favorite and Recent are always first.
  */
 fun buildDockEntries(
     installedApps: List<InstalledApp>,
     lastLaunched: Map<String, Long>,
-    sortOrder: DockSortOrder = DockSortOrder.RECENTLY_USED
+    sortOrder: DockSortOrder = DockSortOrder.RECENTLY_USED,
+    pinned: Set<String> = emptySet(),
+    hidden: Set<String> = emptySet()
 ): List<DockEntry> {
-    val seen = mutableSetOf<String>()
     val entries = mutableListOf<Pair<DockEntry, Long>>()
-    ALL_SYSTEMS.forEach { sys ->
-        sys.knownPackages.forEach { known ->
-            val match = installedApps.firstOrNull { it.packageName.startsWith(known) }
-            if (match != null && seen.add(match.packageName)) {
-                val mostRecent = ALL_SYSTEMS
-                    .filter { s -> s.knownPackages.any { match.packageName.startsWith(it) } }
-                    .maxOfOrNull { lastLaunched[it.id] ?: Long.MIN_VALUE } ?: Long.MIN_VALUE
-                entries += DockEntry(match.packageName, match.label) to mostRecent
-            }
-        }
+    autoDockPackages(installedApps).filter { it.packageName !in hidden }.forEach { app ->
+        val mostRecent = ALL_SYSTEMS
+            .filter { s -> s.knownPackages.any { app.packageName.startsWith(it) } }
+            .maxOfOrNull { lastLaunched[it.id] ?: Long.MIN_VALUE } ?: Long.MIN_VALUE
+        entries += DockEntry(app.packageName, app.label) to mostRecent
+    }
+    // Added apps have no play history, so in "Recent" order they follow the emulators.
+    val present = entries.map { it.first.packageName }.toSet()
+    installedApps.filter { it.packageName in pinned && it.packageName !in present }.forEach { app ->
+        entries += DockEntry(app.packageName, app.label) to Long.MIN_VALUE
     }
     val emulators = when (sortOrder) {
         DockSortOrder.RECENTLY_USED     -> entries.sortedByDescending { it.second }.map { it.first }
@@ -91,7 +111,11 @@ fun Dock(
     onEmulatorClick: (packageName: String) -> Unit,
     modifier: Modifier = Modifier,
     favoriteTitle: String? = null,
-    selectedIndex: Int = -1,
+    focusedPackage: String? = null,
+    onFocusedChange: (String) -> Unit = {},
+    focusRequesters: MutableMap<String, FocusRequester> = remember { mutableMapOf() },
+    /** False while a page covers the home screen, so the D-pad can't wander onto the dock. */
+    focusEnabled: Boolean = true,
     onEmulatorLongClick: (packageName: String) -> Unit = {},
     iconSizeDp: Int = 46,
     listState: LazyListState = rememberLazyListState(),
@@ -132,14 +156,15 @@ fun Dock(
         DockBgOpacity.HIGH   -> 0.70f
     }
 
-    // Resolve the title for the currently highlighted icon (null = nothing to show)
-    val selectedTitle: String? = if (selectedIndex >= 0 && selectedIndex < dockEntries.size && showBadge) {
-        val pkg = dockEntries[selectedIndex].packageName
-        when (pkg) {
+    // Title for the focused icon: its most recent game, or — when there isn't one (an app with
+    // no recently played support, or an emulator not played yet) — the app's own name.
+    val selectedTitle: String? = if (focusedPackage != null && showBadge) {
+        val gameTitle = when (val pkg = focusedPackage) {
             FAVORITE_PACKAGE   -> favoriteTitle
             RECENT_ALL_PACKAGE -> recentAllTitle
             else               -> lastPlayedTitles[pkg]
         }
+        gameTitle ?: dockEntries.firstOrNull { it.packageName == focusedPackage }?.label
     } else null
 
     Box(
@@ -154,13 +179,16 @@ fun Dock(
             horizontalArrangement = Arrangement.spacedBy(9.dp),
             verticalAlignment     = Alignment.Bottom
         ) {
-            itemsIndexed(dockEntries, key = { _, e -> e.packageName }) { i, entry ->
+            // Keyed by package, so focus follows the icon itself when the dock re-sorts.
+            items(dockEntries, key = { it.packageName }) { entry ->
                 DockIcon(
                     packageName   = entry.packageName,
                     label         = entry.label,
                     sizeDp        = iconSizeDp,
-                    isSelected    = selectedIndex == i,
                     favoriteTitle = favoriteTitle,
+                    focusRequester = focusRequesters.getOrPut(entry.packageName) { FocusRequester() },
+                    focusEnabled  = focusEnabled,
+                    onFocused     = { onFocusedChange(entry.packageName) },
                     onClick       = { onEmulatorClick(entry.packageName) },
                     onLongClick   = { onEmulatorLongClick(entry.packageName) },
                     cornerStyle   = cornerStyle
@@ -198,8 +226,10 @@ fun DockIcon(
     packageName: String,
     label: String,
     sizeDp: Int = 46,
-    isSelected: Boolean = false,
     favoriteTitle: String? = null,
+    focusRequester: FocusRequester = remember { FocusRequester() },
+    focusEnabled: Boolean = true,
+    onFocused: () -> Unit = {},
     onClick: () -> Unit,
     onLongClick: () -> Unit = {},
     cornerStyle: DockCornerStyle = DockCornerStyle.ROUNDED
@@ -211,6 +241,9 @@ fun DockIcon(
         DockCornerStyle.CIRCLE  -> (sizeDp / 2).dp
     }
     val tileShape = RoundedCornerShape(cornerDp)
+    // The icon's highlight is its real focus, not a remembered index.
+    val interaction = remember { MutableInteractionSource() }
+    val isSelected by interaction.collectIsFocusedAsState()
     val scale by animateFloatAsState(if (isSelected) 1.18f else 1f, tween(120), label = "dock_scale")
 
     val icon by produceState<ImageBitmap?>(null, packageName) {
@@ -241,8 +274,12 @@ fun DockIcon(
                 .size(sizeDp.dp)
                 .scale(scale)
                 .clip(tileShape)
+                .focusRequester(focusRequester)
+                .focusProperties { canFocus = focusEnabled }
+                .onFocusChanged { if (it.isFocused) onFocused() }
+                // One clickable node = one focus target. A / Select arrive as DPAD centre.
                 .combinedClickable(
-                    interactionSource = remember { MutableInteractionSource() },
+                    interactionSource = interaction,
                     indication        = null,
                     onClick           = onClick,
                     onLongClick       = onLongClick

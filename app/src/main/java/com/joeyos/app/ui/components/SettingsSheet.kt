@@ -6,11 +6,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -18,6 +16,20 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -28,6 +40,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.joeyos.app.ui.controls.Control
 import com.joeyos.app.data.ALL_SYSTEMS
 import com.joeyos.app.data.ClockFormat
 import com.joeyos.app.data.DockBgOpacity
@@ -45,6 +58,11 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+/**
+ * Settings, a full-screen page (JoeyPage): B / Back and Start close it, L1 / R1 switch tabs, and
+ * focus goes back to the dock icon you left. Every control is a single focus target lit by its
+ * real focus; the D-pad moves between them.
+ */
 @Composable
 fun SettingsSheet(
     wallpaperState: WallpaperState,
@@ -73,46 +91,76 @@ fun SettingsSheet(
     onDismiss: () -> Unit,
     raRepo: RetroAchievementsRepository,
     ibRepo: InfiniteBacklogRepository,
-    selectedTab: Int = 0,
-    onTabChange: (Int) -> Unit = {},
-    listState: LazyListState = rememberLazyListState(),
-    settingsSelectedIndex: Int = -1,
-    onSettingsItemCountChange: (Int) -> Unit = {},
-    onSettingsNavGridChange: (List<Int>?) -> Unit = {},
-    activateTick: Int = 0,
-    dropdownSystemId: String? = null,
-    onDropdownSystemChange: (String?) -> Unit = {},
-    onDropdownOpen: (Int) -> Unit = {},
-    onDropdownClose: () -> Unit = {},
-    dropdownSelectedIndex: Int = 0,
-    dropdownActivateTick: Int = 0
+    onCheckUpdates: () -> Unit = {},
+    onShareCrashLog: () -> Unit = {}
 ) {
     val tabs = listOf("Appearance", "Emulators", "Achievements")
+    var selectedTab by remember { mutableIntStateOf(0) }
+    val tabFocus = remember { List(tabs.size) { FocusRequester() } }
+    val scope = rememberCoroutineScope()
+    val focusManager = LocalFocusManager.current
+    // Each tab's list, hoisted so Down from the tab row can scroll it back to the top.
+    val panelLists = remember { List(tabs.size) { LazyListState() } }
+    val panelFirst = remember { FocusRequester() }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(SheetBg),
-        contentAlignment = Alignment.Center
+    /**
+     * Down from the full-width tab row goes to the tab's first control. Left to itself, focus
+     * search picks whatever sits nearest the tab's centre (found on device: 42, not 32).
+     */
+    fun enterPanel() {
+        scope.launch {
+            panelLists[selectedTab].scrollToItem(0)
+            withFrameNanos { }
+            val landed = runCatching { panelFirst.requestFocus() }.isSuccess
+            if (!landed) focusManager.moveFocus(FocusDirection.Down)
+        }
+    }
+
+    /** Switch tab and put focus on its tab button, since whatever was focused has just gone. */
+    fun switchTab(to: Int) {
+        selectedTab = to.coerceIn(0, tabs.lastIndex)
+        scope.launch {
+            withFrameNanos { }
+            runCatching { tabFocus[selectedTab].requestFocus() }
+        }
+    }
+
+    JoeyPage(
+        onClose      = onDismiss,
+        initialFocus = tabFocus[0],
+        onControl    = { control ->
+            when (control) {
+                Control.Options  -> onDismiss()   // Start opened Settings, so Start closes it too
+                Control.StepPrev -> switchTab(selectedTab - 1)
+                Control.StepNext -> switchTab(selectedTab + 1)
+                else -> {}
+            }
+            true
+        }
     ) {
-        Column(modifier = Modifier
-            .fillMaxHeight()
-            .widthIn(max = 640.dp)
-            .fillMaxWidth()
-            .systemBarsPadding()) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(SheetBg),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(modifier = Modifier
+                .fillMaxHeight()
+                .widthIn(max = 640.dp)
+                .fillMaxWidth()
+                .systemBarsPadding()) {
 
                 // Header
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 18.dp, vertical = 8.dp),
+                        .padding(horizontal = 18.dp, vertical = 12.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment     = Alignment.CenterVertically
                 ) {
                     Text("JoeyOS", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = Amber)
-                    TextButton(onClick = onDismiss) {
-                        Text("✕", color = TextFaint, fontSize = 18.sp)
-                    }
+                    Text("L1/R1 tabs  •  B close", fontSize = 9.sp,
+                        fontFamily = FontFamily.Monospace, color = TextFaint)
                 }
 
                 // Tabs
@@ -120,20 +168,33 @@ fun SettingsSheet(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 18.dp)
-                        .padding(bottom = 12.dp),
+                        .padding(bottom = 12.dp)
+                        .focusRow(tabFocus[selectedTab]),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     tabs.forEachIndexed { i, title ->
                         val active = selectedTab == i
+                        val (source, focused) = rememberFocusState()
                         Box(
                             modifier = Modifier
                                 .weight(1f)
+                                .focusRequester(tabFocus[i])
+                                .onPreviewKeyEvent { e ->
+                                    if (e.key == Key.DirectionDown) {
+                                        if (e.type == KeyEventType.KeyDown) enterPanel()
+                                        true
+                                    } else false
+                                }
                                 .clip(RoundedCornerShape(10.dp))
-                                .background(if (active) Amber.copy(alpha = 0.28f) else Color.White.copy(alpha = 0.05f))
-                                .border(2.dp,
-                                    if (active) Amber else Color.White.copy(0.14f),
+                                .background(if (active) Amber.copy(alpha = 0.22f) else Color.White.copy(alpha = 0.05f))
+                                .border(if (focused) FocusWidth else 1.dp,
+                                    when {
+                                        focused -> FocusColor
+                                        active  -> AmberSoft
+                                        else    -> Color.White.copy(0.14f)
+                                    },
                                     RoundedCornerShape(10.dp))
-                                .clickable { onTabChange(i) }
+                                .clickable(interactionSource = source, indication = null) { selectedTab = i }
                                 .padding(vertical = 9.dp),
                             contentAlignment = Alignment.Center
                         ) {
@@ -169,64 +230,55 @@ fun SettingsSheet(
                         onDockBgOpacityChange    = onDockBgOpacityChange,
                         onDockTitleSizeChange    = onDockTitleSizeChange,
                         modifier                 = Modifier.weight(1f),
-                        listState                = listState,
-                        selectedItemIndex        = settingsSelectedIndex,
-                        onItemCountChange        = onSettingsItemCountChange,
-                        onNavGridChange          = onSettingsNavGridChange,
-                        activateTick             = activateTick
+                        listState                = panelLists[0],
+                        firstFocus               = panelFirst,
+                        onCheckUpdates           = onCheckUpdates,
+                        onShareCrashLog          = onShareCrashLog
                     )
                     1 -> EmulatorsPanel(
-                        assignments           = assignments,
-                        installedApps         = installedApps,
-                        onAssignmentChange    = onAssignmentChange,
-                        onRefresh             = onRefreshApps,
-                        modifier              = Modifier.weight(1f),
-                        listState             = listState,
-                        selectedItemIndex     = settingsSelectedIndex,
-                        onItemCountChange     = onSettingsItemCountChange,
-                        activateTick          = activateTick,
-                        dropdownSystemId      = dropdownSystemId,
-                        onDropdownSystemChange = onDropdownSystemChange,
-                        onDropdownOpen        = onDropdownOpen,
-                        onDropdownClose       = onDropdownClose,
-                        dropdownSelectedIndex = dropdownSelectedIndex,
-                        dropdownActivateTick  = dropdownActivateTick
+                        assignments        = assignments,
+                        installedApps      = installedApps,
+                        onAssignmentChange = onAssignmentChange,
+                        onRefresh          = onRefreshApps,
+                        modifier           = Modifier.weight(1f),
+                        listState          = panelLists[1],
+                        firstFocus         = panelFirst
                     )
                     2 -> RetroAchievementsTab(
-                        raRepo            = raRepo,
-                        ibRepo            = ibRepo,
-                        modifier          = Modifier.weight(1f),
-                        selectedItemIndex = settingsSelectedIndex,
-                        onItemCountChange = onSettingsItemCountChange,
-                        activateTick      = activateTick
+                        raRepo   = raRepo,
+                        ibRepo   = ibRepo,
+                        modifier = Modifier.weight(1f),
+                        listState = panelLists[2]
                     )
                 }
+            }
         }
     }
 }
 
 @Composable
 fun WallpaperTile(
+    focusModifier: Modifier = Modifier,
     isActive: Boolean,
     label: String,
     background: Brush,
     modifier: Modifier = Modifier,
     badge: String? = null,
-    isNavSelected: Boolean = false,
     onClick: () -> Unit
 ) {
     val shape = RoundedCornerShape(14.dp)
-    val borderColor = when {
-        isActive        -> Amber
-        isNavSelected   -> Color.White.copy(alpha = 0.65f)
-        else            -> Color.Transparent
-    }
+    val (source, focused) = rememberFocusState()
     Box(
         modifier = modifier
+            .then(focusModifier)
             .clip(shape)
             .background(background)
-            .then(if (isActive || isNavSelected) Modifier.border(2.dp, borderColor, shape) else Modifier)
-            .clickable(onClick = onClick)
+            .then(when {
+                focused  -> Modifier.border(3.dp, FocusColor, shape)
+                isActive -> Modifier.border(1.dp, AmberSoft, shape)
+                else     -> Modifier
+            })
+            .clickable(interactionSource = source, indication = null, onClick = onClick)
     ) {
         if (badge != null) {
             Box(
@@ -240,6 +292,7 @@ fun WallpaperTile(
                 Text(badge, fontSize = 9.sp, color = Color.White, fontFamily = FontFamily.Monospace)
             }
         }
+        if (isActive) ActiveTick(Modifier.align(Alignment.TopStart))
         Text(
             text     = label,
             modifier = Modifier.align(Alignment.BottomStart).padding(8.dp),
@@ -250,6 +303,67 @@ fun WallpaperTile(
     }
 }
 
+/** The "this is the current wallpaper" mark, kept apart from the focus ring. */
+@Composable
+private fun ActiveTick(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .padding(6.dp)
+            .size(18.dp)
+            .clip(CircleShape)
+            .background(Amber),
+        contentAlignment = Alignment.Center
+    ) {
+        Text("✓", fontSize = 10.sp, color = Color.Black, fontWeight = FontWeight.Bold)
+    }
+}
+
+/** A plain labelled action button (Refresh, Check for updates, …), lit when focused. */
+@Composable
+fun ActionButton(label: String, onClick: () -> Unit, modifier: Modifier = Modifier, fontSize: TextUnit = 12.sp) {
+    val (source, focused) = rememberFocusState()
+    Box(
+        modifier = modifier
+            .clip(RoundedCornerShape(12.dp))
+            .background(if (focused) Color.White.copy(alpha = 0.12f) else Color.White.copy(alpha = 0.06f))
+            .border(if (focused) 2.dp else 1.dp,
+                if (focused) FocusColor else Color.White.copy(alpha = 0.14f), RoundedCornerShape(12.dp))
+            .clickable(interactionSource = source, indication = null, onClick = onClick)
+            .padding(horizontal = 12.dp, vertical = 12.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(label, fontSize = fontSize, fontFamily = FontFamily.Monospace,
+            color = if (focused) Amber else TextPrimary)
+    }
+}
+
+@Composable
+private fun SettingsLabel(text: String) {
+    Text(text, fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
+}
+
+/** A labelled row of [OptionChip]s for one setting. */
+@Composable
+private fun <T> ChoiceRow(
+    label: String,
+    options: List<Pair<T, String>>,
+    current: T,
+    onChange: (T) -> Unit,
+    fontSize: TextUnit = 11.sp
+) {
+    Column {
+        Spacer(Modifier.height(4.dp))
+        SettingsLabel(label)
+        Spacer(Modifier.height(8.dp))
+        val first = remember { FocusRequester() }
+        Row(modifier = Modifier.fillMaxWidth().focusRow(first), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            options.forEachIndexed { i, (value, text) ->
+                OptionChip(text, current == value, { onChange(value) },
+                    Modifier.weight(1f).then(if (i == 0) Modifier.focusRequester(first) else Modifier), fontSize)
+            }
+        }
+    }
+}
 
 // ── Appearance panel ─────────────────────────────────────────────────────────
 
@@ -276,11 +390,36 @@ fun AppearancePanel(
     onDockTitleSizeChange: (DockTitleSize) -> Unit = {},
     modifier: Modifier = Modifier,
     listState: LazyListState = rememberLazyListState(),
-    selectedItemIndex: Int = -1,
-    onItemCountChange: (Int) -> Unit = {},
-    onNavGridChange: (List<Int>?) -> Unit = {},
-    activateTick: Int = 0
+    firstFocus: FocusRequester? = null,
+    onCheckUpdates: () -> Unit = {},
+    onShareCrashLog: () -> Unit = {}
 ) {
+    // A on a custom wallpaper opens its options (use / remove). The ✕ inside the tile can't be
+    // reached with the D-pad — it sits within the tile's bounds — so this is the controller way.
+    var wallpaperOptions by remember { mutableStateOf<Uri?>(null) }
+    wallpaperOptions?.let { uri ->
+        JoeyDialog(onDismiss = { wallpaperOptions = null }) {
+            Column(
+                modifier = Modifier
+                    .widthIn(max = 300.dp)
+                    .clip(RoundedCornerShape(18.dp))
+                    .background(Color(0xFF1A1A2E))
+                    .border(1.dp, Color.White.copy(alpha = 0.12f), RoundedCornerShape(18.dp))
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                Text("Custom wallpaper", fontSize = 15.sp, fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Monospace, color = TextPrimary)
+                DialogButton("Use as wallpaper", {
+                    onWallpaperChange(WallpaperState.Custom(uri)); wallpaperOptions = null
+                }, Modifier.fillMaxWidth())
+                DialogButton("Remove", {
+                    onRemoveWallpaper(uri); wallpaperOptions = null
+                }, Modifier.fillMaxWidth())
+            }
+        }
+    }
+
     val steps = listOf(32, 42, 52, 62, 72, 84, 96)
     val currentStep = (steps.indexOfFirst { it >= dockIconSize }.takeIf { it >= 0 } ?: steps.lastIndex)
 
@@ -296,124 +435,15 @@ fun AppearancePanel(
         }
     }
 
-    // ── Navigation index layout ──────────────────────────────────────────────
-    // 0..6:   size step buttons
-    // 7:      − button
-    // 8:      + button
-    // 9..11:  sort order buttons (Recent, A-Z, Z-A)
-    // 12..13: recent badge (Show/Hide)
-    // 14..16: clock format (24h/12h/Off)
-    // 17..19: recent depth (5/10/20)
-    // 20..23: dock bg opacity (None/Low/Medium/High)
-    // 24..26: dock title size (S/M/L)
-    // 27..27+N-1: preset wallpaper tiles
-    // 27+N:   animated wallpaper tile
-    // 27+N+1..27+N+M: custom wallpaper tiles
-    // 27+N+M+1: add wallpaper button
-    val N = PRESET_WALLPAPERS.size
-    val M = customWallpapers.size
-
-    val numPresetRows = (N + 3) / 4
-    val navGrid = remember(N, M) {
-        buildList {
-            add(7)   // size step buttons
-            add(2)   // −/+
-            add(3)   // sort orders
-            add(2)   // recent badge
-            add(3)   // clock format
-            add(3)   // recent depth
-            add(4)   // dock bg opacity
-            add(3)   // dock title size
-            var rem = N
-            while (rem > 0) { add(minOf(rem, 4)); rem -= 4 }
-            add(1)       // animated tile
-            add(M + 1)   // custom wallpapers + add button
-        }
-    }
-    LaunchedEffect(navGrid) {
-        onItemCountChange(navGrid.sum())
-        onNavGridChange(navGrid)
-    }
-
-    // Compute lazy-column item index for auto-scroll
-    // Lazy layout: 0=size label, 1=preview, 2=step presets, 3=−/+,
-    // 4=order label, 5=order buttons, 6=badge, 7=clock, 8=depth, 9=bgOpacity,
-    // 10=title size, 11=wallpaper label, 12..12+numPresetRows-1=presets, 12+numPresetRows=anim,
-    // 12+numPresetRows+1=custom label, 12+numPresetRows+2=custom row
-    //
-    // For size / −/+ (0-8): scroll to 0 so the section label and preview are visible above.
-    // For sort order (9-11): scroll to 4 so the "DOCK ORDER" label is at top.
-    fun navToLazyIdx(navIdx: Int): Int = when {
-        navIdx < 9  -> 0    // size steps + −/+: show label and preview
-        navIdx < 12 -> 4    // sort order: show "DOCK ORDER" label
-        navIdx < 14 -> 6    // recent badge
-        navIdx < 17 -> 7    // clock format (24h / 12h / Off)
-        navIdx < 20 -> 8    // recent depth
-        navIdx < 24 -> 9    // dock bg opacity
-        navIdx < 27 -> 10   // dock title size
-        navIdx < 27 + N -> 12 + (navIdx - 27) / 4
-        navIdx == 27 + N -> 12 + numPresetRows
-        else -> 12 + numPresetRows + 2
-    }
-    LaunchedEffect(selectedItemIndex) {
-        if (selectedItemIndex < 0) return@LaunchedEffect
-        listState.animateScrollToItem(navToLazyIdx(selectedItemIndex))
-    }
-
-    // Keep activation logic up-to-date with current composition values
-    val activateRef = remember { object { var action: () -> Unit = {} } }
-    SideEffect {
-        val idx = selectedItemIndex
-        activateRef.action = {
-            when {
-                idx in 0..6 -> onSizeChange(steps[idx])
-                idx == 7    -> onSizeChange(steps[(currentStep - 1).coerceAtLeast(0)])
-                idx == 8    -> onSizeChange(steps[(currentStep + 1).coerceAtMost(steps.lastIndex)])
-                idx == 9    -> onSortOrderChange(DockSortOrder.RECENTLY_USED)
-                idx == 10   -> onSortOrderChange(DockSortOrder.ALPHABETICAL)
-                idx == 11   -> onSortOrderChange(DockSortOrder.ALPHABETICAL_DESC)
-                idx == 12   -> onShowRecentBadgeChange(true)
-                idx == 13   -> onShowRecentBadgeChange(false)
-                idx == 14   -> onClockFormatChange(ClockFormat.H24)
-                idx == 15   -> onClockFormatChange(ClockFormat.H12)
-                idx == 16   -> onClockFormatChange(ClockFormat.HIDDEN)
-                idx == 17   -> onRecentDepthChange(5)
-                idx == 18   -> onRecentDepthChange(10)
-                idx == 19   -> onRecentDepthChange(20)
-                idx == 20   -> onDockBgOpacityChange(DockBgOpacity.NONE)
-                idx == 21   -> onDockBgOpacityChange(DockBgOpacity.LOW)
-                idx == 22   -> onDockBgOpacityChange(DockBgOpacity.MEDIUM)
-                idx == 23   -> onDockBgOpacityChange(DockBgOpacity.HIGH)
-                idx == 24   -> onDockTitleSizeChange(DockTitleSize.SMALL)
-                idx == 25   -> onDockTitleSizeChange(DockTitleSize.MEDIUM)
-                idx == 26   -> onDockTitleSizeChange(DockTitleSize.LARGE)
-                idx in 27 until 27 + N ->
-                    onWallpaperChange(WallpaperState.Preset(PRESET_WALLPAPERS[idx - 27].id))
-                idx == 27 + N -> onWallpaperChange(WallpaperState.Animated)
-                idx in (27 + N + 1)..(27 + N + M) ->
-                    onWallpaperChange(WallpaperState.Custom(customWallpapers[idx - 27 - N - 1]))
-                idx == 27 + N + M + 1 -> imagePicker.launch(arrayOf("image/*"))
-            }
-        }
-    }
-    LaunchedEffect(activateTick) {
-        if (activateTick == 0) return@LaunchedEffect
-        activateRef.action()
-    }
-
-    fun isNav(navIdx: Int) = selectedItemIndex == navIdx
-
+    // The list brings the focused control into view by itself as the D-pad walks it.
     LazyColumn(
         state          = listState,
         modifier       = modifier.padding(horizontal = 18.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp),
         contentPadding = PaddingValues(top = 4.dp, bottom = 28.dp)
     ) {
-        // ── Icon size section ────────────────────────────────────────────
-        item {
-            Text("DOCK ICON SIZE", fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
-        }
-
+        // ── Icon size ────────────────────────────────────────────────────
+        item { SettingsLabel("DOCK ICON SIZE") }
         item {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -431,338 +461,158 @@ fun AppearancePanel(
                 }
             }
         }
-
         item {
-            // Step presets — navIdx 0..6
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                steps.forEachIndexed { idx, size ->
-                    val active = size == steps[currentStep]
-                    val navSel = isNav(idx)
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .clip(RoundedCornerShape(9.dp))
-                            .background(
-                                if (active || navSel) Amber.copy(alpha = 0.18f)
-                                else Color.White.copy(alpha = 0.05f)
-                            )
-                            .border(1.dp, when {
-                                active  -> AmberSoft
-                                navSel  -> Color.White.copy(alpha = 0.7f)
-                                else    -> Color.White.copy(alpha = 0.12f)
-                            }, RoundedCornerShape(9.dp))
-                            .clickable { onSizeChange(size) }
-                            .padding(vertical = 9.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text("$size", fontSize = 9.sp, fontFamily = FontFamily.Monospace,
-                            color = if (active || navSel) Amber else TextDim)
-                    }
+            val first = remember { FocusRequester() }
+            Row(modifier = Modifier.fillMaxWidth().focusRow(first), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                steps.forEachIndexed { i, size ->
+                    OptionChip("$size", size == steps[currentStep], { onSizeChange(size) },
+                        Modifier.weight(1f).then(
+                            if (i == 0) Modifier.focusRequester(first).then(
+                                if (firstFocus != null) Modifier.focusRequester(firstFocus) else Modifier)
+                            else Modifier),
+                        fontSize = 9.sp)
                 }
+            }
+        }
+        item {
+            val first = remember { FocusRequester() }
+            Row(modifier = Modifier.fillMaxWidth().focusRow(first), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                ActionButton("−", { onSizeChange(steps[(currentStep - 1).coerceAtLeast(0)]) },
+                    Modifier.weight(1f).focusRequester(first), fontSize = 22.sp)
+                ActionButton("+", { onSizeChange(steps[(currentStep + 1).coerceAtMost(steps.lastIndex)]) },
+                    Modifier.weight(1f), fontSize = 22.sp)
             }
         }
 
         item {
-            // −/+ buttons — navIdx 7, 8
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                listOf("−" to -1, "+" to 1).forEachIndexed { btnIdx, (label, dir) ->
-                    val navSel = isNav(7 + btnIdx)
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .clip(RoundedCornerShape(12.dp))
-                            .background(if (navSel) Color.White.copy(alpha = 0.12f) else Color.White.copy(alpha = 0.06f))
-                            .border(1.dp, if (navSel) Color.White.copy(alpha = 0.7f) else Color.White.copy(alpha = 0.14f), RoundedCornerShape(12.dp))
-                            .clickable {
-                                val next = (currentStep + dir).coerceIn(0, steps.lastIndex)
-                                onSizeChange(steps[next])
-                            }
-                            .padding(vertical = 14.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(label, fontSize = 22.sp, color = if (navSel) Amber else TextPrimary)
-                    }
-                }
-            }
-        }
-
-        // ── Dock order section ───────────────────────────────────────────
-        item {
-            Spacer(Modifier.height(4.dp))
-            Text("DOCK ORDER", fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
-        }
-
-        item {
-            // Sort order buttons — navIdx 9, 10, 11
-            val sortOptions = listOf(
+            ChoiceRow("DOCK ORDER", listOf(
                 DockSortOrder.RECENTLY_USED     to "Recent",
                 DockSortOrder.ALPHABETICAL      to "A-Z",
                 DockSortOrder.ALPHABETICAL_DESC to "Z-A"
-            )
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                sortOptions.forEachIndexed { sortIdx, (order, label) ->
-                    val active = dockSortOrder == order
-                    val navSel = isNav(9 + sortIdx)
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .clip(RoundedCornerShape(9.dp))
-                            .background(
-                                if (active || navSel) Amber.copy(alpha = 0.18f)
-                                else Color.White.copy(alpha = 0.05f)
-                            )
-                            .border(1.dp, when {
-                                active  -> AmberSoft
-                                navSel  -> Color.White.copy(alpha = 0.7f)
-                                else    -> Color.White.copy(alpha = 0.12f)
-                            }, RoundedCornerShape(9.dp))
-                            .clickable { onSortOrderChange(order) }
-                            .padding(vertical = 11.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(label, fontSize = 11.sp, fontFamily = FontFamily.Monospace,
-                            color = if (active || navSel) Amber else TextDim)
-                    }
-                }
-            }
+            ), dockSortOrder, onSortOrderChange)
+        }
+        item { ChoiceRow("RECENT TITLE BADGE", listOf(true to "Show", false to "Hide"), showRecentBadge, onShowRecentBadgeChange) }
+        item {
+            ChoiceRow("CLOCK FORMAT", listOf(ClockFormat.H24 to "24h", ClockFormat.H12 to "12h", ClockFormat.HIDDEN to "Off"),
+                clockFormat, onClockFormatChange)
+        }
+        item { ChoiceRow("RECENT LIST DEPTH", listOf(5 to "5", 10 to "10", 20 to "20"), recentDepth, onRecentDepthChange) }
+        item {
+            ChoiceRow("DOCK BACKGROUND", listOf(DockBgOpacity.NONE to "None", DockBgOpacity.LOW to "Low",
+                DockBgOpacity.MEDIUM to "Medium", DockBgOpacity.HIGH to "High"), dockBgOpacity, onDockBgOpacityChange, fontSize = 9.sp)
+        }
+        item {
+            ChoiceRow("DOCK TITLE SIZE", listOf(DockTitleSize.SMALL to "S", DockTitleSize.MEDIUM to "M", DockTitleSize.LARGE to "L"),
+                dockTitleSize, onDockTitleSizeChange)
         }
 
-        // ── Recent badge section — navIdx 12..13 ──────────────────────────
+        // ── Wallpaper ────────────────────────────────────────────────────
         item {
             Spacer(Modifier.height(4.dp))
-            Text("RECENT TITLE BADGE", fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
-            Spacer(Modifier.height(8.dp))
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                listOf(true to "Show", false to "Hide").forEachIndexed { i, (value, label) ->
-                    val active = showRecentBadge == value
-                    val navSel = isNav(12 + i)
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .clip(RoundedCornerShape(9.dp))
-                            .background(if (active || navSel) Amber.copy(alpha = 0.18f) else Color.White.copy(alpha = 0.05f))
-                            .border(1.dp, when { active -> AmberSoft; navSel -> Color.White.copy(alpha = 0.7f); else -> Color.White.copy(alpha = 0.12f) }, RoundedCornerShape(9.dp))
-                            .clickable { onShowRecentBadgeChange(value) }
-                            .padding(vertical = 11.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(label, fontSize = 11.sp, fontFamily = FontFamily.Monospace,
-                            color = if (active || navSel) Amber else TextDim)
-                    }
-                }
-            }
+            SettingsLabel("WALLPAPER")
         }
-
-        // ── Clock format section — navIdx 14..15 ──────────────────────────
-        item {
-            Spacer(Modifier.height(4.dp))
-            Text("CLOCK FORMAT", fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
-            Spacer(Modifier.height(8.dp))
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                listOf(ClockFormat.H24 to "24h", ClockFormat.H12 to "12h", ClockFormat.HIDDEN to "Off").forEachIndexed { i, (value, label) ->
-                    val active = clockFormat == value
-                    val navSel = isNav(14 + i)
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .clip(RoundedCornerShape(9.dp))
-                            .background(if (active || navSel) Amber.copy(alpha = 0.18f) else Color.White.copy(alpha = 0.05f))
-                            .border(1.dp, when { active -> AmberSoft; navSel -> Color.White.copy(alpha = 0.7f); else -> Color.White.copy(alpha = 0.12f) }, RoundedCornerShape(9.dp))
-                            .clickable { onClockFormatChange(value) }
-                            .padding(vertical = 11.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(label, fontSize = 11.sp, fontFamily = FontFamily.Monospace,
-                            color = if (active || navSel) Amber else TextDim)
-                    }
-                }
-            }
-        }
-
-        // ── Recent depth section — navIdx 17..19 ──────────────────────────
-        item {
-            Spacer(Modifier.height(4.dp))
-            Text("RECENT LIST DEPTH", fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
-            Spacer(Modifier.height(8.dp))
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                listOf(5 to "5", 10 to "10", 20 to "20").forEachIndexed { i, (value, label) ->
-                    val active = recentDepth == value
-                    val navSel = isNav(17 + i)
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .clip(RoundedCornerShape(9.dp))
-                            .background(if (active || navSel) Amber.copy(alpha = 0.18f) else Color.White.copy(alpha = 0.05f))
-                            .border(1.dp, when { active -> AmberSoft; navSel -> Color.White.copy(alpha = 0.7f); else -> Color.White.copy(alpha = 0.12f) }, RoundedCornerShape(9.dp))
-                            .clickable { onRecentDepthChange(value) }
-                            .padding(vertical = 11.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(label, fontSize = 11.sp, fontFamily = FontFamily.Monospace,
-                            color = if (active || navSel) Amber else TextDim)
-                    }
-                }
-            }
-        }
-
-        // ── Dock BG opacity section — navIdx 23..26 ───────────────────────
-        item {
-            Spacer(Modifier.height(4.dp))
-            Text("DOCK BACKGROUND", fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
-            Spacer(Modifier.height(8.dp))
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                listOf(DockBgOpacity.NONE to "None", DockBgOpacity.LOW to "Low",
-                       DockBgOpacity.MEDIUM to "Medium", DockBgOpacity.HIGH to "High").forEachIndexed { i, (value, label) ->
-                    val active = dockBgOpacity == value
-                    val navSel = isNav(20 + i)
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .clip(RoundedCornerShape(9.dp))
-                            .background(if (active || navSel) Amber.copy(alpha = 0.18f) else Color.White.copy(alpha = 0.05f))
-                            .border(1.dp, when { active -> AmberSoft; navSel -> Color.White.copy(alpha = 0.7f); else -> Color.White.copy(alpha = 0.12f) }, RoundedCornerShape(9.dp))
-                            .clickable { onDockBgOpacityChange(value) }
-                            .padding(vertical = 11.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(label, fontSize = 9.sp, fontFamily = FontFamily.Monospace,
-                            color = if (active || navSel) Amber else TextDim)
-                    }
-                }
-            }
-        }
-
-        // ── Dock title size section — navIdx 27..29 ──────────────────────
-        item {
-            Spacer(Modifier.height(4.dp))
-            Text("DOCK TITLE SIZE", fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
-            Spacer(Modifier.height(8.dp))
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                listOf(DockTitleSize.SMALL to "S", DockTitleSize.MEDIUM to "M", DockTitleSize.LARGE to "L").forEachIndexed { i, (value, label) ->
-                    val active = dockTitleSize == value
-                    val navSel = isNav(24 + i)
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .clip(RoundedCornerShape(9.dp))
-                            .background(if (active || navSel) Amber.copy(alpha = 0.18f) else Color.White.copy(alpha = 0.05f))
-                            .border(1.dp, when { active -> AmberSoft; navSel -> Color.White.copy(alpha = 0.7f); else -> Color.White.copy(alpha = 0.12f) }, RoundedCornerShape(9.dp))
-                            .clickable { onDockTitleSizeChange(value) }
-                            .padding(vertical = 11.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(label, fontSize = 11.sp, fontFamily = FontFamily.Monospace,
-                            color = if (active || navSel) Amber else TextDim)
-                    }
-                }
-            }
-        }
-
-        // ── Wallpaper section ────────────────────────────────────────────
-        item {
-            Spacer(Modifier.height(4.dp))
-            Text("WALLPAPER", fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
-        }
-
-        // Presets in rows of 4 — navIdx 27..27+N-1
-        PRESET_WALLPAPERS.chunked(4).forEachIndexed { rowIdx, row ->
+        PRESET_WALLPAPERS.chunked(4).forEach { row ->
             item {
-                Row(horizontalArrangement = Arrangement.spacedBy(7.dp)) {
-                    row.forEachIndexed { colIdx, preset ->
-                        val flatIdx = rowIdx * 4 + colIdx
+                val first = remember { FocusRequester() }
+                Row(modifier = Modifier.focusRow(first), horizontalArrangement = Arrangement.spacedBy(7.dp)) {
+                    row.forEachIndexed { i, preset ->
                         WallpaperTile(
-                            isActive      = wallpaperState is WallpaperState.Preset && wallpaperState.id == preset.id,
-                            label         = preset.name,
-                            background    = Brush.linearGradient(preset.colors),
-                            modifier      = Modifier.weight(1f).aspectRatio(1.6f),
-                            isNavSelected = isNav(27 + flatIdx),
-                            onClick       = { onWallpaperChange(WallpaperState.Preset(preset.id)) }
+                            focusModifier = if (i == 0) Modifier.focusRequester(first) else Modifier,
+                            isActive   = wallpaperState is WallpaperState.Preset && wallpaperState.id == preset.id,
+                            label      = preset.name,
+                            background = Brush.linearGradient(preset.colors),
+                            modifier   = Modifier.weight(1f).aspectRatio(1.6f),
+                            onClick    = { onWallpaperChange(WallpaperState.Preset(preset.id)) }
                         )
                     }
-                    // Pad last row if not full
                     repeat(4 - row.size) { Spacer(Modifier.weight(1f)) }
                 }
             }
         }
-
-        // Animated tile — navIdx 27+N
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(7.dp)) {
                 WallpaperTile(
-                    isActive      = wallpaperState is WallpaperState.Animated,
-                    label         = "Animated",
-                    badge         = "LIVE",
-                    background    = Brush.radialGradient(listOf(Color(0xFF4F0A60), Color(0xFF0A0A2A))),
-                    modifier      = Modifier.weight(1f).aspectRatio(1.6f),
-                    isNavSelected = isNav(27 + N),
-                    onClick       = { onWallpaperChange(WallpaperState.Animated) }
+                    isActive   = wallpaperState is WallpaperState.Animated,
+                    label      = "Animated",
+                    badge      = "LIVE",
+                    background = Brush.radialGradient(listOf(Color(0xFF4F0A60), Color(0xFF0A0A2A))),
+                    modifier   = Modifier.weight(1f).aspectRatio(1.6f),
+                    onClick    = { onWallpaperChange(WallpaperState.Animated) }
                 )
                 Spacer(Modifier.weight(3f))
             }
         }
 
-        // Custom wallpapers row
+        // ── Custom wallpapers ────────────────────────────────────────────
         item {
             Spacer(Modifier.height(4.dp))
-            Text("CUSTOM WALLPAPERS", fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
+            SettingsLabel("CUSTOM WALLPAPERS")
         }
         item {
-            // Custom tiles navIdx 27+N+1..27+N+M, add button navIdx 27+N+M+1
             // Tile width matches the 4-column preset grid: (availableWidth - 3 gaps) / 4
             BoxWithConstraints {
                 val tileW = (maxWidth - 21.dp) / 4
-            LazyRow(horizontalArrangement = Arrangement.spacedBy(7.dp)) {
-                itemsIndexed(customWallpapers, key = { _, uri -> uri.toString() }) { i, uri ->
-                    val isActive  = wallpaperState is WallpaperState.Custom && wallpaperState.uri == uri
-                    val navSel    = isNav(27 + N + 1 + i)
-                    val imgBorder = when {
-                        navSel && isActive -> Amber
-                        navSel            -> Color.White.copy(alpha = 0.7f)
-                        isActive          -> Amber
-                        else              -> Color.White.copy(alpha = 0.15f)
-                    }
-                    Box(modifier = Modifier.width(tileW).aspectRatio(1.6f)) {
-                        AsyncImage(
-                            model              = uri,
-                            contentDescription = null,
-                            contentScale       = ContentScale.Crop,
-                            modifier           = Modifier
-                                .fillMaxSize()
-                                .clip(RoundedCornerShape(10.dp))
-                                .border(2.dp, imgBorder, RoundedCornerShape(10.dp))
-                                .clickable { onWallpaperChange(WallpaperState.Custom(uri)) }
-                        )
-                        Box(
-                            modifier = Modifier
-                                .align(Alignment.TopEnd)
-                                .padding(4.dp)
-                                .size(18.dp)
-                                .clip(CircleShape)
-                                .background(Color.Black.copy(alpha = 0.55f))
-                                .clickable { onRemoveWallpaper(uri) },
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text("✕", fontSize = 8.sp, color = Color.White)
+                val first = remember { FocusRequester() }
+                LazyRow(modifier = Modifier.focusRow(first), horizontalArrangement = Arrangement.spacedBy(7.dp)) {
+                    itemsIndexed(customWallpapers, key = { _, uri -> uri.toString() }) { i, uri ->
+                        val isActive = wallpaperState is WallpaperState.Custom && wallpaperState.uri == uri
+                        val (source, focused) = rememberFocusState()
+                        val imgBorder = when {
+                            focused  -> FocusColor
+                            isActive -> AmberSoft
+                            else     -> Color.White.copy(alpha = 0.15f)
+                        }
+                        Box(modifier = Modifier.width(tileW).aspectRatio(1.6f)) {
+                            AsyncImage(
+                                model              = uri,
+                                contentDescription = null,
+                                contentScale       = ContentScale.Crop,
+                                modifier           = (if (i == 0) Modifier.focusRequester(first) else Modifier)
+                                    .fillMaxSize()
+                                    .clip(RoundedCornerShape(10.dp))
+                                    .border(if (focused) 3.dp else 2.dp, imgBorder, RoundedCornerShape(10.dp))
+                                    .clickable(interactionSource = source, indication = null) {
+                                        wallpaperOptions = uri
+                                    }
+                            )
+                            if (isActive) ActiveTick(Modifier.align(Alignment.TopStart))
+                            // Quick remove by touch. (Not a D-pad stop: A on the tile has Remove.)
+                            Box(
+                                modifier = Modifier
+                                    .align(Alignment.TopEnd)
+                                    .padding(4.dp)
+                                    .size(22.dp)
+                                    .clip(CircleShape)
+                                    .background(Color.Black.copy(alpha = 0.55f))
+                                    .focusProperties { canFocus = false }
+                                    .clickable { onRemoveWallpaper(uri) },
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text("✕", fontSize = 9.sp, color = Color.White)
+                            }
                         }
                     }
-                }
-                item {
-                    val navSel = isNav(27 + N + M + 1)
-                    Box(
-                        modifier = Modifier
-                            .width(tileW)
-                            .aspectRatio(1.6f)
-                            .clip(RoundedCornerShape(10.dp))
-                            .background(if (navSel) Color.White.copy(alpha = 0.12f) else Color.White.copy(alpha = 0.06f))
-                            .border(1.dp, if (navSel) Color.White.copy(alpha = 0.7f) else Color.White.copy(alpha = 0.14f), RoundedCornerShape(10.dp))
-                            .clickable { imagePicker.launch(arrayOf("image/*")) },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text("+", fontSize = 22.sp, color = if (navSel) TextPrimary else TextDim)
+                    item {
+                        ActionButton("+", { imagePicker.launch(arrayOf("image/*")) },
+                            Modifier.width(tileW).aspectRatio(1.6f).then(
+                                if (customWallpapers.isEmpty()) Modifier.focusRequester(first) else Modifier),
+                            fontSize = 22.sp)
                     }
                 }
             }
-            } // BoxWithConstraints
+        }
+
+        // ── System ───────────────────────────────────────────────────────
+        item {
+            Spacer(Modifier.height(4.dp))
+            SettingsLabel("SYSTEM")
+        }
+        item {
+            val first = remember { FocusRequester() }
+            Row(modifier = Modifier.fillMaxWidth().focusRow(first), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                ActionButton("Check for updates", onCheckUpdates, Modifier.weight(1f).focusRequester(first))
+                ActionButton("Share crash log", onShareCrashLog, Modifier.weight(1f))
+            }
         }
     }
 }
@@ -777,15 +627,7 @@ fun EmulatorsPanel(
     onRefresh: () -> Unit,
     modifier: Modifier = Modifier,
     listState: LazyListState = rememberLazyListState(),
-    selectedItemIndex: Int = -1,
-    onItemCountChange: (Int) -> Unit = {},
-    activateTick: Int = 0,
-    dropdownSystemId: String? = null,
-    onDropdownSystemChange: (String?) -> Unit = {},
-    onDropdownOpen: (Int) -> Unit = {},
-    onDropdownClose: () -> Unit = {},
-    dropdownSelectedIndex: Int = 0,
-    dropdownActivateTick: Int = 0
+    firstFocus: FocusRequester? = null
 ) {
     val retroarchInstalled = remember(installedApps) {
         installedApps.any { it.packageName.startsWith("com.retroarch") }
@@ -800,70 +642,20 @@ fun EmulatorsPanel(
             .groupBy { it.category }
     }
 
-    // Flat list of navigable systems (no headers) and their LazyColumn indices.
-    // lazyIndexMap accounts for any inline option rows inserted below the expanded system.
-    val allSystems = remember(grouped) { grouped.values.flatten() }
-
-    // Compute options for the currently-open dropdown (must be before lazyIndexMap)
-    val expandedOptions = remember(dropdownSystemId, installedApps, allSystems) {
-        val sys = if (dropdownSystemId != null) allSystems.firstOrNull { it.id == dropdownSystemId }
-                  else null
-        if (sys == null) return@remember emptyList<EmulatorOption>()
-        buildList {
+    // A on a system opens a picker popup (like Recently Played), focused on the current choice.
+    var pickingFor by remember { mutableStateOf<RetroSystem?>(null) }
+    pickingFor?.let { sys ->
+        val options = remember(sys) {
             sys.retroarchCores.filter { RetroArchLauncher.isCoreInstalled(it) }
-                .forEach { add(EmulatorOption(it, RetroArchLauncher.assignmentFor(it))) }
+                .map { EmulatorOption(it, RetroArchLauncher.assignmentFor(it)) }
         }
-    }
-    val lazyIndexMap = remember(grouped, dropdownSystemId, expandedOptions.size) {
-        val map = mutableListOf<Int>()
-        var lazyIdx = 0
-        grouped.forEach { (_, systems) ->
-            lazyIdx++ // header item
-            systems.forEach { sys ->
-                map += lazyIdx
-                lazyIdx++
-                if (sys.id == dropdownSystemId) lazyIdx += 1 + expandedOptions.size
-            }
-        }
-        map
-    }
-    LaunchedEffect(allSystems.size) { onItemCountChange(allSystems.size) }
-    LaunchedEffect(selectedItemIndex) {
-        val lazyIdx = lazyIndexMap.getOrNull(selectedItemIndex) ?: return@LaunchedEffect
-        listState.animateScrollToItem(lazyIdx)
-    }
-    LaunchedEffect(dropdownSelectedIndex, dropdownSystemId) {
-        if (dropdownSystemId == null) return@LaunchedEffect
-        val sysIdx     = allSystems.indexOfFirst { it.id == dropdownSystemId }
-        val sysLazyIdx = lazyIndexMap.getOrNull(sysIdx) ?: return@LaunchedEffect
-        listState.animateScrollToItem(sysLazyIdx + 1 + dropdownSelectedIndex)
-    }
-
-    // A-button: toggle dropdown for the focused row
-    LaunchedEffect(activateTick) {
-        if (activateTick == 0) return@LaunchedEffect
-        val sys = allSystems.getOrNull(selectedItemIndex) ?: return@LaunchedEffect
-        onDropdownSystemChange(if (dropdownSystemId == sys.id) null else sys.id)
-    }
-
-    LaunchedEffect(dropdownSystemId) {
-        if (dropdownSystemId != null) onDropdownOpen(expandedOptions.size + 1) // +1 for "Not set"
-        else onDropdownClose()
-    }
-
-    // A-button inside dropdown: apply the selected item and close
-    val latestExpandedOptions by rememberUpdatedState(expandedOptions)
-    val latestDropdownSysId   by rememberUpdatedState(dropdownSystemId)
-    LaunchedEffect(dropdownActivateTick) {
-        if (dropdownActivateTick == 0) return@LaunchedEffect
-        val sysId = latestDropdownSysId ?: return@LaunchedEffect
-        if (dropdownSelectedIndex == 0) {
-            onAssignmentChange(sysId, null)
-        } else {
-            val opt = latestExpandedOptions.getOrNull(dropdownSelectedIndex - 1) ?: return@LaunchedEffect
-            onAssignmentChange(sysId, opt.value)
-        }
-        onDropdownSystemChange(null)
+        EmulatorPickerPopup(
+            system    = sys,
+            options   = options,
+            current   = assignments[sys.id],
+            onChoose  = { value -> onAssignmentChange(sys.id, value); pickingFor = null },
+            onDismiss = { pickingFor = null }
+        )
     }
 
     var refreshing by remember { mutableStateOf(false) }
@@ -878,104 +670,135 @@ fun EmulatorsPanel(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                "Tap ↺ to re-scan installed apps",
-                fontSize = 10.sp,
-                fontFamily = FontFamily.Monospace,
-                color = TextFaint
-            )
-            Box(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(Color.White.copy(alpha = 0.06f))
-                    .border(1.dp, Color.White.copy(alpha = 0.12f), RoundedCornerShape(8.dp))
-                    .clickable {
-                        refreshing = true
-                        onRefresh()
-                        scope.launch {
-                            delay(800.milliseconds)
-                            refreshing = false
-                        }
-                    }
-                    .padding(horizontal = 12.dp, vertical = 6.dp)
-            ) {
-                Text(
-                    text = if (refreshing) "…" else "↺  Refresh",
-                    fontSize = 11.sp,
-                    fontFamily = FontFamily.Monospace,
-                    color = if (refreshing) TextFaint else Amber
-                )
-            }
+            Text("Re-scan installed apps", fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
+            ActionButton(if (refreshing) "…" else "↺  Refresh", {
+                refreshing = true
+                onRefresh()
+                scope.launch {
+                    delay(800.milliseconds)
+                    refreshing = false
+                }
+            }, modifier = if (firstFocus != null) Modifier.focusRequester(firstFocus) else Modifier, fontSize = 11.sp)
         }
 
-    LazyColumn(
-        state          = listState,
-        modifier       = Modifier.weight(1f).padding(horizontal = 18.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(bottom = 28.dp, top = 4.dp)
-    ) {
-        grouped.forEach { (category, systems) ->
-            item(key = "header_$category") {
-                Text(
-                    text       = category.uppercase(),
-                    fontSize   = 10.sp,
-                    fontFamily = FontFamily.Monospace,
-                    color      = TextFaint,
-                    modifier   = Modifier.padding(top = 14.dp, bottom = 2.dp)
-                )
-            }
-            systems.forEach { sys ->
-                val navIdx     = allSystems.indexOf(sys)
-                val isExpanded = dropdownSystemId == sys.id
-                item(key = sys.id) {
-                    EmulatorRow(
-                        system           = sys,
-                        assigned         = assignments[sys.id],
-                        installedApps    = installedApps,
-                        onAssign         = { pkg -> onAssignmentChange(sys.id, pkg) },
-                        isSelected       = navIdx == selectedItemIndex,
-                        expanded         = isExpanded,
-                        onExpandedChange = { open -> onDropdownSystemChange(if (open) sys.id else null) }
+        LazyColumn(
+            state          = listState,
+            modifier       = Modifier.weight(1f).padding(horizontal = 18.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(bottom = 28.dp, top = 4.dp)
+        ) {
+            grouped.forEach { (category, systems) ->
+                item(key = "header_$category") {
+                    Text(
+                        text       = category.uppercase(),
+                        fontSize   = 10.sp,
+                        fontFamily = FontFamily.Monospace,
+                        color      = TextFaint,
+                        modifier   = Modifier.padding(top = 14.dp, bottom = 2.dp)
                     )
                 }
-                if (isExpanded) {
-                    item(key = "${sys.id}_notset") {
-                        DropdownOptionRow(
-                            label     = "Not set",
-                            isSelected = dropdownSelectedIndex == 0,
-                            isCurrent  = assignments[sys.id] == null,
-                            onClick   = { onAssignmentChange(sys.id, null); onDropdownSystemChange(null) }
-                        )
-                    }
-                    expandedOptions.forEachIndexed { i, opt ->
-                        item(key = "${sys.id}_opt_$i") {
-                            DropdownOptionRow(
-                                label     = opt.label,
-                                isSelected = dropdownSelectedIndex == i + 1,
-                                isCurrent  = assignments[sys.id] == opt.value,
-                                onClick   = { onAssignmentChange(sys.id, opt.value); onDropdownSystemChange(null) }
-                            )
-                        }
-                    }
+                items(systems, key = { it.id }) { sys ->
+                    EmulatorRow(
+                        system        = sys,
+                        assigned      = assignments[sys.id],
+                        installedApps = installedApps,
+                        onClick       = { pickingFor = sys }
+                    )
                 }
             }
         }
     }
-    } // end Column
+}
+
+/** Pick the RetroArch core for one system. Opens on the current choice. */
+@OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
+@Composable
+private fun EmulatorPickerPopup(
+    system: RetroSystem,
+    options: List<EmulatorOption>,
+    current: String?,
+    onChoose: (String?) -> Unit,
+    onDismiss: () -> Unit
+) {
+    val screenH = LocalConfiguration.current.screenHeightDp
+    val currentRow = remember { FocusRequester() }
+    val currentIsSet = current != null && options.any { it.value == current }
+    JoeyDialog(onDismiss = onDismiss, initialFocus = currentRow) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(0.55f)
+                .heightIn(max = (screenH * 0.82f).dp)
+                .clip(RoundedCornerShape(20.dp))
+                .background(SheetBg)
+                .border(1.dp, Color.White.copy(alpha = 0.1f), RoundedCornerShape(20.dp))
+                .padding(vertical = 8.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 18.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(system.fullName, fontWeight = FontWeight.Bold, fontSize = 15.sp, color = TextPrimary)
+                Text("A to set  •  B cancel", fontSize = 9.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
+            }
+            LazyColumn(
+                state = rememberLazyListState(
+                    initialFirstVisibleItemIndex = if (currentIsSet) options.indexOfFirst { it.value == current } + 1 else 0),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                item(key = "notset") {
+                    PickerRow("Not set", isCurrent = !currentIsSet, onClick = { onChoose(null) },
+                        modifier = if (!currentIsSet) Modifier.focusRequester(currentRow) else Modifier)
+                }
+                items(options, key = { it.value }) { opt ->
+                    PickerRow(opt.label, isCurrent = current == opt.value, onClick = { onChoose(opt.value) },
+                        modifier = if (current == opt.value) Modifier.focusRequester(currentRow) else Modifier)
+                }
+            }
+        }
+    }
+}
+
+/** A row in a picker popup: one focus target, amber-lit when focused, ✓ on the current choice. */
+@OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
+@Composable
+private fun PickerRow(label: String, isCurrent: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
+    val (source, focused) = rememberFocusState()
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .focusProperties { left = FocusRequester.Cancel; right = FocusRequester.Cancel }
+            .padding(horizontal = 6.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .background(if (focused) Color.White.copy(alpha = 0.10f) else Color.Transparent)
+            .then(if (focused) Modifier.border(FocusWidth, FocusColor, RoundedCornerShape(10.dp)) else Modifier)
+            .clickable(interactionSource = source, indication = null, onClick = onClick)
+            .padding(horizontal = 12.dp, vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+        Text(if (isCurrent) "✓" else " ", fontSize = 12.sp, color = Amber,
+            fontFamily = FontFamily.Monospace, modifier = Modifier.width(16.dp))
+        Text(label, fontSize = 13.sp, fontFamily = FontFamily.Monospace,
+            color = if (isCurrent) Amber else TextPrimary,
+            maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
+        if (focused) Text("▶", fontSize = 12.sp, color = FocusColor)
+    }
 }
 
 /** A selectable option in the emulator dropdown. */
 private data class EmulatorOption(val label: String, val value: String)
 
+@OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
 @Composable
 fun EmulatorRow(
     system: RetroSystem,
     assigned: String?,
     installedApps: List<InstalledApp>,
-    onAssign: (String?) -> Unit,
-    isSelected: Boolean = false,
-    expanded: Boolean = false,
-    onExpandedChange: (Boolean) -> Unit = {}
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val assignedLabel = when {
         assigned == null         -> null
@@ -985,15 +808,19 @@ fun EmulatorRow(
 
     val rowShape   = RoundedCornerShape(14.dp)
     val badgeShape = RoundedCornerShape(9.dp)
-    val highlight  = isSelected || expanded
+    val (source, focused) = rememberFocusState()
+    val highlight  = focused
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
+            // A full-width row has nothing beside it; stop sideways presses jumping elsewhere.
+            .focusProperties { left = FocusRequester.Cancel; right = FocusRequester.Cancel }
             .clip(rowShape)
             .background(if (highlight) Color.White.copy(alpha = 0.12f) else Color.White.copy(alpha = 0.04f))
-            .border(1.dp, if (highlight) Amber.copy(alpha = 0.6f) else Color.White.copy(alpha = 0.09f), rowShape)
-            .clickable { onExpandedChange(!expanded) }
+            .border(if (focused) FocusWidth else 1.dp,
+                if (focused) FocusColor else Color.White.copy(alpha = 0.09f), rowShape)
+            .clickable(interactionSource = source, indication = null, onClick = onClick)
             .padding(12.dp),
         verticalAlignment     = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -1035,46 +862,7 @@ fun EmulatorRow(
                 overflow   = TextOverflow.Ellipsis,
                 modifier   = Modifier.weight(1f)
             )
-            Text(if (expanded) " ▲" else " ▼", fontSize = 9.sp, color = TextFaint)
+            Text(" ▶", fontSize = 9.sp, color = TextFaint)
         }
-    }
-}
-
-@Composable
-private fun DropdownOptionRow(
-    label: String,
-    isSelected: Boolean,
-    isCurrent: Boolean,
-    onClick: () -> Unit
-) {
-    val shape = RoundedCornerShape(10.dp)
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 58.dp)
-            .clip(shape)
-            .background(if (isSelected) Color.White.copy(alpha = 0.12f) else Color.White.copy(alpha = 0.03f))
-            .then(if (isSelected) Modifier.border(1.dp, Amber.copy(alpha = 0.55f), shape) else Modifier)
-            .clickable(onClick = onClick)
-            .padding(horizontal = 12.dp, vertical = 10.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        Text(
-            text   = if (isCurrent) "✓" else " ",
-            fontSize = 11.sp,
-            color  = Amber,
-            fontFamily = FontFamily.Monospace,
-            modifier = Modifier.width(16.dp)
-        )
-        Text(
-            text     = label,
-            fontSize = 12.sp,
-            fontFamily = FontFamily.Monospace,
-            color    = if (isCurrent) Amber else TextPrimary,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.weight(1f)
-        )
     }
 }

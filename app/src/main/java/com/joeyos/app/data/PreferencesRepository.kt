@@ -41,6 +41,10 @@ class PreferencesRepository(private val context: Context) {
         private val RECENT_DEPTH       = stringPreferencesKey("recent_depth")
         private val DOCK_BG_OPACITY    = stringPreferencesKey("dock_bg_opacity")
         private val DOCK_TITLE_SIZE    = stringPreferencesKey("dock_title_size")
+        // Newline-separated package names: apps added to the dock from the App Drawer, and
+        // emulators taken off it (which the dock would otherwise show automatically).
+        private val DOCK_PINNED        = stringPreferencesKey("dock_pinned")
+        private val DOCK_HIDDEN        = stringPreferencesKey("dock_hidden")
         private fun assignmentKey(systemId: String)   = stringPreferencesKey("assignment_$systemId")
         private fun lastLaunchedKey(systemId: String) = stringPreferencesKey("launched_$systemId")
     }
@@ -100,6 +104,29 @@ class PreferencesRepository(private val context: Context) {
             else prefs[FAVORITE_GAME] = "${game.title}|||${game.path}|||${game.emulatorPackage}|||${game.lastPlayed}|||${game.corePath ?: ""}"
         }
     }
+
+    val dockPinned: Flow<Set<String>> = context.dataStore.data.map { prefs -> prefs[DOCK_PINNED].toPackageSet() }
+    val dockHidden: Flow<Set<String>> = context.dataStore.data.map { prefs -> prefs[DOCK_HIDDEN].toPackageSet() }
+
+    /**
+     * Puts an app on the dock or takes it off. An emulator the dock shows automatically is
+     * hidden or un-hidden; any other app is added to or removed from the pinned list.
+     */
+    suspend fun setInDock(packageName: String, inDock: Boolean, isAutoEmulator: Boolean) {
+        context.dataStore.edit { prefs ->
+            val key = if (isAutoEmulator) DOCK_HIDDEN else DOCK_PINNED
+            val set = prefs[key].toPackageSet().toMutableSet()
+            // Auto emulators: in the dock = not hidden. Other apps: in the dock = pinned.
+            if (inDock == isAutoEmulator) set -= packageName else set += packageName
+            prefs[key] = set.joinToString("\n")
+            // Tidy the other list, in case the app changed kind (e.g. an emulator was installed).
+            val otherKey = if (isAutoEmulator) DOCK_PINNED else DOCK_HIDDEN
+            prefs[otherKey] = (prefs[otherKey].toPackageSet() - packageName).joinToString("\n")
+        }
+    }
+
+    private fun String?.toPackageSet(): Set<String> =
+        this?.split("\n")?.filter { it.isNotBlank() }?.toSet() ?: emptySet()
 
     val lastLaunched: Flow<Map<String, Long>> = context.dataStore.data.map { prefs ->
         ALL_SYSTEMS.mapNotNull { sys ->

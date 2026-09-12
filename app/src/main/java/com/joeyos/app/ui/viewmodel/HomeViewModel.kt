@@ -27,23 +27,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.math.roundToInt
 
-sealed class ControllerEvent {
-    object L1         : ControllerEvent()
-    object R1         : ControllerEvent()
-    object L2         : ControllerEvent()
-    object R2         : ControllerEvent()
-    object A          : ControllerEvent()
-    object LongPressA : ControllerEvent()
-    object X          : ControllerEvent()
-    object Y          : ControllerEvent()
-    object B          : ControllerEvent()
-    object Start      : ControllerEvent()
-    object DpadLeft   : ControllerEvent()
-    object DpadRight  : ControllerEvent()
-    object DpadUp     : ControllerEvent()
-    object DpadDown   : ControllerEvent()
-}
-
 class HomeViewModel(
     private val repo: PreferencesRepository,
     val raRepo: RetroAchievementsRepository,
@@ -114,91 +97,19 @@ class HomeViewModel(
         viewModelScope.launch { repo.setFavoriteGame(game) }
     }
 
+    val dockPinned: StateFlow<Set<String>> = repo.dockPinned
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptySet())
+    val dockHidden: StateFlow<Set<String>> = repo.dockHidden
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptySet())
+
+    fun setInDock(packageName: String, inDock: Boolean) {
+        val isAuto = com.joeyos.app.ui.components.autoDockPackages(_installedApps.value)
+            .any { it.packageName == packageName }
+        viewModelScope.launch { repo.setInDock(packageName, inDock, isAuto) }
+    }
+
     val lastLaunched: StateFlow<Map<String, Long>> = repo.lastLaunched
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyMap())
-
-    val controllerEvents = MutableSharedFlow<ControllerEvent>(extraBufferCapacity = 8)
-
-    // Dock selection index: -1 = nothing, 0 = star, 1..N = systems, N+1 = add tile.
-    // Kept in ViewModel so L1/R1 update it synchronously before the UI recomposes.
-    private val _selectedDockIndex = MutableStateFlow(-1)
-    val selectedDockIndex: StateFlow<Int> = _selectedDockIndex.asStateFlow()
-
-    // Total dock entries: 2 pinned tiles (Favorite + Recent) + one per unique installed emulator.
-    private val dockItemCount: Int
-        get() {
-            val installed = _installedApps.value.map { it.packageName }
-            val emulators = ALL_SYSTEMS
-                .flatMap { sys -> sys.knownPackages.mapNotNull { k -> installed.firstOrNull { it.startsWith(k) } } }
-                .toSet().size
-            return 2 + emulators
-        }
-
-    /** Called from Activity.dispatchKeyEvent / onGenericMotionEvent — returns true if consumed. */
-    fun onControllerKey(keyCode: Int): Boolean {
-        when (keyCode) {
-            android.view.KeyEvent.KEYCODE_BUTTON_L1 -> {
-                viewModelScope.launch { controllerEvents.emit(ControllerEvent.L1) }
-                return true
-            }
-            android.view.KeyEvent.KEYCODE_BUTTON_R1 -> {
-                viewModelScope.launch { controllerEvents.emit(ControllerEvent.R1) }
-                return true
-            }
-            android.view.KeyEvent.KEYCODE_BUTTON_L2 -> {
-                viewModelScope.launch { controllerEvents.emit(ControllerEvent.L2) }
-                return true
-            }
-            android.view.KeyEvent.KEYCODE_BUTTON_R2 -> {
-                viewModelScope.launch { controllerEvents.emit(ControllerEvent.R2) }
-                return true
-            }
-            else -> {
-                val event = when (keyCode) {
-                    android.view.KeyEvent.KEYCODE_BUTTON_A     -> ControllerEvent.A
-                    android.view.KeyEvent.KEYCODE_BUTTON_X     -> ControllerEvent.X
-                    android.view.KeyEvent.KEYCODE_BUTTON_Y     -> ControllerEvent.Y
-                    android.view.KeyEvent.KEYCODE_BUTTON_B     -> ControllerEvent.B
-                    android.view.KeyEvent.KEYCODE_BUTTON_START -> ControllerEvent.Start
-                    else -> return false
-                }
-                viewModelScope.launch { controllerEvents.emit(event) }
-                return true
-            }
-        }
-    }
-
-    /**
-     * Called from Activity for DPAD_LEFT / DPAD_RIGHT. Updates dock highlight but does NOT
-     * consume the event so Compose focus traversal still works inside Settings / AppDrawer.
-     */
-    fun onDpadHorizontal(direction: Int) {
-        val event = if (direction < 0) ControllerEvent.DpadLeft else ControllerEvent.DpadRight
-        viewModelScope.launch { controllerEvents.emit(event) }
-    }
-
-    fun onDpadVertical(direction: Int) {
-        val event = if (direction < 0) ControllerEvent.DpadUp else ControllerEvent.DpadDown
-        viewModelScope.launch { controllerEvents.emit(event) }
-    }
-
-    fun onLongPressA() {
-        viewModelScope.launch { controllerEvents.emit(ControllerEvent.LongPressA) }
-    }
-
-    fun setSelectedDockIndex(idx: Int) {
-        _selectedDockIndex.value = idx
-    }
-
-    fun shiftDockIndex(direction: Int) {
-        _selectedDockIndex.update { cur ->
-            if (direction < 0) {
-                if (cur < 0) 0 else (cur - 1).coerceAtLeast(0)
-            } else {
-                if (cur < 0) 0 else (cur + 1).coerceAtMost(dockItemCount - 1)
-            }
-        }
-    }
 
     fun launchApp(context: Context, packageName: String) {
         val intent = context.packageManager.getLaunchIntentForPackage(packageName)
