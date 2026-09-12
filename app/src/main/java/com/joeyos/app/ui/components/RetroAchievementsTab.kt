@@ -235,7 +235,9 @@ fun RetroAchievementsTab(
     val raBeaten = remember(ra) { ra?.awards.orEmpty().filter { !it.isMastered } }
     val raBeatenByYear = remember(raBeaten) { raBeaten.groupBy { yearOf(it.awardedAt) }.mapValues { it.value.size } }
     val yearsTable = remember(raBeatenByYear, ibByYear) {
-        (raBeatenByYear.keys + ibByYear.keys).filter { it > 0 }.toSortedSet().reversed()
+        // sortedDescending, not toSortedSet().reversed(): on a SortedSet that call binds to Java
+        // 21's SequencedCollection.reversed(), which only exists on Android 15+ (crashed on 14).
+        (raBeatenByYear.keys + ibByYear.keys).filter { it > 0 }.distinct().sortedDescending()
             .map { y -> Triple(y, raBeatenByYear[y] ?: 0, ibByYear[y]?.size ?: 0) }
     }
     val thisYearCount = (raBeatenByYear[currentYear] ?: 0) + (ibByYear[currentYear]?.size ?: 0)

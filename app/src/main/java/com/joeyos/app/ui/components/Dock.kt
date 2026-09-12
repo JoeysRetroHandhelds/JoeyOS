@@ -114,8 +114,13 @@ fun Dock(
     focusedPackage: String? = null,
     onFocusedChange: (String) -> Unit = {},
     focusRequesters: MutableMap<String, FocusRequester> = remember { mutableMapOf() },
-    /** False while a page covers the home screen, so the D-pad can't wander onto the dock. */
-    focusEnabled: Boolean = true,
+    /**
+     * False while a page covers the home screen, so the D-pad can't wander onto the dock. A
+     * function, read when focus is asked for: the dock is a lazy row whose items only pick up a
+     * new plain value at the next layout, after the home screen has already asked for focus back
+     * on closing a page, so that request was refused and nothing was highlighted (found on device).
+     */
+    focusEnabled: () -> Boolean = { true },
     onEmulatorLongClick: (packageName: String) -> Unit = {},
     iconSizeDp: Int = 46,
     listState: LazyListState = rememberLazyListState(),
@@ -228,7 +233,7 @@ fun DockIcon(
     sizeDp: Int = 46,
     favoriteTitle: String? = null,
     focusRequester: FocusRequester = remember { FocusRequester() },
-    focusEnabled: Boolean = true,
+    focusEnabled: () -> Boolean = { true },
     onFocused: () -> Unit = {},
     onClick: () -> Unit,
     onLongClick: () -> Unit = {},
@@ -275,7 +280,7 @@ fun DockIcon(
                 .scale(scale)
                 .clip(tileShape)
                 .focusRequester(focusRequester)
-                .focusProperties { canFocus = focusEnabled }
+                .focusProperties { canFocus = focusEnabled() }
                 .onFocusChanged { if (it.isFocused) onFocused() }
                 // One clickable node = one focus target. A / Select arrive as DPAD centre.
                 .combinedClickable(

@@ -354,7 +354,7 @@ fun HomeScreen(viewModel: HomeViewModel) {
             focusedPackage      = focusedDockPkg,
             onFocusedChange     = { focusedDockPkg = it },
             focusRequesters     = dockFocusRequesters,
-            focusEnabled        = !pageOpen,
+            focusEnabled        = { !showSettings && !showAppDrawer },
             onEmulatorLongClick = { pkg ->
                 scope.launch {
                     when (pkg) {
