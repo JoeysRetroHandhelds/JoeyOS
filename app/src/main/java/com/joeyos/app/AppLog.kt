@@ -46,12 +46,45 @@ object AppLog {
         }.getOrNull() ?: "?"
         enqueue("\n===== JoeyOS $version started ${stamp()} | ${Build.MANUFACTURER} ${Build.MODEL} | " +
             "Android ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT}) =====")
+        logLastExit(context)
 
         val previous = Thread.getDefaultUncaughtExceptionHandler()
         Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
             // Synchronous: the process is about to die, the background writer may not get to run.
             runCatching { writeNow("${stamp()} CRASH on thread ${thread.name}\n${stackOf(throwable)}") }
             previous?.uncaughtException(thread, throwable)
+        }
+    }
+
+    /**
+     * Why Android ended JoeyOS's last run. A crash in our code is logged by the handler above, but
+     * being killed for memory or a native crash (a web view, say) leaves no trace otherwise.
+     */
+    private fun logLastExit(context: Context) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return
+        runCatching {
+            val am = context.getSystemService(android.app.ActivityManager::class.java) ?: return
+            val last = am.getHistoricalProcessExitReasons(context.packageName, 0, 1).firstOrNull() ?: return
+            val reason = when (last.reason) {
+                android.app.ApplicationExitInfo.REASON_LOW_MEMORY -> "Android freed memory (low memory)"
+                android.app.ApplicationExitInfo.REASON_CRASH -> "crash"
+                android.app.ApplicationExitInfo.REASON_CRASH_NATIVE -> "native crash"
+                android.app.ApplicationExitInfo.REASON_ANR -> "not responding (ANR)"
+                android.app.ApplicationExitInfo.REASON_SIGNALED -> "killed by the system (signal ${last.status})"
+                android.app.ApplicationExitInfo.REASON_EXIT_SELF -> "closed itself"
+                android.app.ApplicationExitInfo.REASON_USER_REQUESTED -> "closed by the user or an update"
+                android.app.ApplicationExitInfo.REASON_OTHER -> "other"
+                android.app.ApplicationExitInfo.REASON_DEPENDENCY_DIED -> "a dependency died"
+                android.app.ApplicationExitInfo.REASON_PERMISSION_CHANGE -> "a permission changed"
+                android.app.ApplicationExitInfo.REASON_EXCESSIVE_RESOURCE_USAGE -> "used too many resources"
+                android.app.ApplicationExitInfo.REASON_INITIALIZATION_FAILURE -> "failed to start"
+                else -> "reason ${last.reason}"
+            }
+            val mb = last.pss / 1024
+            enqueue("${stamp(last.timestamp)} I Exit: Last run ended: $reason" +
+                (last.description?.takeIf { it.isNotBlank() }?.let { " ($it)" } ?: "") +
+                (if (mb > 0) ", using $mb MB" else "") +
+                ", importance ${last.importance}")
         }
     }
 
@@ -83,7 +116,7 @@ object AppLog {
             ?.readText()?.takeIf { it.isNotBlank() }?.takeLast(maxChars)
     }
 
-    private fun stamp(): String = synchronized(timeFormat) { timeFormat.format(Date()) }
+    private fun stamp(at: Long = System.currentTimeMillis()): String = synchronized(timeFormat) { timeFormat.format(Date(at)) }
 
     private fun stackOf(t: Throwable): String =
         StringWriter().also { t.printStackTrace(PrintWriter(it)) }.toString().trimEnd()

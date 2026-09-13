@@ -96,10 +96,13 @@ fun GuideTab(
         }
         file != null && !finding -> if (Guides.isHtml(file)) GuideHtmlPage(file, chrome, onChrome, onChange = { finding = true })
             else GuideTextPage(file, target, chrome, onChrome, onChange = { finding = true })
-        else -> GuideFinder(target, current = file, canGoBack = file != null, onBack = { finding = false },
-            onChosen = { choose(it); finding = false },
-            onDownloaded = { choose(it); finding = false }, onChrome = onChrome,
-            onOpen = { s -> if (s.appSearch == null || !openInYouTube(context, s.appSearch)) browsing = s })
+        else -> Box(Modifier.fillMaxSize()) {
+            GuideFinder(target, current = file, canGoBack = file != null, onBack = { finding = false },
+                onChosen = { choose(it); finding = false },
+                onDownloaded = { choose(it); finding = false }, onChrome = onChrome,
+                onOpen = { s -> if (s.appSearch == null || !openInYouTube(context, s.appSearch)) browsing = s })
+            ChromeHandle(visible = !chrome, onShow = { onChrome(true) })
+        }
     }
 }
 
@@ -189,6 +192,7 @@ private fun GuideBrowser(
 ) {
     val context = LocalContext.current
     var web by remember { mutableStateOf<WebView?>(null) }
+    var webGen by remember { mutableIntStateOf(0) }
     var title by remember { mutableStateOf(source.site) }
     var saving by remember { mutableStateOf(false) }
     var typing by remember { mutableStateOf(false) }
@@ -223,7 +227,7 @@ private fun GuideBrowser(
                 }
             }
         }
-        AndroidView(
+        key(webGen) { AndroidView(
             modifier = Modifier.fillMaxSize(),
             factory = { ctx ->
                 WebView(ctx).apply {
@@ -244,6 +248,8 @@ private fun GuideBrowser(
                         }
                         override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest) =
                             GuideBlocklist.intercept(request)
+                        override fun onRenderProcessGone(view: WebView, detail: android.webkit.RenderProcessGoneDetail) =
+                            webGone(view, detail) { webGen++ }
                     }
                     hideChromeOnWebScroll(this, onChrome)
                     loadUrl(source.url)
@@ -251,7 +257,7 @@ private fun GuideBrowser(
                 }
             },
             onRelease = { it.destroy() }
-        )
+        ) }
     }
     ChromeHandle(visible = !(chrome || typing || saving), onShow = { onChrome(true) })
     }
@@ -261,11 +267,31 @@ private fun GuideBrowser(
  * Hides the tabs and bar while a web page is scrolled down, and shows them at its top. A web
  * page's scrolling doesn't reach Compose, so the bars never hid on search pages (found on device).
  */
-private fun hideChromeOnWebScroll(view: WebView, onChrome: (Boolean) -> Unit) {
+/**
+ * A web page's renderer died (usually Android reclaiming memory while a game runs). Unhandled,
+ * that takes all of JoeyOS down with it; instead drop this view and let [rebuild] make a new one.
+ */
+private fun webGone(view: WebView, detail: android.webkit.RenderProcessGoneDetail, rebuild: () -> Unit): Boolean {
+    AppLog.w("Guides", "The web page's renderer " + (if (detail.didCrash()) "crashed" else "was closed for memory") + "; reloading it")
+    (view.parent as? android.view.ViewGroup)?.removeView(view)
+    view.destroy()
+    rebuild()
+    return true
+}
+
+private fun hideChromeOnWebScroll(view: WebView, onChrome: (Boolean) -> Unit, onScrolled: ((Int) -> Unit)? = null) {
     view.setOnScrollChangeListener { _, _, y, _, oldY ->
         if (y > oldY + 12) onChrome(false) else if (y == 0) onChrome(true)
+        onScrolled?.invoke(y)
     }
 }
+
+/** Where your place in a guide file is kept (ten-thousandths of the way through). */
+private fun guidePosKey(file: File) = "pos_file_" + file.absolutePath
+
+/** How far a web view can scroll, in its own pixels. */
+@Suppress("DEPRECATION")
+private fun WebView.scrollRange() = (contentHeight * scale - height).toInt()
 
 /** Reading down a scrolling column hides the tabs and bar; the handle brings them back. */
 private fun Modifier.hideChromeOnScroll(onChrome: (Boolean) -> Unit): Modifier = nestedScroll(
@@ -279,11 +305,15 @@ private fun Modifier.hideChromeOnScroll(onChrome: (Boolean) -> Unit): Modifier =
 /** The small handle at the top while the tabs and bar are hidden: tap to bring them back. */
 @Composable
 private fun BoxScope.ChromeHandle(visible: Boolean, onShow: () -> Unit) {
-    if (!visible) Box(
-        Modifier.align(Alignment.TopCenter).padding(top = 4.dp).clip(RoundedCornerShape(50))
-            .background(Color.Black.copy(alpha = 0.45f)).clickable(onClick = onShow)
-            .padding(horizontal = 18.dp, vertical = 6.dp)
-    ) { Box(Modifier.size(width = 36.dp, height = 4.dp).clip(RoundedCornerShape(2.dp)).background(Color.White.copy(alpha = 0.7f))) }
+    if (!visible) Row(
+        Modifier.align(Alignment.TopCenter).padding(top = 6.dp).clip(RoundedCornerShape(50))
+            .background(Color.Black.copy(alpha = 0.7f)).border(1.dp, Color.White.copy(alpha = 0.25f), RoundedCornerShape(50))
+            .clickable(onClick = onShow).padding(horizontal = 14.dp, vertical = 7.dp),
+        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)
+    ) {
+        Box(Modifier.size(width = 22.dp, height = 4.dp).clip(RoundedCornerShape(2.dp)).background(Color.White.copy(alpha = 0.8f)))
+        Text("Show tabs", fontSize = 11.sp, color = Color.White.copy(alpha = 0.9f))
+    }
 }
 
 /** While [on], the second screen can take the keyboard (it normally can't, so the game keeps its buttons). */
@@ -326,8 +356,8 @@ private fun GuideTextPage(file: File, target: GuideTarget, chrome: Boolean, onCh
                 Pill("Change guide", false, onChange)
             }
             GuideText(file, theme, size, wrap, reflow,
-                startAt = prefs.getInt("pos_${target.key}", 0),
-                onPosition = { p -> save { putInt("pos_${target.key}", p) } },
+                startAt = prefs.getInt(guidePosKey(file), prefs.getInt("pos_${target.key}", 0)),
+                onPosition = { p -> save { putInt(guidePosKey(file), p) } },
                 findOpen = findOpen, onFindOpen = { findOpen = it }, tocOpen = tocOpen, onTocOpen = { tocOpen = it },
                 onChrome = onChrome)
         }
@@ -499,18 +529,21 @@ private fun GuideText(
 
     // Your place is kept as a fraction of the whole (ten-thousandths), not a pixel offset, so it
     // survives changing the text size. Restored once the text has been measured.
+    var restored by remember(file) { mutableStateOf(false) }
     LaunchedEffect(file, textSize, wrapping, text) {
         if (text == null) return@LaunchedEffect
-        repeat(20) {
-            val max = scroll.maxValue
-            if (max > 0) { runCatching { scroll.scrollTo((startAt / 10_000f * max).toInt()) }; return@LaunchedEffect }
-            kotlinx.coroutines.delay(16)
-        }
+        try {
+            repeat(20) {
+                val max = scroll.maxValue
+                if (max > 0) { runCatching { scroll.scrollTo((startAt / 10_000f * max).toInt()) }; return@LaunchedEffect }
+                kotlinx.coroutines.delay(16)
+            }
+        } finally { restored = true }
     }
     LaunchedEffect(scroll.value == 0) { if (scroll.value == 0) onChrome(true) }
-    LaunchedEffect(scroll.value, scroll.maxValue) {
+    LaunchedEffect(scroll.value, scroll.maxValue, restored) {
         val max = scroll.maxValue
-        if (max > 0) onPosition((scroll.value.toFloat() / max * 10_000f).toInt().coerceIn(0, 10_000))
+        if (restored && max > 0) onPosition((scroll.value.toFloat() / max * 10_000f).toInt().coerceIn(0, 10_000))
     }
 
     val display: AnnotatedString = remember(text, query, current, matches, theme) {
@@ -592,6 +625,8 @@ private fun FindBar(query: String, onQuery: (String) -> Unit, total: Int, curren
  */
 @Composable
 private fun GuideHtmlPage(file: File, chrome: Boolean, onChrome: (Boolean) -> Unit, onChange: () -> Unit) {
+    var webGen by remember { mutableIntStateOf(0) }
+    val prefs = guidePrefs(LocalContext.current)
     var web by remember(file) { mutableStateOf<WebView?>(null) }
     var reader by remember(file) { mutableStateOf(false) }
     var findOpen by remember(file) { mutableStateOf(false) }
@@ -629,7 +664,7 @@ private fun GuideHtmlPage(file: File, chrome: Boolean, onChrome: (Boolean) -> Un
                 Pill("›", false) { web?.findNext(true) }
             }
         }
-        AndroidView(
+        key(webGen) { AndroidView(
             modifier = Modifier.fillMaxSize().background(Color.White),
             factory = { ctx ->
                 WebView(ctx).apply {
@@ -642,9 +677,18 @@ private fun GuideHtmlPage(file: File, chrome: Boolean, onChrome: (Boolean) -> Un
                     settings.allowFileAccess = true
                     setFindListener { _, n, _ -> matches = n }
                     webViewClient = object : WebViewClient() {
+                        var restored = false
                         override fun onPageFinished(view: WebView, url: String?) {
                             if (reader) view.evaluateJavascript(ReaderScript, null)
+                            // Back to where you were, once the page has laid out.
+                            if (!restored) view.postDelayed({
+                                restored = true
+                                val at = prefs.getInt(guidePosKey(file), 0)
+                                if (at > 0) view.scrollTo(0, (at / 10_000f * view.scrollRange()).toInt())
+                            }, 400)
                         }
+                        override fun onRenderProcessGone(view: WebView, detail: android.webkit.RenderProcessGoneDetail) =
+                            webGone(view, detail) { webGen++ }
                         // Offline: nothing from the web. A web archive's own parts (cid:, data:)
                         // and the file itself load.
                         override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): android.webkit.WebResourceResponse? {
@@ -653,13 +697,17 @@ private fun GuideHtmlPage(file: File, chrome: Boolean, onChrome: (Boolean) -> Un
                             else super.shouldInterceptRequest(view, request)
                         }
                     }
-                    hideChromeOnWebScroll(this, onChrome)
+                    hideChromeOnWebScroll(this, onChrome) { y ->
+                        val range = scrollRange()
+                        if (range > 0)
+                            prefs.edit().putInt(guidePosKey(file), (y.toFloat() / range * 10_000f).toInt().coerceIn(0, 10_000)).apply()
+                    }
                     loadUrl(android.net.Uri.fromFile(file).toString())
                     web = this
                 }
             },
             onRelease = { it.destroy() }
-        )
+        ) }
     }
     ChromeHandle(visible = !(chrome || findOpen), onShow = { onChrome(true) })
     }
