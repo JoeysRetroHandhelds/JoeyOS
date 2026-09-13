@@ -306,6 +306,10 @@ object RecentGamesReader {
                         ?.substringBeforeLast('.') ?: decodedPath
                 else
                     File(decodedPath).nameWithoutExtension
+                // The same game can be listed under two links: the one PPSSPP made when you opened
+                // it there, and JoeyOS's own when launched from here (found on device: Chinatown
+                // Wars twice). One entry per game, the most recent.
+                if (!seen.add("title:" + cleanTitle(displayName).lowercase())) return@mapNotNull null
                 decodedPath to displayName
             }
             .take(depth)
