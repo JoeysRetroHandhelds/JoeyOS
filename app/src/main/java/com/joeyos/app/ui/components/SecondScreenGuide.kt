@@ -288,7 +288,7 @@ private fun BoxScope.ChromeHandle(visible: Boolean, onShow: () -> Unit) {
 
 /** While [on], the second screen can take the keyboard (it normally can't, so the game keeps its buttons). */
 @Composable
-private fun AllowTyping(on: Boolean) {
+internal fun AllowTyping(on: Boolean) {
     val activity = LocalContext.current as? SecondScreenActivity
     DisposableEffect(on) {
         activity?.allowTyping(on)

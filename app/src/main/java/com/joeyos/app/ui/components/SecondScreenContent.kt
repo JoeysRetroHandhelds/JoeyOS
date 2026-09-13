@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -32,6 +33,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import coil.compose.AsyncImage
 import com.joeyos.app.AppLog
 import com.joeyos.app.data.RAAchievement
+import com.joeyos.app.data.RAAward
+import com.joeyos.app.data.RAProgressGame
 import com.joeyos.app.data.InstalledApp
 import com.joeyos.app.data.loadInstalledApps
 import com.joeyos.app.data.GuideSource
@@ -70,6 +73,8 @@ fun SecondScreenContent() {
     var configured by remember { mutableStateOf(raRepo.isConfigured) }
     var awards by remember { mutableStateOf<RAResult?>(null) }
     var recent by remember { mutableStateOf<List<RARecentGame>>(emptyList()) }
+    var progress by remember { mutableStateOf<List<RAProgressGame>>(emptyList()) }
+    val achNav = remember { AchNav() }
     var points by remember { mutableStateOf<Int?>(null) }
 
     val session by SecondScreenState.session.collectAsState()
@@ -112,6 +117,7 @@ fun SecondScreenContent() {
                 if (configured) {
                     awards = raRepo.fetchAwards()
                     recent = raRepo.fetchRecentlyPlayed()
+                    progress = (raRepo.fetchProgress() as? com.joeyos.app.data.RAProgressResult.Success)?.games.orEmpty()
                     points = raRepo.fetchPoints()
                 } else { awards = null; recent = emptyList(); points = null }
                 delay(10 * 60_000L)
@@ -185,7 +191,7 @@ fun SecondScreenContent() {
                         tab == 1 && s != null -> Message(s.title ?: "Now playing",
                             "Waiting for RetroAchievements to see the game. This works with emulators signed in to " +
                                 "RetroAchievements, a few seconds after the game has loaded.")
-                        else -> Overview(awards, recent, points, raRepo.username, currentYear) { openGame = it }
+                        else -> Overview(awards, recent, progress, points, raRepo.username, currentYear, raRepo, achNav) { openGame = it }
                     }
                 }
             }
@@ -273,13 +279,29 @@ private fun guideTargetKey(s: SecondScreenState.Session?, ra: RAGameProgress?) =
 /** For the game being played: when it started and RA's live view of it. */
 private data class LiveInfo(val session: SecondScreenState.Session, val nowPlaying: RANowPlaying)
 
+/**
+ * Where you are inside the Achievements tab: its home, a "See all" list, a year, or search. Kept
+ * above the tab so opening a game and coming Back returns to the same place.
+ */
+private class AchNav {
+    var view by mutableStateOf("home")          // home, playing, awards, almost, year, search
+    var year by mutableIntStateOf(0)
+    var awardFilter by mutableIntStateOf(0)     // 0 all, 1 beaten, 2 completed / mastered
+    var query by mutableStateOf("")
+    var allRa by mutableStateOf(false)          // search: your games, or all of RetroAchievements
+    var console by mutableStateOf<Pair<Int, String>?>(null)
+}
+
 @Composable
 private fun Overview(
     awards: RAResult?,
     recent: List<RARecentGame>,
+    progress: List<RAProgressGame>,
     points: Int?,
     username: String,
     currentYear: Int,
+    raRepo: RetroAchievementsRepository,
+    nav: AchNav,
     onOpenGame: (Int) -> Unit
 ) {
     val ra = (awards as? RAResult.Success)?.data
@@ -288,12 +310,39 @@ private fun Overview(
         ra == null -> { Message("RetroAchievements", "Loading…"); return }
     }
     ra!!
-    val beaten = ra.awards.filter { !it.isFinished }
+    val awarded = remember(ra) { ra.awards.map { it.gameId }.toSet() }
     val playing = remember(ra, recent) {
-        val awarded = ra.awards.map { it.gameId }.toSet()
-        recent.filter { it.gameId !in awarded && it.numPossible > 0 && it.numAchieved < it.numPossible }.take(4)
+        recent.filter { it.gameId !in awarded && it.numPossible > 0 && it.numAchieved < it.numPossible }
     }
-    val latest = ra.awards.take(4)
+    val almost = remember(progress) {
+        progress.filter { !it.isBeaten && it.numAwarded > 0 && it.percent < 1f }.sortedByDescending { it.percent }
+    }
+    val years = remember(ra) {
+        ra.awards.groupBy { yearOf(it.awardedAt) }.keys.filter { it > 0 }.sortedDescending().map { y ->
+            val l = ra.awards.filter { yearOf(it.awardedAt) == y }
+            Triple(y, l.count { !it.isFinished }, l.count { it.isFinished })
+        }
+    }
+
+    if (nav.view != "home") {
+        Column(Modifier.fillMaxSize()) {
+            Row(Modifier.padding(horizontal = 14.dp).padding(bottom = 6.dp), verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                Pill("‹  Back", active = false) { nav.view = "home" }
+                Text(when (nav.view) {
+                    "playing" -> "Recently played"; "awards" -> "All awards"; "almost" -> "Almost there"
+                    "year" -> "${nav.year}"; else -> "Search"
+                }, fontSize = 15.sp, fontWeight = FontWeight.Bold, color = TextPrimary)
+            }
+            when (nav.view) {
+                "playing" -> EntryList(recent.map { it.entry() to it.gameId }, "No recently played games.", onOpenGame)
+                "almost" -> EntryList(almost.map { it.entry() to it.gameId }, "Nothing in progress.", onOpenGame)
+                "awards", "year" -> AwardsList(ra.awards.filter { nav.view == "awards" || yearOf(it.awardedAt) == nav.year }, nav, onOpenGame)
+                else -> AchSearch(ra, recent, progress, raRepo, nav, onOpenGame)
+            }
+        }
+        return
+    }
 
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val wide = maxWidth > 600.dp
@@ -304,39 +353,191 @@ private fun Overview(
             Row(verticalAlignment = Alignment.Bottom) {
                 Text("RetroAchievements", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = TextPrimary,
                     modifier = Modifier.weight(1f))
-                Text("$username  ·  updated ${agoText(ra.fetchedAt)}", fontSize = 10.sp,
-                    fontFamily = JoeyFont, color = TextFaint)
+                Text("$username  ·  updated ${agoText(ra.fetchedAt)}", fontSize = 10.sp, color = TextFaint)
+            }
+            // Search: a box that opens the search view (the keyboard is only allowed there).
+            Row(
+                Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(Color.White.copy(alpha = 0.06f))
+                    .border(1.dp, Color.White.copy(alpha = 0.12f), RoundedCornerShape(12.dp))
+                    .clickable { nav.view = "search" }.padding(horizontal = 12.dp, vertical = 10.dp),
+                verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                JoeyIcon(com.joeyos.app.R.drawable.ic_search, TextFaint, 18.dp)
+                Text("Search your games, or all of RetroAchievements", fontSize = 12.sp, color = TextFaint)
             }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                StatTile("${beaten.count { yearOf(it.awardedAt) == currentYear }}", "beaten in $currentYear", Amber, Modifier.weight(1f), big = wide)
+                StatTile("${ra.awards.count { !it.isFinished && yearOf(it.awardedAt) == currentYear }}", "beaten in $currentYear", Amber, Modifier.weight(1f), big = wide)
                 StatTile("${ra.beatenHardcoreAwardsCount + ra.beatenSoftcoreAwardsCount}", "beaten all-time", Amber, Modifier.weight(1f), big = wide)
                 finishedTotal(ra.awards).let { (n, label) -> StatTile("$n", label, MasteredColor, Modifier.weight(1f), big = wide) }
                 StatTile(points?.let { "%,d".format(it) } ?: "—", "points", RaColor, Modifier.weight(1f), big = wide)
             }
             val playingCol: @Composable (Modifier) -> Unit = { m ->
-                GameColumn("Currently playing", "Nothing on the go.", playing.isEmpty(), m) {
-                    playing.forEach { g -> GameRow(g.entry(), onClick = { onOpenGame(g.gameId) }) }
+                GameColumn("Currently playing", "Nothing on the go.", playing.isEmpty(), m,
+                    more = if (recent.size > 4) ({ nav.view = "playing" }) else null) {
+                    playing.take(4).forEach { g -> GameRow(g.entry(), onClick = { onOpenGame(g.gameId) }) }
                 }
             }
             val latestCol: @Composable (Modifier) -> Unit = { m ->
-                GameColumn("Recent awards", "No awards yet.", latest.isEmpty(), m) {
-                    latest.forEach { a -> GameRow(a.entry(), onClick = { onOpenGame(a.gameId) }) }
+                GameColumn("Recent awards", "No awards yet.", ra.awards.isEmpty(), m,
+                    more = if (ra.awards.size > 4) ({ nav.awardFilter = 0; nav.view = "awards" }) else null) {
+                    ra.awards.take(4).forEach { a -> GameRow(a.entry(), onClick = { onOpenGame(a.gameId) }) }
                 }
             }
             if (wide) Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 playingCol(Modifier.weight(1f)); latestCol(Modifier.weight(1f))
             } else { playingCol(Modifier); latestCol(Modifier) }
-            Text("Tap a game to see its achievements.", fontSize = 9.sp, fontFamily = JoeyFont, color = TextFaint)
+
+            GameColumn("Almost there", "No games part-way through.", almost.isEmpty(), Modifier,
+                more = if (almost.size > 3) ({ nav.view = "almost" }) else null) {
+                almost.take(3).forEach { g -> GameRow(g.entry(), onClick = { onOpenGame(g.gameId) }) }
+            }
+
+            if (years.isNotEmpty()) {
+                SectionLabel("Per year", Modifier.padding(top = 4.dp))
+                years.forEach { (y, b, f) ->
+                    Row(
+                        Modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp)).background(Color.White.copy(alpha = 0.04f))
+                            .clickable { nav.year = y; nav.awardFilter = 0; nav.view = "year" }.padding(horizontal = 12.dp, vertical = 9.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text("$y", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = TextPrimary, modifier = Modifier.weight(1f))
+                        Text("$b beaten", fontSize = 11.sp, color = RaColor, modifier = Modifier.width(80.dp))
+                        Text("$f " + finishedTotal(ra.awards).second, fontSize = 11.sp, color = MasteredColor, maxLines = 1)
+                        JoeyIcon(com.joeyos.app.R.drawable.ic_chevron_right, TextFaint, 16.dp)
+                    }
+                }
+            }
+            Text("Tap a game to see its achievements.", fontSize = 9.sp, color = TextFaint)
         }
     }
 }
 
 @Composable
-private fun GameColumn(title: String, empty: String, isEmpty: Boolean, modifier: Modifier, content: @Composable ColumnScope.() -> Unit) {
+private fun GameColumn(
+    title: String, empty: String, isEmpty: Boolean, modifier: Modifier,
+    more: (() -> Unit)? = null, content: @Composable ColumnScope.() -> Unit
+) {
     Column(modifier, verticalArrangement = Arrangement.spacedBy(6.dp)) {
-        SectionLabel(title)
-        if (isEmpty) Text(empty, fontSize = 11.sp, fontFamily = JoeyFont, color = TextFaint)
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            SectionLabel(title, Modifier.weight(1f))
+            more?.let { Text("See all ›", fontSize = 11.sp, fontWeight = FontWeight.SemiBold, color = Amber,
+                modifier = Modifier.clip(RoundedCornerShape(6.dp)).clickable(onClick = it).padding(horizontal = 6.dp, vertical = 2.dp)) }
+        }
+        if (isEmpty) Text(empty, fontSize = 11.sp, color = TextFaint)
         else Column(verticalArrangement = Arrangement.spacedBy(6.dp)) { content() }
+    }
+}
+
+/** A plain list of games (each with its RA id), tap to open. */
+@Composable
+private fun EntryList(rows: List<Pair<GameEntry, Int>>, empty: String, onOpenGame: (Int) -> Unit) {
+    if (rows.isEmpty()) { Message("", empty); return }
+    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(start = 14.dp, end = 14.dp, bottom = 18.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        items(rows.size) { i -> val (e, id) = rows[i]; GameRow(e, onClick = { onOpenGame(id) }) }
+    }
+}
+
+/** Awards (all of them, or one year's): filter by kind, grouped by month, newest first. */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun AwardsList(list: List<RAAward>, nav: AchNav, onOpenGame: (Int) -> Unit) {
+    val finishedLabel = finishedTotal(list).second.replaceFirstChar { it.uppercase() }
+    val shown = list.filter { nav.awardFilter == 0 || (nav.awardFilter == 1) == !it.isFinished }
+    val byMonth = shown.groupBy { java.text.SimpleDateFormat("MMMM yyyy", java.util.Locale.US).format(it.awardedAt) }
+    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(start = 14.dp, end = 14.dp, bottom = 18.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        item {
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Pill("All ${list.size}", nav.awardFilter == 0) { nav.awardFilter = 0 }
+                Pill("Beaten ${list.count { !it.isFinished }}", nav.awardFilter == 1) { nav.awardFilter = 1 }
+                Pill("$finishedLabel ${list.count { it.isFinished }}", nav.awardFilter == 2) { nav.awardFilter = 2 }
+            }
+        }
+        if (shown.isEmpty()) item { Text("Nothing here.", fontSize = 11.sp, color = TextFaint) }
+        byMonth.forEach { (month, inMonth) ->
+            item { SectionLabel("$month  ·  ${inMonth.size}", Modifier.padding(top = 6.dp)) }
+            items(inMonth.size) { i -> val a = inMonth[i]; GameRow(a.entry(), onClick = { onOpenGame(a.gameId) }) }
+        }
+    }
+}
+
+/** Normalised words, so "zelda link" finds "The Legend of Zelda: A Link to the Past". */
+private fun searchWords(s: String) = s.lowercase().replace(Regex("[^a-z0-9 ]"), " ").split(' ').filter { it.isNotBlank() }
+
+/**
+ * Search your games (everything you've played or earned an award in), or all of RetroAchievements
+ * by console, and open any game's achievement list. The keyboard is allowed while this is open.
+ */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun AchSearch(
+    ra: com.joeyos.app.data.RAAwardsResult, recent: List<RARecentGame>, progress: List<RAProgressGame>,
+    raRepo: RetroAchievementsRepository, nav: AchNav, onOpenGame: (Int) -> Unit
+) {
+    AllowTyping(true)
+    val focus = remember { androidx.compose.ui.focus.FocusRequester() }
+    LaunchedEffect(Unit) { kotlinx.coroutines.delay(150); runCatching { focus.requestFocus() } }
+
+    // Your games: one entry per game, best source first (progress has the most detail).
+    val mine = remember(ra, recent, progress) {
+        val out = LinkedHashMap<Int, GameEntry>()
+        progress.forEach { out.putIfAbsent(it.gameId, it.entry()) }
+        recent.forEach { out.putIfAbsent(it.gameId, it.entry()) }
+        ra.awards.forEach { out.putIfAbsent(it.gameId, it.entry()) }
+        out.entries.map { it.value to it.key }
+    }
+    val consoles by produceState<List<Pair<Int, String>>>(emptyList(), nav.allRa) {
+        if (nav.allRa) value = raRepo.fetchConsoles()
+    }
+    val catalogue by produceState<Map<Int, String>?>(null, nav.allRa, nav.console) {
+        value = null
+        nav.console?.let { c -> if (nav.allRa) value = raRepo.fetchGameTitles(listOf(c.first)) }
+    }
+    val words = searchWords(nav.query)
+    val results: List<Pair<GameEntry, Int>> = remember(words, mine, catalogue, nav.allRa) {
+        if (words.isEmpty()) emptyList()
+        else if (!nav.allRa) mine.filter { (e, _) -> searchWords(e.title).let { t -> words.all { w -> t.any { it.startsWith(w) } } } }
+        else catalogue.orEmpty().entries
+            .filter { (_, title) -> searchWords(title).let { t -> words.all { w -> t.any { it.startsWith(w) } } } }
+            .sortedBy { it.value.lowercase() }.take(200)
+            .map { (id, title) -> GameEntry(title = title.replace(Regex("~[^~]+~\\s*"), ""), subtitle = nav.console?.second.orEmpty(), imageUrl = null) to id }
+    }
+
+    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(start = 14.dp, end = 14.dp, bottom = 18.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        item {
+            Box(Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(Color.White.copy(alpha = 0.08f))
+                .border(1.dp, AmberSoft, RoundedCornerShape(12.dp)).padding(horizontal = 12.dp, vertical = 10.dp)) {
+                if (nav.query.isEmpty()) Text("Game name", fontSize = 13.sp, color = TextFaint)
+                androidx.compose.foundation.text.BasicTextField(nav.query, { nav.query = it }, singleLine = true,
+                    textStyle = androidx.compose.ui.text.TextStyle(color = TextPrimary, fontSize = 13.sp, fontFamily = JoeyFont),
+                    cursorBrush = androidx.compose.ui.graphics.SolidColor(Amber),
+                    modifier = Modifier.fillMaxWidth().focusRequester(focus))
+            }
+        }
+        item {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Pill("Your games", !nav.allRa) { nav.allRa = false }
+                Pill("All of RetroAchievements", nav.allRa) { nav.allRa = true }
+            }
+        }
+        if (nav.allRa) {
+            item {
+                SectionLabel(if (nav.console == null) "Pick a console" else "Console", Modifier.padding(top = 4.dp))
+            }
+            item {
+                if (consoles.isEmpty()) Text("Loading consoles…", fontSize = 11.sp, color = TextFaint)
+                else FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    consoles.forEach { c -> Pill(c.second, nav.console?.first == c.first) { nav.console = c } }
+                }
+            }
+            if (nav.console != null && catalogue == null) item { Text("Loading ${nav.console!!.second} games…", fontSize = 11.sp, color = TextFaint) }
+        }
+        if (words.isEmpty()) item { Text("Type a game's name.", fontSize = 11.sp, color = TextFaint) }
+        else if (results.isEmpty() && (!nav.allRa || catalogue != null))
+            item { Text("No games match “${nav.query}”.", fontSize = 11.sp, color = TextFaint) }
+        items(results.size) { i -> val (e, id) = results[i]; GameRow(e, onClick = { onOpenGame(id) }) }
     }
 }
 

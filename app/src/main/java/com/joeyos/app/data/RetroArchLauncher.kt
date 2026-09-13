@@ -72,7 +72,10 @@ object RetroArchLauncher {
         val coreHintSystemFolder = game.corePath
             ?.takeIf { !it.startsWith("/") }
             ?.let { systemFolderForCoreHint(it) }
-        val romPath = RomFinder.resolveRomFromSave(game.path, systemFolder = coreHintSystemFolder)
+        // The system id isn't always the folder name (ES-DE keeps PlayStation games in "psx").
+        val aliases = coreHintSystemFolder
+            ?.let { id -> ES_DE_FOLDER_MAP.filterValues { it == id }.keys }.orEmpty()
+        val romPath = RomFinder.resolveRomFromSave(game.path, systemFolder = coreHintSystemFolder, folderAliases = aliases)
         Log.d(TAG, "launch: game.path=${game.path} coreHintSystemFolder=$coreHintSystemFolder romPath=$romPath")
         if (romPath == null) return false
 

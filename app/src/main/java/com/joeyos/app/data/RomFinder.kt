@@ -30,7 +30,8 @@ object RomFinder {
     fun resolveRomFromSave(
         savePath: String,
         systemFolder: String? = null,
-        romExtensions: Set<String>? = null
+        romExtensions: Set<String>? = null,
+        folderAliases: Set<String> = emptySet()
     ): String? {
         val file = File(savePath)
         Log.d(TAG, "resolveRomFromSave: savePath=$savePath ext=${file.extension} romExtensions=$romExtensions")
@@ -49,8 +50,9 @@ object RomFinder {
             } ?: continue
 
             val systemDirs = if (systemFolder != null) {
+                val names = (folderAliases + systemFolder).map { it.lowercase() }.toSet()
                 romsRoot.listFiles()?.filter {
-                    it.isDirectory && it.name.equals(systemFolder, ignoreCase = true)
+                    it.isDirectory && it.name.lowercase() in names
                 } ?: emptyList()
             } else {
                 romsRoot.listFiles()?.filter { it.isDirectory } ?: emptyList()
@@ -58,10 +60,15 @@ object RomFinder {
             Log.d(TAG, "resolveRomFromSave: romsRoot=${romsRoot.absolutePath} systemDirs=${systemDirs.map { it.name }}")
 
             for (dir in systemDirs) {
-                val candidates = dir.listFiles()?.filter { romFile ->
-                    romFile.nameWithoutExtension.equals(baseName, ignoreCase = true) &&
-                    romFile.extension.lowercase() !in SAVE_EXTENSIONS
-                } ?: continue
+                val files = dir.listFiles()?.filter { it.extension.lowercase() !in SAVE_EXTENSIONS } ?: continue
+                // Multi-disc games save under the bare title ("Final Fantasy VII (USA).srm") while
+                // the files are "… (Disc 1).chd" — take the playlist, else disc 1.
+                val discPrefix = "$baseName (Disc"
+                val candidates = files.filter { it.nameWithoutExtension.equals(baseName, ignoreCase = true) }
+                    .ifEmpty {
+                        files.filter { it.nameWithoutExtension.startsWith(discPrefix, ignoreCase = true) }
+                            .sortedWith(compareBy({ it.extension.lowercase() != "m3u" }, { it.name.lowercase() }))
+                    }
                 val rom = if (romExtensions != null) {
                     candidates.firstOrNull { it.extension.lowercase() in romExtensions }
                         ?: candidates.firstOrNull()

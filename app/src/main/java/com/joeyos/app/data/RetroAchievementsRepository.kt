@@ -502,7 +502,8 @@ class RetroAchievementsRepository(context: Context) {
 
     private var recentCache: List<RARecentGame>? = null
     private var recentAt = 0L
-    suspend fun fetchRecentlyPlayed(count: Int = 12, forceRefresh: Boolean = false): List<RARecentGame> {
+    /** Your recently played games, newest first: RA's maximum of 50, so "See all" has them all. */
+    suspend fun fetchRecentlyPlayed(count: Int = 50, forceRefresh: Boolean = false): List<RARecentGame> {
         if (!isConfigured) return emptyList()
         recentCache?.let { if (!forceRefresh && System.currentTimeMillis() - recentAt < 30 * 60_000L) return it }
         return withContext(Dispatchers.IO) {
@@ -694,6 +695,25 @@ class RetroAchievementsRepository(context: Context) {
                 map.keys().forEach { k -> k.toIntOrNull()?.let { out[it] = map.getString(k) } }
             }
             out
+        }
+    }
+
+    /** RetroAchievements' game consoles (id, name), A to Z, for searching the whole catalogue. Kept a week. */
+    suspend fun fetchConsoles(): List<Pair<Int, String>> {
+        if (!isConfigured) return emptyList()
+        return withContext(Dispatchers.IO) {
+            val key = "ra_consoles"
+            val cached = cachePrefs.getString(key, null)?.let { runCatching { JSONObject(it) }.getOrNull() }
+            val fresh = cached != null && System.currentTimeMillis() - cached.optLong("fetchedAt") < 7 * 24 * 3_600_000L
+            val arr = if (fresh) cached!!.getJSONArray("list") else {
+                getJson("https://retroachievements.org/API/API_GetConsoleIDs.php?y=${enc(apiKey)}&a=1&g=1")
+                    ?.let { runCatching { JSONArray(it) }.getOrNull() }
+                    ?.also { cachePrefs.edit().putString(key, JSONObject().put("fetchedAt", System.currentTimeMillis()).put("list", it).toString()).apply() }
+                    ?: cached?.optJSONArray("list") ?: JSONArray()
+            }
+            (0 until arr.length()).mapNotNull { i ->
+                arr.optJSONObject(i)?.let { o -> o.optInt("ID").takeIf { it > 0 }?.let { it to o.optString("Name") } }
+            }.sortedBy { it.second.lowercase() }
         }
     }
 

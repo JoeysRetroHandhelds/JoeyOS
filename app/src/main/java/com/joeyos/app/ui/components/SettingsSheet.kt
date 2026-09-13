@@ -151,7 +151,6 @@ fun SettingsSheet(
         ) {
             Column(modifier = Modifier
                 .fillMaxHeight()
-                .widthIn(max = 640.dp)
                 .fillMaxWidth()
                 .systemBarsPadding()) {
 

@@ -163,7 +163,11 @@ class MainActivity : ComponentActivity() {
     private fun dispatchNormalised(event: KeyEvent): Boolean {
         Controls.translate(event.keyCode)?.let { keyCode ->
             if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-                if (event.action == KeyEvent.ACTION_UP && !event.isCanceled) {
+                // Only a release whose press we saw counts: quitting a game with A presses it in
+                // the game, and the release lands here, which would reopen the focused tile.
+                if (event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0) centerDownTime = event.downTime
+                if (event.action == KeyEvent.ACTION_UP && !event.isCanceled && event.downTime == centerDownTime) {
+                    centerDownTime = -1L
                     super.dispatchKeyEvent(event.withKeyCode(keyCode, KeyEvent.ACTION_DOWN))
                     super.dispatchKeyEvent(event.withKeyCode(keyCode, KeyEvent.ACTION_UP))
                 }
@@ -188,6 +192,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private val loggedUnknownKeys = mutableSetOf<Int>()
+    private var centerDownTime = -1L
 
     private fun KeyEvent.withKeyCode(keyCode: Int, action: Int) = KeyEvent(
         downTime, eventTime, action, keyCode, 0, metaState, deviceId, scanCode, flags, source
