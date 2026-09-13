@@ -569,13 +569,11 @@ private fun SecondScreenSettings() {
     if (!remember { DisplayTargets.hasSecondScreen(context) }) return
     var enabled by remember { mutableStateOf(SecondScreenPrefs.enabled(context)) }
     var gamesOnOther by remember { mutableStateOf(SecondScreenPrefs.gamesOnOther(context)) }
-    var hideSpoilers by remember { mutableStateOf(SecondScreenPrefs.hideSpoilers(context)) }
-    var showGuide by remember { mutableStateOf(SecondScreenPrefs.showGuide(context)) }
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         SectionLabel("Second screen", Modifier.padding(top = 4.dp))
         ToggleRow(
             "Use the second screen",
-            "Shows your RetroAchievements on the other screen, and the game you're playing's achievements while you play. " +
+            "Your RetroAchievements, the game you're playing and its guide on the other screen (its own Settings tab has more). " +
                 "Touch only: your controller always stays with the game.",
             enabled,
             { on ->
@@ -584,18 +582,6 @@ private fun SecondScreenSettings() {
                 AppLog.i("Settings", "Second screen ${if (on) "on" else "off"}")
                 (context as? android.app.Activity)?.let { SecondScreenController.ensure(it) }
             }
-        )
-        ToggleRow(
-            "Guide tab while playing",
-            "Read a walkthrough on the other screen. JoeyOS only downloads a guide when you choose one.",
-            showGuide,
-            { on -> showGuide = on; SecondScreenPrefs.setShowGuide(context, on) }
-        )
-        ToggleRow(
-            "Hide achievement spoilers",
-            "On the second screen, a locked achievement's name and description stay hidden until you tap it.",
-            hideSpoilers,
-            { on -> hideSpoilers = on; SecondScreenPrefs.setHideSpoilers(context, on) }
         )
         ChoiceRow("Games open on", listOf(false to "This screen", true to "The other screen"), gamesOnOther, { v ->
             gamesOnOther = v

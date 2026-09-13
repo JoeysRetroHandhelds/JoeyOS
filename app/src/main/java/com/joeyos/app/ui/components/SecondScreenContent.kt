@@ -74,9 +74,10 @@ fun SecondScreenContent() {
     var nowPlaying by remember { mutableStateOf<RANowPlaying?>(null) }   // what RA sees you playing
     var lastGameId by remember { mutableStateOf<Int?>(null) }            // the previous session's game
     var openGame by remember { mutableStateOf<Int?>(null) }              // a game opened from the overview
-    var tab by remember { mutableIntStateOf(0) }                         // 0 overview, 1 now playing, 2 guide
+    var tab by remember { mutableIntStateOf(0) }                         // 0 overview, 1 now playing, 2 guide, 3 settings
+    var chrome by remember { mutableStateOf(true) }                      // tabs shown (hidden while reading a guide)
+    LaunchedEffect(tab) { chrome = true }
     var guideSearch by remember { mutableStateOf<GuideSource?>(null) }   // "find a guide for this achievement"
-    val showGuide = remember(session) { SecondScreenPrefs.showGuide(context) }
     // RA's own title and console for the game, which name its guide and say where to look for one.
     val raGame by produceState<RAGameProgress?>(null, nowPlaying?.gameId) {
         value = nowPlaying?.gameId?.let { raRepo.fetchGameProgress(it, maxAgeMs = 10 * 60_000) }
@@ -114,7 +115,9 @@ fun SecondScreenContent() {
         val s = session
         if (s == null) { nowPlaying?.let { lastGameId = it.gameId }; nowPlaying = null; tab = 0; return@LaunchedEffect }
         nowPlaying?.let { lastGameId = it.gameId }
-        tab = 1; openGame = null; nowPlaying = null
+        // Open on Now playing, or the Guide if chosen in this screen's Settings (when the game has a name).
+        tab = if (SecondScreenPrefs.openGuideOnLaunch(context) && s.title != null) 2 else 1
+        openGame = null; nowPlaying = null
         if (!configured) return@LaunchedEffect
         while (true) {
             raRepo.fetchNowPlaying(s.startedAt, lastGameId)?.let { np ->
@@ -134,8 +137,8 @@ fun SecondScreenContent() {
                 "Connect RetroAchievements in Settings › Achievements › Account to see your progress here."
             )
             else -> Column(Modifier.fillMaxSize()) {
-                // Tabs, or a back button over an opened game.
-                Row(
+                // Tabs, or a back button over an opened game. Hidden while reading a guide.
+                if (chrome || tab != 2) Row(
                     Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 10.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
@@ -144,8 +147,9 @@ fun SecondScreenContent() {
                         Pill("‹  Back", active = false) { openGame = null }
                     } else {
                         Pill("Overview", active = tab == 0) { tab = 0 }
+                        Pill("Settings", active = tab == 3) { tab = 3 }
                         if (session != null) Pill("Now playing", active = tab == 1) { tab = 1 }
-                        if (session != null && showGuide && guideTarget != null) Pill("Guide", active = tab == 2) { tab = 2 }
+                        if (session != null && guideTarget != null) Pill("Guide", active = tab == 2) { tab = 2 }
                     }
                 }
                 Box(Modifier.weight(1f)) {
@@ -153,9 +157,11 @@ fun SecondScreenContent() {
                     val np = nowPlaying
                     when {
                         openGame != null -> GameAchievements(openGame!!, raRepo, live = null)
-                        tab == 2 && guideTarget != null -> GuideTab(guideTarget, guideSearch) { guideSearch = null }
+                        tab == 3 -> SecondScreenSettings()
+                        tab == 2 && guideTarget != null -> GuideTab(guideTarget, guideSearch, onSearchShown = { guideSearch = null },
+                            chrome = chrome, onChrome = { chrome = it })
                         tab == 1 && s != null && np != null -> GameAchievements(np.gameId, raRepo, live = LiveInfo(s, np),
-                            onFindGuide = if (showGuide && guideTarget != null) { q -> guideSearch = Guides.searchFor(q); tab = 2 } else null)
+                            onFindGuide = if (guideTarget != null) { q -> guideSearch = Guides.searchFor(q); tab = 2 } else null)
                         tab == 1 && s != null -> Message(s.title ?: "Now playing",
                             "Waiting for RetroAchievements to see the game. This works with emulators signed in to " +
                                 "RetroAchievements, a few seconds after the game has loaded.")
@@ -164,6 +170,28 @@ fun SecondScreenContent() {
                 }
             }
         }
+    }
+}
+
+/** The second screen's own settings: what it opens when a game starts, and achievement spoilers. */
+@Composable
+private fun SecondScreenSettings() {
+    val context = LocalContext.current
+    var openGuide by remember { mutableStateOf(SecondScreenPrefs.openGuideOnLaunch(context)) }
+    var hideSpoilers by remember { mutableStateOf(SecondScreenPrefs.hideSpoilers(context)) }
+    Column(
+        Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 14.dp).padding(bottom = 18.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+        ChoiceRow("When a game starts, show", listOf(false to "Now playing", true to "Guide"), openGuide, { v ->
+            openGuide = v; SecondScreenPrefs.setOpenGuideOnLaunch(context, v)
+            AppLog.i("SecondScreen", "Opens on ${if (v) "Guide" else "Now playing"} when a game starts")
+        })
+        ToggleRow("Hide achievement spoilers",
+            "A locked achievement's name and description stay hidden until you tap it.",
+            hideSpoilers, { on -> hideSpoilers = on; SecondScreenPrefs.setHideSpoilers(context, on) })
+        Text("The rest of the second screen's settings are on the main screen: Settings › Appearance › Second screen.",
+            fontSize = 10.sp, color = TextFaint)
     }
 }
 
@@ -251,7 +279,7 @@ private enum class AchSort(val label: String) { Default("Default"), Easiest("Eas
 private fun GameAchievements(gameId: Int, raRepo: RetroAchievementsRepository, live: LiveInfo?,
                              onFindGuide: ((String) -> Unit)? = null) {
     val context = LocalContext.current
-    val hideSpoilers = remember { SecondScreenPrefs.hideSpoilers(context) }
+    val hideSpoilers = remember(gameId) { SecondScreenPrefs.hideSpoilers(context) }
     var game by remember(gameId) { mutableStateOf<RAGameProgress?>(null) }
     var failed by remember(gameId) { mutableStateOf(false) }
     var filter by remember(gameId) { mutableStateOf(AchFilter.All) }

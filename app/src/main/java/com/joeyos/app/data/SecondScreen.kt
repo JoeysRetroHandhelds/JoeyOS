@@ -67,9 +67,9 @@ object SecondScreenPrefs {
     fun enabled(context: Context) = prefs(context).getBoolean("enabled", true)
     fun setEnabled(context: Context, on: Boolean) = prefs(context).edit().putBoolean("enabled", on).apply()
 
-    /** Show the Guide tab while a game runs. */
-    fun showGuide(context: Context) = prefs(context).getBoolean("show_guide", true)
-    fun setShowGuide(context: Context, on: Boolean) = prefs(context).edit().putBoolean("show_guide", on).apply()
+    /** When a game starts, open the Guide tab rather than Now playing. */
+    fun openGuideOnLaunch(context: Context) = prefs(context).getBoolean("open_guide", false)
+    fun setOpenGuideOnLaunch(context: Context, on: Boolean) = prefs(context).edit().putBoolean("open_guide", on).apply()
 
     /** Hide a locked achievement's name and description until you tap it. */
     fun hideSpoilers(context: Context) = prefs(context).getBoolean("hide_spoilers", false)

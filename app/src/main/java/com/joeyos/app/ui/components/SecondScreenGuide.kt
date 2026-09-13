@@ -19,6 +19,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalContext
@@ -68,13 +69,20 @@ private fun guidePrefs(context: Context) = context.getSharedPreferences("guides"
  * are stuck on) and is consumed by [onSearchShown].
  */
 @Composable
-fun GuideTab(target: GuideTarget, search: GuideSource?, onSearchShown: () -> Unit) {
+fun GuideTab(
+    target: GuideTarget,
+    search: GuideSource?,
+    onSearchShown: () -> Unit,
+    chrome: Boolean,
+    onChrome: (Boolean) -> Unit,
+) {
     val context = LocalContext.current
     var guide by remember(target.key) { mutableStateOf(Guides.find(target)) }
     var browsing by remember(target.key) { mutableStateOf<GuideSource?>(null) }
     var finding by remember(target.key) { mutableStateOf(false) }   // "Change guide" from the reader
 
     LaunchedEffect(search) { if (search != null) { browsing = search; onSearchShown() } }
+    LaunchedEffect(guide) { guide?.let { Guides.remember(target, it) } }
 
     val open = browsing
     val file = guide
@@ -83,9 +91,10 @@ fun GuideTab(target: GuideTarget, search: GuideSource?, onSearchShown: () -> Uni
             Guides.saveHtml(target, html)?.let { guide = it; finding = false; browsing = null }
         }
         file != null && !finding -> if (Guides.isHtml(file)) GuideHtmlPage(file, onChange = { finding = true })
-            else GuideTextPage(file, target, onChange = { finding = true })
+            else GuideTextPage(file, target, chrome, onChrome, onChange = { finding = true })
         else -> GuideFinder(target, canGoBack = file != null, onBack = { finding = false },
-            onDownloaded = { guide = it; finding = false }, onOpen = { browsing = it })
+            onDownloaded = { guide = it; finding = false },
+            onOpen = { s -> if (s.appSearch == null || !openInYouTube(context, s.appSearch)) browsing = s })
     }
 }
 
@@ -129,7 +138,17 @@ private fun GuideFinder(
 
         SectionLabel("Search", Modifier.padding(top = 6.dp))
         Text("Opens here: find a guide, then Save to read it offline.", fontSize = 10.sp, color = TextFaint)
-        Guides.searchLinks(target.title).forEach { s -> GuideChoice(s.site, null) { onOpen(s) } }
+        SectionLabel("Search on", Modifier.padding(top = 2.dp))
+        Guides.searchLinks(target.title).chunked(2).forEach { row ->
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                row.forEach { s ->
+                    Box(Modifier.weight(1f)) {
+                        GuideChoice(s.site.removePrefix("Search "), if (s.appSearch != null) "Opens the YouTube app" else null) { onOpen(s) }
+                    }
+                }
+                if (row.size == 1) Spacer(Modifier.weight(1f))
+            }
+        }
     }
 }
 
@@ -180,6 +199,11 @@ private fun GuideBrowser(source: GuideSource, onClose: () -> Unit, onSave: (Stri
                 WebView(ctx).apply {
                     settings.javaScriptEnabled = true
                     settings.domStorageEnabled = true
+                    // Present as the Chrome it is, not an embedded view ("; wv"), and keep cookies,
+                    // so sites stop treating each visit as a suspicious stranger (captchas).
+                    settings.userAgentString = settings.userAgentString.replace("; wv)", ")").replace(" Version/4.0", "")
+                    val view = this
+                    android.webkit.CookieManager.getInstance().apply { setAcceptCookie(true); setAcceptThirdPartyCookies(view, true) }
                     settings.loadWithOverviewMode = true
                     settings.useWideViewPort = true
                     settings.builtInZoomControls = true
@@ -213,7 +237,7 @@ private fun AllowTyping(on: Boolean) {
 // ── Reading a text guide ─────────────────────────────────────────────────────────────────
 
 @Composable
-private fun GuideTextPage(file: File, target: GuideTarget, onChange: () -> Unit) {
+private fun GuideTextPage(file: File, target: GuideTarget, chrome: Boolean, onChrome: (Boolean) -> Unit, onChange: () -> Unit) {
     val context = LocalContext.current
     val prefs = remember { guidePrefs(context) }
     var size by remember { mutableIntStateOf(prefs.getInt("size", 15)) }
@@ -222,36 +246,113 @@ private fun GuideTextPage(file: File, target: GuideTarget, onChange: () -> Unit)
     var theme by remember { mutableStateOf(GuideTheme.entries.firstOrNull { it.name == prefs.getString("theme", null) } ?: GuideTheme.Night) }
     var findOpen by remember { mutableStateOf(false) }
     var tocOpen by remember { mutableStateOf(false) }
+    var optionsOpen by remember { mutableStateOf(false) }
     fun save(block: android.content.SharedPreferences.Editor.() -> Unit) = prefs.edit().apply(block).apply()
+    // The bar stays while something on it is open.
+    val showBar = chrome || findOpen || tocOpen || optionsOpen
 
-    Column(Modifier.fillMaxSize()) {
-        Row(
-            Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 10.dp, vertical = 6.dp),
-            horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically
-        ) {
-            Pill("A−", false) { size = (size - 1).coerceAtLeast(9); save { putInt("size", size) } }
-            Pill("A+", false) { size = (size + 1).coerceAtMost(28); save { putInt("size", size) } }
-            Pill("Wrap", wrap || reflow) { wrap = !wrap; save { putBoolean("wrap", wrap) } }
-            Pill("Reflow", reflow) { reflow = !reflow; save { putBoolean("reflow", reflow) } }
-            GuideTheme.entries.forEach { t -> Pill(t.label, theme == t) { theme = t; save { putString("theme", t.name) } } }
-            Pill("Find", findOpen) { findOpen = !findOpen }
-            Pill("Contents", tocOpen) { tocOpen = !tocOpen }
-            Pill("Change guide", false, onChange)
+    Box(Modifier.fillMaxSize()) {
+        Column(Modifier.fillMaxSize()) {
+            if (showBar) Row(
+                Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 6.dp),
+                horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically
+            ) {
+                Pill("Options", optionsOpen) { optionsOpen = !optionsOpen }
+                Pill("Find", findOpen) { findOpen = !findOpen }
+                Pill("Contents", tocOpen) { tocOpen = !tocOpen }
+                Spacer(Modifier.weight(1f))
+                Pill("Change guide", false, onChange)
+            }
+            GuideText(file, theme, size, wrap, reflow,
+                startAt = prefs.getInt("pos_${target.key}", 0),
+                onPosition = { p -> save { putInt("pos_${target.key}", p) } },
+                findOpen = findOpen, onFindOpen = { findOpen = it }, tocOpen = tocOpen, onTocOpen = { tocOpen = it },
+                onChrome = onChrome)
         }
-        GuideText(file, theme, size, wrap, reflow,
-            startAt = prefs.getInt("pos_${target.key}", 0),
-            onPosition = { p -> save { putInt("pos_${target.key}", p) } },
-            findOpen = findOpen, onFindOpen = { findOpen = it }, tocOpen = tocOpen, onTocOpen = { tocOpen = it })
+        // Hidden while reading: a small handle at the top brings the tabs and bar back (so does
+        // scrolling up).
+        if (!showBar) Box(
+            Modifier.align(Alignment.TopCenter).padding(top = 4.dp).clip(RoundedCornerShape(50))
+                .background(Color.Black.copy(alpha = 0.45f)).clickable { onChrome(true) }
+                .padding(horizontal = 18.dp, vertical = 6.dp)
+        ) { Box(Modifier.size(width = 36.dp, height = 4.dp).clip(RoundedCornerShape(2.dp)).background(Color.White.copy(alpha = 0.7f))) }
+
+        if (optionsOpen) GuideOptions(
+            size, wrap, reflow, theme,
+            onSize = { size = it.coerceIn(9, 28); save { putInt("size", size) } },
+            onWrap = { wrap = it; save { putBoolean("wrap", it) } },
+            onReflow = { reflow = it; save { putBoolean("reflow", it) } },
+            onTheme = { theme = it; save { putString("theme", it.name) } },
+            onClose = { optionsOpen = false }
+        )
     }
 }
+
+/**
+ * The reader's options, in a panel over the guide (not a popup window: a window on this screen
+ * could take the controller from the game).
+ */
+@Composable
+private fun GuideOptions(
+    size: Int, wrap: Boolean, reflow: Boolean, theme: GuideTheme,
+    onSize: (Int) -> Unit, onWrap: (Boolean) -> Unit, onReflow: (Boolean) -> Unit, onTheme: (GuideTheme) -> Unit,
+    onClose: () -> Unit,
+) {
+    Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.55f)).clickable(onClick = onClose)) {
+        Column(
+            Modifier.align(Alignment.TopCenter).padding(12.dp).fillMaxWidth().clip(RoundedCornerShape(18.dp))
+                .background(SheetBg).border(1.dp, Color.White.copy(alpha = 0.1f), RoundedCornerShape(18.dp))
+                .clickable(enabled = false) {}.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text("Reading options", fontSize = 15.sp, fontWeight = FontWeight.Bold, color = TextPrimary, modifier = Modifier.weight(1f))
+                Pill("Done", false, onClose)
+            }
+            SectionLabel("Text size")
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
+                Pill("A−", false) { onSize(size - 1) }
+                Text("$size", fontSize = 15.sp, fontWeight = FontWeight.Bold, color = TextPrimary)
+                Pill("A+", false) { onSize(size + 1) }
+            }
+            ToggleRow("Wrap lines", "Off keeps the guide's own line widths (maps and tables), scrolled sideways.", wrap || reflow, onWrap)
+            ToggleRow("Reflow", "Joins old FAQs' hard-wrapped lines so the text fits the screen.", reflow, onReflow)
+            SectionLabel("Colours")
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                GuideTheme.entries.forEach { t -> Pill(t.label, theme == t) { onTheme(t) } }
+            }
+        }
+    }
+}
+
+/** Searches YouTube in its app, on this screen. False when the app isn't installed. */
+private fun openInYouTube(context: Context, query: String): Boolean = runCatching {
+    val intent = android.content.Intent(android.content.Intent.ACTION_SEARCH)
+        .setPackage("com.google.android.youtube").putExtra("query", query)
+        .addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+    val display = com.joeyos.app.data.DisplayTargets.currentDisplayId(context)
+    context.startActivity(intent, com.joeyos.app.data.DisplayTargets.optionsFor(display))
+    AppLog.i("Guides", "YouTube app search: $query")
+    true
+}.getOrElse { false }
 
 @Composable
 private fun GuideText(
     file: File, theme: GuideTheme, textSize: Int, wraps: Boolean, reflow: Boolean,
     startAt: Int, onPosition: (Int) -> Unit,
     findOpen: Boolean, onFindOpen: (Boolean) -> Unit, tocOpen: Boolean, onTocOpen: (Boolean) -> Unit,
+    onChrome: (Boolean) -> Unit,
 ) {
     val raw = remember(file) { runCatching { file.readText() }.getOrNull() }
+    // Reading down hides the tabs and the bar for room; scrolling back up brings them back.
+    val chromeOnScroll = remember(onChrome) {
+        object : androidx.compose.ui.input.nestedscroll.NestedScrollConnection {
+            override fun onPreScroll(available: androidx.compose.ui.geometry.Offset, source: androidx.compose.ui.input.nestedscroll.NestedScrollSource): androidx.compose.ui.geometry.Offset {
+                if (available.y < -6f) onChrome(false) else if (available.y > 6f) onChrome(true)
+                return androidx.compose.ui.geometry.Offset.Zero
+            }
+        }
+    }
     // Reflowed to the screen when asked, rejoining hard-wrapped prose; find, contents and the
     // saved position all work on the text as shown.
     val text = remember(raw, reflow) { raw?.let { if (reflow) reflowGuide(it) else it } }
@@ -329,7 +430,7 @@ private fun GuideText(
     }
 
     Box(Modifier.fillMaxSize().background(theme.paper)) {
-        Box(Modifier.fillMaxSize().verticalScroll(scroll)) {
+        Box(Modifier.fillMaxSize().nestedScroll(chromeOnScroll).verticalScroll(scroll)) {
             if (wrapping) body() else Box(Modifier.horizontalScroll(rememberScrollState())) { body() }
         }
         if (findOpen) {

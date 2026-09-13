@@ -36,8 +36,11 @@ data class GuideTarget(
     val key: String get() = (consoleName.orEmpty() + "|" + Guides.archiveKey(title))
 }
 
-/** A search (or page) to open in the guide browser, and its link. */
-data class GuideSource(val site: String, val url: String)
+/**
+ * A search (or page) to open in the guide browser, and its link. [appSearch] is set for YouTube:
+ * searched in the YouTube app when it's installed, the browser otherwise.
+ */
+data class GuideSource(val site: String, val url: String, val appSearch: String? = null)
 
 object Guides {
 
@@ -58,6 +61,10 @@ object Guides {
      * JoeyOS's own guides folder under each name the game goes by.
      */
     fun find(t: GuideTarget): File? {
+        // Every name the game went by when its guide was saved (see [remember]).
+        val aliases = readAliases()
+        for (k in keysOf(t)) aliases.optString(k).takeIf { it.isNotBlank() }?.let(::File)
+            ?.takeIf { it.isFile && it.length() > 0 }?.let { return it }
         t.romPath?.let(::File)?.takeIf { it.isFile }?.let { rom ->
             val name = rom.name.substringBeforeLast('.')
             Extensions.flatMap { listOf("$name.$it", "$name.${it.uppercase()}") }
@@ -68,7 +75,36 @@ object Guides {
         for (title in t.titles) for (ext in Extensions) {
             File(folder, safe(title) + "." + ext).takeIf { it.isFile && it.length() > 0 }?.let { return it }
         }
-        return null
+        // Any guide saved under any name the game goes by, in any console's folder. Found on
+        // device: a game is named by its ROM ("Disney's Aladdin (USA)") until RetroAchievements
+        // answers with its own title and console ("Aladdin", SNES); a guide saved under one wasn't
+        // found under the other, so it was offered — and downloaded — again every launch.
+        val keys = keysOf(t)
+        return root.walkTopDown().maxDepth(2)
+            .filter { it.isFile && it.length() > 0 && it.extension.lowercase() in Extensions }
+            .firstOrNull { f ->
+                val k = archiveKey(f.nameWithoutExtension)
+                k in keys || keys.any { key -> key.split(' ').let { w -> w.size >= 2 && k.split(' ').containsAll(w) } }
+            }
+    }
+
+    private fun keysOf(t: GuideTarget): Set<String> =
+        (t.titles + listOfNotNull(t.romPath?.let { File(it).name.substringBeforeLast('.') }))
+            .map(::archiveKey).filter { it.isNotBlank() }.toSet()
+
+    private val aliasFile get() = File(root, ".names.json")
+    private fun readAliases(): JSONObject = runCatching { JSONObject(aliasFile.readText()) }.getOrElse { JSONObject() }
+
+    /**
+     * Notes every name [t] goes by against its guide [file], so the next launch finds it whichever
+     * name it has at that moment (the ROM's before RetroAchievements answers, RA's after).
+     */
+    fun remember(t: GuideTarget, file: File) {
+        runCatching {
+            val a = readAliases()
+            keysOf(t).forEach { a.put(it, file.absolutePath) }
+            root.mkdirs(); aliasFile.writeText(a.toString())
+        }
     }
 
     /** Where a guide for [t] is saved: JoeyOS's guides folder, never the ROM folders. */
@@ -77,7 +113,7 @@ object Guides {
 
     /** Saves a page from the guide browser as [t]'s guide. */
     fun saveHtml(t: GuideTarget, html: String): File? = runCatching {
-        destination(t, "html").also { it.writeText(html) }
+        destination(t, "html").also { it.writeText(html); remember(t, it) }
     }.onSuccess { AppLog.i(TAG, "Saved a guide page for '${t.title}': ${it.absolutePath}") }
         .onFailure { AppLog.w(TAG, "Couldn't save a guide page for '${t.title}'", it) }.getOrNull()
 
@@ -142,6 +178,7 @@ object Guides {
                 val inside = best.optString(2).takeIf { it.isNotBlank() } ?: continue
                 val target = destination(t, "txt")
                 if (extractFromArchive(archive, inside, target)) {
+                    remember(t, target)
                     AppLog.i(TAG, "Downloaded the GameFAQs guide for '${t.title}' ($platform/$archive)")
                     return@withContext target
                 }
@@ -207,19 +244,22 @@ object Guides {
     /** Searches that work for every game: GameFAQs' own, guide sites via a web search, YouTube. */
     fun searchLinks(title: String): List<GuideSource> {
         fun enc(v: String) = URLEncoder.encode(v, "UTF-8")
-        fun web(q: String) = "https://www.google.com/search?q=" + enc(q)
+        // DuckDuckGo, not Google: Google kept putting captchas in front of the in-app browser
+        // (it distrusts an embedded browser with no history), found on device.
+        fun web(q: String) = "https://duckduckgo.com/?q=" + enc(q)
         return listOf(
             GuideSource("Search GameFAQs", "https://gamefaqs.gamespot.com/search?game=" + enc(title)),
             GuideSource("Search IGN", web("$title walkthrough site:ign.com")),
             GuideSource("Search Neoseeker", web("$title walkthrough site:neoseeker.com")),
             GuideSource("Search StrategyWiki", web("$title walkthrough site:strategywiki.org")),
-            GuideSource("Search YouTube", "https://www.youtube.com/results?search_query=" + enc("$title walkthrough")),
+            GuideSource("Search YouTube", "https://www.youtube.com/results?search_query=" + enc("$title walkthrough"),
+                appSearch = "$title walkthrough"),
             GuideSource("Search the web", web("$title walkthrough")),
         )
     }
 
     /** A one-off search for a single thing (an achievement you're stuck on). */
-    fun searchFor(query: String) = GuideSource(query, "https://www.google.com/search?q=" + URLEncoder.encode(query, "UTF-8"))
+    fun searchFor(query: String) = GuideSource(query, "https://duckduckgo.com/?q=" + URLEncoder.encode(query, "UTF-8"))
 
     private fun httpText(url: String): String? = runCatching {
         (URL(url).openConnection() as HttpURLConnection).run {
