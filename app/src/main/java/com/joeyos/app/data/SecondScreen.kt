@@ -67,6 +67,10 @@ object SecondScreenPrefs {
     fun enabled(context: Context) = prefs(context).getBoolean("enabled", true)
     fun setEnabled(context: Context, on: Boolean) = prefs(context).edit().putBoolean("enabled", on).apply()
 
+    /** The tab shown while browsing JoeyOS (no game running): Apps (the default) or Achievements. */
+    fun homeTabIsApps(context: Context) = prefs(context).getBoolean("home_tab_apps", true)
+    fun setHomeTabIsApps(context: Context, apps: Boolean) = prefs(context).edit().putBoolean("home_tab_apps", apps).apply()
+
     /** When a game starts, open the Guide tab rather than Now playing. */
     fun openGuideOnLaunch(context: Context) = prefs(context).getBoolean("open_guide", false)
     fun setOpenGuideOnLaunch(context: Context, on: Boolean) = prefs(context).edit().putBoolean("open_guide", on).apply()

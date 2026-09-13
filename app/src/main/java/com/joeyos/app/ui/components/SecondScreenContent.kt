@@ -76,7 +76,13 @@ fun SecondScreenContent() {
     var nowPlaying by remember { mutableStateOf<RANowPlaying?>(null) }   // what RA sees you playing
     var lastGameId by remember { mutableStateOf<Int?>(null) }            // the previous session's game
     var openGame by remember { mutableStateOf<Int?>(null) }              // a game opened from the overview
-    var tab by remember { mutableIntStateOf(0) }                         // 0 overview, 1 now playing, 2 guide, 3 settings, 4 apps
+    // 0 achievements, 1 now playing, 2 guide, 3 settings, 4 apps. Browsing JoeyOS opens on the
+    // tab chosen in this screen's Settings (Apps by default).
+    // Without a RetroAchievements login there are no Achievements or Now playing tabs at all.
+    fun homeTab() = if (SecondScreenPrefs.homeTabIsApps(context) || !raRepo.isConfigured) 4 else 0
+    var tab by remember { mutableIntStateOf(homeTab()) }
+    // Logged out of RetroAchievements while on one of its tabs: go to Apps.
+    LaunchedEffect(configured) { if (!configured && (tab == 0 || tab == 1)) tab = 4 }
     var chrome by remember { mutableStateOf(true) }                      // tabs shown (hidden while reading a guide)
     var wantGuide by remember { mutableStateOf(false) }                  // open the Guide once the game is known
     LaunchedEffect(tab) { chrome = true }
@@ -119,13 +125,17 @@ fun SecondScreenContent() {
     // its live status line. Back home: back to the overview.
     LaunchedEffect(session, configured) {
         val s = session
-        if (s == null) { nowPlaying?.let { lastGameId = it.gameId }; nowPlaying = null; tab = 0; return@LaunchedEffect }
+        if (s == null) { nowPlaying?.let { lastGameId = it.gameId }; nowPlaying = null; tab = homeTab(); return@LaunchedEffect }
         nowPlaying?.let { lastGameId = it.gameId }
         // Open on Now playing, or the Guide if chosen in this screen's Settings. A game started
         // inside RetroArch has no name until RetroAchievements reports it, so then the Guide opens
         // as soon as it does (found on device: it stayed on Now playing).
         wantGuide = SecondScreenPrefs.openGuideOnLaunch(context)
-        tab = if (wantGuide && s.title != null) 2 else 1
+        tab = when {
+            !configured -> if (s.title != null) 2 else homeTab()   // no Now playing without RA
+            wantGuide && s.title != null -> 2
+            else -> 1
+        }
         openGame = null; nowPlaying = null
         if (!configured) return@LaunchedEffect
         while (true) {
@@ -141,10 +151,6 @@ fun SecondScreenContent() {
     Box(Modifier.fillMaxSize().background(Background)) {
         when {
             !enabled -> Message("Second screen off", "Turn it on in Settings › Appearance › Second screen.")
-            !configured -> Message(
-                "JoeyOS",
-                "Connect RetroAchievements in Settings › Achievements › Account to see your progress here."
-            )
             else -> Column(Modifier.fillMaxSize()) {
                 // Tabs, or a back button over an opened game. Hidden while reading a guide.
                 if (chrome || tab != 2) Row(
@@ -156,10 +162,10 @@ fun SecondScreenContent() {
                         Pill("‹  Back", active = false) { openGame = null }
                     } else {
                         // A tab you pick yourself wins over "open the Guide when a game starts".
-                        Pill("Overview", active = tab == 0) { tab = 0; wantGuide = false }
                         Pill("Apps", active = tab == 4) { tab = 4; wantGuide = false }
+                        if (configured) Pill("Achievements", active = tab == 0) { tab = 0; wantGuide = false }
                         Pill("Settings", active = tab == 3) { tab = 3; wantGuide = false }
-                        if (session != null) Pill("Now playing", active = tab == 1) { tab = 1; wantGuide = false }
+                        if (session != null && configured) Pill("Now playing", active = tab == 1) { tab = 1; wantGuide = false }
                         if (session != null && guideTarget != null) Pill("Guide", active = tab == 2) { tab = 2; wantGuide = false }
                     }
                 }
@@ -170,6 +176,8 @@ fun SecondScreenContent() {
                         openGame != null -> GameAchievements(openGame!!, raRepo, live = null)
                         tab == 3 -> SecondScreenSettings()
                         tab == 4 -> SecondScreenApps()
+                        // Logged out while on an RA tab: back to Apps.
+                        (tab == 0 || tab == 1) && !configured -> SecondScreenApps()
                         tab == 2 && guideTarget != null -> GuideTab(guideTarget, guideSearch, onSearchShown = { guideSearch = null },
                             chrome = chrome, onChrome = { chrome = it })
                         tab == 1 && s != null && np != null -> GameAchievements(np.gameId, raRepo, live = LiveInfo(s, np),
@@ -237,11 +245,16 @@ private fun openHere(context: android.content.Context, app: InstalledApp) {
 private fun SecondScreenSettings() {
     val context = LocalContext.current
     var openGuide by remember { mutableStateOf(SecondScreenPrefs.openGuideOnLaunch(context)) }
+    var homeApps by remember { mutableStateOf(SecondScreenPrefs.homeTabIsApps(context)) }
     var hideSpoilers by remember { mutableStateOf(SecondScreenPrefs.hideSpoilers(context)) }
     Column(
         Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 14.dp).padding(bottom = 18.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
+        ChoiceRow("While browsing JoeyOS, show", listOf(true to "Apps", false to "Achievements"), homeApps, { v ->
+            homeApps = v; SecondScreenPrefs.setHomeTabIsApps(context, v)
+            AppLog.i("SecondScreen", "Browsing tab: ${if (v) "Apps" else "Achievements"}")
+        })
         ChoiceRow("When a game starts, show", listOf(false to "Now playing", true to "Guide"), openGuide, { v ->
             openGuide = v; SecondScreenPrefs.setOpenGuideOnLaunch(context, v)
             AppLog.i("SecondScreen", "Opens on ${if (v) "Guide" else "Now playing"} when a game starts")
