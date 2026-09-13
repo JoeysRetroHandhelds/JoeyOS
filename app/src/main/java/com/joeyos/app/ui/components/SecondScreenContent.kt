@@ -32,6 +32,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import coil.compose.AsyncImage
 import com.joeyos.app.AppLog
 import com.joeyos.app.data.RAAchievement
+import com.joeyos.app.data.InstalledApp
+import com.joeyos.app.data.loadInstalledApps
 import com.joeyos.app.data.GuideSource
 import com.joeyos.app.data.GuideTarget
 import com.joeyos.app.data.Guides
@@ -74,13 +76,17 @@ fun SecondScreenContent() {
     var nowPlaying by remember { mutableStateOf<RANowPlaying?>(null) }   // what RA sees you playing
     var lastGameId by remember { mutableStateOf<Int?>(null) }            // the previous session's game
     var openGame by remember { mutableStateOf<Int?>(null) }              // a game opened from the overview
-    var tab by remember { mutableIntStateOf(0) }                         // 0 overview, 1 now playing, 2 guide, 3 settings
+    var tab by remember { mutableIntStateOf(0) }                         // 0 overview, 1 now playing, 2 guide, 3 settings, 4 apps
     var chrome by remember { mutableStateOf(true) }                      // tabs shown (hidden while reading a guide)
+    var wantGuide by remember { mutableStateOf(false) }                  // open the Guide once the game is known
     LaunchedEffect(tab) { chrome = true }
     var guideSearch by remember { mutableStateOf<GuideSource?>(null) }   // "find a guide for this achievement"
     // RA's own title and console for the game, which name its guide and say where to look for one.
     val raGame by produceState<RAGameProgress?>(null, nowPlaying?.gameId) {
         value = nowPlaying?.gameId?.let { raRepo.fetchGameProgress(it, maxAgeMs = 10 * 60_000) }
+    }
+    LaunchedEffect(guideTargetKey(session, raGame), wantGuide) {
+        if (wantGuide && tab == 1 && session != null && (raGame != null || session?.title != null)) tab = 2
     }
     val guideTarget = remember(session, raGame) {
         val s = session ?: return@remember null
@@ -115,8 +121,11 @@ fun SecondScreenContent() {
         val s = session
         if (s == null) { nowPlaying?.let { lastGameId = it.gameId }; nowPlaying = null; tab = 0; return@LaunchedEffect }
         nowPlaying?.let { lastGameId = it.gameId }
-        // Open on Now playing, or the Guide if chosen in this screen's Settings (when the game has a name).
-        tab = if (SecondScreenPrefs.openGuideOnLaunch(context) && s.title != null) 2 else 1
+        // Open on Now playing, or the Guide if chosen in this screen's Settings. A game started
+        // inside RetroArch has no name until RetroAchievements reports it, so then the Guide opens
+        // as soon as it does (found on device: it stayed on Now playing).
+        wantGuide = SecondScreenPrefs.openGuideOnLaunch(context)
+        tab = if (wantGuide && s.title != null) 2 else 1
         openGame = null; nowPlaying = null
         if (!configured) return@LaunchedEffect
         while (true) {
@@ -146,10 +155,12 @@ fun SecondScreenContent() {
                     if (openGame != null) {
                         Pill("‹  Back", active = false) { openGame = null }
                     } else {
-                        Pill("Overview", active = tab == 0) { tab = 0 }
-                        Pill("Settings", active = tab == 3) { tab = 3 }
-                        if (session != null) Pill("Now playing", active = tab == 1) { tab = 1 }
-                        if (session != null && guideTarget != null) Pill("Guide", active = tab == 2) { tab = 2 }
+                        // A tab you pick yourself wins over "open the Guide when a game starts".
+                        Pill("Overview", active = tab == 0) { tab = 0; wantGuide = false }
+                        Pill("Apps", active = tab == 4) { tab = 4; wantGuide = false }
+                        Pill("Settings", active = tab == 3) { tab = 3; wantGuide = false }
+                        if (session != null) Pill("Now playing", active = tab == 1) { tab = 1; wantGuide = false }
+                        if (session != null && guideTarget != null) Pill("Guide", active = tab == 2) { tab = 2; wantGuide = false }
                     }
                 }
                 Box(Modifier.weight(1f)) {
@@ -158,6 +169,7 @@ fun SecondScreenContent() {
                     when {
                         openGame != null -> GameAchievements(openGame!!, raRepo, live = null)
                         tab == 3 -> SecondScreenSettings()
+                        tab == 4 -> SecondScreenApps()
                         tab == 2 && guideTarget != null -> GuideTab(guideTarget, guideSearch, onSearchShown = { guideSearch = null },
                             chrome = chrome, onChrome = { chrome = it })
                         tab == 1 && s != null && np != null -> GameAchievements(np.gameId, raRepo, live = LiveInfo(s, np),
@@ -171,6 +183,53 @@ fun SecondScreenContent() {
             }
         }
     }
+}
+
+/**
+ * Every installed app, A to Z. Tapping one opens it on this screen, beside the game or the home
+ * screen. An app opened here takes the controller (it's an ordinary app); a tap on the other
+ * screen gives it back.
+ */
+@Composable
+private fun SecondScreenApps() {
+    val context = LocalContext.current
+    val apps by produceState<List<InstalledApp>?>(null) {
+        value = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { loadInstalledApps(context) }
+    }
+    val list = apps
+    if (list == null) { Message("Apps", "Loading…"); return }
+    androidx.compose.foundation.lazy.grid.LazyVerticalGrid(
+        columns = androidx.compose.foundation.lazy.grid.GridCells.Adaptive(minSize = 84.dp),
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(start = 10.dp, end = 10.dp, bottom = 18.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+        horizontalArrangement = Arrangement.spacedBy(6.dp)
+    ) {
+        items(list.size, key = { list[it].packageName }) { i ->
+            val app = list[i]
+            AppGridItem(app, onClick = { openHere(context, app) })
+        }
+    }
+}
+
+/** Opens an app on the second screen (the display this screen is on). */
+private fun openHere(context: android.content.Context, app: InstalledApp) {
+    // JoeyOS itself: bring its home screen forward on the main screen, never onto this one (home
+    // on the bottom screen is what put the second screen on the wrong display, found in a log).
+    if (app.packageName == context.packageName) {
+        runCatching {
+            context.startActivity(android.content.Intent(context, com.joeyos.app.MainActivity::class.java)
+                .addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK or android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT),
+                com.joeyos.app.data.DisplayTargets.optionsFor(android.view.Display.DEFAULT_DISPLAY))
+        }
+        return
+    }
+    val intent = context.packageManager.getLaunchIntentForPackage(app.packageName) ?: return
+    runCatching {
+        context.startActivity(intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK),
+            com.joeyos.app.data.DisplayTargets.optionsFor(com.joeyos.app.data.DisplayTargets.currentDisplayId(context)))
+        AppLog.i("SecondScreen", "Opened ${app.packageName} on the second screen")
+    }.onFailure { AppLog.w("SecondScreen", "Couldn't open ${app.packageName} on the second screen", it) }
 }
 
 /** The second screen's own settings: what it opens when a game starts, and achievement spoilers. */
@@ -194,6 +253,9 @@ private fun SecondScreenSettings() {
             fontSize = 10.sp, color = TextFaint)
     }
 }
+
+/** Changes when the game to find a guide for becomes known (its launch name, or RA's game). */
+private fun guideTargetKey(s: SecondScreenState.Session?, ra: RAGameProgress?) = listOf(s?.startedAt, s?.title, ra?.gameId)
 
 /** For the game being played: when it started and RA's live view of it. */
 private data class LiveInfo(val session: SecondScreenState.Session, val nowPlaying: RANowPlaying)

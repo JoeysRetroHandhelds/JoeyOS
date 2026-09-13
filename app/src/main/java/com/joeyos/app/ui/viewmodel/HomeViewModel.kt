@@ -1,4 +1,4 @@
-﻿package com.joeyos.app.ui.viewmodel
+package com.joeyos.app.ui.viewmodel
 
 import com.joeyos.app.data.startApp
 import com.joeyos.app.data.startGame
@@ -183,22 +183,7 @@ class HomeViewModel(
                 repo.setDockIconSize(default)
             }
 
-            val apps = withContext(Dispatchers.IO) {
-                val pm = context.packageManager
-                val intent = Intent(Intent.ACTION_MAIN, null).apply {
-                    addCategory(Intent.CATEGORY_LAUNCHER)
-                }
-                pm.queryIntentActivities(intent, 0)
-                    .map { info ->
-                        InstalledApp(
-                            packageName = info.activityInfo.packageName,
-                            label = info.loadLabel(pm).toString()
-                        )
-                    }
-                    .filter { it.packageName != context.packageName }
-                    .distinctBy { it.packageName }
-                    .sortedBy { it.label.lowercase() }
-            }
+            val apps = withContext(Dispatchers.IO) { com.joeyos.app.data.loadInstalledApps(context) }
             _installedApps.value = apps
             autoPopulateAssignments(apps)
             // Pre-warm game DB and recent-games cache so the popup opens instantly.

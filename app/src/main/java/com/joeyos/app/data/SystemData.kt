@@ -1,10 +1,23 @@
-﻿package com.joeyos.app.data
+package com.joeyos.app.data
 
 // Represents an installed Android app that can be assigned as an emulator
 data class InstalledApp(
     val packageName: String,
     val label: String
 )
+
+/**
+ * Every app with a launcher entry, A to Z, JoeyOS included (nothing is hidden, at the user's
+ * request). Shared by the App Drawer and the second screen.
+ */
+fun loadInstalledApps(context: android.content.Context): List<InstalledApp> {
+    val pm = context.packageManager
+    val intent = android.content.Intent(android.content.Intent.ACTION_MAIN, null).addCategory(android.content.Intent.CATEGORY_LAUNCHER)
+    return pm.queryIntentActivities(intent, 0)
+        .map { info -> InstalledApp(packageName = info.activityInfo.packageName, label = info.loadLabel(pm).toString()) }
+        .distinctBy { it.packageName }
+        .sortedBy { it.label.lowercase() }
+}
 
 // A single retro system entry
 data class RetroSystem(

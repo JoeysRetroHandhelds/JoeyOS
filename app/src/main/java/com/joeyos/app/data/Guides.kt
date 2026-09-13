@@ -45,7 +45,7 @@ data class GuideSource(val site: String, val url: String, val appSearch: String?
 object Guides {
 
     /** Text wins over a saved page when both are there: it's the archive's format. */
-    private val Extensions = listOf("txt", "html", "htm")
+    private val Extensions = listOf("txt", "mht", "html", "htm")
 
     val root: File get() = File(Environment.getExternalStorageDirectory(), "JoeyOS/guides")
 
@@ -53,7 +53,33 @@ object Guides {
 
     private fun folderFor(t: GuideTarget) = File(root, safe(t.consoleName ?: "Other"))
 
-    fun isHtml(file: File) = file.extension.lowercase() in setOf("html", "htm")
+    /** A page saved from a site (a complete web archive, or plain HTML from before v1.0.20). */
+    fun isHtml(file: File) = file.extension.lowercase() in setOf("mht", "html", "htm")
+
+    /**
+     * Every guide saved for [t] — the GameFAQs one, pages saved from sites, one next to the ROM —
+     * so "Change guide" can open one again rather than downloading it again (found on device).
+     */
+    fun savedFor(t: GuideTarget): List<File> {
+        val keys = keysOf(t)
+        val aliased = readAliases().let { a -> keys.mapNotNull { a.optString(it).takeIf { p -> p.isNotBlank() }?.let(::File) } }
+        val beside = t.romPath?.let(::File)?.takeIf { it.isFile }?.let { rom ->
+            val name = rom.name.substringBeforeLast('.')
+            Extensions.map { File(rom.parentFile, "$name.$it") }
+        }.orEmpty()
+        val inFolder = folderFor(t).listFiles().orEmpty().filter { f ->
+            val k = archiveKey(f.nameWithoutExtension.substringBefore(" - "))
+            k in keys || keys.any { key -> k.split(' ').containsAll(key.split(' ')) }
+        }
+        return (aliased + beside + inFolder).filter { it.isFile && it.length() > 0 && it.extension.lowercase() in Extensions }
+            .distinctBy { it.absolutePath }
+    }
+
+    /** Where a page saved from a site goes: named for the game and the page, so pages don't overwrite each other. */
+    fun pageDestination(t: GuideTarget, pageTitle: String): File {
+        val page = safe(pageTitle).take(60).ifBlank { "Saved page" }
+        return File(folderFor(t).apply { mkdirs() }, safe(t.title) + " - " + page + ".mht")
+    }
 
     /**
      * The guide for [t], or null. Looks next to the ROM first (`Game Name.txt`, where Guide Watch
@@ -111,11 +137,7 @@ object Guides {
     fun destination(t: GuideTarget, extension: String): File =
         File(folderFor(t).apply { mkdirs() }, safe(t.title) + "." + extension)
 
-    /** Saves a page from the guide browser as [t]'s guide. */
-    fun saveHtml(t: GuideTarget, html: String): File? = runCatching {
-        destination(t, "html").also { it.writeText(html); remember(t, it) }
-    }.onSuccess { AppLog.i(TAG, "Saved a guide page for '${t.title}': ${it.absolutePath}") }
-        .onFailure { AppLog.w(TAG, "Couldn't save a guide page for '${t.title}'", it) }.getOrNull()
+
 
     // ── The GameFAQs archive ─────────────────────────────────────────────────────────────
 
@@ -254,7 +276,7 @@ object Guides {
             GuideSource("Search StrategyWiki", web("$title walkthrough site:strategywiki.org")),
             GuideSource("Search YouTube", "https://www.youtube.com/results?search_query=" + enc("$title walkthrough"),
                 appSearch = "$title walkthrough"),
-            GuideSource("Search the web", web("$title walkthrough")),
+            GuideSource("Search Web", web("$title walkthrough")),
         )
     }
 
