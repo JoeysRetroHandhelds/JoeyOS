@@ -44,19 +44,19 @@ object FlycastLauncher {
                 path.startsWith("content://") -> {
                     intent.data = Uri.parse(path)
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    context.startActivity(intent)
+                    context.startGame(intent)
                 }
                 path.isNotBlank() && File(path.removePrefix("file://")).exists() -> {
                     intent.data = Uri.fromFile(File(path.removePrefix("file://")))
                     val policy = StrictMode.getVmPolicy()
                     try {
                         StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder().build())
-                        context.startActivity(intent)
+                        context.startGame(intent)
                     } finally {
                         StrictMode.setVmPolicy(policy)
                     }
                 }
-                else -> context.startActivity(base.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                else -> context.startGame(base.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
             }
             true
         } catch (e: Exception) {

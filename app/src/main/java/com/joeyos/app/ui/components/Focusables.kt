@@ -24,6 +24,7 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalFocusManager
@@ -244,4 +245,36 @@ fun ControllerTextField(
         }
         trailing?.invoke()
     }
+}
+
+/**
+ * Keeps a page from being left with nothing focused. A page's first rows can arrive after it
+ * opens (a scan of your ROM folders), and a run's Cancel button disappears when the run ends;
+ * either way focus had nowhere to be and the controls did nothing (found on device: Generate
+ * .m3u). Whenever [keys] change and nothing on the page holds focus, [target] gets it, with the
+ * list scrolled to the top first so the row exists to take it.
+ */
+@Composable
+fun Modifier.keepFocus(target: FocusRequester, listState: androidx.compose.foundation.lazy.LazyListState, vararg keys: Any?): Modifier {
+    var hasFocus by remember { mutableStateOf(false) }
+    LaunchedEffect(*keys) {
+        withFrameNanos { }
+        if (!hasFocus) {
+            runCatching { listState.scrollToItem(0) }
+            withFrameNanos { }
+            runCatching { target.requestFocus() }
+        }
+    }
+    return this.onFocusChanged { hasFocus = it.hasFocus }
+}
+
+/**
+ * For the first row of a page whose heading sits above it (a label, a preview): moving onto it
+ * scrolls the whole list back to the top, so the heading shows. The margin scrolling in the theme
+ * covers a line of text; this covers a tall preview too (found on device: Appearance's dock-size
+ * row hid "Dock icon size" and its icon).
+ */
+fun Modifier.revealListTop(listState: androidx.compose.foundation.lazy.LazyListState): Modifier = composed {
+    val scope = rememberCoroutineScope()
+    onFocusChanged { if (it.hasFocus) scope.launch { withFrameNanos { }; listState.animateScrollToItem(0) } }
 }

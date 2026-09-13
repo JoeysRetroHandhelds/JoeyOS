@@ -159,6 +159,22 @@ object RomCompression {
      * verified, or kept beside it. Cancellable between files; a file in flight finishes
      * or leaves nothing behind.
      */
+    /** Every cartridge extension a zip suits (the ones the Compress tool zips). */
+    val ZipExtensions: Set<String> = Systems.flatMap { it.sourceExtensions }.toSet()
+
+    /**
+     * Zips one ROM in place: [file] becomes `<name>.zip` beside it, the loose file removed once
+     * the archive is verified. The zipped file, or null (logged) when it couldn't be done.
+     */
+    suspend fun zipOne(file: File): File? {
+        val target = File(file.parentFile, file.nameWithoutExtension + "." + CompressionMethod.Zip.extension)
+        val job = CompressJob(system = file.extension.lowercase(), source = file, target = target,
+            method = CompressionMethod.Zip, status = CompressStatus.Ready, conflict = null)
+        val run = compressAll(listOf(job), removeOriginal = true, overwrite = { false }) {}
+        return run.undo.firstOrNull()?.target
+            ?: null.also { AppLog.w("Compress", "Couldn't zip ${file.absolutePath}: ${run.results.firstOrNull()}") }
+    }
+
     suspend fun compressAll(
         jobs: List<CompressJob>,
         removeOriginal: Boolean,

@@ -1,6 +1,10 @@
 ﻿package com.joeyos.app
 
 import android.content.Intent
+import android.hardware.display.DisplayManager
+import androidx.lifecycle.Lifecycle
+import com.joeyos.app.data.SecondScreenController
+import com.joeyos.app.data.SecondScreenState
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -46,6 +50,8 @@ class MainActivity : ComponentActivity() {
         hasStoragePermission = hasPermission()
         GameDatabase.init(this)
         enableEdgeToEdge()
+        (getSystemService(DISPLAY_SERVICE) as DisplayManager)
+            .registerDisplayListener(displayListener, android.os.Handler(mainLooper))
         hideSystemBars()
         setContent {
             JoeyOSTheme {
@@ -88,7 +94,32 @@ class MainActivity : ComponentActivity() {
         if (introComplete) {
             vm.loadInstalledApps(this)
             vm.invalidateAndPreWarmRecentGames()
+            SecondScreenController.ensure(this)
         }
+        SecondScreenState.backHome()
+    }
+
+    // Games on the other screen leave the home screen resumed, so "back home" is also when it
+    // becomes the screen in front again.
+    override fun onTopResumedActivityChanged(isTopResumedActivity: Boolean) {
+        super.onTopResumedActivityChanged(isTopResumedActivity)
+        if (isTopResumedActivity) SecondScreenState.backHome()
+    }
+
+    // A screen plugged in or removed (HDMI, a dock): open or close the second screen to match.
+    private val displayListener = object : DisplayManager.DisplayListener {
+        override fun onDisplayAdded(displayId: Int) = recheckScreens()
+        override fun onDisplayRemoved(displayId: Int) = recheckScreens()
+        override fun onDisplayChanged(displayId: Int) {}
+    }
+
+    private fun recheckScreens() {
+        if (introComplete && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) SecondScreenController.ensure(this)
+    }
+
+    override fun onDestroy() {
+        (getSystemService(DISPLAY_SERVICE) as DisplayManager).unregisterDisplayListener(displayListener)
+        super.onDestroy()
     }
 
     private fun completeIntro() {

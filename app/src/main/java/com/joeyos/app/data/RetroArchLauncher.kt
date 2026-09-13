@@ -119,7 +119,7 @@ object RetroArchLauncher {
         }
         Log.d(TAG, "launch: firing intent ROM=$romPath LIBRETRO=${corePath ?: "(none - RetroArch will pick core)"}")
         return try {
-            context.startActivity(intent)
+            context.startGame(intent)
             true
         } catch (e: Exception) {
             AppLog.e(TAG, "launch: startActivity failed", e)

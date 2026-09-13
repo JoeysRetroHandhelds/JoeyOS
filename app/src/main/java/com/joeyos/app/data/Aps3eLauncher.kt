@@ -24,7 +24,7 @@ object Aps3eLauncher {
             )
         }
         return try {
-            context.startActivity(intent)
+            context.startGame(intent)
             true
         } catch (_: Exception) {
             false

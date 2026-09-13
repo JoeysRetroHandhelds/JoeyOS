@@ -28,7 +28,7 @@ object PpssppLauncher {
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         return try {
-            context.startActivity(intent)
+            context.startGame(intent)
             true
         } catch (e: Exception) {
             AppLog.e(TAG, "launch: startActivity failed", e)

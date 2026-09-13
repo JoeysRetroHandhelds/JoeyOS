@@ -48,7 +48,10 @@ import com.joeyos.app.data.DockCornerStyle
 import com.joeyos.app.data.DockSortOrder
 import com.joeyos.app.data.DockTitleSize
 import com.joeyos.app.data.InstalledApp
-import com.joeyos.app.data.InfiniteBacklogRepository
+import com.joeyos.app.AppLog
+import com.joeyos.app.data.DisplayTargets
+import com.joeyos.app.data.SecondScreenController
+import com.joeyos.app.data.SecondScreenPrefs
 import com.joeyos.app.data.RetroAchievementsRepository
 import com.joeyos.app.data.RetroArchLauncher
 import com.joeyos.app.data.RetroSystem
@@ -90,7 +93,6 @@ fun SettingsSheet(
     onRefreshApps: () -> Unit,
     onDismiss: () -> Unit,
     raRepo: RetroAchievementsRepository,
-    ibRepo: InfiniteBacklogRepository,
     onCheckUpdates: () -> Unit = {},
     onShareCrashLog: () -> Unit = {},
     biosFolder: String = "",
@@ -246,7 +248,6 @@ fun SettingsSheet(
                     )
                     2 -> RetroAchievementsTab(
                         raRepo   = raRepo,
-                        ibRepo   = ibRepo,
                         modifier = Modifier.weight(1f),
                         listState = panelLists[2],
                         firstFocus = panelFirst
@@ -413,7 +414,7 @@ fun AppearancePanel(
         }
         item {
             val first = remember { FocusRequester() }
-            Row(modifier = Modifier.fillMaxWidth().focusRow(first), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            Row(modifier = Modifier.fillMaxWidth().revealListTop(listState).focusRow(first), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                 steps.forEachIndexed { i, size ->
                     OptionChip("$size", size == steps[currentStep], { onSizeChange(size) },
                         Modifier.weight(1f).then(
@@ -551,6 +552,48 @@ fun AppearancePanel(
                 }
             }
         }
+
+        // ── Second screen (dual-screen handhelds only) ───────────────────
+        item { SecondScreenSettings() }
+    }
+}
+
+/**
+ * Settings for a dual-screen handheld's other screen. Shown only when there is one, and applied
+ * straight away: turning it on or off opens or closes the second screen.
+ */
+@Composable
+private fun SecondScreenSettings() {
+    val context = LocalContext.current
+    if (!remember { DisplayTargets.hasSecondScreen(context) }) return
+    var enabled by remember { mutableStateOf(SecondScreenPrefs.enabled(context)) }
+    var gamesOnOther by remember { mutableStateOf(SecondScreenPrefs.gamesOnOther(context)) }
+    var hideSpoilers by remember { mutableStateOf(SecondScreenPrefs.hideSpoilers(context)) }
+    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        SectionLabel("Second screen", Modifier.padding(top = 4.dp))
+        ToggleRow(
+            "Use the second screen",
+            "Shows your RetroAchievements on the other screen, and the game you're playing's achievements while you play. " +
+                "Touch only: your controller always stays with the game.",
+            enabled,
+            { on ->
+                enabled = on
+                SecondScreenPrefs.setEnabled(context, on)
+                AppLog.i("Settings", "Second screen ${if (on) "on" else "off"}")
+                (context as? android.app.Activity)?.let { SecondScreenController.ensure(it) }
+            }
+        )
+        ToggleRow(
+            "Hide achievement spoilers",
+            "On the second screen, a locked achievement's name and description stay hidden until you tap it.",
+            hideSpoilers,
+            { on -> hideSpoilers = on; SecondScreenPrefs.setHideSpoilers(context, on) }
+        )
+        ChoiceRow("Games open on", listOf(false to "This screen", true to "The other screen"), gamesOnOther, { v ->
+            gamesOnOther = v
+            SecondScreenPrefs.setGamesOnOther(context, v)
+            AppLog.i("Settings", "Games open on ${if (v) "the other screen" else "this screen"}")
+        })
     }
 }
 

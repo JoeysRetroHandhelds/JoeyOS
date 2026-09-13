@@ -57,6 +57,26 @@
 
         <!-- In-app updater result. An activity (not a receiver) so JoeyOS can reopen itself
              after updating: see UpdateStatusActivity. -->
+        <!-- The second screen of a dual-screen handheld: its own task on the other display, so it
+             stays up for a whole game (see SecondScreenActivity). Never in recents.
+             SECONDARY_HOME makes it the "home" of the other screen while JoeyOS is the home app,
+             so that screen's Home button comes back to it (found on the Thor: Home there opened
+             the Thor's apps screen and JoeyOS couldn't be got back). A secondary home must be
+             exported and can't be singleTask/singleInstance, so the controller keeps it single. -->
+        <activity
+            android:name=".SecondScreenActivity"
+            android:exported="true"
+            android:taskAffinity="com.joeyos.app.secondscreen"
+            android:excludeFromRecents="true"
+            android:resizeableActivity="true"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|density|keyboard|keyboardHidden|navigation|uiMode">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.SECONDARY_HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".UpdateStatusActivity"
             android:exported="false"

@@ -1,5 +1,6 @@
 ﻿package com.joeyos.app.ui
 
+import com.joeyos.app.data.startGame
 import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -192,8 +193,13 @@ fun HomeScreen(viewModel: HomeViewModel) {
         scope.launch {
             if (manual) Toast.makeText(context, "Checking for updates…", Toast.LENGTH_SHORT).show()
             val release = AppUpdates.newerRelease(context)
-            if (release != null) update = release
-            else if (manual) Toast.makeText(context, "You're on the latest version", Toast.LENGTH_SHORT).show()
+            when {
+                release == null -> if (manual) Toast.makeText(context, "You're on the latest version", Toast.LENGTH_SHORT).show()
+                // Chose Later for this one: only a manual check offers it again.
+                !manual && release.versionName == AppUpdates.skippedVersion(context) ->
+                    AppLog.i("Update", "v${release.versionName} available, skipped (chose Later)")
+                else -> update = release
+            }
         }
     }
     fun shareCrashLog() {
@@ -447,7 +453,6 @@ fun HomeScreen(viewModel: HomeViewModel) {
                 onRefreshApps             = { viewModel.loadInstalledApps(context) },
                 onDismiss                 = { showSettings = false },
                 raRepo                    = viewModel.raRepo,
-                ibRepo                    = viewModel.ibRepo,
                 onCheckUpdates               = { checkForUpdates(manual = true) },
                 onShareCrashLog              = ::shareCrashLog,
                 biosFolder                   = biosFolder,
@@ -462,7 +467,11 @@ fun HomeScreen(viewModel: HomeViewModel) {
                 downloading      = updateDownloading,
                 progress         = updateProgress,
                 onUpdate         = { startUpdate(release) },
-                onLater          = { update = null }
+                onLater          = {
+                    AppLog.i("Update", "Later: not offering v${release.versionName} again")
+                    AppUpdates.skipVersion(context, release.versionName)
+                    update = null
+                }
             )
         }
     }
@@ -584,7 +593,7 @@ suspend fun launchRecentGame(
             setPackage(game.emulatorPackage)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-        try { context.startActivity(intent) }
+        try { context.startGame(intent) }
         catch (e: Exception) {
             AppLog.w("Launch", "'${game.title}': plain open failed too, opening ${game.emulatorPackage} instead", e)
             viewModel.launchApp(context, game.emulatorPackage); return

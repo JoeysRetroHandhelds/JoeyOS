@@ -29,6 +29,7 @@ object AppUpdates {
     private val ASSET_REGEX = Regex("""JoeyOS-v?([\d.]+)\.apk""", RegexOption.IGNORE_CASE)
     private const val PREFS = "app_updates"
     private const val KEY_LAST_CHECK = "last_check"
+    private const val KEY_SKIPPED = "skipped_version"
     // Hourly on resume (GitHub allows 60 unauthenticated checks an hour), plus once every time
     // JoeyOS starts fresh. 6 hours was too long: a release could sit unseen most of a day.
     private const val AUTO_CHECK_INTERVAL_MS = 60 * 60 * 1000L
@@ -44,6 +45,16 @@ object AppUpdates {
     fun installedVersion(context: Context): String = runCatching {
         context.packageManager.getPackageInfo(context.packageName, 0).versionName
     }.getOrNull() ?: "0"
+
+    /**
+     * The version the user chose Later for. The automatic check doesn't offer it again (a newer
+     * release still is); Check for updates in Tools always does.
+     */
+    fun skippedVersion(context: Context): String? =
+        context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString(KEY_SKIPPED, null)
+
+    fun skipVersion(context: Context, version: String) =
+        context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putString(KEY_SKIPPED, version).apply()
 
     /** True if an automatic check is due (throttled so resume doesn't hit the API every time). */
     fun autoCheckDue(context: Context): Boolean {

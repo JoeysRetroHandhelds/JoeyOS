@@ -85,6 +85,42 @@ sealed class RAProgressResult {
     object NotConfigured : RAProgressResult()
 }
 
+/** One achievement in a game, with whether you've earned it. */
+data class RAAchievement(
+    val id: Int,
+    val title: String,
+    val description: String,
+    val points: Int,
+    val badgeName: String,
+    val earned: Boolean,
+    val earnedHardcore: Boolean,
+    val dateEarned: Date?,
+    val numAwarded: Int,
+    val type: String?,           // "progression", "win_condition", "missable" or null
+    val displayOrder: Int
+) {
+    val badgeUrl: String get() = "https://media.retroachievements.org/Badge/$badgeName.png"
+    val lockedBadgeUrl: String get() = "https://media.retroachievements.org/Badge/${badgeName}_lock.png"
+    val isMissable: Boolean get() = type == "missable"
+}
+
+/** A game's achievements and your progress through them. */
+data class RAGameProgress(
+    val gameId: Int,
+    val title: String,
+    val consoleName: String,
+    val imageIcon: String,
+    val numDistinctPlayers: Int,
+    val achievements: List<RAAchievement>,
+    val fetchedAt: Long = System.currentTimeMillis()
+) {
+    val iconUrl: String? get() = imageIcon.takeIf { it.isNotBlank() }?.let { "https://media.retroachievements.org$it" }
+    val gameUrl: String get() = "https://retroachievements.org/game/$gameId"
+    val earnedCount: Int get() = achievements.count { it.earned }
+    val totalPoints: Int get() = achievements.sumOf { it.points }
+    val earnedPoints: Int get() = achievements.filter { it.earned }.sumOf { it.points }
+}
+
 class RetroAchievementsRepository(context: Context) {
 
     private val appContext = context.applicationContext
@@ -459,7 +495,8 @@ class RetroAchievementsRepository(context: Context) {
                     conn.inputStream.bufferedReader().use { it.readText() }
                 } finally { conn.disconnect() }
                 val arr = JSONArray(body)
-                val fmt = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
+                // RA times are UTC: read as local they were off by the time-zone offset.
+                val fmt = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).apply { timeZone = java.util.TimeZone.getTimeZone("UTC") }
                 val list = (0 until arr.length()).map { i ->
                     val g = arr.getJSONObject(i)
                     RARecentGame(
@@ -532,6 +569,115 @@ class RetroAchievementsRepository(context: Context) {
                 else -> null
             }
         } catch (_: Exception) { null } finally { conn.disconnect() }
+    }
+
+    // ── The game being played, and a game's achievement list (the second screen) ──────────
+
+    /** RA's dates are UTC ("yyyy-MM-dd HH:mm:ss"). */
+    private fun parseRaUtc(s: String?): Date? = s?.takeIf { it.isNotBlank() && it != "null" }?.let {
+        runCatching {
+            SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
+                .apply { timeZone = java.util.TimeZone.getTimeZone("UTC") }.parse(it)
+        }.getOrNull()
+    }
+
+    private fun getJson(url: String): String? {
+        val conn = URL(url).openConnection() as HttpURLConnection
+        return try {
+            conn.connectTimeout = 10_000; conn.readTimeout = 15_000
+            conn.setRequestProperty("User-Agent", "JoeyOS/1.0")
+            if (conn.responseCode != 200) { AppLog.w("RetroAchievements", "HTTP ${conn.responseCode} from ${url.substringBefore('?')}"); null }
+            else conn.inputStream.bufferedReader().use { it.readText() }
+        } catch (e: Exception) {
+            AppLog.w("RetroAchievements", "Request failed: ${url.substringBefore('?')}", e); null
+        } finally { conn.disconnect() }
+    }
+
+    /**
+     * The game you're playing right now, as RetroAchievements sees it: your last game, provided
+     * RA saw you playing it since [sinceMs] (a minute's grace for clocks). Null until an emulator
+     * signed in to RetroAchievements has started the game. Never cached: it's the live answer.
+     */
+    suspend fun fetchNowPlaying(sinceMs: Long): Int? {
+        if (!isConfigured) return null
+        return withContext(Dispatchers.IO) {
+            val body = getJson("https://retroachievements.org/API/API_GetUserSummary.php" +
+                "?u=${enc(username)}&y=${enc(apiKey)}&g=1&a=0") ?: return@withContext null
+            runCatching {
+                val j = JSONObject(body)
+                val last = j.optJSONArray("RecentlyPlayed")?.optJSONObject(0) ?: return@runCatching null
+                val id = last.optInt("GameID", 0).takeIf { it > 0 } ?: return@runCatching null
+                val at = parseRaUtc(last.optString("LastPlayed"))?.time ?: return@runCatching null
+                id.takeIf { at >= sinceMs - 60_000 }
+            }.getOrNull()
+        }
+    }
+
+    /**
+     * RetroAchievements' own game titles for a console (id → title), used to name romhacks: a
+     * RAPatches archive is filed under its hack's RA game id. One request per console, kept a
+     * week on disk. Empty when not signed in or offline.
+     */
+    suspend fun fetchGameTitles(consoleIds: List<Int>): Map<Int, String> {
+        if (!isConfigured) return emptyMap()
+        return withContext(Dispatchers.IO) {
+            val out = mutableMapOf<Int, String>()
+            for (cid in consoleIds) {
+                val key = "ra_titles_$cid"
+                val cached = cachePrefs.getString(key, null)?.let { runCatching { JSONObject(it) }.getOrNull() }
+                val fresh = cached != null && System.currentTimeMillis() - cached.optLong("fetchedAt") < 7 * 24 * 3_600_000L
+                val map = if (fresh) cached!!.getJSONObject("map") else {
+                    val body = getJson("https://retroachievements.org/API/API_GetGameList.php" +
+                        "?y=${enc(apiKey)}&i=$cid&f=1&h=0")
+                    val parsed = body?.let { b -> runCatching {
+                        val arr = JSONArray(b); val m = JSONObject()
+                        for (i in 0 until arr.length()) arr.getJSONObject(i).let { m.put(it.optInt("ID").toString(), it.optString("Title")) }
+                        m
+                    }.getOrNull() }
+                    if (parsed != null) {
+                        cachePrefs.edit().putString(key, JSONObject().put("fetchedAt", System.currentTimeMillis()).put("map", parsed).toString()).apply()
+                        parsed
+                    } else cached?.optJSONObject("map") ?: JSONObject()
+                }
+                map.keys().forEach { k -> k.toIntOrNull()?.let { out[it] = map.getString(k) } }
+            }
+            out
+        }
+    }
+
+    private val gameProgressCache = java.util.concurrent.ConcurrentHashMap<Int, RAGameProgress>()
+
+    /** A game's achievements with what you've earned. Reused for [maxAgeMs], so a live view can poll. */
+    suspend fun fetchGameProgress(gameId: Int, maxAgeMs: Long = 60_000): RAGameProgress? {
+        if (gameId <= 0 || !isConfigured) return null
+        gameProgressCache[gameId]?.let { if (System.currentTimeMillis() - it.fetchedAt < maxAgeMs) return it }
+        return withContext(Dispatchers.IO) {
+            val body = getJson("https://retroachievements.org/API/API_GetGameInfoAndUserProgress.php" +
+                "?u=${enc(username)}&g=$gameId&y=${enc(apiKey)}&a=1") ?: return@withContext gameProgressCache[gameId]
+            runCatching {
+                val j = JSONObject(body)
+                val list = mutableListOf<RAAchievement>()
+                j.optJSONObject("Achievements")?.let { map ->
+                    map.keys().forEach { k ->
+                        val a = map.getJSONObject(k)
+                        val date = parseRaUtc(a.optString("DateEarnedHardcore")) ?: parseRaUtc(a.optString("DateEarned"))
+                        list += RAAchievement(
+                            id = a.optInt("ID"), title = a.optString("Title"), description = a.optString("Description"),
+                            points = a.optInt("Points"), badgeName = a.optString("BadgeName"),
+                            earned = date != null, earnedHardcore = parseRaUtc(a.optString("DateEarnedHardcore")) != null,
+                            dateEarned = date, numAwarded = a.optInt("NumAwarded"),
+                            type = a.optString("type").takeIf { it.isNotBlank() && it != "null" },
+                            displayOrder = a.optInt("DisplayOrder")
+                        )
+                    }
+                }
+                RAGameProgress(
+                    gameId = gameId, title = j.optString("Title"), consoleName = j.optString("ConsoleName"),
+                    imageIcon = j.optString("ImageIcon"), numDistinctPlayers = j.optInt("NumDistinctPlayers"),
+                    achievements = list.sortedWith(compareBy({ it.displayOrder }, { it.id }))
+                ).also { gameProgressCache[gameId] = it }
+            }.getOrElse { AppLog.w("RetroAchievements", "Couldn't read game $gameId", it); gameProgressCache[gameId] }
+        }
     }
 
     private fun enc(value: String): String = URLEncoder.encode(value, "UTF-8")

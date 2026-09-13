@@ -39,7 +39,7 @@ object AzaharLauncher {
             )
         }
         return try {
-            context.startActivity(intent)
+            context.startGame(intent)
             Log.d(TAG, "launch: startActivity succeeded")
             true
         } catch (e: Exception) {

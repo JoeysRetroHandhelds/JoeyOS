@@ -24,7 +24,7 @@ object Vita3KLauncher {
             )
         }
         return try {
-            context.startActivity(intent)
+            context.startGame(intent)
             true
         } catch (_: Exception) {
             false

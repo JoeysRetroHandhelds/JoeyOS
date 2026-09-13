@@ -66,8 +66,11 @@ JoeyOS checks GitHub for a new version when it starts and every hour after that,
 - Default cores are pre-selected based on recommendation, but games won't load unless the chosen core is actually installed
 
 ### Settings → Achievements
-- Log in with your RetroAchievements and/or InfiniteBacklog account
-- View your beaten games at a glance, broken down by year and by game
+- Log in with your RetroAchievements account (Account)
+- Overview: games beaten this year and all-time, what you're currently playing, and beaten/mastered per year
+- Games: your beaten and mastered games by year and month, plus "Almost there" (the games you're closest to beating), with filters
+- Stats: totals, points, hours played and charts
+- Press A on any game for its details
 
 ### Settings → Tools
 None of the tools ever change or delete your original games.

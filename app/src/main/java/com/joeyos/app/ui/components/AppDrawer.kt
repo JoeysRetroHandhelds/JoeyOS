@@ -48,6 +48,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.joeyos.app.data.InstalledApp
+import com.joeyos.app.data.DisplayTargets
+import com.joeyos.app.data.SecondScreenPrefs
 import com.joeyos.app.ui.controls.Control
 import androidx.activity.compose.BackHandler
 import com.joeyos.app.ui.theme.*
@@ -257,6 +259,17 @@ fun AppDrawer(
                         Toast.LENGTH_SHORT).show()
                     contextApp = null
                 })
+                // Dual-screen handhelds: this app can open on the other screen instead.
+                if (remember { DisplayTargets.hasSecondScreen(context) }) {
+                    val onOther = app.packageName in SecondScreenPrefs.otherScreenApps(context)
+                    PopupRow("Open on the other screen", isCurrent = onOther, onClick = {
+                        SecondScreenPrefs.setOnOtherScreen(context, app.packageName, !onOther)
+                        Toast.makeText(context,
+                            if (onOther) "${app.label} opens on this screen" else "${app.label} opens on the other screen",
+                            Toast.LENGTH_SHORT).show()
+                        contextApp = null
+                    })
+                }
         }
     }
 }

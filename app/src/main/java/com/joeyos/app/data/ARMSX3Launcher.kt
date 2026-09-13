@@ -45,14 +45,14 @@ object ARMSX3Launcher {
             when {
                 path.startsWith("content://") -> {
                     intent.data = Uri.parse(path)
-                    context.startActivity(intent)
+                    context.startGame(intent)
                 }
                 file != null && file.isFile -> {
                     intent.setDataAndType(
                         FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file),
                         "application/octet-stream")
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    context.startActivity(intent)
+                    context.startGame(intent)
                 }
                 file != null && file.isDirectory -> {
                     // Android refuses to send a file:// URI to another app by default (it throws
@@ -62,12 +62,12 @@ object ARMSX3Launcher {
                     val policy = StrictMode.getVmPolicy()
                     try {
                         StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder().build())
-                        context.startActivity(intent)
+                        context.startGame(intent)
                     } finally {
                         StrictMode.setVmPolicy(policy)
                     }
                 }
-                else -> context.startActivity(base.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                else -> context.startGame(base.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
             }
             true
         } catch (e: Exception) {

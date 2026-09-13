@@ -39,6 +39,7 @@ import com.joeyos.app.data.ChdConversion
 import com.joeyos.app.data.RvzConversion
 import com.joeyos.app.data.ThreeDsCompression
 import com.joeyos.app.data.CompressJob
+import com.joeyos.app.data.CompressOne
 import com.joeyos.app.data.CompressStatus
 import com.joeyos.app.data.CompressUndo
 import com.joeyos.app.data.RomCompression
@@ -408,6 +409,10 @@ private fun PatchScreen(firstFocus: FocusRequester, modifier: Modifier = Modifie
 
     val ready = patchUri != null && romUri != null && kind != null && !busy
     var saving by remember { mutableStateOf(false) }
+    // The best compressed form for the patched game, read from its extension and ROM folder.
+    val patchFormat = remember(romName, romUri) {
+        romName?.let { CompressOne.formatFor(context, it, null, romUri?.let(TreeUriPaths::documentToFile)?.parentFile) }
+    }
     if (saving) {
         SaveResultDialog(
             title = "Save the patched game",
@@ -415,12 +420,17 @@ private fun PatchScreen(firstFocus: FocusRequester, modifier: Modifier = Modifie
             // Only a ROM with a real path has a folder to save next to; otherwise Downloads.
             besideFolder = romUri?.let(TreeUriPaths::documentToFile)?.parentFile,
             prefKey = "patch_save_to",
-            onSave = { target, _ ->
+            compressFormat = patchFormat,
+            onSave = { target, _, compress ->
                 saving = false
                 runPatch { bytes ->
                     target.parentFile?.mkdirs()
                     target.writeBytes(bytes)
-                    target.absolutePath
+                    val fmt = patchFormat
+                    if (compress && fmt != null)
+                        kotlinx.coroutines.runBlocking { CompressOne.compress(context, target, fmt, null) }?.absolutePath
+                            ?: target.absolutePath
+                    else target.absolutePath
                 }
             },
             onCancel = { saving = false }
@@ -563,8 +573,10 @@ private fun M3uScreen(firstFocus: FocusRequester, modifier: Modifier = Modifier)
         if (applying) { withFrameNanos { }; runCatching { cancelFocus.requestFocus() } }
     }
 
+    val listState = rememberLazyListState()
     LazyColumn(
-        modifier = modifier.padding(horizontal = 18.dp),
+        state = listState,
+        modifier = modifier.keepFocus(firstFocus, listState, plans, applying).padding(horizontal = 18.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
         contentPadding = PaddingValues(top = 4.dp, bottom = 28.dp)
     ) {
@@ -886,8 +898,10 @@ private fun CompressScreen(firstFocus: FocusRequester, modifier: Modifier = Modi
         }
     }
 
+    val listState = rememberLazyListState()
     LazyColumn(
-        modifier = modifier.padding(horizontal = 18.dp),
+        state = listState,
+        modifier = modifier.keepFocus(firstFocus, listState, plans, applying).padding(horizontal = 18.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
         contentPadding = PaddingValues(top = 4.dp, bottom = 28.dp)
     ) {
@@ -1187,6 +1201,55 @@ private val RaConsoleNames = mapOf(
     "ps2" to "PlayStation 2", "psp" to "PSP", "psx" to "PlayStation",
 )
 
+/** RetroAchievements' console ids for the romhack consoles, to look up each hack's RA title. */
+private val RaConsoleIds = mapOf(
+    "nes" to listOf(7), "fds" to listOf(81), "snes" to listOf(3), "n64" to listOf(2, 78),
+    "gb" to listOf(4), "gbc" to listOf(6), "gba" to listOf(5), "nds" to listOf(18),
+    "genesis" to listOf(1), "master" to listOf(11), "gamegear" to listOf(15), "sega32x" to listOf(10),
+    "segacd" to listOf(9), "saturn" to listOf(39), "dreamcast" to listOf(40), "tg16" to listOf(8, 76),
+    "pcfx" to listOf(49), "neogeocd" to listOf(56), "ngp" to listOf(14), "msx" to listOf(29),
+    "3do" to listOf(43), "gc" to listOf(16), "wii" to listOf(19), "ps2" to listOf(21),
+    "psp" to listOf(41), "psx" to listOf(12),
+)
+
+/** How a hack is shown: a proper title, and its version, author and kind underneath. */
+private data class HackLabel(val title: String, val detail: String)
+
+private val RaTitleTags = Regex("~[^~]+~\\s*")
+private val VersionLike = Regex("^v?\\d+([._]\\d+)*[a-z]?$|^v\\d.*", RegexOption.IGNORE_CASE)
+private val NotAnAuthor = setOf("usa", "europe", "japan", "world", "en", "eng", "english", "complete", "beta",
+    "demo", "alt menus", "full game", "classic")
+
+/**
+ * A readable name for a hack. The index's names are the patch files' own ("FE8 - Storge (v1.22)
+ * (knabepricer)", "old/…", or a bare "34181-FE8-DreamOfFiveDE"), so: RetroAchievements' own title
+ * for the hack when we have it (the archive is filed under the hack's RA game id), else the patch
+ * name tidied up; the version and author move to the detail line. Translations keep the patch
+ * name, since RA files them under the base game's title.
+ */
+private fun hackLabel(hack: RaHack, raTitles: Map<Int, String>): HackLabel {
+    val file = hack.path.substringAfterLast('/')
+    val raId = Regex("^(\\d+)-").find(file)?.groupValues?.get(1)?.toIntOrNull()
+    var raw = hack.name.substringAfterLast('/').trim()
+    val groups = mutableListOf<String>()
+    while (true) {
+        val m = Regex("\\s*\\(([^()]*)\\)\\s*$").find(raw) ?: break
+        if (m.range.first == 0) break
+        groups.add(0, m.groupValues[1].trim()); raw = raw.substring(0, m.range.first).trim()
+    }
+    val version = groups.firstOrNull { VersionLike.matches(it) }?.let { if (it.startsWith("v", true)) it else "v$it" }
+    val author = groups.lastOrNull { !VersionLike.matches(it) && it.lowercase() !in NotAnAuthor }
+    if (Regex("^\\d+-").containsMatchIn(raw)) {
+        raw = raw.replace(Regex("^\\d+-[A-Za-z0-9]+-"), "")
+            .replace(Regex("(?<=[a-z])(?=[A-Z])"), " ").replace('_', ' ')
+    }
+    raw = raw.replace(Regex("^[A-Z0-9]{2,5}\\s-\\s"), "")
+    val raTitle = raId?.let { raTitles[it] }?.takeIf { hack.type != "Translation" }
+        ?.replace(RaTitleTags, "")?.trim()?.takeIf { it.isNotEmpty() }
+    val kind = when (hack.type) { "Hacks" -> "Hack"; "Fixes" -> "Fix"; "Subsets" -> "Subset"; else -> hack.type }
+    return HackLabel(raTitle ?: raw.ifBlank { hack.name }, listOfNotNull(version, author, kind).joinToString("  ·  "))
+}
+
 /** A game the user owns that has one or more RetroAchievements romhacks. */
 private data class RaGameMatch(val rom: File, val title: String, val hacks: List<RaHack>)
 
@@ -1204,6 +1267,7 @@ private fun RaHacksScreen(firstFocus: FocusRequester, modifier: Modifier = Modif
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     remember { RaPatches.cacheDir = context.cacheDir; Unit }
+    val raRepo = remember { com.joeyos.app.data.RetroAchievementsRepository(context) }
 
     var chosen by rememberSaveable { mutableStateOf<String?>(null) }
     var openGame by remember { mutableStateOf<RaGameMatch?>(null) }
@@ -1220,23 +1284,37 @@ private fun RaHacksScreen(firstFocus: FocusRequester, modifier: Modifier = Modif
     var lastGame by remember { mutableStateOf<String?>(null) }
     var pendingHack by remember { mutableStateOf<RaHack?>(null) }
 
+    // RetroAchievements' own titles for this console's hacks (one request, kept a week).
+    val raTitles by produceState(emptyMap<Int, String>(), chosen) {
+        value = chosen?.let { RaConsoleIds[it] }?.let { raRepo.fetchGameTitles(it) } ?: emptyMap()
+    }
+    val hackLabels = remember(openGame, raTitles) {
+        openGame?.hacks.orEmpty().map { it to hackLabel(it, raTitles) }.sortedBy { it.second.title.lowercase() }
+    }
+
     // Nothing is downloaded or written until the user names the hack and picks where it goes.
     pendingHack?.let { hack ->
         val game = openGame
         val console = chosen
         if (game != null && console != null) {
             val zipped = game.rom.extension.equals("zip", ignoreCase = true)
+            val hackFormat = remember(game) {
+                CompressOne.formatFor(context, RaPatches.baseRomName(game.rom), console, game.rom.parentFile)
+            }
             SaveResultDialog(
                 title = "Save the romhack",
-                suggestedName = remember(hack) { raSuggestedName(game, hack) },
+                suggestedName = remember(hack) { raSuggestedName(game, hackLabel(hack, raTitles).title) },
                 besideFolder = game.rom.parentFile,
                 prefKey = "romhack_save_to",
-                zipsTo = if (zipped) "zip" else null,
-                onSave = { target, beside ->
+                compressFormat = hackFormat,
+                // Compressed by default when the original already is (a zipped or CHD library).
+                compressDefault = zipped || game.rom.extension.lowercase() in setOf("chd", "rvz", "zcci", "7z"),
+                onSave = { target, _, compress ->
                     pendingHack = null
                     busy = true; message = null
                     scope.launch {
-                        val (worked, text) = createRaHack(console, game, hack, target, zip = beside && zipped)
+                        val (worked, text) = createRaHack(context, console, game, hack, target,
+                            compress = hackFormat.takeIf { compress })
                         ok = worked; message = text; busy = false; openGame = null
                     }
                 },
@@ -1280,22 +1358,41 @@ private fun RaHacksScreen(firstFocus: FocusRequester, modifier: Modifier = Modif
         }
     }
 
-    // Focus: the first row when a level opens, the row you came from when you step back.
+    // Focus: the first row when a level opens, the row you came from when you step back. The row
+    // is scrolled into view first: the list keeps its scroll position across levels, and a row
+    // that's off screen doesn't exist yet in a lazy list, so it can't take focus. Found on device:
+    // opening Fire Emblem, far down the GBA list, opened its 76 hacks scrolled part-way, the first
+    // hack wasn't there to focus, and nothing was focused, so the controls did nothing.
+    val listState = rememberLazyListState()
     LaunchedEffect(chosen, openGame, matches != null, folders != null, busy) {
-        withFrameNanos { }
-        runCatching {
-            when {
-                busy -> {}
-                openGame != null -> levelFirst.requestFocus()
-                chosen != null && matches != null ->
-                    (lastGame?.let { gameRows[it] } ?: levelFirst).requestFocus()
-                chosen == null && folders != null ->
-                    (lastConsole?.let { consoleRows[it] } ?: firstFocus).requestFocus()
+        if (busy) return@LaunchedEffect
+        // Rows above the level's list: the title, a result message, and the level's own heading.
+        val header = 2 + (if (message != null) 1 else 0)
+        val (index, target) = when {
+            openGame != null -> header to levelFirst
+            chosen != null && matches != null -> {
+                val i = matches.orEmpty().indexOfFirst { it.rom.absolutePath == lastGame }
+                if (i >= 0) (header + i) to gameRows.getValue(lastGame!!) else header to levelFirst
             }
+            chosen == null && folders != null -> {
+                val keys = folders.orEmpty().keys.sortedBy { RaConsoleNames[it] ?: it }
+                val i = keys.indexOf(lastConsole)
+                if (i >= 0) (header + i) to consoleRows.getValue(lastConsole!!) else header to firstFocus
+            }
+            else -> return@LaunchedEffect
+        }
+        runCatching { listState.scrollToItem((index - 1).coerceAtLeast(0)) }
+        withFrameNanos { }
+        if (runCatching { target.requestFocus() }.isFailure) {
+            // Never leave the page with nothing focused: fall back to the top of the list.
+            runCatching { listState.scrollToItem(0) }
+            withFrameNanos { }
+            runCatching { (if (openGame != null || chosen != null) levelFirst else firstFocus).requestFocus() }
         }
     }
 
     LazyColumn(
+        state = listState,
         modifier = modifier.padding(horizontal = 18.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
         contentPadding = PaddingValues(top = 4.dp, bottom = 28.dp)
@@ -1371,9 +1468,9 @@ private fun RaHacksScreen(firstFocus: FocusRequester, modifier: Modifier = Modif
             // ── Level 3: the game's hacks ──
             else -> {
                 item { SectionLabel(game.title) }
-                game.hacks.forEachIndexed { i, hack ->
+                hackLabels.forEachIndexed { i, (hack, label) ->
                     item(key = "hack_${hack.path}") {
-                        ToolRow(hack.name, "${hack.type}  •  A to name it and choose where to save it",
+                        ToolRow(label.title, label.detail + "  •  A to save it",
                             onClick = { pendingHack = hack },
                             modifier = if (i == 0) Modifier.focusRequester(levelFirst) else Modifier)
                     }
@@ -1384,10 +1481,10 @@ private fun RaHacksScreen(firstFocus: FocusRequester, modifier: Modifier = Modif
 }
 
 /** The suggested file name for a romhack: the base game's name plus the hack's, keeping its extension. */
-private fun raSuggestedName(match: RaGameMatch, hack: RaHack): String {
+private fun raSuggestedName(match: RaGameMatch, hackTitle: String): String {
     val inner = RaPatches.baseRomName(match.rom)
     val ext = inner.substringAfterLast('.', "")
-    val safe = hack.name.replace(Regex("[\\\\/:*?\"<>|]"), "_").trim()
+    val safe = hackTitle.replace(Regex("[\\\\/:*?\"<>|]"), "_").trim()
     return inner.substringBeforeLast('.') + " ($safe)" + if (ext.isNotEmpty()) ".$ext" else ""
 }
 
@@ -1397,7 +1494,8 @@ private fun raSuggestedName(match: RaGameMatch, hack: RaHack): String {
  * original) the result is zipped like its neighbours. Returns whether it worked and a line to show.
  */
 private suspend fun createRaHack(
-    console: String, match: RaGameMatch, hack: RaHack, target: File, zip: Boolean
+    context: android.content.Context, console: String, match: RaGameMatch, hack: RaHack, target: File,
+    compress: CompressOne.Format?
 ): Pair<Boolean, String> =
     withContext(Dispatchers.IO) {
         fun fail(text: String, t: Throwable? = null): Pair<Boolean, String> {
@@ -1424,14 +1522,11 @@ private suspend fun createRaHack(
 
         // Zipped when saved next to a zipped original, so that folder stays in one form.
         var finalName = out.name
-        if (zip) {
-            RomCompression.Systems.firstOrNull { it.shortname == console }?.let { sys ->
-                val jobs = RomCompression.plan(folder, sys).filter { it.source.absolutePath == out.absolutePath }
-                if (jobs.isNotEmpty()) {
-                    val run = RomCompression.compressAll(jobs, removeOriginal = true, overwrite = { true }) {}
-                    run.undo.firstOrNull()?.let { finalName = it.target.name }
-                }
-            }
+        if (compress != null) {
+            val packed = CompressOne.compress(context, out, compress, console)
+            if (packed != null) finalName = packed.name
+            else return@withContext true to "Created ${out.name} in ${folder.absolutePath}, but couldn't compress it " +
+                "to ${compress.label}; it's saved uncompressed."
         }
         AppLog.i("Tools", "Romhacks: applied '${hack.name}' to ${match.rom.name} -> ${folder.absolutePath}/$finalName")
         true to "Created $finalName in ${folder.absolutePath}. In a ROMs folder, refresh your emulator's game " +
@@ -1440,14 +1535,18 @@ private suspend fun createRaHack(
 
 /**
  * "Save the result", for the tools that create a new game (Patch a ROM, RetroAchievements
- * romhacks). Shown before anything is downloaded or written: the name is editable, and it goes
- * either next to the original or into Downloads on internal storage. The place is remembered per
- * tool ([prefKey]). An existing file is never overwritten; the user is asked to change the name.
+ * romhacks). Shown before anything is downloaded or written: the name is editable, it goes next
+ * to the original or into Downloads on internal storage, and, for a cartridge game, it can be
+ * saved as a .zip. An existing file is never overwritten; the user is asked to change the name.
  * Focus opens on Save, so A with nothing changed takes the suggestion.
  *
+ * Nothing is remembered unless the user ticks "Remember these choices" (unticked by default, at
+ * the user's request): then that tool ([prefKey]) starts with the same place and compress choice
+ * next time. Otherwise it starts next to the original, compressed only if [compressDefault].
+ *
  * [besideFolder] is null when the original has no folder JoeyOS can write to (it came from cloud
- * storage, say), leaving Downloads as the only choice. [zipsTo] is the extension the result ends up
- * with when saved next to the original (a zipped library), so the name check looks for that too.
+ * storage, say), leaving Downloads as the only choice. [compressFormat] is the best compressed
+ * form for this game (CompressOne), or null when there is none, which hides the switch.
  */
 @Composable
 private fun SaveResultDialog(
@@ -1455,19 +1554,26 @@ private fun SaveResultDialog(
     suggestedName: String,
     besideFolder: File?,
     prefKey: String,
-    onSave: (target: File, beside: Boolean) -> Unit,
+    onSave: (target: File, beside: Boolean, compress: Boolean) -> Unit,
     onCancel: () -> Unit,
-    zipsTo: String? = null
+    compressFormat: CompressOne.Format? = null,
+    compressDefault: Boolean = false
 ) {
     val context = LocalContext.current
     val prefs = remember { context.getSharedPreferences("tools", android.content.Context.MODE_PRIVATE) }
-    var beside by remember { mutableStateOf(prefs.getString(prefKey, "beside") != "downloads") }
+    val remembered = remember { prefs.getBoolean("${prefKey}_remember", false) }
+    var rememberChoice by remember { mutableStateOf(remembered) }
+    var beside by remember { mutableStateOf(!remembered || prefs.getString(prefKey, "beside") != "downloads") }
+    var compress by remember {
+        mutableStateOf(compressFormat != null &&
+            if (remembered) prefs.getBoolean("${prefKey}_compress", compressDefault) else compressDefault)
+    }
     var name by remember { mutableStateOf(suggestedName) }
     val ext = suggestedName.substringAfterLast('.', "")
 
     // The name as written: characters a file name can't hold replaced, the extension kept.
     val fileName = remember(name) {
-        var clean = name.trim().replace(Regex("[\\/:*?\"<>|]"), "_")
+        var clean = name.trim().replace(Regex("[\\\\/:*?\"<>|]"), "_")
         if (ext.isNotEmpty() && !clean.endsWith(".$ext", ignoreCase = true)) clean += ".$ext"
         clean
     }
@@ -1475,7 +1581,7 @@ private fun SaveResultDialog(
     val folder = if (toBeside) besideFolder!! else
         Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
     val target = File(folder, fileName)
-    val shownName = if (toBeside && zipsTo != null) target.nameWithoutExtension + "." + zipsTo else fileName
+    val shownName = if (compress && compressFormat != null) target.nameWithoutExtension + "." + compressFormat.extension else fileName
     val problem = when {
         name.isBlank() -> "Enter a name."
         target.exists() || File(folder, shownName).exists() -> "A file with that name is already there. Change the name."
@@ -1485,10 +1591,10 @@ private fun SaveResultDialog(
     val placeFirst = remember { FocusRequester() }
 
     JoeyPopup(title = title, onDismiss = onCancel, initialFocus = saveFocus) {
-        SectionLabel("NAME")
+        SectionLabel("Name")
         ControllerTextField(value = name, onValueChange = { name = it }, placeholder = "File name")
 
-        SectionLabel("SAVE TO")
+        SectionLabel("Save to")
         Row(Modifier.fillMaxWidth().focusRow(placeFirst), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             if (besideFolder != null) {
                 OptionChip("Next to the original", toBeside, { beside = true },
@@ -1498,19 +1604,33 @@ private fun SaveResultDialog(
                 Modifier.weight(1f).then(if (besideFolder == null) Modifier.focusRequester(placeFirst) else Modifier),
                 fontSize = 12.sp)
         }
+        compressFormat?.let { fmt ->
+            ToggleRow("Save compressed", "As ${fmt.label}, the format its emulators read directly. Takes less space.",
+                compress, { compress = it })
+        }
         Text(
             "${folder.absolutePath}/$shownName" + if (besideFolder == null)
                 "\nThe original isn't in a folder JoeyOS can save to, so it goes in Downloads." else "",
             fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextDim
         )
+        ToggleRow("Remember these choices", "Start with this place" + (if (compressFormat != null) " and compress choice" else "") +
+            " next time.", rememberChoice, { rememberChoice = it })
         problem?.let { StatusLine(it, MissingColor, bold = true) }
 
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             JoeyButton("Save", {
                 if (problem != null) return@JoeyButton
-                prefs.edit().putString(prefKey, if (toBeside) "beside" else "downloads").apply()
-                AppLog.i("Tools", "Save: ${target.absolutePath}")
-                onSave(target, toBeside)
+                prefs.edit().apply {
+                    if (rememberChoice) {
+                        putBoolean("${prefKey}_remember", true)
+                        putString(prefKey, if (toBeside) "beside" else "downloads")
+                        putBoolean("${prefKey}_compress", compress)
+                    } else {
+                        remove("${prefKey}_remember"); remove(prefKey); remove("${prefKey}_compress")
+                    }
+                }.apply()
+                AppLog.i("Tools", "Save: ${target.absolutePath}" + if (compress) " (compressed, ${compressFormat?.label})" else "")
+                onSave(target, toBeside, compress && compressFormat != null)
             }, Modifier.weight(1f).focusRequester(saveFocus))
             JoeyButton("Cancel", onCancel, Modifier.weight(1f))
         }

@@ -38,7 +38,7 @@ object M64PlusFZLauncher {
         val oldPolicy = StrictMode.getVmPolicy()
         return try {
             StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder().build())
-            context.startActivity(intent)
+            context.startGame(intent)
             true
         } catch (e: Exception) {
             AppLog.e(TAG, "launch: startActivity failed", e)

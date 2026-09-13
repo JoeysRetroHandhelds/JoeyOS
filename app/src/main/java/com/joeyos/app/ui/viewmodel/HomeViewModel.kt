@@ -1,5 +1,7 @@
 ﻿package com.joeyos.app.ui.viewmodel
 
+import com.joeyos.app.data.startApp
+import com.joeyos.app.data.startGame
 import android.content.Context
 import com.joeyos.app.AppLog
 import android.content.Intent
@@ -18,7 +20,6 @@ import com.joeyos.app.data.DockTitleSize
 import com.joeyos.app.data.RecentGame
 import com.joeyos.app.data.InstalledApp
 import com.joeyos.app.data.PreferencesRepository
-import com.joeyos.app.data.InfiniteBacklogRepository
 import com.joeyos.app.data.RetroAchievementsRepository
 import com.joeyos.app.data.RetroArchLauncher
 import com.joeyos.app.data.WallpaperState
@@ -30,8 +31,7 @@ import kotlin.math.roundToInt
 
 class HomeViewModel(
     private val repo: PreferencesRepository,
-    val raRepo: RetroAchievementsRepository,
-    val ibRepo: InfiniteBacklogRepository
+    val raRepo: RetroAchievementsRepository
 ) : ViewModel() {
 
     val wallpaperState: StateFlow<WallpaperState> = repo.wallpaperState
@@ -125,7 +125,7 @@ class HomeViewModel(
         if (intent != null) {
             AppLog.i("Launch", "Opening app $packageName")
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            runCatching { context.startActivity(intent) }
+            runCatching { context.startApp(intent, packageName) }
                 .onFailure { AppLog.e("Launch", "Couldn't open $packageName", it) }
             viewModelScope.launch {
                 // Record launch for every system that maps to this package so dock sort updates.
@@ -228,7 +228,7 @@ class HomeViewModel(
         val intent = context.packageManager.getLaunchIntentForPackage(packageName)
         if (intent != null) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            context.startActivity(intent)
+            context.startGame(intent)
             viewModelScope.launch { repo.recordLaunch(systemId) }
         } else {
             Toast.makeText(context, "App not found: $packageName", Toast.LENGTH_SHORT).show()
@@ -240,8 +240,9 @@ class HomeViewModel(
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             val repo   = PreferencesRepository(context.applicationContext)
             val raRepo = RetroAchievementsRepository(context.applicationContext)
-            val ibRepo = InfiniteBacklogRepository(context.applicationContext)
-            return HomeViewModel(repo, raRepo, ibRepo) as T
+            // Infinite Backlog support was removed in 1.0.16; drop what it had saved.
+            context.applicationContext.deleteSharedPreferences("infinitebacklog")
+            return HomeViewModel(repo, raRepo) as T
         }
     }
 }
