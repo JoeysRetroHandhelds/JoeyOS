@@ -163,7 +163,7 @@ fun AppDrawer(
                         .clip(RoundedCornerShape(12.dp))
                         .background(Color.White.copy(alpha = if (lit) 0.12f else 0.07f))
                         .border(if (lit) 2.dp else 1.dp,
-                            if (lit) Amber else Color.White.copy(alpha = 0.12f), RoundedCornerShape(12.dp))
+                            if (lit) Accent else Color.White.copy(alpha = 0.12f), RoundedCornerShape(12.dp))
                         .padding(horizontal = 14.dp, vertical = 10.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -293,7 +293,7 @@ fun AppGridItem(
             .onFocusChanged { if (it.isFocused) onFocused() }
             .clip(RoundedCornerShape(12.dp))
             .then(if (isSelected) Modifier.background(Color.White.copy(alpha = 0.12f)) else Modifier)
-            .border(if (isSelected) 2.dp else 1.dp, if (isSelected) Amber else Color.Transparent, RoundedCornerShape(12.dp))
+            .border(if (isSelected) 2.dp else 1.dp, if (isSelected) Accent else Color.Transparent, RoundedCornerShape(12.dp))
             // One clickable node = one focus target.
             .combinedClickable(interactionSource = interaction, indication = null,
                 onClick = onClick, onLongClick = onLongClick)

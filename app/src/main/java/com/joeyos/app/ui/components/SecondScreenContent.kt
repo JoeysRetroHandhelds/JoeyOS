@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -99,9 +100,8 @@ fun SecondScreenContent() {
     var tab by remember { mutableIntStateOf(homeTab()) }
     // Logged out of RetroAchievements while on one of its tabs: go to Apps.
     LaunchedEffect(configured) { if (!configured && (tab == 0 || tab == 1)) tab = 4 }
-    var chrome by remember { mutableStateOf(true) }                      // tabs shown (hidden while reading a guide)
+    var chrome by remember { mutableStateOf(true) }                      // the guide's own bar shown (arrow in the tab row)
     var wantGuide by remember { mutableStateOf(false) }                  // open the Guide once the game is known
-    LaunchedEffect(tab) { chrome = true }
     var guideSearch by remember { mutableStateOf<GuideSource?>(null) }   // "find a guide for this achievement"
     // RA's own title and console for the game, which name its guide and say where to look for one.
     val raGame by produceState<RAGameProgress?>(null, nowPlaying?.gameId) {
@@ -179,18 +179,11 @@ fun SecondScreenContent() {
         when {
             !enabled -> Message("Second screen off", "Turn it on in Settings › Appearance › Second screen.")
             else -> Column(Modifier.fillMaxSize()) {
-                // Tabs, or a back button over an opened game. Hidden while reading a guide.
-                // Hidden: a slim strip in their place (not over the guide) brings them back.
-                if (!chrome && tab == 2) Box(
-                    Modifier.fillMaxWidth().clickable { chrome = true }.padding(vertical = 5.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                        Box(Modifier.size(width = 22.dp, height = 4.dp).clip(RoundedCornerShape(2.dp)).background(TextFaint))
-                        Text("Show tabs", fontSize = 11.sp, color = TextFaint)
-                    }
-                }
-                if (chrome || tab != 2) Row(
+                // Tabs, or a back button over an opened game: always shown. The Guide is the only
+                // tab with a second row (its own bar); the arrow at the end of this row hides and
+                // shows that bar. Hiding things on scroll was fiddly (found on device), so nothing
+                // moves by itself any more.
+                Row(
                     Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 10.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
@@ -204,6 +197,18 @@ fun SecondScreenContent() {
                         Pill("Settings", active = tab == 3) { tab = 3; wantGuide = false }
                         if (session != null && configured) Pill("Now playing", active = tab == 1) { tab = 1; wantGuide = false }
                         if (session != null && guideTarget != null) Pill("Guide", active = tab == 2) { tab = 2; wantGuide = false }
+                        if (tab == 2 && guideTarget != null) {
+                            Spacer(Modifier.weight(1f))
+                            // Up: hide the guide's bar. Down: show it again.
+                            Box(
+                                Modifier.clip(RoundedCornerShape(50)).background(Color.White.copy(alpha = 0.08f))
+                                    .clickable { chrome = !chrome }.padding(4.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                JoeyIcon(R.drawable.ic_chevron_right, TextDim, 22.dp,
+                                    Modifier.graphicsLayer { rotationZ = if (chrome) -90f else 90f })
+                            }
+                        }
                     }
                 }
                 Box(Modifier.weight(1f)) {
@@ -216,7 +221,8 @@ fun SecondScreenContent() {
                         // Logged out while on an RA tab: back to Apps.
                         (tab == 0 || tab == 1) && !configured -> SecondScreenApps()
                         tab == 2 && guideTarget != null -> GuideTab(guideTarget, guideSearch, onSearchShown = { guideSearch = null },
-                            chrome = chrome, onChrome = { chrome = it })
+                            // Only the arrow above changes the guide's bar; scrolling doesn't.
+                            chrome = chrome, onChrome = {})
                         tab == 1 && s != null && np != null -> GameAchievements(np.gameId, raRepo, live = LiveInfo(s, np),
                             onFindGuide = if (guideTarget != null) { q -> guideSearch = Guides.searchFor(q); tab = 2 } else null)
                         tab == 1 && s != null -> Message(s.title ?: "Now playing",
@@ -415,8 +421,8 @@ private fun Overview(
                 Text("Search RetroAchievements", fontSize = 12.sp, color = TextFaint)
             }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                StatTile("${ra.awards.count { !it.isFinished && yearOf(it.awardedAt) == currentYear }}", "beaten in $currentYear", Amber, Modifier.weight(1f), big = wide)
-                StatTile("${ra.beatenHardcoreAwardsCount + ra.beatenSoftcoreAwardsCount}", "beaten all-time", Amber, Modifier.weight(1f), big = wide)
+                StatTile("${ra.awards.count { !it.isFinished && yearOf(it.awardedAt) == currentYear }}", "beaten in $currentYear", Accent, Modifier.weight(1f), big = wide)
+                StatTile("${ra.beatenHardcoreAwardsCount + ra.beatenSoftcoreAwardsCount}", "beaten all-time", Accent, Modifier.weight(1f), big = wide)
                 finishedTotal(ra.awards).let { (n, label) -> StatTile("$n", label, MasteredColor, Modifier.weight(1f), big = wide) }
                 StatTile(points?.let { "%,d".format(it) } ?: "—", "points", RaColor, Modifier.weight(1f), big = wide)
             }
@@ -469,7 +475,7 @@ private fun GameColumn(
     Column(modifier, verticalArrangement = Arrangement.spacedBy(6.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             SectionLabel(title, Modifier.weight(1f))
-            more?.let { Text("See all ›", fontSize = 11.sp, fontWeight = FontWeight.SemiBold, color = Amber,
+            more?.let { Text("See all ›", fontSize = 11.sp, fontWeight = FontWeight.SemiBold, color = Accent,
                 modifier = Modifier.clip(RoundedCornerShape(6.dp)).clickable(onClick = it).padding(horizontal = 6.dp, vertical = 2.dp)) }
         }
         if (isEmpty) Text(empty, fontSize = 11.sp, color = TextFaint)
@@ -593,7 +599,7 @@ private fun AchSearch(raRepo: RetroAchievementsRepository, nav: AchNav, onOpenGa
             SearchField(nav.query, { nav.query = it }, "Search RetroAchievements",
                 Modifier.fillMaxWidth(), focusRequester = focus,
                 classicBox = Modifier.clip(RoundedCornerShape(12.dp)).background(Color.White.copy(alpha = 0.08f))
-                    .border(1.dp, AmberSoft, RoundedCornerShape(12.dp)).padding(horizontal = 12.dp, vertical = 10.dp))
+                    .border(1.dp, AccentSoft, RoundedCornerShape(12.dp)).padding(horizontal = 12.dp, vertical = 10.dp))
         }
         if (loading) item {
             Text(if (totalConsoles == 0) "Loading RetroAchievements games…"
@@ -761,12 +767,12 @@ private fun GameHeader(g: RAGameProgress, live: LiveInfo?, now: Long) {
         // RA's live line for this session ("Stage 3-2 · 4 lives"), when the game has one.
         live?.nowPlaying?.richPresence?.takeIf { it.isNotBlank() }?.let { rp ->
             Row(
-                Modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp)).background(Amber.copy(alpha = 0.10f))
+                Modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp)).background(Accent.copy(alpha = 0.10f))
                     .padding(horizontal = 10.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically
             ) {
-                JoeyIcon(R.drawable.ic_play_arrow, Amber, 16.dp)
-                Text(rp, fontSize = 12.sp, color = Amber, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                JoeyIcon(R.drawable.ic_play_arrow, Accent, 16.dp)
+                Text(rp, fontSize = 12.sp, color = Accent, maxLines = 2, overflow = TextOverflow.Ellipsis)
             }
         }
         val status = when (g.highestAward) {
@@ -829,7 +835,7 @@ private fun AchievementRow(a: RAAchievement, players: Int, hidden: Boolean, onTa
             Text(listOfNotNull(rarity.takeIf { it.isNotEmpty() }, earned).joinToString("  ·  "), fontSize = 9.sp,
                 fontFamily = JoeyFont, color = if (a.earned) VerifiedColor else TextFaint)
         }
-        Text("${a.points}", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = if (a.earned) Amber else TextFaint,
+        Text("${a.points}", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = if (a.earned) Accent else TextFaint,
             modifier = Modifier.alpha(if (a.earned) 1f else 0.7f))
     }
 }
@@ -885,7 +891,7 @@ private fun AchievementDetail(a: RAAchievement, g: RAGameProgress, raRepo: Retro
                         .padding(10.dp)
                 ) {
                     Text(c.user + (c.submitted?.let { "  ·  ${dayFmt().format(it)} ${yearOf(it)}" } ?: ""),
-                        fontSize = 10.sp, fontFamily = JoeyFont, color = Amber)
+                        fontSize = 10.sp, fontFamily = JoeyFont, color = Accent)
                     Text(c.text, fontSize = 12.sp, color = TextPrimary)
                 }
             }
@@ -916,10 +922,10 @@ private fun ClassicPill(label: String, active: Boolean, onClick: () -> Unit) {
     val shape = RoundedCornerShape(50)
     Text(
         label, fontSize = 12.sp, fontFamily = JoeyFont, fontWeight = FontWeight.SemiBold,
-        color = if (active) Amber else TextDim,
+        color = if (active) Accent else TextDim,
         modifier = Modifier.clip(shape)
-            .background(if (active) Amber.copy(alpha = 0.18f) else Color.White.copy(alpha = 0.05f))
-            .border(1.dp, if (active) AmberSoft else Color.White.copy(alpha = 0.10f), shape)
+            .background(if (active) Accent.copy(alpha = 0.18f) else Color.White.copy(alpha = 0.05f))
+            .border(1.dp, if (active) AccentSoft else Color.White.copy(alpha = 0.10f), shape)
             .clickable(onClick = onClick)
             .padding(horizontal = 14.dp, vertical = 8.dp)
     )
@@ -952,7 +958,7 @@ internal fun SearchField(
         }
         androidx.compose.foundation.text.BasicTextField(value, onValueChange, singleLine = true,
             textStyle = androidx.compose.ui.text.TextStyle(color = TextPrimary, fontSize = 13.sp, fontFamily = JoeyFont),
-            cursorBrush = androidx.compose.ui.graphics.SolidColor(Amber),
+            cursorBrush = androidx.compose.ui.graphics.SolidColor(Accent),
             modifier = Modifier.fillMaxWidth()
                 .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier))
     }
@@ -965,7 +971,7 @@ private fun Message(title: String, text: String) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(title, fontSize = 22.sp, fontWeight = FontWeight.Bold, color = Amber)
+        Text(title, fontSize = 22.sp, fontWeight = FontWeight.Bold, color = Accent)
         Spacer(Modifier.height(8.dp))
         Text(text, fontSize = 12.sp, fontFamily = JoeyFont, color = TextDim, textAlign = TextAlign.Center)
     }

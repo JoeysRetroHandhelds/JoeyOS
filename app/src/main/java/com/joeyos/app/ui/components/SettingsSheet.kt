@@ -162,7 +162,7 @@ fun SettingsSheet(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment     = Alignment.CenterVertically
                 ) {
-                    Text("JoeyOS", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = Amber)
+                    Text("JoeyOS", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = Accent)
                     Text("L1/R1 tabs  •  B close", fontSize = 9.sp,
                         fontFamily = JoeyFont, color = TextFaint)
                 }
@@ -190,11 +190,11 @@ fun SettingsSheet(
                                     } else false
                                 }
                                 .clip(RoundedCornerShape(10.dp))
-                                .background(if (active) Amber.copy(alpha = 0.22f) else Color.White.copy(alpha = 0.05f))
+                                .background(if (active) Accent.copy(alpha = 0.22f) else Color.White.copy(alpha = 0.05f))
                                 .border(if (focused) FocusWidth else 1.dp,
                                     when {
                                         focused -> FocusColor
-                                        active  -> AmberSoft
+                                        active  -> AccentSoft
                                         else    -> Color.White.copy(0.14f)
                                     },
                                     RoundedCornerShape(10.dp))
@@ -203,7 +203,7 @@ fun SettingsSheet(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(title,
-                                color      = if (active) Amber else TextDim,
+                                color      = if (active) Accent else TextDim,
                                 fontWeight = if (active) FontWeight.Bold else FontWeight.SemiBold,
                                 fontSize   = 13.sp
                             )
@@ -287,7 +287,7 @@ fun WallpaperTile(
             .background(background)
             .then(when {
                 focused  -> Modifier.border(3.dp, FocusColor, shape)
-                isActive -> Modifier.border(1.dp, AmberSoft, shape)
+                isActive -> Modifier.border(1.dp, AccentSoft, shape)
                 else     -> Modifier
             })
             .clickable(interactionSource = source, indication = null, onClick = onClick)
@@ -323,7 +323,7 @@ private fun ActiveTick(modifier: Modifier = Modifier) {
             .padding(6.dp)
             .size(18.dp)
             .clip(CircleShape)
-            .background(Amber),
+            .background(Accent),
         contentAlignment = Alignment.Center
     ) {
         JoeyIcon(R.drawable.ic_check, Color.Black, 14.dp)
@@ -510,7 +510,7 @@ fun AppearancePanel(
                         val (source, focused) = rememberFocusState()
                         val imgBorder = when {
                             focused  -> FocusColor
-                            isActive -> AmberSoft
+                            isActive -> AccentSoft
                             else     -> Color.White.copy(alpha = 0.15f)
                         }
                         Box(modifier = Modifier.width(tileW).aspectRatio(1.6f)) {
@@ -741,7 +741,7 @@ fun EmulatorRow(
             modifier   = Modifier.weight(1f),
             fontWeight = FontWeight.SemiBold,
             fontSize   = 14.sp,
-            color      = if (focused) Amber else TextPrimary
+            color      = if (focused) Accent else TextPrimary
         )
 
         Row(
@@ -757,7 +757,7 @@ fun EmulatorRow(
                 text       = assignedLabel ?: "Not set",
                 fontSize   = 11.sp,
                 fontFamily = JoeyFont,
-                color      = if (assigned != null) TextDim else Amber,
+                color      = if (assigned != null) TextDim else Accent,
                 fontStyle  = if (assigned == null) FontStyle.Italic else FontStyle.Normal,
                 maxLines   = 1,
                 overflow   = TextOverflow.Ellipsis,

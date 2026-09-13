@@ -20,7 +20,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.joeyos.app.data.AppUpdates
-import com.joeyos.app.ui.theme.Amber
+import com.joeyos.app.ui.theme.Accent
 import com.joeyos.app.ui.theme.TextDim
 import com.joeyos.app.ui.theme.TextFaint
 
@@ -56,7 +56,7 @@ fun UpdatePrompt(
             )
         }
         if (downloading) {
-            LinearProgressIndicator(progress = { progress }, modifier = Modifier.fillMaxWidth(), color = Amber)
+            LinearProgressIndicator(progress = { progress }, modifier = Modifier.fillMaxWidth(), color = Accent)
             Text("Downloading… ${(progress * 100).toInt()}%", fontSize = 11.sp,
                 fontFamily = JoeyFont, color = TextDim)
         } else {

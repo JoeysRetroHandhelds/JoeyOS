@@ -101,11 +101,11 @@ fun PopupRow(
 ) {
     PopupRowFrame(onClick, modifier) {
         if (isCurrent != null) {
-            Box(Modifier.width(16.dp)) { if (isCurrent) JoeyIcon(R.drawable.ic_check, Amber, 16.dp) }
+            Box(Modifier.width(16.dp)) { if (isCurrent) JoeyIcon(R.drawable.ic_check, Accent, 16.dp) }
         }
         Column(Modifier.weight(1f)) {
             Text(label, fontSize = 13.sp, fontFamily = JoeyFont,
-                color = if (isCurrent == true) Amber else TextPrimary,
+                color = if (isCurrent == true) Accent else TextPrimary,
                 maxLines = 1, overflow = TextOverflow.Ellipsis)
             if (detail != null) {
                 Text(detail, fontSize = 10.sp, fontFamily = JoeyFont, color = TextFaint, maxLines = 2)

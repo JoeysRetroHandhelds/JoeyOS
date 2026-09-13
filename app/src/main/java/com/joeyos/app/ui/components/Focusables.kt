@@ -50,7 +50,7 @@ import kotlinx.coroutines.launch
  * The one highlight colour for "this is where you are", used by every focusable in the app.
  * A setting's current value is shown differently (a soft amber fill), so the two never collide.
  */
-val FocusColor = Amber
+val FocusColor = Accent
 val FocusWidth = 2.dp
 
 /**
@@ -93,7 +93,7 @@ fun OptionChip(
         modifier = modifier
             .clip(shape)
             .background(when {
-                active  -> Amber.copy(alpha = 0.22f)
+                active  -> Accent.copy(alpha = 0.22f)
                 focused -> Color.White.copy(alpha = 0.10f)
                 else    -> Color.White.copy(alpha = 0.05f)
             })
@@ -101,7 +101,7 @@ fun OptionChip(
                 if (focused) FocusWidth else 1.dp,
                 when {
                     focused -> FocusColor
-                    active  -> AmberSoft
+                    active  -> AccentSoft
                     else    -> Color.White.copy(alpha = 0.12f)
                 },
                 shape
@@ -113,7 +113,7 @@ fun OptionChip(
     ) {
         Text(label, fontSize = fontSize, fontFamily = JoeyFont,
             color = when {
-                active  -> Amber
+                active  -> Accent
                 focused -> TextPrimary
                 else    -> TextDim
             })

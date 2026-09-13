@@ -155,7 +155,7 @@ internal fun GameRow(e: GameEntry, onClick: () -> Unit, modifier: Modifier = Mod
     CardRow(onClick = onClick, modifier = modifier) { focused ->
         Thumb(e.imageUrl, e.title, 44.dp)
         Column(Modifier.weight(1f)) {
-            Text(e.title, fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = if (focused) Amber else TextPrimary,
+            Text(e.title, fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = if (focused) Accent else TextPrimary,
                 maxLines = 1, overflow = TextOverflow.Ellipsis)
             Spacer(Modifier.height(2.dp))
             Text(e.subtitle, fontSize = 10.sp, fontFamily = JoeyFont, color = TextFaint,

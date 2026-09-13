@@ -67,15 +67,15 @@ fun JoeyButton(
             .clip(shape)
             .background(when {
                 !enabled           -> Color.White.copy(alpha = 0.04f)
-                primary && focused -> Amber.copy(alpha = 0.30f)
-                primary            -> Amber.copy(alpha = 0.16f)
-                focused            -> Amber.copy(alpha = 0.22f)
+                primary && focused -> Accent.copy(alpha = 0.30f)
+                primary            -> Accent.copy(alpha = 0.16f)
+                focused            -> Accent.copy(alpha = 0.22f)
                 else               -> Color.White.copy(alpha = 0.06f)
             })
             .border(if (focused) FocusWidth else 1.dp, when {
                 focused            -> FocusColor
                 !enabled           -> Color.White.copy(alpha = 0.10f)
-                primary            -> AmberSoft
+                primary            -> AccentSoft
                 else               -> Color.White.copy(alpha = 0.14f)
             }, shape)
             .clickable(enabled = enabled, interactionSource = source, indication = null, onClick = onClick)
@@ -84,7 +84,7 @@ fun JoeyButton(
     ) {
         val color = when {
             !enabled             -> TextFaint
-            primary || focused   -> Amber
+            primary || focused   -> Accent
             else                 -> TextPrimary
         }
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -126,7 +126,7 @@ fun CardRow(
 @Composable
 fun RowScope.CardText(title: String, detail: String?, focused: Boolean) {
     Column(Modifier.weight(1f)) {
-        Text(title, fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = if (focused) Amber else TextPrimary)
+        Text(title, fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = if (focused) Accent else TextPrimary)
         if (!detail.isNullOrEmpty()) {
             Spacer(Modifier.height(3.dp))
             Text(detail, fontSize = 10.sp, fontFamily = JoeyFont, color = TextFaint)

@@ -486,7 +486,7 @@ private fun PatchScreen(firstFocus: FocusRequester, modifier: Modifier = Modifie
         if (busy) {
             item {
                 androidx.compose.material3.LinearProgressIndicator(
-                    modifier = Modifier.fillMaxWidth(), color = Amber)
+                    modifier = Modifier.fillMaxWidth(), color = Accent)
             }
         }
         message?.let {
@@ -510,8 +510,8 @@ internal fun ToggleRow(
             modifier = Modifier
                 .size(20.dp)
                 .clip(RoundedCornerShape(5.dp))
-                .background(if (checked) Amber else Color.Transparent)
-                .border(1.5.dp, if (checked) Amber else TextFaint, RoundedCornerShape(5.dp)),
+                .background(if (checked) Accent else Color.Transparent)
+                .border(1.5.dp, if (checked) Accent else TextFaint, RoundedCornerShape(5.dp)),
             contentAlignment = androidx.compose.ui.Alignment.Center
         ) {
             if (checked) JoeyIcon(R.drawable.ic_check, Color.Black, 16.dp)
@@ -592,8 +592,8 @@ private fun M3uScreen(firstFocus: FocusRequester, modifier: Modifier = Modifier)
                 val p = progress
                 val fraction = p?.takeIf { it.filesTotal > 0 }?.let { it.filesDone.toFloat() / it.filesTotal }
                 if (fraction != null) androidx.compose.material3.LinearProgressIndicator(
-                    progress = { fraction }, modifier = Modifier.fillMaxWidth(), color = Amber)
-                else androidx.compose.material3.LinearProgressIndicator(modifier = Modifier.fillMaxWidth(), color = Amber)
+                    progress = { fraction }, modifier = Modifier.fillMaxWidth(), color = Accent)
+                else androidx.compose.material3.LinearProgressIndicator(modifier = Modifier.fillMaxWidth(), color = Accent)
             }
             item {
                 StatusLine(progress?.let {
@@ -917,8 +917,8 @@ private fun CompressScreen(firstFocus: FocusRequester, modifier: Modifier = Modi
                 val p = progress
                 val fraction = p?.takeIf { it.total > 0 }?.let { (it.done + it.percent / 100f) / it.total }
                 if (fraction != null) androidx.compose.material3.LinearProgressIndicator(
-                    progress = { fraction }, modifier = Modifier.fillMaxWidth(), color = Amber)
-                else androidx.compose.material3.LinearProgressIndicator(modifier = Modifier.fillMaxWidth(), color = Amber)
+                    progress = { fraction }, modifier = Modifier.fillMaxWidth(), color = Accent)
+                else androidx.compose.material3.LinearProgressIndicator(modifier = Modifier.fillMaxWidth(), color = Accent)
             }
             item {
                 StatusLine(progress?.let {
@@ -1406,7 +1406,7 @@ private fun RaHacksScreen(firstFocus: FocusRequester, modifier: Modifier = Modif
 
         if (busy) {
             item { StatusLine("Downloading and applying the patch…", TextPrimary) }
-            item { androidx.compose.material3.LinearProgressIndicator(modifier = Modifier.fillMaxWidth(), color = Amber) }
+            item { androidx.compose.material3.LinearProgressIndicator(modifier = Modifier.fillMaxWidth(), color = Accent) }
             return@LazyColumn
         }
         message?.let { item { StatusLine(it, if (ok) VerifiedColor else WarnColor, bold = true) } }
@@ -1446,7 +1446,7 @@ private fun RaHacksScreen(firstFocus: FocusRequester, modifier: Modifier = Modif
                 when {
                     list == null -> {
                         item { StatusLine("Checking your games… ($checked so far)", TextFaint) }
-                        item { androidx.compose.material3.LinearProgressIndicator(modifier = Modifier.fillMaxWidth(), color = Amber) }
+                        item { androidx.compose.material3.LinearProgressIndicator(modifier = Modifier.fillMaxWidth(), color = Accent) }
                     }
                     list.isEmpty() && indexMissing -> item {
                         ToolRow("Couldn't load the romhack list",

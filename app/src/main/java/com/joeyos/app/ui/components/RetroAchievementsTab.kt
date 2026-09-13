@@ -325,10 +325,10 @@ private fun LazyListScope.overview(
     item {
         val first = remember { FocusRequester() }
         Row(Modifier.fillMaxWidth().focusRow(first), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            StatTile("$thisYear", "beaten in $currentYear", Amber, Modifier.weight(1f).focusRequester(first), big = true) {
+            StatTile("$thisYear", "beaten in $currentYear", Accent, Modifier.weight(1f).focusRequester(first), big = true) {
                 onYear(currentYear)
             }
-            StatTile("$allTime", "beaten all-time", Amber, Modifier.weight(1f), big = true) { onYear(0) }
+            StatTile("$allTime", "beaten all-time", Accent, Modifier.weight(1f), big = true) { onYear(0) }
         }
     }
     if (loading) item { StatusLine("Loading your games…", TextFaint) }
@@ -352,7 +352,7 @@ private fun LazyListScope.overview(
         items(years) { (y, beatenN, finishedN) ->
             CardRow(onClick = { onYear(y) }) { f ->
                 Text("$y", fontSize = 13.sp, fontFamily = JoeyFont, fontWeight = FontWeight.Bold,
-                    color = if (f) Amber else TextPrimary, modifier = Modifier.weight(1f))
+                    color = if (f) Accent else TextPrimary, modifier = Modifier.weight(1f))
                 TableNum(beatenN, RaColor, Modifier.width(72.dp))
                 TableNum(finishedN, MasteredColor, Modifier.width(88.dp))
             }
@@ -417,7 +417,7 @@ private fun LazyListScope.stats(
             val first = remember { FocusRequester() }
             Row(Modifier.fillMaxWidth().focusRow(first), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 row.forEachIndexed { i, (v, l) ->
-                    StatTile(v, l, Amber, Modifier.weight(1f).then(if (i == 0) Modifier.focusRequester(first) else Modifier))
+                    StatTile(v, l, Accent, Modifier.weight(1f).then(if (i == 0) Modifier.focusRequester(first) else Modifier))
                 }
             }
         }
@@ -427,10 +427,10 @@ private fun LazyListScope.stats(
     val sections = listOf(
         Triple("Hours per year", hoursByYear.entries.sortedByDescending { it.key }.map { "${it.key}" to it.value.roundToInt() }, VerifiedColor),
         Triple("Hours in $currentYear by month", MonthNames.mapIndexed { i, m -> m to hoursByMonth[i].roundToInt() }.filter { it.second > 0 }, VerifiedColor),
-        Triple("Beaten per year", years.map { "${it.first}" to it.second }, Amber),
+        Triple("Beaten per year", years.map { "${it.first}" to it.second }, Accent),
         Triple("$currentYear by month", MonthNames.mapIndexed { i, m ->
             m to beaten.count { yearOf(it.awardedAt) == currentYear && monthOf(it.awardedAt) == i }
-        }.filter { it.second > 0 }, Amber),
+        }.filter { it.second > 0 }, Accent),
         Triple("Awards", listOfNotNull(ra?.let {
             listOf("Beaten, hardcore" to it.beatenHardcoreAwardsCount, "Beaten, casual" to it.beatenSoftcoreAwardsCount,
                 "Completed" to it.awards.count { a -> a.isFinished && a.awardDataExtra != 1 },
@@ -439,7 +439,7 @@ private fun LazyListScope.stats(
         Triple("Top consoles", beaten.groupBy { it.consoleName }.map { it.key to it.value.size }
             .sortedByDescending { it.second }.take(8), RaColor),
         Triple("Most productive month", MonthNames.mapIndexed { i, m -> m to beaten.count { monthOf(it.awardedAt) == i } }
-            .filter { it.second > 0 }.sortedByDescending { it.second }.take(6), Amber)
+            .filter { it.second > 0 }.sortedByDescending { it.second }.take(6), Accent)
     )
     sections.filter { it.second.isNotEmpty() }.forEach { (title, rows, color) ->
         item { BarSection(title, rows, color) }
@@ -544,7 +544,7 @@ private fun LabelledField(
                 {
                     val (source, focused) = rememberFocusState()
                     Text(if (showPassword) "hide" else "show", fontSize = 10.sp, fontFamily = JoeyFont,
-                        color = if (focused) Amber else TextFaint,
+                        color = if (focused) Accent else TextFaint,
                         modifier = Modifier.clickable(interactionSource = source, indication = null, onClick = onToggleShow)
                             .padding(start = 8.dp))
                 }

@@ -173,7 +173,7 @@ private fun GuideFinder(
                     if (f != null) onDownloaded(f) else archive = "No archived guide found for this game. Try a search below."
                 }
             }
-            if (working) LinearProgressIndicator(Modifier.fillMaxWidth(), color = Amber)
+            if (working) LinearProgressIndicator(Modifier.fillMaxWidth(), color = Accent)
         }
 
         SectionLabel("Search on", Modifier.padding(top = 6.dp))
@@ -448,11 +448,11 @@ private fun ThemeSwatch(t: GuideTheme, chosen: Boolean, onClick: () -> Unit) {
     ) {
         Box(
             Modifier.size(width = 64.dp, height = 44.dp).clip(RoundedCornerShape(10.dp)).background(t.paper)
-                .border(if (chosen) 2.dp else 1.dp, if (chosen) Amber else Color.White.copy(alpha = 0.25f), RoundedCornerShape(10.dp)),
+                .border(if (chosen) 2.dp else 1.dp, if (chosen) Accent else Color.White.copy(alpha = 0.25f), RoundedCornerShape(10.dp)),
             contentAlignment = Alignment.Center
         ) { Text("Aa", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = t.ink) }
         Text(t.label, fontSize = 12.sp, fontWeight = if (chosen) FontWeight.Bold else FontWeight.Normal,
-            color = if (chosen) Amber else TextDim)
+            color = if (chosen) Accent else TextDim)
     }
 }
 
@@ -583,7 +583,7 @@ private fun GuideText(
         if (matches.isEmpty() || q.length < 2) AnnotatedString(t) else buildAnnotatedString {
             append(t)
             matches.forEachIndexed { i, off ->
-                addStyle(SpanStyle(background = if (i == current) Amber else Amber.copy(alpha = 0.33f),
+                addStyle(SpanStyle(background = if (i == current) Accent else Accent.copy(alpha = 0.33f),
                     color = if (i == current) Color(0xFF101010) else theme.ink), off.coerceAtMost(t.length), (off + q.length).coerceAtMost(t.length))
             }
         }
@@ -755,7 +755,7 @@ private const val ReaderScript = """
     }
     if(best){document.body.innerHTML='<div id="rdr">'+best.innerHTML+'</div>';}
     var s=document.createElement('style');
-    s.innerHTML='html,body{background:#0B0D12!important;color:#F3EFE4!important;margin:0;padding:14px;font-family:sans-serif;line-height:1.55;font-size:16px}#rdr img{max-width:100%;height:auto}a{color:#FFB000}h1,h2,h3,h4{color:#fff}table{max-width:100%}';
+    s.innerHTML='html,body{background:#0B0D12!important;color:#F3EFE4!important;margin:0;padding:14px;font-family:sans-serif;line-height:1.55;font-size:16px}#rdr img{max-width:100%;height:auto}a{color:#4DA3FF}h1,h2,h3,h4{color:#fff}table{max-width:100%}';
     document.head.appendChild(s);
   } catch(e){}
 })();

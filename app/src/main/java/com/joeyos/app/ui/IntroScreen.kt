@@ -30,8 +30,8 @@ import androidx.compose.ui.unit.sp
 import com.joeyos.app.ui.components.FocusColor
 import com.joeyos.app.ui.components.FocusWidth
 import com.joeyos.app.ui.components.rememberFocusState
-import com.joeyos.app.ui.theme.Amber
-import com.joeyos.app.ui.theme.AmberSoft
+import com.joeyos.app.ui.theme.Accent
+import com.joeyos.app.ui.theme.AccentSoft
 import com.joeyos.app.ui.theme.Background
 import com.joeyos.app.ui.theme.TextFaint
 
@@ -88,7 +88,7 @@ fun IntroScreen(
                 fontSize = 42.sp,
                 fontFamily = JoeyFont,
                 fontWeight = FontWeight.Bold,
-                color = Amber,
+                color = Accent,
                 letterSpacing = 8.sp
             )
             Spacer(Modifier.height(h * 0.008f))
@@ -140,13 +140,13 @@ private fun IntroButton(
         modifier = modifier
             .fillMaxWidth()
             .clip(shape)
-            .background(if (done) Color.White.copy(alpha = 0.04f) else AmberSoft)
+            .background(if (done) Color.White.copy(alpha = 0.04f) else AccentSoft)
             .border(
                 width = if (focused) FocusWidth else 1.dp,
                 color = when {
                     focused -> FocusColor
                     done    -> Color.White.copy(alpha = 0.12f)
-                    else    -> Amber.copy(alpha = 0.6f)
+                    else    -> Accent.copy(alpha = 0.6f)
                 },
                 shape = shape
             )
@@ -159,7 +159,7 @@ private fun IntroButton(
             fontSize = 14.sp,
             fontFamily = JoeyFont,
             fontWeight = FontWeight.Bold,
-            color = if (done) TextFaint else Amber,
+            color = if (done) TextFaint else Accent,
             letterSpacing = 1.sp
         )
     }

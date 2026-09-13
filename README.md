@@ -103,4 +103,4 @@ Nothing downloads until you choose it. Guides are saved in **Internal storage â€
 - **GameFAQs archive**: download the text walkthrough for the game and read it offline, with text size, wrap, reflow, light/dark/sepia, Find and Contents
 - **Search the web**: a built-in browser with ad blocking (DuckDuckGo). Save any page to read offline later
 - **YouTube**: opens a search in your YouTube app (including ReVanced)
-- While reading, the tabs hide for room. Tap **Show tabs** at the top, or scroll back up, to bring them back
+- The tabs always stay at the top. In Guide, the arrow at the end of the tab row hides or shows the guide's own bar (Options, Find, Contents, Change guide) for more room

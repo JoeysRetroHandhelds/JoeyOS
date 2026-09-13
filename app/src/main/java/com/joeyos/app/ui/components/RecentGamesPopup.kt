@@ -181,13 +181,13 @@ internal fun GameListRow(
             modifier = Modifier
                 .size(28.dp)
                 .clip(RoundedCornerShape(8.dp))
-                .background(Amber.copy(alpha = 0.18f))
-                .border(1.dp, AmberSoft, RoundedCornerShape(8.dp)),
+                .background(Accent.copy(alpha = 0.18f))
+                .border(1.dp, AccentSoft, RoundedCornerShape(8.dp)),
             contentAlignment = Alignment.Center
         ) {
-            if (isCurrent) JoeyIcon(R.drawable.ic_star, Amber, 16.dp)
+            if (isCurrent) JoeyIcon(R.drawable.ic_star, Accent, 16.dp)
             else Text("$index", fontSize = 11.sp, fontFamily = JoeyFont,
-                color = Amber, fontWeight = FontWeight.Bold)
+                color = Accent, fontWeight = FontWeight.Bold)
         }
         Column(modifier = Modifier.weight(1f)) {
             Text(
