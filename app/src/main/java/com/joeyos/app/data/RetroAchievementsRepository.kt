@@ -97,12 +97,23 @@ data class RAAchievement(
     val dateEarned: Date?,
     val numAwarded: Int,
     val type: String?,           // "progression", "win_condition", "missable" or null
-    val displayOrder: Int
+    val displayOrder: Int,
+    val numAwardedHardcore: Int = 0,
+    /** RetroPoints: RA's difficulty-weighted score for it. */
+    val trueRatio: Int = 0
 ) {
     val badgeUrl: String get() = "https://media.retroachievements.org/Badge/$badgeName.png"
     val lockedBadgeUrl: String get() = "https://media.retroachievements.org/Badge/${badgeName}_lock.png"
     val isMissable: Boolean get() = type == "missable"
+    /** Counts toward beating the game (progression or the win condition). */
+    val isToBeat: Boolean get() = type == "progression" || type == "win_condition"
 }
+
+/** A comment left on an achievement (where players post tips). */
+data class RAComment(val user: String, val text: String, val submitted: Date?)
+
+/** What RetroAchievements says you're playing now, and its live status line. */
+data class RANowPlaying(val gameId: Int, val richPresence: String)
 
 /** A game's achievements and your progress through them. */
 data class RAGameProgress(
@@ -112,13 +123,22 @@ data class RAGameProgress(
     val imageIcon: String,
     val numDistinctPlayers: Int,
     val achievements: List<RAAchievement>,
-    val fetchedAt: Long = System.currentTimeMillis()
+    val fetchedAt: Long = System.currentTimeMillis(),
+    /** Your total time in the game, in seconds (0 when RA doesn't know). */
+    val userPlaytimeSeconds: Int = 0,
+    /** "beaten-softcore", "beaten-hardcore", "completed", "mastered", or null. */
+    val highestAward: String? = null,
+    val genre: String? = null,
+    val developer: String? = null,
+    val released: String? = null
 ) {
     val iconUrl: String? get() = imageIcon.takeIf { it.isNotBlank() }?.let { "https://media.retroachievements.org$it" }
     val gameUrl: String get() = "https://retroachievements.org/game/$gameId"
     val earnedCount: Int get() = achievements.count { it.earned }
     val totalPoints: Int get() = achievements.sumOf { it.points }
     val earnedPoints: Int get() = achievements.filter { it.earned }.sumOf { it.points }
+    val earnedHardcoreCount: Int get() = achievements.count { it.earnedHardcore }
+    val toBeat: List<RAAchievement> get() = achievements.filter { it.isToBeat }
 }
 
 class RetroAchievementsRepository(context: Context) {
@@ -598,7 +618,7 @@ class RetroAchievementsRepository(context: Context) {
      * RA saw you playing it since [sinceMs] (a minute's grace for clocks). Null until an emulator
      * signed in to RetroAchievements has started the game. Never cached: it's the live answer.
      */
-    suspend fun fetchNowPlaying(sinceMs: Long): Int? {
+    suspend fun fetchNowPlaying(sinceMs: Long): RANowPlaying? {
         if (!isConfigured) return null
         return withContext(Dispatchers.IO) {
             val body = getJson("https://retroachievements.org/API/API_GetUserSummary.php" +
@@ -608,9 +628,35 @@ class RetroAchievementsRepository(context: Context) {
                 val last = j.optJSONArray("RecentlyPlayed")?.optJSONObject(0) ?: return@runCatching null
                 val id = last.optInt("GameID", 0).takeIf { it > 0 } ?: return@runCatching null
                 val at = parseRaUtc(last.optString("LastPlayed"))?.time ?: return@runCatching null
-                id.takeIf { at >= sinceMs - 60_000 }
+                if (at < sinceMs - 60_000) return@runCatching null
+                val rp = j.optString("RichPresenceMsg").takeIf { it.isNotBlank() && it != "null" && j.optInt("LastGameID") == id }
+                RANowPlaying(id, rp.orEmpty())
             }.getOrNull()
         }
+    }
+
+    /** An achievement's comments, newest first. Empty when there are none or it can't be read. */
+    suspend fun fetchAchievementComments(achievementId: Int): List<RAComment> {
+        if (!isConfigured) return emptyList()
+        return withContext(Dispatchers.IO) {
+            val body = getJson("https://retroachievements.org/API/API_GetComments.php" +
+                "?y=${enc(apiKey)}&t=2&i=$achievementId&c=100&sort=-submitted") ?: return@withContext emptyList()
+            runCatching {
+                val arr = JSONObject(body).optJSONArray("Results") ?: return@runCatching emptyList()
+                (0 until arr.length()).map { i ->
+                    val c = arr.getJSONObject(i)
+                    RAComment(c.optString("User"), c.optString("CommentText"), parseIsoOrRa(c.optString("Submitted")))
+                }.sortedByDescending { it.submitted }
+            }.getOrElse { AppLog.w("RetroAchievements", "Couldn't read comments for $achievementId", it); emptyList() }
+        }
+    }
+
+    /** Comment dates come as ISO 8601 ("2024-01-02T03:04:05.000000Z") or RA's own form. */
+    private fun parseIsoOrRa(s: String?): Date? = s?.takeIf { it.isNotBlank() && it != "null" }?.let {
+        runCatching {
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
+                .apply { timeZone = java.util.TimeZone.getTimeZone("UTC") }.parse(it.take(19))
+        }.getOrNull() ?: parseRaUtc(it)
     }
 
     /**
@@ -667,14 +713,21 @@ class RetroAchievementsRepository(context: Context) {
                             earned = date != null, earnedHardcore = parseRaUtc(a.optString("DateEarnedHardcore")) != null,
                             dateEarned = date, numAwarded = a.optInt("NumAwarded"),
                             type = a.optString("type").takeIf { it.isNotBlank() && it != "null" },
-                            displayOrder = a.optInt("DisplayOrder")
+                            displayOrder = a.optInt("DisplayOrder"),
+                            numAwardedHardcore = a.optInt("NumAwardedHardcore"),
+                            trueRatio = a.optInt("TrueRatio")
                         )
                     }
                 }
                 RAGameProgress(
                     gameId = gameId, title = j.optString("Title"), consoleName = j.optString("ConsoleName"),
                     imageIcon = j.optString("ImageIcon"), numDistinctPlayers = j.optInt("NumDistinctPlayers"),
-                    achievements = list.sortedWith(compareBy({ it.displayOrder }, { it.id }))
+                    achievements = list.sortedWith(compareBy({ it.displayOrder }, { it.id })),
+                    userPlaytimeSeconds = j.optInt("UserTotalPlaytime"),
+                    highestAward = j.optString("HighestAwardKind").takeIf { it.isNotBlank() && it != "null" },
+                    genre = j.optString("Genre").takeIf { it.isNotBlank() && it != "null" },
+                    developer = j.optString("Developer").takeIf { it.isNotBlank() && it != "null" },
+                    released = j.optString("Released").takeIf { it.isNotBlank() && it != "null" }
                 ).also { gameProgressCache[gameId] = it }
             }.getOrElse { AppLog.w("RetroAchievements", "Couldn't read game $gameId", it); gameProgressCache[gameId] }
         }

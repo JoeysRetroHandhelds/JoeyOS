@@ -547,6 +547,8 @@ suspend fun launchRecentGame(
         if (game.path.isNotBlank()) " from ${game.path}" else "")
     // Most launchers resolve the ROM by scanning storage directories (RomFinder.findRomByTitle)
     // on every launch, not just as a fallback — keep that disk I/O off the main thread.
+    // The second screen names the game straight away, before RetroAchievements has seen it.
+    com.joeyos.app.data.SecondScreenState.willLaunch(game.title)
     val launched = withContext(Dispatchers.IO) {
         when {
             game.emulatorPackage.startsWith("com.retroarch") ->
@@ -588,6 +590,7 @@ suspend fun launchRecentGame(
     }
     if (!launched) {
         AppLog.w("Launch", "'${game.title}': ${game.emulatorPackage}'s launcher couldn't start it, trying a plain open")
+        com.joeyos.app.data.SecondScreenState.willLaunch(game.title)
         val intent = Intent(Intent.ACTION_VIEW).apply {
             data = Uri.fromFile(File(game.path))
             setPackage(game.emulatorPackage)

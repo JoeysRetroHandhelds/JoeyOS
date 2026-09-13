@@ -163,6 +163,10 @@ fun ToolsPanel(
                     JoeyButton("Share log", onShareLog, Modifier.weight(1f))
                 }
             }
+            item {
+                Text("The log is also saved as a file: Internal storage › JoeyOS › joeyos.log",
+                    fontSize = 9.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
+            }
         }
         ToolScreen.Patch -> PatchScreen(firstFocus = toolFirst, modifier = modifier)
         ToolScreen.M3u -> M3uScreen(firstFocus = toolFirst, modifier = modifier)

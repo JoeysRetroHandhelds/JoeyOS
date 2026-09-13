@@ -84,6 +84,8 @@ fun AppDrawer(
 
     val gridState = rememberLazyGridState()
     var typing by remember { mutableStateOf(false) }
+    LaunchedEffect(typing) { com.joeyos.app.data.SecondScreenState.setTyping(typing) }
+    DisposableEffect(Unit) { onDispose { com.joeyos.app.data.SecondScreenState.setTyping(false) } }
     val fieldFocus = remember { FocusRequester() }
     val boxFocus = remember { FocusRequester() }
     /**

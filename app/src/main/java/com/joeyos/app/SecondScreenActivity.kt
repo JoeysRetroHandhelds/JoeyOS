@@ -11,7 +11,10 @@ import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.lifecycle.lifecycleScope
 import com.joeyos.app.data.DisplayTargets
+import com.joeyos.app.data.SecondScreenState
+import kotlinx.coroutines.launch
 import com.joeyos.app.ui.components.SecondScreenContent
 import com.joeyos.app.ui.theme.JoeyOSTheme
 import java.lang.ref.WeakReference
@@ -65,6 +68,14 @@ class SecondScreenActivity : ComponentActivity() {
         (getSystemService(DISPLAY_SERVICE) as DisplayManager)
             .registerDisplayListener(displayListener, Handler(Looper.getMainLooper()))
         setContent { JoeyOSTheme { SecondScreenContent() } }
+        // While typing on the home screen, get out of the keyboard's way (see SecondScreenState.typing).
+        lifecycleScope.launch {
+            SecondScreenState.typing.collect { typing ->
+                window.attributes = window.attributes.apply { alpha = if (typing) 0f else 1f }
+                if (typing) window.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                else window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            }
+        }
     }
 
     override fun onResume() {

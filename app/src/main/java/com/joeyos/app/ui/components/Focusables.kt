@@ -190,6 +190,9 @@ fun ControllerTextField(
     // On a page (not in a popup window) B / Back reaches the activity's back dispatcher; while
     // typing, this handler — registered after the page's own — takes it first.
     BackHandler(enabled = typing && registry == null) { stopTyping(moveOn = false) }
+    // Tell the second screen, so a keyboard shown under it (the Thor's) can be seen and used.
+    LaunchedEffect(typing) { com.joeyos.app.data.SecondScreenState.setTyping(typing) }
+    DisposableEffect(Unit) { onDispose { com.joeyos.app.data.SecondScreenState.setTyping(false) } }
     LaunchedEffect(typing) {
         if (typing) {
             withFrameNanos { }

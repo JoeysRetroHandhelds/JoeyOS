@@ -109,10 +109,29 @@ object SecondScreenOwners {
  * flow is enough (the second screen is JoeyOS's own activity).
  */
 object SecondScreenState {
-    private val _gameStartedAt = MutableStateFlow<Long?>(null)
-    val gameStartedAt: StateFlow<Long?> = _gameStartedAt.asStateFlow()
-    fun gameStarted() { _gameStartedAt.value = System.currentTimeMillis() }
-    fun backHome() { _gameStartedAt.value = null }
+    /** A game JoeyOS started: when, and its name when JoeyOS knows it (Recently Played, X). */
+    data class Session(val startedAt: Long, val title: String?)
+
+    private val _session = MutableStateFlow<Session?>(null)
+    val session: StateFlow<Session?> = _session.asStateFlow()
+    @Volatile private var pendingTitle: String? = null
+
+    /** Called just before a known game is launched, so the second screen can name it at once. */
+    fun willLaunch(title: String) { pendingTitle = title }
+    fun gameStarted() {
+        _session.value = Session(System.currentTimeMillis(), pendingTitle)
+        pendingTitle = null
+    }
+    fun backHome() { _session.value = null; pendingTitle = null }
+
+    /**
+     * Someone is typing in JoeyOS. The Thor shows its keyboard on the bottom screen, under this
+     * second screen (found on device, and a window flag didn't cure it), so while this is true the
+     * second screen turns see-through and lets touches through to the keyboard.
+     */
+    private val _typing = MutableStateFlow(false)
+    val typing: StateFlow<Boolean> = _typing.asStateFlow()
+    fun setTyping(on: Boolean) { _typing.value = on }
 }
 
 /** Opens, keeps and closes the second screen. Driven by MainActivity. */
@@ -126,7 +145,10 @@ object SecondScreenController {
      */
     fun ensure(home: Activity) {
         val other = DisplayTargets.otherDisplay(home)
-        val want = SecondScreenPrefs.enabled(home) && other != null
+        // Only while JoeyOS's home is on the main screen. Found in the log: home was running on
+        // the Thor's bottom screen (opened from there), and the "second" screen went on the top one.
+        val onMain = DisplayTargets.currentDisplayId(home) == Display.DEFAULT_DISPLAY
+        val want = SecondScreenPrefs.enabled(home) && other != null && onMain
         val open = SecondScreenActivity.current
         when {
             !want -> open?.finish()

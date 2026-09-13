@@ -3,6 +3,7 @@ package com.joeyos.app.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -31,6 +32,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import coil.compose.AsyncImage
 import com.joeyos.app.AppLog
 import com.joeyos.app.data.RAAchievement
+import com.joeyos.app.data.RAComment
+import com.joeyos.app.data.RANowPlaying
 import com.joeyos.app.data.RAGameProgress
 import com.joeyos.app.data.RARecentGame
 import com.joeyos.app.data.RAResult
@@ -48,9 +51,9 @@ import kotlin.math.roundToInt
  * achievement to reveal it.
  *
  *  - Overview: your RetroAchievements summary. Tap a game to see its achievement list.
- *  - Now playing (while a game runs): the achievements of the game RetroAchievements sees you
- *    playing, refreshed every minute so new unlocks show up. It switches here by itself once RA
- *    has seen the game, and back to the overview when you're home.
+ *  - Now playing (while a game runs): switches here as soon as JoeyOS starts a game, then shows
+ *    the achievements of the game RetroAchievements sees you playing, with its live status,
+ *    refreshed every minute so new unlocks show up. Back home: back to the overview.
  */
 @Composable
 fun SecondScreenContent() {
@@ -64,10 +67,10 @@ fun SecondScreenContent() {
     var recent by remember { mutableStateOf<List<RARecentGame>>(emptyList()) }
     var points by remember { mutableStateOf<Int?>(null) }
 
-    val gameStartedAt by SecondScreenState.gameStartedAt.collectAsState()
-    var nowPlaying by remember { mutableStateOf<Int?>(null) }   // RA game id of the running game
-    var openGame by remember { mutableStateOf<Int?>(null) }     // a game opened from the overview
-    var tab by remember { mutableIntStateOf(0) }                // 0 overview, 1 now playing
+    val session by SecondScreenState.session.collectAsState()
+    var nowPlaying by remember { mutableStateOf<RANowPlaying?>(null) }   // what RA sees you playing
+    var openGame by remember { mutableStateOf<Int?>(null) }              // a game opened from the overview
+    var tab by remember { mutableIntStateOf(0) }                         // 0 overview, 1 now playing
 
     // Refresh while showing: on return from a game (resume) and every 10 minutes. The repository
     // caches (awards a day, recently played half an hour), so this rarely touches the network.
@@ -87,18 +90,22 @@ fun SecondScreenContent() {
         }
     }
 
-    // While a game runs, ask RetroAchievements what's being played until it says, then follow it
-    // (it can change if you switch games without coming home). Back home: back to the overview.
-    LaunchedEffect(gameStartedAt, configured) {
-        val since = gameStartedAt
-        if (since == null || !configured) { nowPlaying = null; tab = 0; return@LaunchedEffect }
+    // A game started: switch to Now playing at once (named, when JoeyOS knows the name), then ask
+    // RetroAchievements what's being played — every 5 seconds for the first two minutes, since the
+    // answer arrives as soon as the emulator has signed in and loaded the game, then every 30 for
+    // its live status line. Back home: back to the overview.
+    LaunchedEffect(session, configured) {
+        val s = session
+        if (s == null) { nowPlaying = null; tab = 0; return@LaunchedEffect }
+        tab = 1; openGame = null; nowPlaying = null
+        if (!configured) return@LaunchedEffect
         while (true) {
-            val id = raRepo.fetchNowPlaying(since)
-            if (id != null && id != nowPlaying) {
-                AppLog.i("SecondScreen", "Now playing: RetroAchievements game $id")
-                nowPlaying = id; tab = 1; openGame = null
+            raRepo.fetchNowPlaying(s.startedAt)?.let { np ->
+                if (np.gameId != nowPlaying?.gameId) AppLog.i("SecondScreen", "Now playing: RetroAchievements game ${np.gameId}")
+                nowPlaying = np
             }
-            delay(if (nowPlaying == null) 20_000L else 60_000L)
+            val fast = System.currentTimeMillis() - s.startedAt < 2 * 60_000L
+            delay(if (nowPlaying == null && fast) 5_000L else 30_000L)
         }
     }
 
@@ -120,16 +127,18 @@ fun SecondScreenContent() {
                         Pill("‹  Back", active = false) { openGame = null }
                     } else {
                         Pill("Overview", active = tab == 0) { tab = 0 }
-                        if (gameStartedAt != null) Pill("Now playing", active = tab == 1) { tab = 1 }
+                        if (session != null) Pill("Now playing", active = tab == 1) { tab = 1 }
                     }
                 }
                 Box(Modifier.weight(1f)) {
+                    val s = session
+                    val np = nowPlaying
                     when {
-                        openGame != null -> GameAchievements(openGame!!, raRepo, live = false)
-                        tab == 1 && nowPlaying != null -> GameAchievements(nowPlaying!!, raRepo, live = true)
-                        tab == 1 -> Message("Now playing",
+                        openGame != null -> GameAchievements(openGame!!, raRepo, live = null)
+                        tab == 1 && s != null && np != null -> GameAchievements(np.gameId, raRepo, live = LiveInfo(s, np))
+                        tab == 1 && s != null -> Message(s.title ?: "Now playing",
                             "Waiting for RetroAchievements to see the game. This works with emulators signed in to " +
-                                "RetroAchievements, and can take up to a minute after the game starts.")
+                                "RetroAchievements, a few seconds after the game has loaded.")
                         else -> Overview(awards, recent, points, raRepo.username, currentYear) { openGame = it }
                     }
                 }
@@ -137,6 +146,9 @@ fun SecondScreenContent() {
         }
     }
 }
+
+/** For the game being played: when it started and RA's live view of it. */
+private data class LiveInfo(val session: SecondScreenState.Session, val nowPlaying: RANowPlaying)
 
 @Composable
 private fun Overview(
@@ -205,73 +217,184 @@ private fun GameColumn(title: String, empty: String, isEmpty: Boolean, modifier:
     }
 }
 
+private enum class AchFilter(val label: String) { All("All"), Locked("Locked"), Earned("Earned"), Missable("Missable"), ToBeat("To beat") }
+private enum class AchSort(val label: String) { Default("Default"), Easiest("Easiest"), Points("Points"), Recent("Recent") }
+
 /**
- * A game's achievement list: header with your progress, All / Locked / Earned, and each
- * achievement with its badge, points, how many players have it, and a MISSABLE tag. [live]
- * refreshes it every minute (the game you're playing), so new unlocks appear.
+ * A game's achievement list: your progress, the filters and sorts, and each achievement (tap it
+ * for its details and comments). With [live] (the game you're playing) it also shows RA's live
+ * status line, the session time and your total playtime, refreshes every minute, and flashes an
+ * "Unlocked!" banner when a new one comes in.
  */
 @Composable
-private fun GameAchievements(gameId: Int, raRepo: RetroAchievementsRepository, live: Boolean) {
+private fun GameAchievements(gameId: Int, raRepo: RetroAchievementsRepository, live: LiveInfo?) {
     val context = LocalContext.current
     val hideSpoilers = remember { SecondScreenPrefs.hideSpoilers(context) }
     var game by remember(gameId) { mutableStateOf<RAGameProgress?>(null) }
     var failed by remember(gameId) { mutableStateOf(false) }
-    var filter by remember(gameId) { mutableIntStateOf(0) }   // 0 all, 1 locked, 2 earned
+    var filter by remember(gameId) { mutableStateOf(AchFilter.All) }
+    var sort by remember(gameId) { mutableStateOf(AchSort.Default) }
     val revealed = remember(gameId) { mutableStateListOf<Int>() }
+    var detail by remember(gameId) { mutableStateOf<RAAchievement?>(null) }
+    var banner by remember(gameId) { mutableStateOf<RAAchievement?>(null) }
+    var now by remember { mutableLongStateOf(System.currentTimeMillis()) }
 
-    LaunchedEffect(gameId, live) {
+    LaunchedEffect(gameId, live != null) {
+        var known: Set<Int>? = null
         while (true) {
-            val g = raRepo.fetchGameProgress(gameId, maxAgeMs = if (live) 55_000 else 5 * 60_000)
-            if (g != null) game = g else if (game == null) failed = true
-            if (!live) break
+            val g = raRepo.fetchGameProgress(gameId, maxAgeMs = if (live != null) 55_000 else 5 * 60_000)
+            if (g != null) {
+                val earned = g.achievements.filter { it.earned }.map { it.id }.toSet()
+                // A new unlock since the last look: show it for a few seconds.
+                if (live != null && known != null) g.achievements.firstOrNull { it.earned && it.id !in known!! }?.let { banner = it }
+                known = earned
+                game = g
+            } else if (game == null) failed = true
+            if (live == null) break
             delay(60_000L)
         }
     }
+    LaunchedEffect(banner) { if (banner != null) { delay(6_000L); banner = null } }
+    // The session clock ticks every half minute.
+    if (live != null) LaunchedEffect(Unit) { while (true) { now = System.currentTimeMillis(); delay(30_000L) } }
+
+    detail?.let { a -> game?.let { g -> AchievementDetail(a, g, raRepo) { detail = null } }; return }
 
     val g = game
-    if (g == null) { Message("Achievements", if (failed) "Couldn't load this game's achievements." else "Loading…"); return }
-    val shown = when (filter) {
-        1 -> g.achievements.filter { !it.earned }
-        2 -> g.achievements.filter { it.earned }.sortedByDescending { it.dateEarned }
-        else -> g.achievements
+    if (g == null) { Message(live?.session?.title ?: "Achievements", if (failed) "Couldn't load this game's achievements." else "Loading…"); return }
+    val shown = remember(g, filter, sort) {
+        g.achievements
+            .filter {
+                when (filter) {
+                    AchFilter.All -> true
+                    AchFilter.Locked -> !it.earned
+                    AchFilter.Earned -> it.earned
+                    AchFilter.Missable -> it.isMissable
+                    AchFilter.ToBeat -> it.isToBeat
+                }
+            }
+            .let { l ->
+                when (sort) {
+                    AchSort.Default -> l
+                    AchSort.Easiest -> l.sortedByDescending { it.numAwarded }
+                    AchSort.Points -> l.sortedByDescending { it.points }
+                    AchSort.Recent -> l.sortedWith(compareByDescending<RAAchievement> { it.dateEarned?.time ?: 0L })
+                }
+            }
     }
-    LazyColumn(
-        Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(start = 14.dp, end = 14.dp, bottom = 18.dp),
-        verticalArrangement = Arrangement.spacedBy(6.dp)
+
+    Box(Modifier.fillMaxSize()) {
+        LazyColumn(
+            Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(start = 14.dp, end = 14.dp, bottom = 18.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            item { GameHeader(g, live, now) }
+            if (g.achievements.isEmpty()) {
+                item { Text("This game has no achievements yet.", fontSize = 11.sp, fontFamily = FontFamily.Monospace, color = TextFaint) }
+            } else {
+                item {
+                    Column(Modifier.padding(vertical = 4.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                        Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            AchFilter.entries.forEach { f ->
+                                val n = when (f) {
+                                    AchFilter.All -> g.achievements.size
+                                    AchFilter.Locked -> g.achievements.size - g.earnedCount
+                                    AchFilter.Earned -> g.earnedCount
+                                    AchFilter.Missable -> g.achievements.count { it.isMissable }
+                                    AchFilter.ToBeat -> g.toBeat.size
+                                }
+                                if (n > 0 || f == AchFilter.All) Pill("${f.label} $n", filter == f) { filter = f }
+                            }
+                        }
+                        Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalAlignment = Alignment.CenterVertically) {
+                            Text("Sort", fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
+                            AchSort.entries.forEach { s -> Pill(s.label, sort == s) { sort = s } }
+                        }
+                    }
+                }
+                if (shown.isEmpty()) item { Text("Nothing here.", fontSize = 11.sp, fontFamily = FontFamily.Monospace, color = TextFaint) }
+                items(shown, key = { it.id }) { a ->
+                    val hidden = hideSpoilers && !a.earned && a.id !in revealed
+                    AchievementRow(a, g.numDistinctPlayers, hidden) { if (hidden) revealed.add(a.id) else detail = a }
+                }
+            }
+        }
+        banner?.let { a ->
+            Row(
+                Modifier.align(Alignment.TopCenter).padding(12.dp).clip(RoundedCornerShape(14.dp))
+                    .background(Color(0xFF14311F)).border(1.dp, VerifiedColor, RoundedCornerShape(14.dp))
+                    .clickable { banner = null; detail = a }
+                    .padding(horizontal = 14.dp, vertical = 10.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically
+            ) {
+                AsyncImage(model = a.badgeUrl, contentDescription = null, modifier = Modifier.size(36.dp).clip(RoundedCornerShape(6.dp)))
+                Column {
+                    Text("Unlocked!", fontSize = 10.sp, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold, color = VerifiedColor)
+                    Text("${a.title}  +${a.points}", fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = TextPrimary,
+                        maxLines = 1, overflow = TextOverflow.Ellipsis)
+                }
+            }
+        }
+    }
+}
+
+private fun formatDuration(seconds: Long): String {
+    val m = seconds / 60
+    return if (m >= 60) "${m / 60}h ${m % 60}m" else "${m}m"
+}
+
+/** The game's icon, name and your progress; for the game being played, its live status too. */
+@Composable
+private fun GameHeader(g: RAGameProgress, live: LiveInfo?, now: Long) {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
+            Thumb(g.iconUrl, g.title, 56.dp)
+            Column(Modifier.weight(1f)) {
+                Text(g.title, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = TextPrimary, maxLines = 2,
+                    overflow = TextOverflow.Ellipsis)
+                Text(listOfNotNull(g.consoleName, g.genre, g.released?.take(4)).joinToString("  ·  "),
+                    fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint, maxLines = 1)
+                Spacer(Modifier.height(6.dp))
+                LinearProgressIndicator(
+                    progress = { if (g.achievements.isEmpty()) 0f else g.earnedCount.toFloat() / g.achievements.size },
+                    color = RaColor, trackColor = Color.White.copy(alpha = 0.08f),
+                    modifier = Modifier.fillMaxWidth().height(5.dp).clip(RoundedCornerShape(3.dp))
+                )
+            }
+        }
+        // RA's live line for this session ("Stage 3-2 · 4 lives"), when the game has one.
+        live?.nowPlaying?.richPresence?.takeIf { it.isNotBlank() }?.let { rp ->
+            Text("▶  $rp", fontSize = 12.sp, color = Amber, maxLines = 2, overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp)).background(Amber.copy(alpha = 0.10f))
+                    .padding(horizontal = 10.dp, vertical = 8.dp))
+        }
+        val status = when (g.highestAward) {
+            "mastered" -> "Mastered"; "completed" -> "Completed"
+            "beaten-hardcore" -> "Beaten (hardcore)"; "beaten-softcore" -> "Beaten"
+            else -> null
+        }
+        Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            MiniStat("${g.earnedCount}/${g.achievements.size}", "earned")
+            MiniStat("${g.earnedPoints}/${g.totalPoints}", "points")
+            if (g.earnedHardcoreCount > 0) MiniStat("${g.earnedHardcoreCount}", "hardcore")
+            if (g.toBeat.isNotEmpty()) MiniStat("${g.toBeat.count { it.earned }}/${g.toBeat.size}", "to beat")
+            live?.let { MiniStat(formatDuration((now - it.session.startedAt) / 1000), "this session") }
+            if (g.userPlaytimeSeconds > 0) MiniStat(formatDuration(g.userPlaytimeSeconds.toLong()), "played")
+            status?.let { MiniStat(it, "status") }
+        }
+    }
+}
+
+@Composable
+private fun MiniStat(value: String, label: String) {
+    Column(
+        Modifier.clip(RoundedCornerShape(10.dp)).background(Color.White.copy(alpha = 0.05f))
+            .padding(horizontal = 10.dp, vertical = 6.dp)
     ) {
-        item {
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
-                Thumb(g.iconUrl, g.title, 56.dp)
-                Column(Modifier.weight(1f)) {
-                    Text(g.title, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = TextPrimary, maxLines = 2,
-                        overflow = TextOverflow.Ellipsis)
-                    Text("${g.consoleName}  ·  ${g.earnedCount}/${g.achievements.size} earned  ·  ${g.earnedPoints}/${g.totalPoints} points",
-                        fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
-                    Spacer(Modifier.height(6.dp))
-                    LinearProgressIndicator(
-                        progress = { if (g.achievements.isEmpty()) 0f else g.earnedCount.toFloat() / g.achievements.size },
-                        color = RaColor, trackColor = Color.White.copy(alpha = 0.08f),
-                        modifier = Modifier.fillMaxWidth().height(5.dp).clip(RoundedCornerShape(3.dp))
-                    )
-                }
-            }
-        }
-        if (g.achievements.isEmpty()) {
-            item { Text("This game has no achievements yet.", fontSize = 11.sp, fontFamily = FontFamily.Monospace, color = TextFaint) }
-        } else {
-            item {
-                Row(Modifier.padding(vertical = 4.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Pill("All ${g.achievements.size}", filter == 0) { filter = 0 }
-                    Pill("Locked ${g.achievements.size - g.earnedCount}", filter == 1) { filter = 1 }
-                    Pill("Earned ${g.earnedCount}", filter == 2) { filter = 2 }
-                }
-            }
-            items(shown, key = { it.id }) { a ->
-                val hidden = hideSpoilers && !a.earned && a.id !in revealed
-                AchievementRow(a, g.numDistinctPlayers, hidden) { if (hidden) revealed.add(a.id) }
-            }
-        }
+        Text(value, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = TextPrimary, maxLines = 1)
+        Text(label, fontSize = 9.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
     }
 }
 
@@ -298,6 +421,7 @@ private fun AchievementRow(a: RAAchievement, players: Int, hidden: Boolean, onTa
                     color = if (a.earned) TextPrimary else TextDim, maxLines = 2, overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.weight(1f, fill = false))
                 if (a.isMissable) Tag("MISSABLE", WarnColor)
+                if (a.isToBeat) Tag(if (a.type == "win_condition") "WIN" else "STORY", RaColor)
             }
             Text(if (hidden) "Tap to reveal" else a.description, fontSize = 10.sp, fontFamily = FontFamily.Monospace,
                 color = TextFaint, maxLines = 3, overflow = TextOverflow.Ellipsis)
@@ -308,6 +432,59 @@ private fun AchievementRow(a: RAAchievement, players: Int, hidden: Boolean, onTa
         }
         Text("${a.points}", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = if (a.earned) Amber else TextFaint,
             modifier = Modifier.alpha(if (a.earned) 1f else 0.7f))
+    }
+}
+
+/** One achievement in full, with its RetroAchievements comments (where players post tips). */
+@Composable
+private fun AchievementDetail(a: RAAchievement, g: RAGameProgress, raRepo: RetroAchievementsRepository, onBack: () -> Unit) {
+    val comments by produceState<List<RAComment>?>(null, a.id) { value = raRepo.fetchAchievementComments(a.id) }
+    val players = g.numDistinctPlayers
+    LazyColumn(
+        Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(start = 14.dp, end = 14.dp, bottom = 18.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        item { Pill("‹  ${g.title}", active = false, onClick = onBack) }
+        item {
+            Row(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                AsyncImage(model = if (a.earned) a.badgeUrl else a.lockedBadgeUrl, contentDescription = null,
+                    modifier = Modifier.size(80.dp).clip(RoundedCornerShape(12.dp)))
+                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(a.title, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = TextPrimary)
+                    Text(a.description, fontSize = 12.sp, color = TextDim)
+                    Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                        if (a.isMissable) Tag("MISSABLE", WarnColor)
+                        if (a.isToBeat) Tag(if (a.type == "win_condition") "WIN CONDITION" else "PROGRESSION", RaColor)
+                    }
+                }
+            }
+        }
+        item {
+            Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                MiniStat("${a.points}", "points")
+                if (a.trueRatio > 0) MiniStat("${a.trueRatio}", "RetroPoints")
+                if (players > 0) MiniStat("${(a.numAwarded * 100f / players).roundToInt()}%", "of players")
+                if (players > 0 && a.numAwardedHardcore > 0) MiniStat("${(a.numAwardedHardcore * 100f / players).roundToInt()}%", "hardcore")
+                a.dateEarned?.let { MiniStat(dayFmt().format(it), if (a.earnedHardcore) "earned (hardcore)" else "earned") }
+            }
+        }
+        item { SectionLabel("Comments" + (comments?.let { "  ·  ${it.size}" } ?: ""), Modifier.padding(top = 6.dp)) }
+        val list = comments
+        when {
+            list == null -> item { Text("Loading…", fontSize = 11.sp, fontFamily = FontFamily.Monospace, color = TextFaint) }
+            list.isEmpty() -> item { Text("No comments yet.", fontSize = 11.sp, fontFamily = FontFamily.Monospace, color = TextFaint) }
+            else -> items(list) { c ->
+                Column(
+                    Modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp)).background(Color.White.copy(alpha = 0.04f))
+                        .padding(10.dp)
+                ) {
+                    Text(c.user + (c.submitted?.let { "  ·  ${dayFmt().format(it)} ${yearOf(it)}" } ?: ""),
+                        fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = Amber)
+                    Text(c.text, fontSize = 12.sp, color = TextPrimary)
+                }
+            }
+        }
     }
 }
 
