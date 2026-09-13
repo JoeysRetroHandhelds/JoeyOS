@@ -353,25 +353,25 @@ private fun LazyListScope.overview(
         }
         items(years) { (y, beatenN, finishedN) ->
             CardRow(onClick = { onYear(y) }) { f ->
-                Text("$y", fontSize = 13.sp, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold,
+                Text("$y", fontSize = 13.sp, fontFamily = JoeyFont, fontWeight = FontWeight.Bold,
                     color = if (f) Amber else TextPrimary, modifier = Modifier.weight(1f))
                 TableNum(beatenN, RaColor, Modifier.width(72.dp))
                 TableNum(finishedN, MasteredColor, Modifier.width(88.dp))
             }
         }
-        item { Text("A on a year lists the games beaten.", fontSize = 9.sp, fontFamily = FontFamily.Monospace, color = TextFaint) }
+        item { Text("A on a year lists the games beaten.", fontSize = 9.sp, fontFamily = JoeyFont, color = TextFaint) }
     }
 }
 
 @Composable
 private fun TableHead(text: String, modifier: Modifier) {
-    Text(text, fontSize = 9.sp, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold,
+    Text(text, fontSize = 9.sp, fontFamily = JoeyFont, fontWeight = FontWeight.Bold,
         color = TextFaint, letterSpacing = 1.sp, modifier = modifier)
 }
 
 @Composable
 private fun TableNum(n: Int, color: Color, modifier: Modifier) {
-    Text(if (n == 0) "—" else "$n", fontSize = 13.sp, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold,
+    Text(if (n == 0) "—" else "$n", fontSize = 13.sp, fontFamily = JoeyFont, fontWeight = FontWeight.Bold,
         color = if (n == 0) TextFaint else color, modifier = modifier)
 }
 
@@ -462,12 +462,12 @@ private fun BarSection(title: String, rows: List<Pair<String, Int>>, color: Colo
         ) {
             rows.forEach { (label, v) ->
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(label, fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextDim, maxLines = 1,
+                    Text(label, fontSize = 10.sp, fontFamily = JoeyFont, color = TextDim, maxLines = 1,
                         overflow = TextOverflow.Ellipsis, modifier = Modifier.width(96.dp))
                     Box(Modifier.weight(1f).height(14.dp).clip(RoundedCornerShape(4.dp)).background(color.copy(alpha = 0.15f))) {
                         Box(Modifier.fillMaxHeight().fillMaxWidth(v.toFloat() / max).clip(RoundedCornerShape(4.dp)).background(color))
                     }
-                    Text("$v", fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextPrimary,
+                    Text("$v", fontSize = 10.sp, fontFamily = JoeyFont, color = TextPrimary,
                         textAlign = TextAlign.End, modifier = Modifier.width(44.dp))
                 }
             }
@@ -498,7 +498,7 @@ private fun AccountSection(
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         SectionLabel("RetroAchievements")
         if (raAwards is RAResult.Success) {
-            Text("Logged in as ${raRepo.username}", fontSize = 12.sp, fontFamily = FontFamily.Monospace, color = TextPrimary)
+            Text("Logged in as ${raRepo.username}", fontSize = 12.sp, fontFamily = JoeyFont, color = TextPrimary)
             val first = remember { FocusRequester() }
             Row(Modifier.focusRow(first), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 JoeyButton(when { loading -> "Loading…"; !canRefresh -> "Refresh in ${wait}m"; else -> "Refresh" },
@@ -513,7 +513,7 @@ private fun AccountSection(
             LabelledField("API key", apiKey, { apiKey = it; raRepo.apiKey = it; raRepo.clearCache(); onChanged() },
                 isPassword = true, showPassword = showApiKey, onToggleShow = { showApiKey = !showApiKey })
             Text("Get your API key from retroachievements.org → Settings → Keys", fontSize = 9.sp,
-                fontFamily = FontFamily.Monospace, color = TextFaint)
+                fontFamily = JoeyFont, color = TextFaint)
             JoeyButton(if (loading) "Loading…" else "Connect", { onFetch(true) }, primary = true,
                 enabled = username.isNotBlank() && apiKey.isNotBlank() && !loading)
             (raAwards as? RAResult.Error)?.let { StatusLine(it.message, MissingColor) }
@@ -538,7 +538,7 @@ private fun LabelledField(
             trailing = if (isPassword && onToggleShow != null) {
                 {
                     val (source, focused) = rememberFocusState()
-                    Text(if (showPassword) "hide" else "show", fontSize = 10.sp, fontFamily = FontFamily.Monospace,
+                    Text(if (showPassword) "hide" else "show", fontSize = 10.sp, fontFamily = JoeyFont,
                         color = if (focused) Amber else TextFaint,
                         modifier = Modifier.clickable(interactionSource = source, indication = null, onClick = onToggleShow)
                             .padding(start = 8.dp))
@@ -564,8 +564,8 @@ private fun YearChips(years: List<Int>, selected: Int, onSelect: (Int) -> Unit) 
 @Composable
 private fun CountLine(text: String, sub: String) {
     Column {
-        Text(text, fontSize = 12.sp, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Medium, color = TextPrimary)
-        if (sub.isNotEmpty()) Text(sub, fontSize = 9.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
+        Text(text, fontSize = 12.sp, fontFamily = JoeyFont, fontWeight = FontWeight.Medium, color = TextPrimary)
+        if (sub.isNotEmpty()) Text(sub, fontSize = 9.sp, fontFamily = JoeyFont, color = TextFaint)
     }
 }
 
@@ -597,11 +597,11 @@ private fun GameDetailPopup(
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 (e.facts + extra.orEmpty()).distinctBy { it.first }.forEach { (k, v) ->
                     Row {
-                        Text(k, fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint, modifier = Modifier.width(96.dp))
-                        Text(v, fontSize = 11.sp, fontFamily = FontFamily.Monospace, color = TextPrimary)
+                        Text(k, fontSize = 10.sp, fontFamily = JoeyFont, color = TextFaint, modifier = Modifier.width(96.dp))
+                        Text(v, fontSize = 11.sp, fontFamily = JoeyFont, color = TextPrimary)
                     }
                 }
-                if (extra == null) Text("Loading details…", fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
+                if (extra == null) Text("Loading details…", fontSize = 10.sp, fontFamily = JoeyFont, color = TextFaint)
             }
         }
         val first = remember { FocusRequester() }

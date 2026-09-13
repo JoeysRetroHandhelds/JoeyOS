@@ -1,5 +1,6 @@
 package com.joeyos.app.ui.components
 
+import com.joeyos.app.ui.theme.JoeyFont
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -44,12 +45,12 @@ fun UpdatePrompt(
     JoeyPopup(title = "Update available", hint = if (downloading) "" else "Choose Update or Later",
         onDismiss = {}, dismissible = false, initialFocus = updateButton) {
         Text("v$installedVersion  →  v${release.versionName}", fontSize = 12.sp,
-            fontFamily = FontFamily.Monospace, color = TextDim)
+            fontFamily = JoeyFont, color = TextDim)
         if (release.notes.isNotBlank()) {
             Text(
                 release.notes,
                 fontSize = 11.sp,
-                fontFamily = FontFamily.Monospace,
+                fontFamily = JoeyFont,
                 color = TextFaint,
                 modifier = Modifier.heightIn(max = 140.dp).verticalScroll(rememberScrollState())
             )
@@ -57,7 +58,7 @@ fun UpdatePrompt(
         if (downloading) {
             LinearProgressIndicator(progress = { progress }, modifier = Modifier.fillMaxWidth(), color = Amber)
             Text("Downloading… ${(progress * 100).toInt()}%", fontSize = 11.sp,
-                fontFamily = FontFamily.Monospace, color = TextDim)
+                fontFamily = JoeyFont, color = TextDim)
         } else {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 JoeyButton("Update", { if (armed) onUpdate() }, Modifier.weight(1f).focusRequester(updateButton))

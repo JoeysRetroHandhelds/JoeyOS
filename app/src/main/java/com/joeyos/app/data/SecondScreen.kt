@@ -67,6 +67,10 @@ object SecondScreenPrefs {
     fun enabled(context: Context) = prefs(context).getBoolean("enabled", true)
     fun setEnabled(context: Context, on: Boolean) = prefs(context).edit().putBoolean("enabled", on).apply()
 
+    /** Show the Guide tab while a game runs. */
+    fun showGuide(context: Context) = prefs(context).getBoolean("show_guide", true)
+    fun setShowGuide(context: Context, on: Boolean) = prefs(context).edit().putBoolean("show_guide", on).apply()
+
     /** Hide a locked achievement's name and description until you tap it. */
     fun hideSpoilers(context: Context) = prefs(context).getBoolean("hide_spoilers", false)
     fun setHideSpoilers(context: Context, on: Boolean) = prefs(context).edit().putBoolean("hide_spoilers", on).apply()
@@ -110,19 +114,29 @@ object SecondScreenOwners {
  */
 object SecondScreenState {
     /** A game JoeyOS started: when, and its name when JoeyOS knows it (Recently Played, X). */
-    data class Session(val startedAt: Long, val title: String?)
+    data class Session(val startedAt: Long, val title: String?, val romPath: String? = null)
 
     private val _session = MutableStateFlow<Session?>(null)
     val session: StateFlow<Session?> = _session.asStateFlow()
     @Volatile private var pendingTitle: String? = null
+    @Volatile private var pendingRom: String? = null
 
-    /** Called just before a known game is launched, so the second screen can name it at once. */
-    fun willLaunch(title: String) { pendingTitle = title }
-    fun gameStarted() {
-        _session.value = Session(System.currentTimeMillis(), pendingTitle)
-        pendingTitle = null
+    /**
+     * Called just before a known game is launched, so the second screen can name it at once and
+     * find a guide saved next to its ROM ([path] is ignored when it's a save state, not a ROM).
+     */
+    fun willLaunch(title: String, path: String? = null) {
+        pendingTitle = title
+        pendingRom = path?.takeUnless { p ->
+            val ext = p.substringAfterLast('.', "").lowercase()
+            ext.startsWith("state") || ext in setOf("srm", "sav", "auto") || "/states/" in p
+        }
     }
-    fun backHome() { _session.value = null; pendingTitle = null }
+    fun gameStarted() {
+        _session.value = Session(System.currentTimeMillis(), pendingTitle, pendingRom)
+        pendingTitle = null; pendingRom = null
+    }
+    fun backHome() { _session.value = null; pendingTitle = null; pendingRom = null }
 
     /**
      * Someone is typing in JoeyOS. The Thor shows its keyboard on the bottom screen, under this

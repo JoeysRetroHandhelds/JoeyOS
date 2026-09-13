@@ -1,5 +1,6 @@
-﻿package com.joeyos.app.ui.components
+package com.joeyos.app.ui.components
 
+import com.joeyos.app.R
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -139,7 +140,7 @@ fun AppDrawer(
             ) {
                 Text("All Apps", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = TextPrimary)
                 Text("A open  •  Start options  •  B close", fontSize = 9.sp,
-                    fontFamily = FontFamily.Monospace, color = TextFaint)
+                    fontFamily = JoeyFont, color = TextFaint)
             }
 
             // Search box. Two states, the TV way: landing on it only highlights it (the overlay
@@ -169,7 +170,7 @@ fun AppDrawer(
                         .padding(horizontal = 14.dp, vertical = 10.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("🔍 ", fontSize = 13.sp, color = TextFaint)
+                    JoeyIcon(R.drawable.ic_search, TextFaint, 18.dp, Modifier.padding(end = 8.dp))
                     BasicTextField(
                         value = query,
                         onValueChange = { query = it },
@@ -180,12 +181,12 @@ fun AppDrawer(
                         textStyle = TextStyle(
                             color = TextPrimary,
                             fontSize = 14.sp,
-                            fontFamily = FontFamily.Monospace
+                            fontFamily = JoeyFont
                         ),
                         decorationBox = { inner ->
                             if (query.isEmpty()) Text(
                                 if (typing) "Type to search…" else "Search apps…  (A to type)",
-                                fontSize = 14.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
+                                fontSize = 14.sp, fontFamily = JoeyFont, color = TextFaint)
                             inner()
                         },
                         modifier = Modifier
@@ -331,7 +332,7 @@ fun AppGridItem(
                 contentAlignment = Alignment.Center
             ) {
                 Text(app.label.take(2).uppercase(), fontSize = 16.sp, color = TextDim,
-                    fontFamily = FontFamily.Monospace)
+                    fontFamily = JoeyFont)
             }
         }
         Text(

@@ -1,5 +1,6 @@
 package com.joeyos.app.ui
 
+import com.joeyos.app.ui.theme.JoeyFont
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -85,7 +86,7 @@ fun IntroScreen(
             Text(
                 text = "JOEYOS",
                 fontSize = 42.sp,
-                fontFamily = FontFamily.Monospace,
+                fontFamily = JoeyFont,
                 fontWeight = FontWeight.Bold,
                 color = Amber,
                 letterSpacing = 8.sp
@@ -94,7 +95,7 @@ fun IntroScreen(
             Text(
                 text = "RETRO GAME LAUNCHER",
                 fontSize = 11.sp,
-                fontFamily = FontFamily.Monospace,
+                fontFamily = JoeyFont,
                 fontWeight = FontWeight.Normal,
                 color = TextFaint,
                 letterSpacing = 4.sp
@@ -156,7 +157,7 @@ private fun IntroButton(
         Text(
             text = label,
             fontSize = 14.sp,
-            fontFamily = FontFamily.Monospace,
+            fontFamily = JoeyFont,
             fontWeight = FontWeight.Bold,
             color = if (done) TextFaint else Amber,
             letterSpacing = 1.sp

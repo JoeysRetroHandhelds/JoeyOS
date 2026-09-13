@@ -1,5 +1,6 @@
 package com.joeyos.app.ui.components
 
+import com.joeyos.app.R
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
@@ -66,7 +67,7 @@ internal data class GameEntry(
     val title: String,
     val subtitle: String,
     val imageUrl: String?,
-    val badge: String? = null,
+    val badge: Int? = null,   // a drawable icon
     val badgeColor: Color = RaColor,
     val trailing: String? = null,
     val progress: Float? = null,
@@ -95,7 +96,7 @@ internal fun finishedTotal(awards: List<RAAward>): Pair<Int, String> {
 
 internal fun RAAward.entry(): GameEntry = GameEntry(
     title = title, subtitle = consoleName, imageUrl = iconUrl,
-    badge = if (isFinished) "★" else "✓", badgeColor = if (isFinished) MasteredColor else RaColor,
+    badge = if (isFinished) R.drawable.ic_star else R.drawable.ic_check, badgeColor = if (isFinished) MasteredColor else RaColor,
     trailing = dayFmt().format(awardedAt), raGameId = gameId, url = gameUrl, sortMs = awardedAt.time,
     facts = listOf(
         "Console" to consoleName,
@@ -114,7 +115,7 @@ internal fun RARecentGame.entry(): GameEntry {
     val pct = if (numPossible > 0) numAchieved.toFloat() / numPossible else 0f
     return GameEntry(
         title = title, subtitle = "$consoleName  ·  $numAchieved/$numPossible", imageUrl = iconUrl,
-        badge = "▶", trailing = "${(pct * 100).roundToInt()}%", progress = pct, raGameId = gameId, url = gameUrl,
+        badge = R.drawable.ic_play_arrow, trailing = "${(pct * 100).roundToInt()}%", progress = pct, raGameId = gameId, url = gameUrl,
         sortMs = lastPlayedMs,
         facts = listOf("Console" to consoleName, "Achievements" to "$numAchieved of $numPossible",
             "Last played" to fullFmt().format(Date(lastPlayedMs)))
@@ -153,7 +154,7 @@ internal fun GameRow(e: GameEntry, onClick: () -> Unit, modifier: Modifier = Mod
             Text(e.title, fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = if (focused) Amber else TextPrimary,
                 maxLines = 1, overflow = TextOverflow.Ellipsis)
             Spacer(Modifier.height(2.dp))
-            Text(e.subtitle, fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint,
+            Text(e.subtitle, fontSize = 10.sp, fontFamily = JoeyFont, color = TextFaint,
                 maxLines = 1, overflow = TextOverflow.Ellipsis)
             e.progress?.let { p ->
                 Spacer(Modifier.height(6.dp))
@@ -162,8 +163,8 @@ internal fun GameRow(e: GameEntry, onClick: () -> Unit, modifier: Modifier = Mod
             }
         }
         Column(horizontalAlignment = Alignment.End) {
-            e.badge?.let { Text(it, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = e.badgeColor) }
-            e.trailing?.let { Text(it, fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextDim) }
+            e.badge?.let { JoeyIcon(it, e.badgeColor, 16.dp) }
+            e.trailing?.let { Text(it, fontSize = 10.sp, fontFamily = JoeyFont, color = TextDim) }
         }
     }
 }
@@ -190,7 +191,7 @@ internal fun StatTile(
             .padding(horizontal = 14.dp, vertical = if (big) 16.dp else 12.dp)
     ) {
         Text(value, fontSize = if (big) 30.sp else 20.sp, fontWeight = FontWeight.Bold, color = color, maxLines = 1)
-        Text(label, fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint, maxLines = 2)
+        Text(label, fontSize = 10.sp, fontFamily = JoeyFont, color = TextFaint, maxLines = 2)
     }
 }
 

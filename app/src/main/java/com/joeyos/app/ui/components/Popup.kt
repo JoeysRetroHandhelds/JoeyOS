@@ -1,5 +1,6 @@
 package com.joeyos.app.ui.components
 
+import com.joeyos.app.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -70,7 +71,7 @@ fun JoeyPopup(
                 Text(title, fontWeight = FontWeight.Bold, fontSize = 15.sp, color = TextPrimary,
                     maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
                 if (hint.isNotEmpty()) {
-                    Text(hint, fontSize = 9.sp, fontFamily = FontFamily.Monospace, color = TextFaint, maxLines = 1)
+                    Text(hint, fontSize = 9.sp, fontFamily = JoeyFont, color = TextFaint, maxLines = 1)
                 }
             }
             Column(
@@ -85,7 +86,7 @@ fun JoeyPopup(
 
 /**
  * A row in a popup list: one focus target, lit and ringed amber when focused. [isCurrent] marks
- * the chosen value in a picker with a ✓ (null for a plain action list, which has no ✓ column).
+ * the chosen value in a picker with a tick (null for a plain action list, which has no tick column).
  * Sideways presses are cancelled: a full-width row has nothing beside it, and an unanswered one
  * would fall to a geometric search that jumps elsewhere (found in Chameleon).
  */
@@ -114,24 +115,23 @@ fun PopupRow(
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         if (isCurrent != null) {
-            Text(if (isCurrent) "✓" else " ", fontSize = 12.sp, color = Amber,
-                fontFamily = FontFamily.Monospace, modifier = Modifier.width(16.dp))
+            Box(Modifier.width(16.dp)) { if (isCurrent) JoeyIcon(R.drawable.ic_check, Amber, 16.dp) }
         }
         Column(Modifier.weight(1f)) {
-            Text(label, fontSize = 13.sp, fontFamily = FontFamily.Monospace,
+            Text(label, fontSize = 13.sp, fontFamily = JoeyFont,
                 color = if (isCurrent == true) Amber else TextPrimary,
                 maxLines = 1, overflow = TextOverflow.Ellipsis)
             if (detail != null) {
-                Text(detail, fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint, maxLines = 2)
+                Text(detail, fontSize = 10.sp, fontFamily = JoeyFont, color = TextFaint, maxLines = 2)
             }
         }
-        if (focused) Text("▶", fontSize = 12.sp, color = FocusColor)
+        if (focused) JoeyIcon(R.drawable.ic_chevron_right, FocusColor, 18.dp)
     }
 }
 
 /** The line shown in a popup list while it loads or has nothing in it. */
 @Composable
 fun PopupNote(text: String) {
-    Text(text, fontSize = 12.sp, fontFamily = FontFamily.Monospace, color = TextFaint,
+    Text(text, fontSize = 12.sp, fontFamily = JoeyFont, color = TextFaint,
         modifier = Modifier.padding(horizontal = 18.dp, vertical = 14.dp))
 }

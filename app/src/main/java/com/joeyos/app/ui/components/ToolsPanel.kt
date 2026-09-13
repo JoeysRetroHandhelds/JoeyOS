@@ -1,5 +1,6 @@
 package com.joeyos.app.ui.components
 
+import com.joeyos.app.R
 import android.os.Environment
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
@@ -165,7 +166,7 @@ fun ToolsPanel(
             }
             item {
                 Text("The log is also saved as a file: Internal storage › JoeyOS › joeyos.log",
-                    fontSize = 9.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
+                    fontSize = 9.sp, fontFamily = JoeyFont, color = TextFaint)
             }
         }
         ToolScreen.Patch -> PatchScreen(firstFocus = toolFirst, modifier = modifier)
@@ -323,8 +324,8 @@ private fun BiosResultRow(result: BiosSystemResult) {
             .padding(horizontal = 12.dp, vertical = 9.dp)
     ) {
         Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
-            Text(if (result.satisfied) "✓ " else "✕ ", fontSize = 13.sp,
-                color = if (result.satisfied) VerifiedColor else MissingColor, fontWeight = FontWeight.Bold)
+            JoeyIcon(if (result.satisfied) R.drawable.ic_check else R.drawable.ic_close,
+                if (result.satisfied) VerifiedColor else MissingColor, 16.dp, Modifier.padding(end = 6.dp))
             Text(result.system, fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = TextPrimary)
         }
         result.files.forEach { file ->
@@ -337,7 +338,7 @@ private fun BiosResultRow(result: BiosSystemResult) {
                     (if (file.required) "missing" else "missing (optional)") to
                         (if (file.required) MissingColor else TextFaint)
             }
-            Text("${file.name}  •  $label", fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = color)
+            Text("${file.name}  •  $label", fontSize = 10.sp, fontFamily = JoeyFont, color = color)
         }
     }
 }
@@ -451,7 +452,7 @@ private fun PatchScreen(firstFocus: FocusRequester, modifier: Modifier = Modifie
             Text(
                 "Choose a patch and the game it's for. UPS and BPS patches carry checksums, so a " +
                     "wrong base ROM is caught before anything is written. The original game is never changed.",
-                fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint
+                fontSize = 10.sp, fontFamily = JoeyFont, color = TextFaint
             )
         }
         item {
@@ -513,7 +514,7 @@ internal fun ToggleRow(
                 .border(1.5.dp, if (checked) Amber else TextFaint, RoundedCornerShape(5.dp)),
             contentAlignment = androidx.compose.ui.Alignment.Center
         ) {
-            if (checked) Text("✓", fontSize = 12.sp, color = Color.Black, fontWeight = FontWeight.Bold)
+            if (checked) JoeyIcon(R.drawable.ic_check, Color.Black, 16.dp)
         }
         CardText(label, detail, focused)
     }
@@ -614,7 +615,7 @@ private fun M3uScreen(firstFocus: FocusRequester, modifier: Modifier = Modifier)
                     "emulator shows a single entry per game. Files are moved, never deleted, and every move " +
                     "is checked before the original is removed. You can undo the whole run afterwards. " +
                     "Nothing happens until you press Create playlists.",
-                fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint
+                fontSize = 10.sp, fontFamily = JoeyFont, color = TextFaint
             )
         }
 
@@ -894,7 +895,7 @@ private fun CompressScreen(firstFocus: FocusRequester, modifier: Modifier = Modi
         }
         JoeyPopup(title = "Licence", hint = "↑↓ read  •  B close", wide = true, onDismiss = { showLicence = null }) {
             // A focusable, scrollable body so the D-pad can read all of it.
-            Text(text, fontSize = 9.sp, fontFamily = FontFamily.Monospace, color = TextDim,
+            Text(text, fontSize = 9.sp, fontFamily = JoeyFont, color = TextDim,
                 modifier = Modifier.weight(1f, fill = false)
                     .readOnlyFocus()
                     .verticalScroll(androidx.compose.foundation.rememberScrollState()))
@@ -941,7 +942,7 @@ private fun CompressScreen(firstFocus: FocusRequester, modifier: Modifier = Modi
                     "both below, each original is removed once its new file is checked. The whole run can be " +
                     "undone. DSiWare, DSi-only DS games and encrypted 3DS games are left alone. Nothing " +
                     "happens until you press Compress.",
-                fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint
+                fontSize = 10.sp, fontFamily = JoeyFont, color = TextFaint
             )
         }
         item {
@@ -1419,7 +1420,7 @@ private fun RaHacksScreen(firstFocus: FocusRequester, modifier: Modifier = Modif
                     Text("Pick a console. JoeyOS checks the games you own against the RetroAchievements patch " +
                         "set and lists the ones with a hack or translation. Each is applied to a copy: your " +
                         "original game is never changed.",
-                        fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
+                        fontSize = 10.sp, fontFamily = JoeyFont, color = TextFaint)
                 }
                 val list = folders
                 when {
@@ -1615,7 +1616,7 @@ private fun SaveResultDialog(
         Text(
             "${folder.absolutePath}/$shownName" + if (besideFolder == null)
                 "\nThe original isn't in a folder JoeyOS can save to, so it goes in Downloads." else "",
-            fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextDim
+            fontSize = 10.sp, fontFamily = JoeyFont, color = TextDim
         )
         ToggleRow("Remember these choices", "Start with this place" + (if (compressFormat != null) " and compress choice" else "") +
             " next time.", rememberChoice, { rememberChoice = it })

@@ -1,0 +1,519 @@
+package com.joeyos.app.ui.components
+
+import android.content.Context
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
+import com.joeyos.app.AppLog
+import com.joeyos.app.SecondScreenActivity
+import com.joeyos.app.data.GuideBlocklist
+import com.joeyos.app.data.GuideSource
+import com.joeyos.app.data.GuideTarget
+import com.joeyos.app.data.Guides
+import com.joeyos.app.ui.theme.*
+import kotlinx.coroutines.launch
+import org.json.JSONTokener
+import java.io.File
+
+/*
+ * The second screen's Guide tab, ported from Chameleon: read a saved guide beside the game (text
+ * with size, wrap, reflow, Night/Day/Sepia, find, contents and your place remembered; a saved web
+ * page offline with a reader mode), or, when there's none, get one — only when you choose: from
+ * the GameFAQs archive, or via a search in a built-in browser with ad blocking, saving the page to
+ * read offline. Touch only, like the rest of the
+ * second screen; typing (find, a site's search box) briefly lets this screen take the keyboard.
+ */
+
+/** How a guide is coloured: a daylight and a night-time question. */
+enum class GuideTheme(val label: String, val ink: Color, val paper: Color) {
+    Night("Night", Color(0xFFEDEDED), Color(0xFF000000)),
+    Day("Day", Color(0xFF101010), Color(0xFFF2F2F2)),
+    Sepia("Sepia", Color(0xFF3B2F1E), Color(0xFFF3E6CE)),
+}
+
+private fun guidePrefs(context: Context) = context.getSharedPreferences("guides", Context.MODE_PRIVATE)
+
+/**
+ * The Guide tab for [target]. [search] opens the browser on a one-off search (an achievement you
+ * are stuck on) and is consumed by [onSearchShown].
+ */
+@Composable
+fun GuideTab(target: GuideTarget, search: GuideSource?, onSearchShown: () -> Unit) {
+    val context = LocalContext.current
+    var guide by remember(target.key) { mutableStateOf(Guides.find(target)) }
+    var browsing by remember(target.key) { mutableStateOf<GuideSource?>(null) }
+    var finding by remember(target.key) { mutableStateOf(false) }   // "Change guide" from the reader
+
+    LaunchedEffect(search) { if (search != null) { browsing = search; onSearchShown() } }
+
+    val open = browsing
+    val file = guide
+    when {
+        open != null -> GuideBrowser(open, onClose = { browsing = null }) { html ->
+            Guides.saveHtml(target, html)?.let { guide = it; finding = false; browsing = null }
+        }
+        file != null && !finding -> if (Guides.isHtml(file)) GuideHtmlPage(file, onChange = { finding = true })
+            else GuideTextPage(file, target, onChange = { finding = true })
+        else -> GuideFinder(target, canGoBack = file != null, onBack = { finding = false },
+            onDownloaded = { guide = it; finding = false }, onOpen = { browsing = it })
+    }
+}
+
+// ── Getting a guide ──────────────────────────────────────────────────────────────────────
+
+@Composable
+private fun GuideFinder(
+    target: GuideTarget,
+    canGoBack: Boolean,
+    onBack: () -> Unit,
+    onDownloaded: (File) -> Unit,
+    onOpen: (GuideSource) -> Unit,
+) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    var archive by remember(target.key) { mutableStateOf<String?>(null) }   // status line
+    var working by remember { mutableStateOf(false) }
+
+    Column(
+        Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 14.dp).padding(bottom = 18.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        if (canGoBack) Pill("‹  Back to the guide", active = false, onClick = onBack)
+        Text("Get a guide for ${target.title}", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = TextPrimary)
+        Text("Nothing downloads until you choose. Guides are saved in Internal storage › JoeyOS › guides.",
+            fontSize = 10.sp, color = TextFaint)
+
+        if (Guides.archiveCovers(target)) {
+            SectionLabel("GameFAQs archive", Modifier.padding(top = 6.dp))
+            GuideChoice("Download the GameFAQs guide", archive ?: "The text walkthrough from GameFAQs' archive, to read offline.") {
+                if (working) return@GuideChoice
+                working = true; archive = "Looking in the archive…"
+                scope.launch {
+                    val f = Guides.downloadFromArchive(target, context.cacheDir)
+                    working = false
+                    if (f != null) onDownloaded(f) else archive = "No archived guide found for this game. Try a search below."
+                }
+            }
+            if (working) LinearProgressIndicator(Modifier.fillMaxWidth(), color = Amber)
+        }
+
+        SectionLabel("Search", Modifier.padding(top = 6.dp))
+        Text("Opens here: find a guide, then Save to read it offline.", fontSize = 10.sp, color = TextFaint)
+        Guides.searchLinks(target.title).forEach { s -> GuideChoice(s.site, null) { onOpen(s) } }
+    }
+}
+
+@Composable
+private fun GuideChoice(title: String, detail: String?, onClick: () -> Unit) {
+    CardRow(onClick = onClick) { f -> CardText(title, detail, f) }
+}
+
+/**
+ * The guide browser: JavaScript on (a live guide site needs it), ads and trackers blocked, and
+ * Save, which reads the rendered page out and files it as the game's guide for offline reading.
+ */
+@Composable
+private fun GuideBrowser(source: GuideSource, onClose: () -> Unit, onSave: (String) -> Unit) {
+    val context = LocalContext.current
+    var web by remember { mutableStateOf<WebView?>(null) }
+    var title by remember { mutableStateOf(source.site) }
+    var saving by remember { mutableStateOf(false) }
+    var typing by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) { runCatching { GuideBlocklist.ensureLoaded(context.cacheDir) } }
+    // Typing into a page (a site's search box) needs this screen to take the keyboard.
+    AllowTyping(typing)
+
+    Column(Modifier.fillMaxSize().background(Color.White)) {
+        Row(
+            Modifier.fillMaxWidth().background(Background).padding(horizontal = 8.dp, vertical = 6.dp),
+            verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            Pill("Close", active = false, onClick = onClose)
+            Pill("‹", active = false) { web?.let { if (it.canGoBack()) it.goBack() } }
+            Text(title, fontSize = 11.sp, color = TextDim, maxLines = 1, overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.weight(1f))
+            Pill("Type", active = typing) { typing = !typing }
+            Pill(if (saving) "Saving…" else "Save", active = true) {
+                val v = web ?: return@Pill
+                if (saving) return@Pill
+                saving = true
+                v.evaluateJavascript("(function(){return document.documentElement.outerHTML;})();") { encoded ->
+                    saving = false
+                    val html = runCatching { JSONTokener(encoded).nextValue() as? String }.getOrNull()
+                    if (!html.isNullOrBlank()) onSave(html) else AppLog.w("Guides", "Save: the page came back empty")
+                }
+            }
+        }
+        AndroidView(
+            modifier = Modifier.fillMaxSize(),
+            factory = { ctx ->
+                WebView(ctx).apply {
+                    settings.javaScriptEnabled = true
+                    settings.domStorageEnabled = true
+                    settings.loadWithOverviewMode = true
+                    settings.useWideViewPort = true
+                    settings.builtInZoomControls = true
+                    settings.displayZoomControls = false
+                    webViewClient = object : WebViewClient() {
+                        override fun onPageFinished(view: WebView, url: String?) {
+                            title = view.title?.takeIf { it.isNotBlank() } ?: source.site
+                        }
+                        override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest) =
+                            GuideBlocklist.intercept(request)
+                    }
+                    loadUrl(source.url)
+                    web = this
+                }
+            },
+            onRelease = { it.destroy() }
+        )
+    }
+}
+
+/** While [on], the second screen can take the keyboard (it normally can't, so the game keeps its buttons). */
+@Composable
+private fun AllowTyping(on: Boolean) {
+    val activity = LocalContext.current as? SecondScreenActivity
+    DisposableEffect(on) {
+        activity?.allowTyping(on)
+        onDispose { activity?.allowTyping(false) }
+    }
+}
+
+// ── Reading a text guide ─────────────────────────────────────────────────────────────────
+
+@Composable
+private fun GuideTextPage(file: File, target: GuideTarget, onChange: () -> Unit) {
+    val context = LocalContext.current
+    val prefs = remember { guidePrefs(context) }
+    var size by remember { mutableIntStateOf(prefs.getInt("size", 15)) }
+    var wrap by remember { mutableStateOf(prefs.getBoolean("wrap", true)) }
+    var reflow by remember { mutableStateOf(prefs.getBoolean("reflow", false)) }
+    var theme by remember { mutableStateOf(GuideTheme.entries.firstOrNull { it.name == prefs.getString("theme", null) } ?: GuideTheme.Night) }
+    var findOpen by remember { mutableStateOf(false) }
+    var tocOpen by remember { mutableStateOf(false) }
+    fun save(block: android.content.SharedPreferences.Editor.() -> Unit) = prefs.edit().apply(block).apply()
+
+    Column(Modifier.fillMaxSize()) {
+        Row(
+            Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 10.dp, vertical = 6.dp),
+            horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically
+        ) {
+            Pill("A−", false) { size = (size - 1).coerceAtLeast(9); save { putInt("size", size) } }
+            Pill("A+", false) { size = (size + 1).coerceAtMost(28); save { putInt("size", size) } }
+            Pill("Wrap", wrap || reflow) { wrap = !wrap; save { putBoolean("wrap", wrap) } }
+            Pill("Reflow", reflow) { reflow = !reflow; save { putBoolean("reflow", reflow) } }
+            GuideTheme.entries.forEach { t -> Pill(t.label, theme == t) { theme = t; save { putString("theme", t.name) } } }
+            Pill("Find", findOpen) { findOpen = !findOpen }
+            Pill("Contents", tocOpen) { tocOpen = !tocOpen }
+            Pill("Change guide", false, onChange)
+        }
+        GuideText(file, theme, size, wrap, reflow,
+            startAt = prefs.getInt("pos_${target.key}", 0),
+            onPosition = { p -> save { putInt("pos_${target.key}", p) } },
+            findOpen = findOpen, onFindOpen = { findOpen = it }, tocOpen = tocOpen, onTocOpen = { tocOpen = it })
+    }
+}
+
+@Composable
+private fun GuideText(
+    file: File, theme: GuideTheme, textSize: Int, wraps: Boolean, reflow: Boolean,
+    startAt: Int, onPosition: (Int) -> Unit,
+    findOpen: Boolean, onFindOpen: (Boolean) -> Unit, tocOpen: Boolean, onTocOpen: (Boolean) -> Unit,
+) {
+    val raw = remember(file) { runCatching { file.readText() }.getOrNull() }
+    // Reflowed to the screen when asked, rejoining hard-wrapped prose; find, contents and the
+    // saved position all work on the text as shown.
+    val text = remember(raw, reflow) { raw?.let { if (reflow) reflowGuide(it) else it } }
+    val wrapping = reflow || wraps
+    val scroll = rememberScrollState()
+    val density = LocalDensity.current
+    val scope = rememberCoroutineScope()
+    var layout by remember(text) { mutableStateOf<TextLayoutResult?>(null) }
+    val topPadPx = with(density) { 10.dp.toPx() }
+
+    suspend fun scrollToChar(offset: Int) {
+        val l = layout ?: return
+        val length = text?.length ?: return
+        val box = runCatching { l.getBoundingBox(offset.coerceIn(0, (length - 1).coerceAtLeast(0))) }.getOrNull() ?: return
+        runCatching { scroll.scrollTo((box.top + topPadPx).toInt().coerceIn(0, scroll.maxValue)) }
+    }
+
+    // Find: every match of the query (two characters or more), and which is current.
+    var query by remember(text) { mutableStateOf("") }
+    var current by remember(text) { mutableIntStateOf(0) }
+    val matches = remember(text, query) {
+        val t = text
+        if (t == null || query.length < 2) emptyList() else buildList {
+            var i = t.indexOf(query, 0, ignoreCase = true)
+            while (i >= 0) { add(i); i = t.indexOf(query, i + query.length, ignoreCase = true) }
+        }
+    }
+    LaunchedEffect(matches) { if (current >= matches.size) current = 0 }
+    LaunchedEffect(current, matches, layout) { matches.getOrNull(current)?.let { scrollToChar(it) } }
+
+    // Section headings for Contents (a plain-text FAQ has no structure, so it's a heuristic).
+    val headings = remember(text) {
+        val t = text ?: return@remember emptyList<Pair<String, Int>>()
+        buildList {
+            var offset = 0
+            t.lineSequence().forEach { line ->
+                val trimmed = line.trim()
+                if (isGuideHeading(trimmed)) add(trimmed to offset)
+                offset += line.length + 1
+            }
+        }
+    }
+
+    // Your place is kept as a fraction of the whole (ten-thousandths), not a pixel offset, so it
+    // survives changing the text size. Restored once the text has been measured.
+    LaunchedEffect(file, textSize, wrapping, text) {
+        if (text == null) return@LaunchedEffect
+        repeat(20) {
+            val max = scroll.maxValue
+            if (max > 0) { runCatching { scroll.scrollTo((startAt / 10_000f * max).toInt()) }; return@LaunchedEffect }
+            kotlinx.coroutines.delay(16)
+        }
+    }
+    LaunchedEffect(scroll.value, scroll.maxValue) {
+        val max = scroll.maxValue
+        if (max > 0) onPosition((scroll.value.toFloat() / max * 10_000f).toInt().coerceIn(0, 10_000))
+    }
+
+    val display: AnnotatedString = remember(text, query, current, matches, theme) {
+        val t = text ?: return@remember AnnotatedString("This guide couldn't be read.")
+        if (matches.isEmpty()) AnnotatedString(t) else buildAnnotatedString {
+            append(t)
+            matches.forEachIndexed { i, off ->
+                addStyle(SpanStyle(background = if (i == current) Amber else Amber.copy(alpha = 0.33f),
+                    color = if (i == current) Color(0xFF101010) else theme.ink), off, (off + query.length).coerceAtMost(t.length))
+            }
+        }
+    }
+
+    // Text guides keep a monospace face: they're drawn as ASCII maps and tables to a fixed column.
+    val body = @Composable {
+        Text(display, color = theme.ink, fontFamily = FontFamily.Monospace, fontSize = textSize.sp,
+            lineHeight = (textSize * 1.35f).sp, softWrap = wrapping, onTextLayout = { layout = it },
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp))
+    }
+
+    Box(Modifier.fillMaxSize().background(theme.paper)) {
+        Box(Modifier.fillMaxSize().verticalScroll(scroll)) {
+            if (wrapping) body() else Box(Modifier.horizontalScroll(rememberScrollState())) { body() }
+        }
+        if (findOpen) {
+            AllowTyping(true)
+            FindBar(query, { query = it; current = 0 }, matches.size, if (matches.isEmpty()) 0 else current + 1,
+                onPrev = { if (matches.isNotEmpty()) current = (current - 1 + matches.size) % matches.size },
+                onNext = { if (matches.isNotEmpty()) current = (current + 1) % matches.size },
+                onClose = { onFindOpen(false); query = "" })
+        }
+        if (tocOpen) {
+            Box(Modifier.fillMaxSize().background(Color(0xE6000000)).clickable { onTocOpen(false) }) {
+                Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(12.dp),
+                    verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                    Row(Modifier.fillMaxWidth().padding(bottom = 6.dp), horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically) {
+                        Text("Contents", color = TextPrimary, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+                        Pill("Close", false) { onTocOpen(false) }
+                    }
+                    if (headings.isEmpty()) Text("No sections found in this guide.", color = TextFaint, fontSize = 13.sp)
+                    headings.forEach { (title, offset) ->
+                        Text(title, color = TextPrimary, fontSize = 13.sp, maxLines = 1, overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(6.dp))
+                                .clickable { onTocOpen(false); scope.launch { scrollToChar(offset) } }
+                                .padding(horizontal = 8.dp, vertical = 8.dp))
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun FindBar(query: String, onQuery: (String) -> Unit, total: Int, current: Int,
+                    onPrev: () -> Unit, onNext: () -> Unit, onClose: () -> Unit) {
+    Row(
+        Modifier.fillMaxWidth().background(Color(0xF2141414)).padding(horizontal = 12.dp, vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Box(Modifier.weight(1f).clip(RoundedCornerShape(8.dp)).background(Color(0xFF2A2A2A)).padding(horizontal = 10.dp, vertical = 8.dp)) {
+            if (query.isEmpty()) Text("Find in guide", color = TextFaint, fontSize = 13.sp)
+            BasicTextField(query, onQuery, singleLine = true,
+                textStyle = TextStyle(color = TextPrimary, fontSize = 13.sp, fontFamily = JoeyFont),
+                cursorBrush = SolidColor(Amber), modifier = Modifier.fillMaxWidth())
+        }
+        Text(if (total == 0) "0" else "$current/$total", color = TextDim, fontSize = 12.sp)
+        Pill("‹", false, onPrev)
+        Pill("›", false, onNext)
+        Pill("Done", false, onClose)
+    }
+}
+
+// ── A saved web page ─────────────────────────────────────────────────────────────────────
+
+/**
+ * A guide saved from a site, read offline in a WebView. JavaScript is on for Reader mode's
+ * extraction, but every non-file request is refused, so the page can't reach anything online.
+ */
+@Composable
+private fun GuideHtmlPage(file: File, onChange: () -> Unit) {
+    var web by remember(file) { mutableStateOf<WebView?>(null) }
+    var reader by remember(file) { mutableStateOf(false) }
+    var findOpen by remember(file) { mutableStateOf(false) }
+    var query by remember(file) { mutableStateOf("") }
+    var matches by remember(file) { mutableIntStateOf(0) }
+    if (findOpen) AllowTyping(true)
+
+    Column(Modifier.fillMaxSize().background(Color.White)) {
+        Row(
+            Modifier.fillMaxWidth().background(Background).padding(horizontal = 8.dp, vertical = 6.dp),
+            verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Pill(if (reader) "Full page" else "Reader", reader) {
+                reader = !reader
+                web?.let { if (reader) it.evaluateJavascript(ReaderScript, null) else it.reload() }
+            }
+            Pill("Find", findOpen) { findOpen = !findOpen; if (!findOpen) { web?.clearMatches(); query = "" } }
+            Spacer(Modifier.weight(1f))
+            Pill("Change guide", false, onChange)
+        }
+        if (findOpen) {
+            Row(
+                Modifier.fillMaxWidth().background(Color(0xFF1E1E1E)).padding(horizontal = 10.dp, vertical = 6.dp),
+                verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Box(Modifier.weight(1f)) {
+                    if (query.isEmpty()) Text("Find in page", color = TextFaint, fontSize = 13.sp)
+                    BasicTextField(query, { query = it; web?.findAllAsync(it) }, singleLine = true,
+                        textStyle = TextStyle(color = TextPrimary, fontSize = 13.sp, fontFamily = JoeyFont),
+                        cursorBrush = SolidColor(Amber), modifier = Modifier.fillMaxWidth())
+                }
+                Text(if (query.isBlank()) "" else "$matches", color = TextDim, fontSize = 12.sp)
+                Pill("‹", false) { web?.findNext(false) }
+                Pill("›", false) { web?.findNext(true) }
+            }
+        }
+        AndroidView(
+            modifier = Modifier.fillMaxSize().background(Color.White),
+            factory = { ctx ->
+                WebView(ctx).apply {
+                    settings.javaScriptEnabled = true
+                    settings.builtInZoomControls = true
+                    settings.displayZoomControls = false
+                    settings.loadWithOverviewMode = true
+                    settings.useWideViewPort = true
+                    @Suppress("DEPRECATION")
+                    settings.allowFileAccess = true
+                    setFindListener { _, n, _ -> matches = n }
+                    webViewClient = object : WebViewClient() {
+                        override fun onPageFinished(view: WebView, url: String?) {
+                            if (reader) view.evaluateJavascript(ReaderScript, null)
+                        }
+                        override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): android.webkit.WebResourceResponse? {
+                            val url = request.url?.toString().orEmpty()
+                            return if (url.startsWith("file://")) super.shouldInterceptRequest(view, request)
+                            else android.webkit.WebResourceResponse("text/plain", "utf-8", null)
+                        }
+                    }
+                    loadUrl(android.net.Uri.fromFile(file).toString())
+                    web = this
+                }
+            },
+            onRelease = { it.destroy() }
+        )
+    }
+}
+
+/** Reader mode: keep the densest block of running text (the guide), restyled for a dark screen. */
+private const val ReaderScript = """
+(function(){
+  try {
+    var best=null, bestScore=0;
+    var nodes=document.querySelectorAll('article,main,[role=main],section,div');
+    for (var i=0;i<nodes.length;i++){
+      var el=nodes[i];
+      var text=(el.innerText||'').length;
+      var paras=el.querySelectorAll('p,li,br,pre').length;
+      var score=text+paras*30;
+      var cls=((el.className||'')+' '+(el.id||'')).toLowerCase();
+      if(/nav|menu|footer|header|sidebar|comment|share|related|promo|advert|cookie/.test(cls)) score*=0.2;
+      if(score>bestScore){bestScore=score;best=el;}
+    }
+    if(best){document.body.innerHTML='<div id="rdr">'+best.innerHTML+'</div>';}
+    var s=document.createElement('style');
+    s.innerHTML='html,body{background:#0B0D12!important;color:#F3EFE4!important;margin:0;padding:14px;font-family:sans-serif;line-height:1.55;font-size:16px}#rdr img{max-width:100%;height:auto}a{color:#FFB000}h1,h2,h3,h4{color:#fff}table{max-width:100%}';
+    document.head.appendChild(s);
+  } catch(e){}
+})();
+"""
+
+/**
+ * Rejoins the hard-wrapped prose of an old text guide so it wraps to the screen, leaving blocks
+ * whose line breaks carry meaning (tables, maps, ASCII art) alone.
+ */
+internal fun reflowGuide(text: String): String {
+    val lines = text.split("\n")
+    val out = StringBuilder()
+    var i = 0
+    while (i < lines.size) {
+        if (lines[i].isBlank()) { out.append("\n"); i++; continue }
+        val block = ArrayList<String>()
+        while (i < lines.size && lines[i].isNotBlank()) { block.add(lines[i]); i++ }
+        out.append(if (isProseBlock(block)) block.joinToString(" ") { it.trim() } else block.joinToString("\n"))
+        out.append("\n")
+    }
+    return out.toString()
+}
+
+/** Hard-wrapped prose: lines near one column width, no aligned columns or box-drawing characters. */
+internal fun isProseBlock(lines: List<String>): Boolean {
+    if (lines.size < 2) return false
+    for (line in lines) {
+        if (Regex("""\S {2,}\S""").containsMatchIn(line)) return false
+        if (line.count { it in "|+=_/\\<>#*~" } > line.length * 0.15f) return false
+    }
+    val nonLast = lines.dropLast(1)
+    return nonLast.count { it.trim().length in 40..90 }.toFloat() / nonLast.size >= 0.6f
+}
+
+/** A heading in a plain-text FAQ: a short line that is mostly capitals, or numbered like an outline. */
+internal fun isGuideHeading(line: String): Boolean {
+    if (line.length !in 3..48) return false
+    val letters = line.count { it.isLetter() }
+    if (letters < 2) return false
+    if (line.count { it in "=-*_~|" } > line.length / 2) return false
+    val upper = line.count { it.isLetter() && it.isUpperCase() }
+    return upper.toFloat() / letters >= 0.7f || Regex("""^\d+([.)]|\.\d+)*[.)]?\s+\S""").containsMatchIn(line)
+}

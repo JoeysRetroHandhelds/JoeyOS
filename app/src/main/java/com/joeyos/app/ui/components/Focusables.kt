@@ -106,7 +106,7 @@ fun OptionChip(
             .padding(vertical = 11.dp),
         contentAlignment = Alignment.Center
     ) {
-        Text(label, fontSize = fontSize, fontFamily = FontFamily.Monospace,
+        Text(label, fontSize = fontSize, fontFamily = JoeyFont,
             color = when {
                 active  -> Amber
                 focused -> TextPrimary
@@ -224,11 +224,11 @@ fun ControllerTextField(
                     imeAction = ImeAction.Done
                 ),
                 keyboardActions = KeyboardActions(onDone = { stopTyping(moveOn = true) }),
-                textStyle = TextStyle(color = TextPrimary, fontSize = 13.sp, fontFamily = FontFamily.Monospace),
+                textStyle = TextStyle(color = TextPrimary, fontSize = 13.sp, fontFamily = JoeyFont),
                 decorationBox = { inner ->
                     if (value.isEmpty()) Text(
                         if (typing) placeholder else "$placeholder  (A to type)",
-                        fontSize = 13.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
+                        fontSize = 13.sp, fontFamily = JoeyFont, color = TextFaint)
                     inner()
                 },
                 modifier = Modifier

@@ -78,6 +78,17 @@ class SecondScreenActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * Lets this screen take the keyboard while [on] — Find in a guide, or typing into a site in
+     * the guide browser — and gives it back after. Normally it can't (FLAG_NOT_FOCUSABLE), so the
+     * game keeps its buttons; while typing here the controller follows the keyboard, and a tap on
+     * the game's screen hands it back.
+     */
+    fun allowTyping(on: Boolean) {
+        if (on) window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+        else window.addFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+    }
+
     override fun onResume() {
         super.onResume()
         // Only one screen left (its own went away while JoeyOS wasn't watching): not ours to cover.

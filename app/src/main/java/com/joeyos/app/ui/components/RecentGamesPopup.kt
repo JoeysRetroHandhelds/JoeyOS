@@ -1,5 +1,6 @@
 package com.joeyos.app.ui.components
 
+import com.joeyos.app.R
 import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -206,8 +207,8 @@ internal fun GameListRow(
                 .border(1.dp, AmberSoft, RoundedCornerShape(8.dp)),
             contentAlignment = Alignment.Center
         ) {
-            if (isCurrent) Text("★", fontSize = 12.sp, color = Amber)
-            else Text("$index", fontSize = 11.sp, fontFamily = FontFamily.Monospace,
+            if (isCurrent) JoeyIcon(R.drawable.ic_star, Amber, 16.dp)
+            else Text("$index", fontSize = 11.sp, fontFamily = JoeyFont,
                 color = Amber, fontWeight = FontWeight.Bold)
         }
         Column(modifier = Modifier.weight(1f)) {
@@ -222,11 +223,11 @@ internal fun GameListRow(
             Text(
                 subtitle,
                 fontSize = 10.sp,
-                fontFamily = FontFamily.Monospace,
+                fontFamily = JoeyFont,
                 color = TextFaint,
                 maxLines = 1
             )
         }
-        if (isSelected) Text("▶", fontSize = 12.sp, color = Amber)
+        if (isSelected) JoeyIcon(R.drawable.ic_chevron_right, Amber, 18.dp)
     }
 }

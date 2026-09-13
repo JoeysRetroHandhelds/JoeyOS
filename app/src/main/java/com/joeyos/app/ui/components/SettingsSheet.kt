@@ -1,5 +1,6 @@
-﻿package com.joeyos.app.ui.components
+package com.joeyos.app.ui.components
 
+import com.joeyos.app.R
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -164,7 +165,7 @@ fun SettingsSheet(
                 ) {
                     Text("JoeyOS", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = Amber)
                     Text("L1/R1 tabs  •  B close", fontSize = 9.sp,
-                        fontFamily = FontFamily.Monospace, color = TextFaint)
+                        fontFamily = JoeyFont, color = TextFaint)
                 }
 
                 // Tabs
@@ -301,7 +302,7 @@ fun WallpaperTile(
                     .background(Color.Black.copy(alpha = 0.4f))
                     .padding(horizontal = 6.dp, vertical = 2.dp)
             ) {
-                Text(badge, fontSize = 9.sp, color = Color.White, fontFamily = FontFamily.Monospace)
+                Text(badge, fontSize = 9.sp, color = Color.White, fontFamily = JoeyFont)
             }
         }
         if (isActive) ActiveTick(Modifier.align(Alignment.TopStart))
@@ -310,7 +311,7 @@ fun WallpaperTile(
             modifier = Modifier.align(Alignment.BottomStart).padding(8.dp),
             fontSize = 10.5.sp,
             color    = Color.White,
-            fontFamily = FontFamily.Monospace
+            fontFamily = JoeyFont
         )
     }
 }
@@ -326,7 +327,7 @@ private fun ActiveTick(modifier: Modifier = Modifier) {
             .background(Amber),
         contentAlignment = Alignment.Center
     ) {
-        Text("✓", fontSize = 10.sp, color = Color.Black, fontWeight = FontWeight.Bold)
+        JoeyIcon(R.drawable.ic_check, Color.Black, 14.dp)
     }
 }
 
@@ -357,7 +358,7 @@ fun AppearancePanel(
     listState: LazyListState = rememberLazyListState(),
     firstFocus: FocusRequester? = null
 ) {
-    // A on a custom wallpaper opens its options (use / remove). The ✕ inside the tile can't be
+    // A on a custom wallpaper opens its options (use / remove). The × inside the tile can't be
     // reached with the D-pad — it sits within the tile's bounds — so this is the controller way.
     var wallpaperOptions by remember { mutableStateOf<Uri?>(null) }
     wallpaperOptions?.let { uri ->
@@ -408,7 +409,7 @@ fun AppearancePanel(
                         .background(Brush.linearGradient(listOf(Color(0xFF6B4FA0), Color(0xFF241A3D)))),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text("🎮", fontSize = (dockIconSize * 0.42f).sp)
+                    JoeyIcon(R.drawable.ic_sports_esports, Color.White, (dockIconSize * 0.5f).dp)
                 }
             }
         }
@@ -539,7 +540,7 @@ fun AppearancePanel(
                                     .clickable { onRemoveWallpaper(uri) },
                                 contentAlignment = Alignment.Center
                             ) {
-                                Text("✕", fontSize = 9.sp, color = Color.White)
+                                JoeyIcon(R.drawable.ic_close, Color.White, 14.dp)
                             }
                         }
                     }
@@ -569,6 +570,7 @@ private fun SecondScreenSettings() {
     var enabled by remember { mutableStateOf(SecondScreenPrefs.enabled(context)) }
     var gamesOnOther by remember { mutableStateOf(SecondScreenPrefs.gamesOnOther(context)) }
     var hideSpoilers by remember { mutableStateOf(SecondScreenPrefs.hideSpoilers(context)) }
+    var showGuide by remember { mutableStateOf(SecondScreenPrefs.showGuide(context)) }
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         SectionLabel("Second screen", Modifier.padding(top = 4.dp))
         ToggleRow(
@@ -582,6 +584,12 @@ private fun SecondScreenSettings() {
                 AppLog.i("Settings", "Second screen ${if (on) "on" else "off"}")
                 (context as? android.app.Activity)?.let { SecondScreenController.ensure(it) }
             }
+        )
+        ToggleRow(
+            "Guide tab while playing",
+            "Read a walkthrough on the other screen. JoeyOS only downloads a guide when you choose one.",
+            showGuide,
+            { on -> showGuide = on; SecondScreenPrefs.setShowGuide(context, on) }
         )
         ToggleRow(
             "Hide achievement spoilers",
@@ -651,8 +659,8 @@ fun EmulatorsPanel(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Re-scan installed apps", fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
-            JoeyButton(if (refreshing) "…" else "↺  Refresh", {
+            Text("Re-scan installed apps", fontSize = 10.sp, fontFamily = JoeyFont, color = TextFaint)
+            JoeyButton(if (refreshing) "…" else "Refresh", icon = if (refreshing) null else R.drawable.ic_refresh, onClick = {
                 refreshing = true
                 onRefresh()
                 scope.launch {
@@ -739,7 +747,7 @@ fun EmulatorRow(
                 .background(Brush.linearGradient(listOf(Color(system.colorStart.toInt()), Color(system.colorEnd.toInt())))),
             contentAlignment = Alignment.Center
         ) {
-            Text(system.label, fontSize = 6.5.sp, color = TextPrimary.copy(alpha = 0.92f), fontFamily = FontFamily.Monospace)
+            Text(system.label, fontSize = 6.5.sp, color = TextPrimary.copy(alpha = 0.92f), fontFamily = JoeyFont)
         }
 
         Text(
@@ -762,14 +770,14 @@ fun EmulatorRow(
             Text(
                 text       = assignedLabel ?: "Not set",
                 fontSize   = 11.sp,
-                fontFamily = FontFamily.Monospace,
+                fontFamily = JoeyFont,
                 color      = if (assigned != null) TextDim else Amber,
                 fontStyle  = if (assigned == null) FontStyle.Italic else FontStyle.Normal,
                 maxLines   = 1,
                 overflow   = TextOverflow.Ellipsis,
                 modifier   = Modifier.weight(1f)
             )
-            Text(" ▶", fontSize = 9.sp, color = TextFaint)
+            JoeyIcon(R.drawable.ic_chevron_right, TextFaint, 16.dp)
         }
     }
 }

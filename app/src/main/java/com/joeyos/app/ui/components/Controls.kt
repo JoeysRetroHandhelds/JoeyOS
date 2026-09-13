@@ -29,10 +29,20 @@ import com.joeyos.app.ui.theme.*
  * Add to these rather than styling a one-off on a screen.
  */
 
+/**
+ * An icon from Material Symbols (Rounded), res/drawable/ic_*.xml, the set JoeyOS uses instead of text symbols like ✓ or
+ * ▶, which Inter doesn't have: vector, so crisp at any size, tinted exactly, one stroke weight.
+ */
+@Composable
+fun JoeyIcon(@androidx.annotation.DrawableRes icon: Int, color: Color, size: androidx.compose.ui.unit.Dp, modifier: Modifier = Modifier) {
+    androidx.compose.material3.Icon(androidx.compose.ui.res.painterResource(icon), contentDescription = null, tint = color,
+        modifier = modifier.size(size))
+}
+
 /** The small grey heading above a group of settings or a tool's section ("SYSTEM", "NAME"). */
 @Composable
 fun SectionLabel(text: String, modifier: Modifier = Modifier) {
-    Text(text.uppercase(), fontSize = 10.sp, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold,
+    Text(text.uppercase(), fontSize = 10.sp, fontFamily = JoeyFont, fontWeight = FontWeight.Bold,
         color = TextFaint, letterSpacing = 1.sp, modifier = modifier)
 }
 
@@ -47,7 +57,8 @@ fun JoeyButton(
     modifier: Modifier = Modifier,
     primary: Boolean = false,
     enabled: Boolean = true,
-    fontSize: TextUnit = 13.sp
+    fontSize: TextUnit = 13.sp,
+    @androidx.annotation.DrawableRes icon: Int? = null
 ) {
     val (source, focused) = rememberFocusState()
     val shape = RoundedCornerShape(12.dp)
@@ -71,12 +82,15 @@ fun JoeyButton(
             .padding(horizontal = 16.dp, vertical = 12.dp),
         contentAlignment = Alignment.Center
     ) {
-        Text(label, fontSize = fontSize, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.SemiBold,
-            color = when {
-                !enabled             -> TextFaint
-                primary || focused   -> Amber
-                else                 -> TextPrimary
-            })
+        val color = when {
+            !enabled             -> TextFaint
+            primary || focused   -> Amber
+            else                 -> TextPrimary
+        }
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            icon?.let { JoeyIcon(it, color, (fontSize.value + 3).dp) }
+            Text(label, fontSize = fontSize, fontFamily = JoeyFont, fontWeight = FontWeight.SemiBold, color = color)
+        }
     }
 }
 
@@ -115,7 +129,7 @@ fun RowScope.CardText(title: String, detail: String?, focused: Boolean) {
         Text(title, fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = if (focused) Amber else TextPrimary)
         if (!detail.isNullOrEmpty()) {
             Spacer(Modifier.height(3.dp))
-            Text(detail, fontSize = 10.sp, fontFamily = FontFamily.Monospace, color = TextFaint)
+            Text(detail, fontSize = 10.sp, fontFamily = JoeyFont, color = TextFaint)
         }
     }
 }
@@ -128,7 +142,7 @@ val MissingColor = Color(0xFFF87171)
 /** A one-line result or progress message ("Patched ROM written…", "Couldn't load…"). */
 @Composable
 fun StatusLine(text: String, color: Color, bold: Boolean = false) {
-    Text(text, fontSize = 12.sp, fontFamily = FontFamily.Monospace, color = color,
+    Text(text, fontSize = 12.sp, fontFamily = JoeyFont, color = color,
         fontWeight = if (bold) FontWeight.Bold else FontWeight.Normal)
 }
 

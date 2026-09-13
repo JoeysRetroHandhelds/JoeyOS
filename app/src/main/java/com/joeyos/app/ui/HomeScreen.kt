@@ -1,5 +1,7 @@
-﻿package com.joeyos.app.ui
+package com.joeyos.app.ui
 
+import com.joeyos.app.R
+import com.joeyos.app.ui.theme.JoeyFont
 import com.joeyos.app.data.startGame
 import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -497,7 +499,7 @@ fun Clock(use24h: Boolean = true) {
     val dateSp = (screenH * 0.028f).coerceIn(8f, 13f).sp
     Column(horizontalAlignment = Alignment.End) {
         Text(time, fontSize = timeSp, fontWeight = FontWeight.Bold, color = Color.White)
-        Text(date, fontSize = dateSp, color = Color.White.copy(alpha = 0.85f), fontFamily = FontFamily.Monospace)
+        Text(date, fontSize = dateSp, color = Color.White.copy(alpha = 0.85f), fontFamily = JoeyFont)
     }
 }
 
@@ -514,7 +516,7 @@ fun AppDrawerButton(onClick: () -> Unit) {
     ) {
         Surface(modifier = Modifier.fillMaxSize(), shape = CircleShape,
             color = Color.White.copy(alpha = 0.14f), tonalElevation = 0.dp) {}
-        Text("⊞", fontSize = 16.sp, color = Color.White)
+        com.joeyos.app.ui.components.JoeyIcon(R.drawable.ic_apps, Color.White, 20.dp)
     }
 }
 
@@ -531,7 +533,7 @@ fun SettingsGearButton(onClick: () -> Unit) {
     ) {
         Surface(modifier = Modifier.fillMaxSize(), shape = CircleShape,
             color = Color.White.copy(alpha = 0.14f), tonalElevation = 0.dp) {}
-        Text("⚙", fontSize = 16.sp, color = Color.White)
+        com.joeyos.app.ui.components.JoeyIcon(R.drawable.ic_settings, Color.White, 20.dp)
     }
 }
 
@@ -548,7 +550,7 @@ suspend fun launchRecentGame(
     // Most launchers resolve the ROM by scanning storage directories (RomFinder.findRomByTitle)
     // on every launch, not just as a fallback — keep that disk I/O off the main thread.
     // The second screen names the game straight away, before RetroAchievements has seen it.
-    com.joeyos.app.data.SecondScreenState.willLaunch(game.title)
+    com.joeyos.app.data.SecondScreenState.willLaunch(game.title, game.path)
     val launched = withContext(Dispatchers.IO) {
         when {
             game.emulatorPackage.startsWith("com.retroarch") ->
@@ -590,7 +592,7 @@ suspend fun launchRecentGame(
     }
     if (!launched) {
         AppLog.w("Launch", "'${game.title}': ${game.emulatorPackage}'s launcher couldn't start it, trying a plain open")
-        com.joeyos.app.data.SecondScreenState.willLaunch(game.title)
+        com.joeyos.app.data.SecondScreenState.willLaunch(game.title, game.path)
         val intent = Intent(Intent.ACTION_VIEW).apply {
             data = Uri.fromFile(File(game.path))
             setPackage(game.emulatorPackage)

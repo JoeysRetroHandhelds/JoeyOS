@@ -122,6 +122,7 @@ data class RAGameProgress(
     val consoleName: String,
     val imageIcon: String,
     val numDistinctPlayers: Int,
+    val consoleId: Int = 0,
     val achievements: List<RAAchievement>,
     val fetchedAt: Long = System.currentTimeMillis(),
     /** Your total time in the game, in seconds (0 when RA doesn't know). */
@@ -615,10 +616,14 @@ class RetroAchievementsRepository(context: Context) {
 
     /**
      * The game you're playing right now, as RetroAchievements sees it: your last game, provided
-     * RA saw you playing it since [sinceMs] (a minute's grace for clocks). Null until an emulator
-     * signed in to RetroAchievements has started the game. Never cached: it's the live answer.
+     * RA saw you playing it since [sinceMs]. Null until an emulator signed in to RetroAchievements
+     * has started the game. Never cached: it's the live answer.
+     *
+     * Only ten seconds' grace for clocks, and none for [previousGameId] (the last session's game):
+     * with a minute's grace, switching from Aladdin to another game showed Aladdin for 15 seconds,
+     * because RA had seen it within the minute (found on device).
      */
-    suspend fun fetchNowPlaying(sinceMs: Long): RANowPlaying? {
+    suspend fun fetchNowPlaying(sinceMs: Long, previousGameId: Int? = null): RANowPlaying? {
         if (!isConfigured) return null
         return withContext(Dispatchers.IO) {
             val body = getJson("https://retroachievements.org/API/API_GetUserSummary.php" +
@@ -628,7 +633,8 @@ class RetroAchievementsRepository(context: Context) {
                 val last = j.optJSONArray("RecentlyPlayed")?.optJSONObject(0) ?: return@runCatching null
                 val id = last.optInt("GameID", 0).takeIf { it > 0 } ?: return@runCatching null
                 val at = parseRaUtc(last.optString("LastPlayed"))?.time ?: return@runCatching null
-                if (at < sinceMs - 60_000) return@runCatching null
+                val grace = if (id == previousGameId) 0L else 10_000L
+                if (at < sinceMs - grace) return@runCatching null
                 val rp = j.optString("RichPresenceMsg").takeIf { it.isNotBlank() && it != "null" && j.optInt("LastGameID") == id }
                 RANowPlaying(id, rp.orEmpty())
             }.getOrNull()
@@ -712,7 +718,10 @@ class RetroAchievementsRepository(context: Context) {
                             points = a.optInt("Points"), badgeName = a.optString("BadgeName"),
                             earned = date != null, earnedHardcore = parseRaUtc(a.optString("DateEarnedHardcore")) != null,
                             dateEarned = date, numAwarded = a.optInt("NumAwarded"),
-                            type = a.optString("type").takeIf { it.isNotBlank() && it != "null" },
+                            // RA's live API sends "Type" (its docs show "type"): reading only the docs'
+                            // spelling found no progression/win/missable markings at all (found on device).
+                            type = (a.optString("Type").ifBlank { a.optString("type") })
+                                .takeIf { it.isNotBlank() && it != "null" },
                             displayOrder = a.optInt("DisplayOrder"),
                             numAwardedHardcore = a.optInt("NumAwardedHardcore"),
                             trueRatio = a.optInt("TrueRatio")
@@ -722,13 +731,19 @@ class RetroAchievementsRepository(context: Context) {
                 RAGameProgress(
                     gameId = gameId, title = j.optString("Title"), consoleName = j.optString("ConsoleName"),
                     imageIcon = j.optString("ImageIcon"), numDistinctPlayers = j.optInt("NumDistinctPlayers"),
+                    consoleId = j.optInt("ConsoleID"),
                     achievements = list.sortedWith(compareBy({ it.displayOrder }, { it.id })),
                     userPlaytimeSeconds = j.optInt("UserTotalPlaytime"),
                     highestAward = j.optString("HighestAwardKind").takeIf { it.isNotBlank() && it != "null" },
                     genre = j.optString("Genre").takeIf { it.isNotBlank() && it != "null" },
                     developer = j.optString("Developer").takeIf { it.isNotBlank() && it != "null" },
                     released = j.optString("Released").takeIf { it.isNotBlank() && it != "null" }
-                ).also { gameProgressCache[gameId] = it }
+                ).also {
+                    if (gameProgressCache[gameId] == null) AppLog.i("RetroAchievements",
+                        "Game $gameId '${it.title}': ${it.achievements.size} achievements, ${it.toBeat.size} to beat, " +
+                            "${it.achievements.count { a -> a.isMissable }} missable, ${it.earnedCount} earned")
+                    gameProgressCache[gameId] = it
+                }
             }.getOrElse { AppLog.w("RetroAchievements", "Couldn't read game $gameId", it); gameProgressCache[gameId] }
         }
     }

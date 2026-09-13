@@ -1,5 +1,7 @@
-﻿package com.joeyos.app.ui.components
+package com.joeyos.app.ui.components
 
+import com.joeyos.app.R
+import com.joeyos.app.ui.theme.JoeyFont
 import android.graphics.Bitmap
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -211,7 +213,7 @@ fun Dock(
                     DockTitleSize.LARGE  -> 20.sp
                 },
                 color      = Color.White.copy(alpha = 0.95f),
-                fontFamily = FontFamily.Monospace,
+                fontFamily = JoeyFont,
                 maxLines   = 1,
                 overflow   = TextOverflow.Ellipsis,
                 modifier   = Modifier
@@ -309,11 +311,11 @@ fun DockIcon(
                             text = favoriteTitle!!.take(2).uppercase(),
                             fontSize = (sizeDp * 0.34f).sp,
                             color = Color.White,
-                            fontFamily = FontFamily.Monospace,
+                            fontFamily = JoeyFont,
                             fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
                         )
                     } else {
-                        Text("★", fontSize = (sizeDp * 0.42f).sp, color = Color.White.copy(alpha = 0.35f))
+                        JoeyIcon(R.drawable.ic_star, Color.White.copy(alpha = 0.35f), (sizeDp * 0.5f).dp)
                     }
                 }
             } else if (packageName == RECENT_ALL_PACKAGE) {
@@ -327,8 +329,7 @@ fun DockIcon(
                         ),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text("◷", fontSize = (sizeDp * 0.42f).sp, color = Color.White,
-                        fontFamily = FontFamily.Default)
+                    JoeyIcon(R.drawable.ic_history, Color.White, (sizeDp * 0.5f).dp)
                 }
             } else if (icon != null) {
                 Image(
