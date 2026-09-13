@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Android 11 and below. Encrypted RA credentials can't be decrypted on another device
-     (the keystore key doesn't travel with the backup), so never back them up. -->
+     (the keystore key doesn't travel with the backup), so never back them up. Nor the unencrypted fallback copy. -->
 <full-backup-content>
     <exclude domain="sharedpref" path="ra_credentials.xml" />
+    <exclude domain="sharedpref" path="ra_credentials_plain.xml" />
 </full-backup-content>

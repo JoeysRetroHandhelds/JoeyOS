@@ -145,6 +145,9 @@ class HomeViewModel(
     }
 
     fun recordLaunchForPackage(packageName: String) {
+        // Launchers that start the game with an implicit intent don't name the package to
+        // startGame, so note it here too for the rescan on the way back home.
+        RecentGamesReader.noteLaunched(packageName)
         viewModelScope.launch {
             ALL_SYSTEMS
                 .filter { sys -> sys.knownPackages.any { packageName.startsWith(it) } }
@@ -158,22 +161,58 @@ class HomeViewModel(
     private val _recentGamesVersion = MutableStateFlow(0)
     val recentGamesVersion: StateFlow<Int> = _recentGamesVersion.asStateFlow()
 
-    /** Called from Activity.onResume when returning from an emulator. */
-    fun invalidateAndPreWarmRecentGames() {
+    /**
+     * Called from Activity.onResume. Only emulators started from JoeyOS since the last time home
+     * was in front (plus any cached list past its time limit) are rescanned; the rest keep their
+     * cached lists, so coming back from Settings or a non-emulator app scans nothing. The version
+     * is only bumped when something was dropped, so the dock doesn't re-read for nothing either.
+     */
+    fun refreshRecentGamesAfterLaunch() {
+        val dropped = RecentGamesReader.invalidateLaunched()
+        if (dropped.isEmpty()) return
         _recentGamesVersion.update { it + 1 }
         viewModelScope.launch(Dispatchers.IO) {
-            RecentGamesReader.invalidateCache()
-            val apps = _installedApps.value
-            if (apps.isNotEmpty()) {
-                RecentGamesReader.preWarm(apps, recentDepth.value.takeIf { it > 0 } ?: 20)
-            }
+            val installed = _installedApps.value.map { it.packageName }.toSet()
+            val depth = recentDepth.value.takeIf { it > 0 } ?: 20
+            dropped.filter { it in installed }.forEach { RecentGamesReader.readForPackage(it, depth) }
         }
     }
 
     private val _installedApps = MutableStateFlow<List<InstalledApp>>(emptyList())
     val installedApps: StateFlow<List<InstalledApp>> = _installedApps.asStateFlow()
+    private var installedAppsLoaded = false
+    private var packageChangeJob: kotlinx.coroutines.Job? = null
 
+    /**
+     * Loads the app list the first time only. After that it's kept up to date by
+     * [onPackagesChanged] (from MainActivity's package receiver), so coming home doesn't
+     * re-query the package manager every time.
+     */
+    fun ensureInstalledApps(context: Context) {
+        if (installedAppsLoaded) return
+        installedAppsLoaded = true
+        loadInstalledApps(context)
+    }
+
+    /**
+     * An app was installed, removed, updated or had a component switched on or off. Installing
+     * over an existing app sends removed, added and replaced together, so wait a moment and
+     * reload once. The package's cached recently played list is dropped too, since an update
+     * can move where it saves.
+     */
+    fun onPackagesChanged(context: Context, packageName: String?) {
+        if (packageName != null) RecentGamesReader.invalidatePackage(packageName)
+        packageChangeJob?.cancel()
+        packageChangeJob = viewModelScope.launch {
+            kotlinx.coroutines.delay(500)
+            _recentGamesVersion.update { it + 1 }
+            loadInstalledApps(context)
+        }
+    }
+
+    /** Re-queries the installed apps (start-up, a package change, or Settings' refresh). */
     fun loadInstalledApps(context: Context) {
+        installedAppsLoaded = true
         viewModelScope.launch {
             // Set display-scaled default on first run (sentinel value is 0).
             // 420dpi is the standard density for a 1080p (xxhdpi) Android phone → 72dp baseline.
@@ -186,9 +225,10 @@ class HomeViewModel(
             val apps = withContext(Dispatchers.IO) { com.joeyos.app.data.loadInstalledApps(context) }
             _installedApps.value = apps
             autoPopulateAssignments(apps)
-            // Pre-warm game DB and recent-games cache so the popup opens instantly.
+            // Pre-warm the title tables installed emulators use and the recent-games cache so
+            // the popup opens instantly. Lists already cached are reused, not rescanned.
             launch(Dispatchers.IO) {
-                GameDatabase.preWarm()
+                GameDatabase.preWarm(apps.map { it.packageName })
                 RecentGamesReader.preWarm(apps, recentDepth.value.takeIf { it > 0 } ?: 20)
             }
         }
@@ -224,7 +264,7 @@ class HomeViewModel(
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             val repo   = PreferencesRepository(context.applicationContext)
-            val raRepo = RetroAchievementsRepository(context.applicationContext)
+            val raRepo = RetroAchievementsRepository.get(context.applicationContext)
             // Infinite Backlog support was removed in 1.0.16; drop what it had saved.
             context.applicationContext.deleteSharedPreferences("infinitebacklog")
             return HomeViewModel(repo, raRepo) as T

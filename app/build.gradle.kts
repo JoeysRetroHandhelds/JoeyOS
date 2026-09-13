@@ -19,8 +19,8 @@ android {
         applicationId = "com.joeyos.app"
         minSdk = 26
         targetSdk = 34
-        versionCode = 24
-        versionName = "1.0.23"
+        versionCode = 25
+        versionName = "1.0.24"
     }
 
     signingConfigs {
@@ -36,7 +36,10 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            // R8 removes unused code and resources: a smaller APK that starts faster.
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs.getByName("release")
         }
     }

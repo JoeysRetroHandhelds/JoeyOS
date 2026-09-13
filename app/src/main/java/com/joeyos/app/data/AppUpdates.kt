@@ -11,8 +11,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.File
-import java.net.HttpURLConnection
-import java.net.URL
 
 /**
  * In-app updater — pulls the newest signed APK from the public GitHub release.
@@ -101,26 +99,14 @@ object AppUpdates {
             val partial = File(context.cacheDir, target.name + ".part")
             runCatching {
                 partial.delete()
-                val connection = open(release.assetUrl, accept = "application/octet-stream")
-                try {
-                    if (connection.responseCode !in 200..299) error("HTTP ${connection.responseCode}")
-                    connection.inputStream.use { input ->
-                        partial.outputStream().use { output ->
-                            val buffer = ByteArray(64 * 1024)
-                            var written = 0L
-                            while (true) {
-                                val read = input.read(buffer)
-                                if (read <= 0) break
-                                output.write(buffer, 0, read)
-                                written += read
-                                if (release.bytes > 0) onProgress((written.toFloat() / release.bytes).coerceIn(0f, 1f))
-                            }
-                            if (release.bytes > 0 && written != release.bytes) error("expected ${release.bytes} bytes, got $written")
-                        }
-                    }
-                } finally {
-                    connection.disconnect()
+                // Release assets redirect to GitHub's storage host; Http follows it.
+                val written = Http.download(
+                    release.assetUrl, partial, accept = "application/octet-stream", userAgent = USER_AGENT,
+                    connectMs = 15_000, readMs = 30_000,
+                ) { soFar ->
+                    if (release.bytes > 0) onProgress((soFar.toFloat() / release.bytes).coerceIn(0f, 1f))
                 }
+                if (release.bytes > 0 && written != release.bytes) error("expected ${release.bytes} bytes, got $written")
                 target.delete()
                 if (!partial.renameTo(target)) error("could not rename the download")
                 target
@@ -167,19 +153,10 @@ object AppUpdates {
         return 0
     }
 
-    private fun open(url: String, accept: String): HttpURLConnection =
-        (URL(url).openConnection() as HttpURLConnection).apply {
-            connectTimeout = 15_000; readTimeout = 30_000
-            setRequestProperty("Accept", accept)
-            setRequestProperty("User-Agent", "JoeyOS")
-            instanceFollowRedirects = true  // release assets redirect to GitHub's storage host
-        }
+    // GitHub's API refuses a request without a User-Agent.
+    private const val USER_AGENT = "JoeyOS"
 
-    private fun get(url: String): String? {
-        val connection = open(url, accept = "application/vnd.github+json")
-        return try {
-            if (connection.responseCode !in 200..299) null
-            else connection.inputStream.use { it.readBytes().toString(Charsets.UTF_8) }
-        } finally { connection.disconnect() }
-    }
+    private fun get(url: String): String? =
+        Http.get(url, accept = "application/vnd.github+json", userAgent = USER_AGENT, connectMs = 15_000, readMs = 30_000)
+            .takeIf { it.ok }?.text
 }

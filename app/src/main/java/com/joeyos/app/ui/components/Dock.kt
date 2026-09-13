@@ -2,7 +2,6 @@ package com.joeyos.app.ui.components
 
 import com.joeyos.app.R
 import com.joeyos.app.ui.theme.JoeyFont
-import android.graphics.Bitmap
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -30,10 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.graphics.Brush
@@ -241,7 +237,6 @@ fun DockIcon(
     onLongClick: () -> Unit = {},
     cornerStyle: DockCornerStyle = DockCornerStyle.ROUNDED
 ) {
-    val context   = LocalContext.current
     val cornerDp  = when (cornerStyle) {
         DockCornerStyle.SQUARE  -> 0.dp
         DockCornerStyle.ROUNDED -> (sizeDp * 0.22f).dp
@@ -253,22 +248,9 @@ fun DockIcon(
     val isSelected by interaction.collectIsFocusedAsState()
     val scale by animateFloatAsState(if (isSelected) 1.18f else 1f, tween(120), label = "dock_scale")
 
-    val icon by produceState<ImageBitmap?>(null, packageName) {
-        value = withContext(Dispatchers.IO) {
-            try {
-                val drawable = context.packageManager.getApplicationIcon(packageName)
-                val bm = Bitmap.createBitmap(
-                    drawable.intrinsicWidth.coerceAtLeast(1),
-                    drawable.intrinsicHeight.coerceAtLeast(1),
-                    Bitmap.Config.ARGB_8888
-                )
-                val canvas = android.graphics.Canvas(bm)
-                drawable.setBounds(0, 0, canvas.width, canvas.height)
-                drawable.draw(canvas)
-                bm.asImageBitmap()
-            } catch (e: Exception) { null }
-        }
-    }
+    // Drawn at the focused (scaled-up) size so the highlighted icon stays sharp; cached, so
+    // scrolling the dock doesn't redraw it.
+    val icon by rememberAppIcon(packageName, (sizeDp * 1.18f).dp)
 
     val viewConfig = LocalViewConfiguration.current
     CompositionLocalProvider(

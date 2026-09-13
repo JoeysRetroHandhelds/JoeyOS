@@ -11,7 +11,6 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
@@ -21,13 +20,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLayoutResult
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -43,6 +40,8 @@ import com.joeyos.app.data.GuideTarget
 import com.joeyos.app.data.Guides
 import com.joeyos.app.ui.theme.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.Dispatchers
 import java.io.File
 
 /*
@@ -78,8 +77,14 @@ fun GuideTab(
     val context = LocalContext.current
     val prefs = remember { guidePrefs(context) }
     // The guide you last opened for this game, else the best one found.
-    var guide by remember(target.key) {
-        mutableStateOf(prefs.getString("chosen_${target.key}", null)?.let(::File)?.takeIf { it.isFile } ?: Guides.find(target))
+    // Looked up on a background thread: finding it walks the guides folder on shared storage.
+    var guide by remember(target.key) { mutableStateOf<File?>(null) }
+    var looked by remember(target.key) { mutableStateOf(false) }
+    LaunchedEffect(target.key) {
+        guide = withContext(Dispatchers.IO) {
+            prefs.getString("chosen_${target.key}", null)?.let(::File)?.takeIf { it.isFile } ?: Guides.find(target)
+        }
+        looked = true
     }
     fun choose(f: File) { guide = f; prefs.edit().putString("chosen_${target.key}", f.absolutePath).apply() }
     var browsing by remember(target.key) { mutableStateOf<GuideSource?>(null) }
@@ -90,7 +95,11 @@ fun GuideTab(
 
     val open = browsing
     val file = guide
+    androidx.activity.compose.BackHandler(enabled = open == null && finding && file != null) { finding = false }
     when {
+        !looked && open == null -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text("Looking for a guide…", fontSize = 12.sp, color = TextFaint)
+        }
         open != null -> GuideBrowser(open, target, chrome, onChrome, onClose = { browsing = null }) { saved ->
             Guides.remember(target, saved); choose(saved); finding = false; browsing = null
         }
@@ -101,7 +110,6 @@ fun GuideTab(
                 onChosen = { choose(it); finding = false },
                 onDownloaded = { choose(it); finding = false }, onChrome = onChrome,
                 onOpen = { s -> if (s.appSearch == null || !openInYouTube(context, s.appSearch)) browsing = s })
-            ChromeHandle(visible = !chrome, onShow = { onChrome(true) })
         }
     }
 }
@@ -123,7 +131,9 @@ private fun GuideFinder(
     val scope = rememberCoroutineScope()
     var archive by remember(target.key) { mutableStateOf<String?>(null) }   // status line
     var working by remember { mutableStateOf(false) }
-    val saved = remember(target.key, current) { Guides.savedFor(target) }
+    val saved by produceState(emptyList<File>(), target.key, current) {
+        value = withContext(Dispatchers.IO) { Guides.savedFor(target) }
+    }
     val hasArchive = saved.any { it.extension.equals("txt", true) }
 
     Column(
@@ -196,9 +206,16 @@ private fun GuideBrowser(
     var title by remember { mutableStateOf(source.site) }
     var saving by remember { mutableStateOf(false) }
     var typing by remember { mutableStateOf(false) }
+    // Hold the ad-block list only while this browser is open (it's large); the last one closed frees it.
+    DisposableEffect(Unit) {
+        GuideBlocklist.acquire()
+        onDispose { GuideBlocklist.release() }
+    }
     LaunchedEffect(Unit) { runCatching { GuideBlocklist.ensureLoaded(context.cacheDir) } }
     // Typing into a page (a site's search box) needs this screen to take the keyboard.
     AllowTyping(typing)
+    // Back: the previous page, then out of the browser.
+    androidx.activity.compose.BackHandler { web?.takeIf { it.canGoBack() }?.goBack() ?: onClose() }
 
     Box(Modifier.fillMaxSize()) {
     Column(Modifier.fillMaxSize().background(Color.White)) {
@@ -249,7 +266,7 @@ private fun GuideBrowser(
                         override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest) =
                             GuideBlocklist.intercept(request)
                         override fun onRenderProcessGone(view: WebView, detail: android.webkit.RenderProcessGoneDetail) =
-                            webGone(view, detail) { webGen++ }
+                            webGone(view, detail) { web = null; saving = false; webGen++ }
                     }
                     hideChromeOnWebScroll(this, onChrome)
                     loadUrl(source.url)
@@ -259,7 +276,6 @@ private fun GuideBrowser(
             onRelease = { it.destroy() }
         ) }
     }
-    ChromeHandle(visible = !(chrome || typing || saving), onShow = { onChrome(true) })
     }
 }
 
@@ -273,15 +289,21 @@ private fun GuideBrowser(
  */
 private fun webGone(view: WebView, detail: android.webkit.RenderProcessGoneDetail, rebuild: () -> Unit): Boolean {
     AppLog.w("Guides", "The web page's renderer " + (if (detail.didCrash()) "crashed" else "was closed for memory") + "; reloading it")
+    // Only taken out of the page here; onRelease destroys it once, as it does any web view.
     (view.parent as? android.view.ViewGroup)?.removeView(view)
-    view.destroy()
     rebuild()
     return true
 }
 
 private fun hideChromeOnWebScroll(view: WebView, onChrome: (Boolean) -> Unit, onScrolled: ((Int) -> Unit)? = null) {
+    var up = 0
+    val reveal = (RevealUpDp * view.resources.displayMetrics.density).toInt()
     view.setOnScrollChangeListener { _, _, y, _, oldY ->
-        if (y > oldY + 12) onChrome(false) else if (y == 0) onChrome(true)
+        when {
+            y == 0 -> { up = 0; onChrome(true) }
+            y > oldY -> { up = 0; if (y > oldY + 12) onChrome(false) }
+            else -> { up += oldY - y; if (up > reveal) onChrome(true) }
+        }
         onScrolled?.invoke(y)
     }
 }
@@ -293,27 +315,24 @@ private fun guidePosKey(file: File) = "pos_file_" + file.absolutePath
 @Suppress("DEPRECATION")
 private fun WebView.scrollRange() = (contentHeight * scale - height).toInt()
 
-/** Reading down a scrolling column hides the tabs and bar; the handle brings them back. */
-private fun Modifier.hideChromeOnScroll(onChrome: (Boolean) -> Unit): Modifier = nestedScroll(
-    object : androidx.compose.ui.input.nestedscroll.NestedScrollConnection {
-        override fun onPreScroll(available: androidx.compose.ui.geometry.Offset, source: androidx.compose.ui.input.nestedscroll.NestedScrollSource): androidx.compose.ui.geometry.Offset {
-            if (available.y < -6f) onChrome(false)
-            return androidx.compose.ui.geometry.Offset.Zero
-        }
-    })
+/** Scrolling back up this far (not a nudge while reading) brings the tabs and bar back. */
+private const val RevealUpDp = 120f
 
-/** The small handle at the top while the tabs and bar are hidden: tap to bring them back. */
-@Composable
-private fun BoxScope.ChromeHandle(visible: Boolean, onShow: () -> Unit) {
-    if (!visible) Row(
-        Modifier.align(Alignment.TopCenter).padding(top = 6.dp).clip(RoundedCornerShape(50))
-            .background(Color.Black.copy(alpha = 0.7f)).border(1.dp, Color.White.copy(alpha = 0.25f), RoundedCornerShape(50))
-            .clickable(onClick = onShow).padding(horizontal = 14.dp, vertical = 7.dp),
-        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)
-    ) {
-        Box(Modifier.size(width = 22.dp, height = 4.dp).clip(RoundedCornerShape(2.dp)).background(Color.White.copy(alpha = 0.8f)))
-        Text("Show tabs", fontSize = 11.sp, color = Color.White.copy(alpha = 0.9f))
+/** Hides the tabs and bar while reading down; a real scroll back up (or the strip) shows them. */
+private class ChromeOnScroll(private val revealPx: Float, private val onChrome: (Boolean) -> Unit) :
+    androidx.compose.ui.input.nestedscroll.NestedScrollConnection {
+    private var up = 0f
+    override fun onPreScroll(available: androidx.compose.ui.geometry.Offset, source: androidx.compose.ui.input.nestedscroll.NestedScrollSource): androidx.compose.ui.geometry.Offset {
+        if (available.y < 0f) { up = 0f; if (available.y < -6f) onChrome(false) }
+        else { up += available.y; if (up > revealPx) { up = 0f; onChrome(true) } }
+        return androidx.compose.ui.geometry.Offset.Zero
     }
+}
+
+@Composable
+private fun Modifier.hideChromeOnScroll(onChrome: (Boolean) -> Unit): Modifier {
+    val px = with(LocalDensity.current) { RevealUpDp.dp.toPx() }
+    return nestedScroll(remember(onChrome) { ChromeOnScroll(px, onChrome) })
 }
 
 /** While [on], the second screen can take the keyboard (it normally can't, so the game keeps its buttons). */
@@ -361,8 +380,6 @@ private fun GuideTextPage(file: File, target: GuideTarget, chrome: Boolean, onCh
                 findOpen = findOpen, onFindOpen = { findOpen = it }, tocOpen = tocOpen, onTocOpen = { tocOpen = it },
                 onChrome = onChrome)
         }
-        // Hidden while reading: a small handle at the top brings the tabs and bar back.
-        ChromeHandle(visible = !showBar, onShow = { onChrome(true) })
 
         if (optionsOpen) GuideOptions(
             size, wrap, reflow, theme,
@@ -472,21 +489,22 @@ private fun GuideText(
     findOpen: Boolean, onFindOpen: (Boolean) -> Unit, tocOpen: Boolean, onTocOpen: (Boolean) -> Unit,
     onChrome: (Boolean) -> Unit,
 ) {
-    val raw = remember(file) { runCatching { file.readText() }.getOrNull() }
-    // Reading down hides the tabs and the bar for room. Scrolling back up doesn't bring them back
-    // (that got in the way of just reading, found on device): the handle at the top does, and so
-    // does reaching the very top of the guide.
-    val chromeOnScroll = remember(onChrome) {
-        object : androidx.compose.ui.input.nestedscroll.NestedScrollConnection {
-            override fun onPreScroll(available: androidx.compose.ui.geometry.Offset, source: androidx.compose.ui.input.nestedscroll.NestedScrollSource): androidx.compose.ui.geometry.Offset {
-                if (available.y < -6f) onChrome(false)
-                return androidx.compose.ui.geometry.Offset.Zero
-            }
-        }
-    }
+    // Read (and reflowed) on a background thread: a GameFAQs guide can be a megabyte, and the
+    // guides folder is on shared storage, which is slow to read.
+    var loading by remember(file) { mutableStateOf(true) }
+    // Reading down hides the tabs and the bar for room. A nudge back up doesn't bring them back
+    // (that got in the way of just reading, found on device); a real scroll up, the "Show tabs"
+    // strip, or reaching the very top does.
+    val revealPx = with(LocalDensity.current) { RevealUpDp.dp.toPx() }
+    val chromeOnScroll = remember(onChrome) { ChromeOnScroll(revealPx, onChrome) }
     // Reflowed to the screen when asked, rejoining hard-wrapped prose; find, contents and the
     // saved position all work on the text as shown.
-    val text = remember(raw, reflow) { raw?.let { if (reflow) reflowGuide(it) else it } }
+    val text by produceState<String?>(null, file, reflow) {
+        value = withContext(Dispatchers.IO) {
+            runCatching { file.readText() }.getOrNull()?.let { if (reflow) reflowGuide(it) else it }
+        }
+        loading = false
+    }
     val wrapping = reflow || wraps
     val scroll = rememberScrollState()
     val density = LocalDensity.current
@@ -504,25 +522,32 @@ private fun GuideText(
     // Find: every match of the query (two characters or more), and which is current.
     var query by remember(text) { mutableStateOf("") }
     var current by remember(text) { mutableIntStateOf(0) }
-    val matches = remember(text, query) {
+    val matches by produceState(emptyList<Int>(), text, query) {
         val t = text
-        if (t == null || query.length < 2) emptyList() else buildList {
-            var i = t.indexOf(query, 0, ignoreCase = true)
-            while (i >= 0) { add(i); i = t.indexOf(query, i + query.length, ignoreCase = true) }
+        val q = query
+        if (t == null || q.length < 2) { value = emptyList(); return@produceState }
+        kotlinx.coroutines.delay(250)   // wait for typing to pause
+        value = withContext(Dispatchers.Default) {
+            buildList {
+                var i = t.indexOf(q, 0, ignoreCase = true)
+                while (i >= 0) { add(i); i = t.indexOf(q, i + q.length, ignoreCase = true) }
+            }
         }
     }
     LaunchedEffect(matches) { if (current >= matches.size) current = 0 }
     LaunchedEffect(current, matches, layout) { matches.getOrNull(current)?.let { scrollToChar(it) } }
 
     // Section headings for Contents (a plain-text FAQ has no structure, so it's a heuristic).
-    val headings = remember(text) {
-        val t = text ?: return@remember emptyList<Pair<String, Int>>()
-        buildList {
-            var offset = 0
-            t.lineSequence().forEach { line ->
-                val trimmed = line.trim()
-                if (isGuideHeading(trimmed)) add(trimmed to offset)
-                offset += line.length + 1
+    val headings by produceState(emptyList<Pair<String, Int>>(), text) {
+        val t = text ?: return@produceState
+        value = withContext(Dispatchers.Default) {
+            buildList {
+                var offset = 0
+                t.lineSequence().forEach { line ->
+                    val trimmed = line.trim()
+                    if (isGuideHeading(trimmed)) add(trimmed to offset)
+                    offset += line.length + 1
+                }
             }
         }
     }
@@ -543,16 +568,18 @@ private fun GuideText(
     LaunchedEffect(scroll.value == 0) { if (scroll.value == 0) onChrome(true) }
     LaunchedEffect(scroll.value, scroll.maxValue, restored) {
         val max = scroll.maxValue
-        if (restored && max > 0) onPosition((scroll.value.toFloat() / max * 10_000f).toInt().coerceIn(0, 10_000))
+        // Saved once scrolling settles (this restarts on every move), not on every pixel.
+        if (restored && max > 0) { kotlinx.coroutines.delay(600); onPosition((scroll.value.toFloat() / max * 10_000f).toInt().coerceIn(0, 10_000)) }
     }
 
     val display: AnnotatedString = remember(text, query, current, matches, theme) {
-        val t = text ?: return@remember AnnotatedString("This guide couldn't be read.")
-        if (matches.isEmpty()) AnnotatedString(t) else buildAnnotatedString {
+        val t = text ?: return@remember AnnotatedString(if (loading) "Opening the guide…" else "This guide couldn't be read.")
+        val q = query
+        if (matches.isEmpty() || q.length < 2) AnnotatedString(t) else buildAnnotatedString {
             append(t)
             matches.forEachIndexed { i, off ->
                 addStyle(SpanStyle(background = if (i == current) Amber else Amber.copy(alpha = 0.33f),
-                    color = if (i == current) Color(0xFF101010) else theme.ink), off, (off + query.length).coerceAtMost(t.length))
+                    color = if (i == current) Color(0xFF101010) else theme.ink), off.coerceAtMost(t.length), (off + q.length).coerceAtMost(t.length))
             }
         }
     }
@@ -597,19 +624,18 @@ private fun GuideText(
     }
 }
 
+/** Find in a guide (text or saved page): the box, "current/total", previous, next, Done. */
 @Composable
 private fun FindBar(query: String, onQuery: (String) -> Unit, total: Int, current: Int,
-                    onPrev: () -> Unit, onNext: () -> Unit, onClose: () -> Unit) {
+                    onPrev: () -> Unit, onNext: () -> Unit, onClose: () -> Unit,
+                    placeholder: String = "Find in guide") {
     Row(
         Modifier.fillMaxWidth().background(Color(0xF2141414)).padding(horizontal = 12.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Box(Modifier.weight(1f).clip(RoundedCornerShape(8.dp)).background(Color(0xFF2A2A2A)).padding(horizontal = 10.dp, vertical = 8.dp)) {
-            if (query.isEmpty()) Text("Find in guide", color = TextFaint, fontSize = 13.sp)
-            BasicTextField(query, onQuery, singleLine = true,
-                textStyle = TextStyle(color = TextPrimary, fontSize = 13.sp, fontFamily = JoeyFont),
-                cursorBrush = SolidColor(Amber), modifier = Modifier.fillMaxWidth())
-        }
+        SearchField(query, onQuery, placeholder, Modifier.weight(1f),
+            classicBox = Modifier.clip(RoundedCornerShape(8.dp)).background(Color(0xFF2A2A2A))
+                .padding(horizontal = 10.dp, vertical = 8.dp))
         Text(if (total == 0) "0" else "$current/$total", color = TextDim, fontSize = 12.sp)
         Pill("‹", false, onPrev)
         Pill("›", false, onNext)
@@ -632,6 +658,7 @@ private fun GuideHtmlPage(file: File, chrome: Boolean, onChrome: (Boolean) -> Un
     var findOpen by remember(file) { mutableStateOf(false) }
     var query by remember(file) { mutableStateOf("") }
     var matches by remember(file) { mutableIntStateOf(0) }
+    var activeMatch by remember(file) { mutableIntStateOf(0) }   // which match is showing, from 0
     if (findOpen) AllowTyping(true)
 
     Box(Modifier.fillMaxSize()) {
@@ -649,20 +676,12 @@ private fun GuideHtmlPage(file: File, chrome: Boolean, onChrome: (Boolean) -> Un
             Pill("Change guide", false, onChange)
         }
         if (findOpen) {
-            Row(
-                Modifier.fillMaxWidth().background(Color(0xFF1E1E1E)).padding(horizontal = 10.dp, vertical = 6.dp),
-                verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Box(Modifier.weight(1f)) {
-                    if (query.isEmpty()) Text("Find in page", color = TextFaint, fontSize = 13.sp)
-                    BasicTextField(query, { query = it; web?.findAllAsync(it) }, singleLine = true,
-                        textStyle = TextStyle(color = TextPrimary, fontSize = 13.sp, fontFamily = JoeyFont),
-                        cursorBrush = SolidColor(Amber), modifier = Modifier.fillMaxWidth())
-                }
-                Text(if (query.isBlank()) "" else "$matches", color = TextDim, fontSize = 12.sp)
-                Pill("‹", false) { web?.findNext(false) }
-                Pill("›", false) { web?.findNext(true) }
-            }
+            // The same find bar as text guides; the WebView does the searching and reports back.
+            FindBar(query, { query = it; web?.findAllAsync(it) }, matches, activeMatch + 1,
+                onPrev = { web?.findNext(false) },
+                onNext = { web?.findNext(true) },
+                onClose = { findOpen = false; web?.clearMatches(); query = "" },
+                placeholder = "Find in page")
         }
         key(webGen) { AndroidView(
             modifier = Modifier.fillMaxSize().background(Color.White),
@@ -675,7 +694,7 @@ private fun GuideHtmlPage(file: File, chrome: Boolean, onChrome: (Boolean) -> Un
                     settings.useWideViewPort = true
                     @Suppress("DEPRECATION")
                     settings.allowFileAccess = true
-                    setFindListener { _, n, _ -> matches = n }
+                    setFindListener { active, n, _ -> activeMatch = active; matches = n }
                     webViewClient = object : WebViewClient() {
                         var restored = false
                         override fun onPageFinished(view: WebView, url: String?) {
@@ -688,7 +707,7 @@ private fun GuideHtmlPage(file: File, chrome: Boolean, onChrome: (Boolean) -> Un
                             }, 400)
                         }
                         override fun onRenderProcessGone(view: WebView, detail: android.webkit.RenderProcessGoneDetail) =
-                            webGone(view, detail) { webGen++ }
+                            webGone(view, detail) { web = null; webGen++ }
                         // Offline: nothing from the web. A web archive's own parts (cid:, data:)
                         // and the file itself load.
                         override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): android.webkit.WebResourceResponse? {
@@ -697,11 +716,13 @@ private fun GuideHtmlPage(file: File, chrome: Boolean, onChrome: (Boolean) -> Un
                             else super.shouldInterceptRequest(view, request)
                         }
                     }
-                    hideChromeOnWebScroll(this, onChrome) { y ->
+                    // Your place, saved once scrolling settles rather than on every pixel.
+                    val savePlace = Runnable {
                         val range = scrollRange()
                         if (range > 0)
-                            prefs.edit().putInt(guidePosKey(file), (y.toFloat() / range * 10_000f).toInt().coerceIn(0, 10_000)).apply()
+                            prefs.edit().putInt(guidePosKey(file), (scrollY.toFloat() / range * 10_000f).toInt().coerceIn(0, 10_000)).apply()
                     }
+                    hideChromeOnWebScroll(this, onChrome) { removeCallbacks(savePlace); postDelayed(savePlace, 600) }
                     loadUrl(android.net.Uri.fromFile(file).toString())
                     web = this
                 }
@@ -709,7 +730,6 @@ private fun GuideHtmlPage(file: File, chrome: Boolean, onChrome: (Boolean) -> Un
             onRelease = { it.destroy() }
         ) }
     }
-    ChromeHandle(visible = !(chrome || findOpen), onShow = { onChrome(true) })
     }
 }
 

@@ -79,6 +79,10 @@ internal data class GameEntry(
 
 internal fun dayFmt() = SimpleDateFormat("MMM d", Locale.US)
 internal fun fullFmt() = SimpleDateFormat("MMM d, yyyy", Locale.US)
+// Month headers in the award lists. Like the two above, each call makes a fresh formatter:
+// SimpleDateFormat isn't thread-safe, so none is ever shared.
+internal fun monthFmt() = SimpleDateFormat("MMMM", Locale.US)
+internal fun monthYearFmt() = SimpleDateFormat("MMMM yyyy", Locale.US)
 internal fun yearOf(d: Date) = Calendar.getInstance().apply { time = d }.get(Calendar.YEAR)
 internal fun monthOf(d: Date) = Calendar.getInstance().apply { time = d }.get(Calendar.MONTH)
 

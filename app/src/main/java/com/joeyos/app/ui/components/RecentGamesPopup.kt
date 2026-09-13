@@ -4,24 +4,18 @@ import com.joeyos.app.R
 import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
@@ -168,12 +162,10 @@ fun RecentGamesPopup(
 }
 
 /**
- * A game row in a vertical popup list: one clickable node (one focus target), lit when focused.
- * Left/right are cancelled on the row itself — a full-width row has nothing beside it, and an
- * unanswered sideways press would otherwise fall to a geometric search that jumps to the top
- * row (found in Chameleon). Shared by Recently Played and the favourite picker.
+ * A game row in a vertical popup list: a number badge (a star for the current favourite), the
+ * title and where it runs. The focus, ring and chevron come from [PopupRowFrame], the same as
+ * every other popup row. Shared by Recently Played and the favourite picker.
  */
-@OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
 @Composable
 internal fun GameListRow(
     index: Int,
@@ -184,21 +176,7 @@ internal fun GameListRow(
 ) {
     val context = LocalContext.current
     val subtitle = remember(game.emulatorPackage, game.corePath) { gameSubtitle(context, game) }
-    val interaction = remember { MutableInteractionSource() }
-    val isSelected by interaction.collectIsFocusedAsState()
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .focusProperties { left = FocusRequester.Cancel; right = FocusRequester.Cancel }
-            .padding(horizontal = 6.dp)
-            .clip(RoundedCornerShape(10.dp))
-            .background(if (isSelected) Color.White.copy(alpha = 0.10f) else Color.Transparent)
-            .then(if (isSelected) Modifier.border(FocusWidth, FocusColor, RoundedCornerShape(10.dp)) else Modifier)
-            .clickable(interactionSource = interaction, indication = null, onClick = onClick)
-            .padding(horizontal = 12.dp, vertical = 9.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
+    PopupRowFrame(onClick, modifier, verticalPadding = 9.dp, spacing = 12.dp) {
         Box(
             modifier = Modifier
                 .size(28.dp)
@@ -228,6 +206,5 @@ internal fun GameListRow(
                 maxLines = 1
             )
         }
-        if (isSelected) JoeyIcon(R.drawable.ic_chevron_right, Amber, 18.dp)
     }
 }

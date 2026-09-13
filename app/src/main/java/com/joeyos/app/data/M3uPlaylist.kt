@@ -87,28 +87,19 @@ object M3uPlaylist {
     data class M3uSystem(val label: String, val folderNames: Set<String>)
 
     val SupportedSystems = listOf(
-        M3uSystem("PlayStation", setOf("psx", "ps1", "playstation", "ps")),
-        M3uSystem("Dreamcast", setOf("dreamcast", "dc")),
-        M3uSystem("Saturn", setOf("saturn")),
-        M3uSystem("Sega CD", setOf("segacd", "megacd", "sega cd")),
-        M3uSystem("PC Engine CD", setOf("tgcd", "pcenginecd", "pcecd", "turbografxcd", "pce-cd")),
-        M3uSystem("Neo Geo CD", setOf("neogeocd", "ngcd")),
-        M3uSystem("3DO", setOf("3do")),
-        M3uSystem("PC-FX", setOf("pcfx")),
+        M3uSystem("PlayStation", RomFolders.namesFor("psx")),
+        M3uSystem("Dreamcast", RomFolders.namesFor("dreamcast")),
+        M3uSystem("Saturn", RomFolders.namesFor("saturn")),
+        M3uSystem("Sega CD", RomFolders.namesFor("segacd")),
+        M3uSystem("PC Engine CD", RomFolders.namesFor("pcenginecd")),
+        M3uSystem("Neo Geo CD", RomFolders.namesFor("neogeocd")),
+        M3uSystem("3DO", RomFolders.namesFor("3do")),
+        M3uSystem("PC-FX", RomFolders.namesFor("pcfx")),
     )
 
     /** Every `ROMs/<folder>` on every storage volume, grouped by the console it holds. */
-    fun romFolders(roots: List<File>): Map<M3uSystem, List<File>> {
-        val found = mutableMapOf<M3uSystem, MutableList<File>>()
-        for (root in roots) {
-            val roms = root.listFiles()?.firstOrNull { it.isDirectory && it.name.equals("roms", true) } ?: continue
-            roms.listFiles()?.filter { it.isDirectory }?.forEach { dir ->
-                val system = SupportedSystems.firstOrNull { dir.name.lowercase() in it.folderNames } ?: return@forEach
-                found.getOrPut(system) { mutableListOf() } += dir
-            }
-        }
-        return found
-    }
+    fun romFolders(roots: List<File>): Map<M3uSystem, List<File>> =
+        RomFolders.group(roots, SupportedSystems) { it.folderNames }
 
     private val DiscExtensions = setOf("chd", "cue", "gdi", "iso", "ccd", "mds", "nrg")
 

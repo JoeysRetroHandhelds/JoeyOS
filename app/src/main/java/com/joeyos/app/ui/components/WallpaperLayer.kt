@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.*
@@ -64,8 +63,23 @@ fun WallpaperLayer(state: WallpaperState, modifier: Modifier = Modifier) {
 
 // ── Animated blob wallpaper ──────────────────────────────────────────────────
 
+/**
+ * Three soft colour blobs drifting slowly. They stand still while a game runs (the home screen
+ * stays resumed behind a game on the other screen, and redrawing it every frame took GPU time
+ * from the emulator) and while JoeyOS isn't the app in front. No blur: the gradients already fade
+ * to nothing, and a full-screen blur every frame was the expensive part.
+ */
 @Composable
 fun AnimatedBlobWallpaper(modifier: Modifier = Modifier) {
+    val playing by com.joeyos.app.data.SecondScreenState.session.collectAsState()
+    val lifecycle = androidx.compose.ui.platform.LocalLifecycleOwner.current.lifecycle
+    val resumed by lifecycle.currentStateFlow.collectAsState()
+    val moving = playing == null && resumed.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED)
+    if (moving) MovingBlobs(modifier) else Blobs(modifier, 0.05f, 0.02f, -0.04f, 0f, -0.06f, 0.07f)
+}
+
+@Composable
+private fun MovingBlobs(modifier: Modifier) {
     val t = rememberInfiniteTransition(label = "blobs")
 
     // Blob 1 — red, top-left drift
@@ -86,24 +100,30 @@ fun AnimatedBlobWallpaper(modifier: Modifier = Modifier) {
     val b3y by t.animateFloat(0f,  0.14f,
         infiniteRepeatable(tween(27_000, easing = FastOutSlowInEasing), RepeatMode.Reverse), "b3y")
 
-    Canvas(
-        modifier = modifier.fillMaxSize().blur(55.dp)
-    ) {
+    Blobs(modifier, b1x, b1y, b2x, b2y, b3x, b3y)
+}
+
+@Composable
+private fun Blobs(modifier: Modifier, b1x: Float, b1y: Float, b2x: Float, b2y: Float, b3x: Float, b3y: Float) {
+    Canvas(modifier = modifier.fillMaxSize()) {
         drawRect(Color(0xFF070710))
         val r = size.minDimension * 0.75f / 2f
 
         drawCircle(
-            brush  = Brush.radialGradient(listOf(Color(0xAAFF6B6B), Color(0x00FF6B6B)), radius = r),
+            brush  = Brush.radialGradient(listOf(Color(0xAAFF6B6B), Color(0x00FF6B6B)), radius = r,
+                center = Offset(size.width * (0f + b1x), size.height * (0f + b1y))),
             radius = r,
             center = Offset(size.width * (0f + b1x), size.height * (0f + b1y))
         )
         drawCircle(
-            brush  = Brush.radialGradient(listOf(Color(0xAA4F8CFF), Color(0x004F8CFF)), radius = r),
+            brush  = Brush.radialGradient(listOf(Color(0xAA4F8CFF), Color(0x004F8CFF)), radius = r,
+                center = Offset(size.width * (1f + b2x), size.height * (1f + b2y))),
             radius = r,
             center = Offset(size.width * (1f + b2x), size.height * (1f + b2y))
         )
         drawCircle(
-            brush  = Brush.radialGradient(listOf(Color(0xAAB266FF), Color(0x00B266FF)), radius = r),
+            brush  = Brush.radialGradient(listOf(Color(0xAAB266FF), Color(0x00B266FF)), radius = r,
+                center = Offset(size.width * (0.65f + b3x), size.height * (0.28f + b3y))),
             radius = r,
             center = Offset(size.width * (0.65f + b3x), size.height * (0.28f + b3y))
         )

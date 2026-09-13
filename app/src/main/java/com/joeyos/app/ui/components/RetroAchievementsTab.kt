@@ -47,10 +47,8 @@ import com.joeyos.app.ui.theme.*
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
-import java.util.Locale
 import kotlin.math.roundToInt
 
 /*
@@ -509,12 +507,19 @@ private fun AccountSection(
                 })
             }
         } else {
-            LabelledField("Username", username, { username = it; raRepo.username = it; raRepo.clearCache(); onChanged() })
-            LabelledField("API key", apiKey, { apiKey = it; raRepo.apiKey = it; raRepo.clearCache(); onChanged() },
+            // Typed into these fields only; saved when you press Connect. Saving every letter meant
+            // an encrypted write and a cache wipe per keystroke, on the main thread.
+            LabelledField("Username", username, { username = it })
+            LabelledField("API key", apiKey, { apiKey = it },
                 isPassword = true, showPassword = showApiKey, onToggleShow = { showApiKey = !showApiKey })
             Text("Get your API key from retroachievements.org → Settings → Keys", fontSize = 9.sp,
                 fontFamily = JoeyFont, color = TextFaint)
-            JoeyButton(if (loading) "Loading…" else "Connect", { onFetch(true) }, primary = true,
+            JoeyButton(if (loading) "Loading…" else "Connect", {
+                if (username.trim() != raRepo.username || apiKey.trim() != raRepo.apiKey) {
+                    raRepo.username = username.trim(); raRepo.apiKey = apiKey.trim(); raRepo.clearCache(); onChanged()
+                }
+                onFetch(true)
+            }, primary = true,
                 enabled = username.isNotBlank() && apiKey.isNotBlank() && !loading)
             (raAwards as? RAResult.Error)?.let { StatusLine(it.message, MissingColor) }
         }
@@ -571,7 +576,7 @@ private fun CountLine(text: String, sub: String) {
 
 @Composable
 private fun MonthLabel(date: Date, count: Int) {
-    SectionLabel("${SimpleDateFormat("MMMM", Locale.US).format(date)}  ·  $count", Modifier.padding(top = 6.dp))
+    SectionLabel("${monthFmt().format(date)}  ·  $count", Modifier.padding(top = 6.dp))
 }
 
 @Composable

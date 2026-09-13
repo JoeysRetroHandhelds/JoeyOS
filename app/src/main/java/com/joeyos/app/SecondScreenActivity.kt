@@ -26,9 +26,12 @@ import java.lang.ref.WeakReference
  * home screen: while it's visible it keeps itself alive for the whole game, so a guide or the
  * achievements can't vanish because Android reclaimed the home screen in the background.
  *
- * Its window can't take key focus (FLAG_NOT_FOCUSABLE). Touch still works, but the controller
- * always stays with the game: tapping this screen doesn't move focus here, because Android only
- * moves it on a tap into a window that can receive keys.
+ * Its window can take buttons. It used to refuse them (FLAG_NOT_FOCUSABLE) so the controller
+ * always stayed with the game, but then the bottom screen's own back arrow sent Back to a window
+ * that couldn't take it: Android waited, and the next tap closed JoeyOS as not responding (found
+ * on the Thor). Now it takes the controller like any app, and the handheld decides which screen
+ * gets it (the Thor locks it to the top, the bottom, or whichever screen you tap). Back works
+ * here and never closes this screen.
  */
 class SecondScreenActivity : ComponentActivity() {
 
@@ -39,27 +42,28 @@ class SecondScreenActivity : ComponentActivity() {
     }
 
     fun displayId(): Int = DisplayTargets.currentDisplayId(this)
+    private var shownOn = -1
 
     private val displayListener = object : DisplayManager.DisplayListener {
         override fun onDisplayAdded(displayId: Int) {}
         override fun onDisplayChanged(displayId: Int) {}
         // Android moves an activity to the main screen when its display goes (HDMI unplugged):
-        // close instead of covering the home screen.
-        override fun onDisplayRemoved(displayId: Int) { finish() }
+        // close instead of covering the home screen. Only for our own display: a screen recording
+        // or a cast ending removes a display too.
+        override fun onDisplayRemoved(displayId: Int) { if (displayId == shownOn) finish() }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ref = WeakReference(this)
+        shownOn = displayId()
         AppLog.i("SecondScreen", "Second screen open on display ${displayId()}")
-        // ALT_FOCUSABLE_IM with NOT_FOCUSABLE puts this window *behind* the keyboard. Without it a
-        // non-focusable window sits on top of the keyboard, so typing on the home screen (the
-        // RetroAchievements login) had its keyboard hidden under this screen on the Thor.
-        window.addFlags(
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM or
-                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-        )
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        // Back steps back inside this screen (its pages handle it); with nothing left, it does
+        // nothing rather than closing the second screen.
+        onBackPressedDispatcher.addCallback(this, object : androidx.activity.OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {}
+        })
         WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowCompat.getInsetsController(window, window.decorView).apply {
             systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
@@ -79,15 +83,11 @@ class SecondScreenActivity : ComponentActivity() {
     }
 
     /**
-     * Lets this screen take the keyboard while [on] — Find in a guide, or typing into a site in
-     * the guide browser — and gives it back after. Normally it can't (FLAG_NOT_FOCUSABLE), so the
-     * game keeps its buttons; while typing here the controller follows the keyboard, and a tap on
-     * the game's screen hands it back.
+     * Typing here (Find in a guide, a site's search box). The window can always take the keyboard
+     * now, so there's nothing to switch; kept so the pages can say when they're typing.
      */
-    fun allowTyping(on: Boolean) {
-        if (on) window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
-        else window.addFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
-    }
+    @Suppress("UNUSED_PARAMETER")
+    fun allowTyping(on: Boolean) {}
 
     override fun onResume() {
         super.onResume()

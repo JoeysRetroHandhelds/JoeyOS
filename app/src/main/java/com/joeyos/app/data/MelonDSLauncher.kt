@@ -1,13 +1,10 @@
 ﻿package com.joeyos.app.data
 
-import com.joeyos.app.AppLog
-
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
-import androidx.core.content.FileProvider
 import java.io.File
 
 private const val TAG = "MelonDSLauncher"
@@ -23,35 +20,19 @@ object MelonDSLauncher {
         }
         Log.d(TAG, "launch: resolved ROM path=$romPath")
 
-        val contentUri = try {
-            FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", File(romPath))
-        } catch (e: Exception) {
-            AppLog.e(TAG, "launch: FileProvider failed, falling back to file URI", e)
-            Uri.fromFile(File(romPath))
-        }
-        Log.d(TAG, "launch: uri=$contentUri")
-
-        context.grantUriPermission(game.emulatorPackage, contentUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        // melonDS takes the ROM as a URI string in an extra rather than as the intent's data,
+        // so a file:// fallback still gets through if the FileProvider can't share it.
+        val uri = grantableRomUri(context, game.emulatorPackage, romPath, TAG)
+            ?: Uri.fromFile(File(romPath))
 
         val intent = Intent("me.magnum.melonds.dev.LAUNCH_ROM").apply {
             component = ComponentName(
                 game.emulatorPackage,
                 "me.magnum.melonds.ui.emulator.EmulatorActivity"
             )
-            putExtra("uri", contentUri.toString())
-            addFlags(
-                Intent.FLAG_ACTIVITY_NEW_TASK or
-                Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                Intent.FLAG_ACTIVITY_CLEAR_TOP
-            )
+            putExtra("uri", uri.toString())
+            addFlags(FRESH_TASK)
         }
-        return try {
-            context.startGame(intent)
-            Log.d(TAG, "launch: startActivity succeeded")
-            true
-        } catch (e: Exception) {
-            AppLog.e(TAG, "launch: startActivity failed", e)
-            false
-        }
+        return context.tryStartGame(TAG, intent)
     }
 }

@@ -213,15 +213,19 @@ object SecondScreenController {
  */
 fun Context.startGame(intent: Intent) {
     val pkg = intent.`package` ?: intent.component?.packageName
+    val other = if (SecondScreenPrefs.gamesOnOther(this) && !SecondScreenOwners.owns(pkg))
+        DisplayTargets.otherDisplay(this) else null
+    // Started first, then announced: a launch that throws (the caller tries another way) mustn't
+    // flip the second screen to Now playing for a game that never ran.
+    if (other != null) startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK), DisplayTargets.optionsFor(other.displayId))
+    else startActivity(intent)
+    // So coming back home rescans just this emulator's recently played list.
+    RecentGamesReader.noteLaunched(pkg)
     SecondScreenState.gameStarted()
     if (SecondScreenOwners.owns(pkg)) {
         AppLog.i(TAG, "$pkg uses the second screen itself; closing JoeyOS's")
         SecondScreenController.close()
     }
-    val other = if (SecondScreenPrefs.gamesOnOther(this) && !SecondScreenOwners.owns(pkg))
-        DisplayTargets.otherDisplay(this) else null
-    if (other != null) startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK), DisplayTargets.optionsFor(other.displayId))
-    else startActivity(intent)
 }
 
 /** Starts an app: on the other screen if it's set to open there, else like a game if it's an emulator. */
@@ -232,4 +236,5 @@ fun Context.startApp(intent: Intent, pkg: String) {
         ALL_SYSTEMS.any { sys -> sys.knownPackages.any { pkg.startsWith(it) } } -> startGame(intent)
         else -> startActivity(intent)
     }
+    RecentGamesReader.noteLaunched(pkg)
 }

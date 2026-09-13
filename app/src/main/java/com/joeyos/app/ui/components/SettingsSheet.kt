@@ -554,16 +554,17 @@ fun AppearancePanel(
         }
 
         // ── Second screen (dual-screen handhelds only) ───────────────────
-        item { SecondScreenSettings() }
+        item { SecondScreenSection() }
     }
 }
 
 /**
  * Settings for a dual-screen handheld's other screen. Shown only when there is one, and applied
- * straight away: turning it on or off opens or closes the second screen.
+ * straight away: turning it on or off opens or closes the second screen. (Not the second
+ * screen's own Settings tab, which is SecondScreenSettings in SecondScreenContent.kt.)
  */
 @Composable
-private fun SecondScreenSettings() {
+private fun SecondScreenSection() {
     val context = LocalContext.current
     if (!remember { DisplayTargets.hasSecondScreen(context) }) return
     var enabled by remember { mutableStateOf(SecondScreenPrefs.enabled(context)) }

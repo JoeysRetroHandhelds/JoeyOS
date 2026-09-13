@@ -5,9 +5,7 @@ import com.joeyos.app.AppLog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.StrictMode
 import android.util.Log
-import androidx.core.content.FileProvider
 import java.io.File
 
 private const val TAG = "ARMSX3Launcher"
@@ -41,38 +39,25 @@ object ARMSX3Launcher {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
         Log.d(TAG, "launch: title='${game.title}' path=$path")
-        return try {
-            when {
-                path.startsWith("content://") -> {
-                    intent.data = Uri.parse(path)
-                    context.startGame(intent)
-                }
-                file != null && file.isFile -> {
-                    intent.setDataAndType(
-                        FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file),
-                        "application/octet-stream")
-                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    context.startGame(intent)
-                }
-                file != null && file.isDirectory -> {
-                    // Android refuses to send a file:// URI to another app by default (it throws
-                    // FileUriExposedException). A folder can't go through a FileProvider, and
-                    // ARMSX3 reads the raw path itself, so allow it for this one start.
-                    intent.data = Uri.fromFile(file)
-                    val policy = StrictMode.getVmPolicy()
-                    try {
-                        StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder().build())
-                        context.startGame(intent)
-                    } finally {
-                        StrictMode.setVmPolicy(policy)
-                    }
-                }
-                else -> context.startGame(base.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        return when {
+            path.startsWith("content://") -> {
+                intent.data = Uri.parse(path)
+                context.tryStartGame(TAG, intent)
             }
-            true
-        } catch (e: Exception) {
-            AppLog.e(TAG, "launch: startActivity failed", e)
-            false
+            file != null && file.isFile -> {
+                val uri = grantableRomUri(context, game.emulatorPackage, file.absolutePath, TAG)
+                    ?: return false
+                intent.setDataAndType(uri, "application/octet-stream")
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                context.tryStartGame(TAG, intent)
+            }
+            file != null && file.isDirectory -> {
+                // A folder can't go through a FileProvider, and ARMSX3 reads the raw path
+                // itself, so it goes as file:// with Android's check relaxed for this start.
+                intent.data = Uri.fromFile(file)
+                context.tryStartGame(TAG, intent, allowFileUri = true)
+            }
+            else -> context.tryStartGame(TAG, base.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }
     }
 }

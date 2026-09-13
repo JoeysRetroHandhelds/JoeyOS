@@ -4,6 +4,8 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 
+private const val TAG = "Vita3KLauncher"
+
 object Vita3KLauncher {
 
     fun launch(context: Context, game: RecentGame): Boolean {
@@ -17,17 +19,8 @@ object Vita3KLauncher {
             // ("-r TITLEID" argv, older/native builds). Vita3K ignores whichever it doesn't know.
             putExtra("launch", game.path)
             putExtra("AppStartParameters", arrayOf("-r", game.path))
-            addFlags(
-                Intent.FLAG_ACTIVITY_NEW_TASK or
-                Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                Intent.FLAG_ACTIVITY_CLEAR_TOP
-            )
+            addFlags(FRESH_TASK)
         }
-        return try {
-            context.startGame(intent)
-            true
-        } catch (_: Exception) {
-            false
-        }
+        return context.tryStartGame(TAG, intent)
     }
 }

@@ -3,8 +3,10 @@
 <data-extraction-rules>
     <cloud-backup>
         <exclude domain="sharedpref" path="ra_credentials.xml" />
+        <exclude domain="sharedpref" path="ra_credentials_plain.xml" />
     </cloud-backup>
     <device-transfer>
         <exclude domain="sharedpref" path="ra_credentials.xml" />
+        <exclude domain="sharedpref" path="ra_credentials_plain.xml" />
     </device-transfer>
 </data-extraction-rules>

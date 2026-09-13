@@ -46,26 +46,17 @@ object ChdConversion {
     // bin/cue. The rest take a cue, a gdi or a plain iso.
     private val Disc = setOf("cue", "gdi", "iso")
     val Systems: List<ChdSystem> = listOf(
-        ChdSystem("psx", Mode.Cd, Disc, "PlayStation", setOf("psx", "ps1", "playstation", "ps")),
-        ChdSystem("ps2", Mode.Cd, Disc, "PlayStation 2", setOf("ps2")),
-        ChdSystem("saturn", Mode.Cd, Disc, "Saturn", setOf("saturn")),
-        ChdSystem("segacd", Mode.Cd, Disc, "Sega CD", setOf("segacd", "megacd", "sega cd")),
-        ChdSystem("dreamcast", Mode.Cd, setOf("gdi"), "Dreamcast", setOf("dreamcast", "dc")),
-        ChdSystem("psp", Mode.Dvd, Disc, "PSP", setOf("psp")),
+        ChdSystem("psx", Mode.Cd, Disc, "PlayStation", RomFolders.namesFor("psx")),
+        ChdSystem("ps2", Mode.Cd, Disc, "PlayStation 2", RomFolders.namesFor("ps2")),
+        ChdSystem("saturn", Mode.Cd, Disc, "Saturn", RomFolders.namesFor("saturn")),
+        ChdSystem("segacd", Mode.Cd, Disc, "Sega CD", RomFolders.namesFor("segacd")),
+        ChdSystem("dreamcast", Mode.Cd, setOf("gdi"), "Dreamcast", RomFolders.namesFor("dreamcast")),
+        ChdSystem("psp", Mode.Dvd, Disc, "PSP", RomFolders.namesFor("psp")),
     )
 
     /** Every `ROMs/<folder>` on every storage volume, grouped by the console it holds. */
-    fun romFolders(roots: List<File>): Map<ChdSystem, List<File>> {
-        val found = mutableMapOf<ChdSystem, MutableList<File>>()
-        for (root in roots) {
-            val roms = root.listFiles()?.firstOrNull { it.isDirectory && it.name.equals("roms", true) } ?: continue
-            roms.listFiles()?.filter { it.isDirectory }?.forEach { dir ->
-                val system = Systems.firstOrNull { dir.name.lowercase() in it.folderNames } ?: return@forEach
-                found.getOrPut(system) { mutableListOf() } += dir
-            }
-        }
-        return found
-    }
+    fun romFolders(roots: List<File>): Map<ChdSystem, List<File>> =
+        RomFolders.group(roots, Systems) { it.folderNames }
 
     val Shortnames: Set<String> = Systems.map { it.shortname }.toSet()
 

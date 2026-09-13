@@ -1,6 +1,8 @@
 ﻿package com.joeyos.app
 
 import android.content.Intent
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import android.hardware.display.DisplayManager
 import androidx.lifecycle.Lifecycle
 import com.joeyos.app.data.SecondScreenController
@@ -46,12 +48,15 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppLog.install(this)
+        // Open the RetroAchievements login (a keystore call) in the background, before any screen asks.
+        lifecycleScope.launch { com.joeyos.app.data.RetroAchievementsRepository.get(this@MainActivity).warmUp() }
         introComplete = hasPermission() && prefs.getBoolean("intro_done", false)
         hasStoragePermission = hasPermission()
         GameDatabase.init(this)
         enableEdgeToEdge()
         (getSystemService(DISPLAY_SERVICE) as DisplayManager)
             .registerDisplayListener(displayListener, android.os.Handler(mainLooper))
+        registerPackageReceiver()
         hideSystemBars()
         setContent {
             JoeyOSTheme {
@@ -92,8 +97,10 @@ class MainActivity : ComponentActivity() {
         hasStoragePermission = hasPermission()
         introHomeDone = isDefaultHomeApp()
         if (introComplete) {
-            vm.loadInstalledApps(this)
-            vm.invalidateAndPreWarmRecentGames()
+            // The app list is loaded once and then kept current by packageReceiver, and only the
+            // emulators started since home was last in front get their recently played rescanned.
+            vm.ensureInstalledApps(applicationContext)
+            vm.refreshRecentGamesAfterLaunch()
             SecondScreenController.ensure(this)
         }
         SecondScreenState.backHome()
@@ -117,15 +124,44 @@ class MainActivity : ComponentActivity() {
         if (introComplete && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) SecondScreenController.ensure(this)
     }
 
+    /**
+     * Apps installed, removed, updated or switched on/off while JoeyOS is running: reload the
+     * app list and drop that app's cached icon. This replaces reloading the list on every
+     * return home. Package broadcasts are system-only, so exporting the receiver is safe.
+     */
+    private val packageReceiver = object : android.content.BroadcastReceiver() {
+        override fun onReceive(context: android.content.Context, intent: Intent) {
+            val pkg = intent.data?.schemeSpecificPart
+            if (pkg != null) com.joeyos.app.ui.components.AppIcons.evict(pkg)
+            vm.onPackagesChanged(applicationContext, pkg)
+        }
+    }
+
+    private fun registerPackageReceiver() {
+        val filter = android.content.IntentFilter().apply {
+            addAction(Intent.ACTION_PACKAGE_ADDED)
+            addAction(Intent.ACTION_PACKAGE_REMOVED)
+            addAction(Intent.ACTION_PACKAGE_CHANGED)
+            addAction(Intent.ACTION_PACKAGE_REPLACED)
+            addDataScheme("package")
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(packageReceiver, filter, android.content.Context.RECEIVER_EXPORTED)
+        } else {
+            registerReceiver(packageReceiver, filter)
+        }
+    }
+
     override fun onDestroy() {
         (getSystemService(DISPLAY_SERVICE) as DisplayManager).unregisterDisplayListener(displayListener)
+        runCatching { unregisterReceiver(packageReceiver) }
         super.onDestroy()
     }
 
     private fun completeIntro() {
         prefs.edit().putBoolean("intro_done", true).apply()
         introComplete = true
-        vm.loadInstalledApps(this)
+        vm.ensureInstalledApps(applicationContext)
     }
 
     private fun openStoragePermissionSettings() {

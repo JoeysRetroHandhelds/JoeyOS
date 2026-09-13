@@ -6,7 +6,6 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.StrictMode
 import android.util.Log
 import java.io.File
 
@@ -39,29 +38,18 @@ object FlycastLauncher {
             component = ComponentName(pkg, "com.flycast.emulator.MainActivity")
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
-        return try {
-            when {
-                path.startsWith("content://") -> {
-                    intent.data = Uri.parse(path)
-                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    context.startGame(intent)
-                }
-                path.isNotBlank() && File(path.removePrefix("file://")).exists() -> {
-                    intent.data = Uri.fromFile(File(path.removePrefix("file://")))
-                    val policy = StrictMode.getVmPolicy()
-                    try {
-                        StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder().build())
-                        context.startGame(intent)
-                    } finally {
-                        StrictMode.setVmPolicy(policy)
-                    }
-                }
-                else -> context.startGame(base.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        val file = File(path.removePrefix("file://"))
+        return when {
+            path.startsWith("content://") -> {
+                intent.data = Uri.parse(path)
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                context.tryStartGame(TAG, intent)
             }
-            true
-        } catch (e: Exception) {
-            AppLog.e(TAG, "launch: startActivity failed", e)
-            false
+            path.isNotBlank() && file.exists() -> {
+                intent.data = Uri.fromFile(file)
+                context.tryStartGame(TAG, intent, allowFileUri = true)
+            }
+            else -> context.tryStartGame(TAG, base.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }
     }
 }

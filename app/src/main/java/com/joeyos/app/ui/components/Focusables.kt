@@ -74,6 +74,9 @@ fun rememberFocusState(): Pair<MutableInteractionSource, Boolean> {
 /**
  * One choice in a row of choices (dock size, clock format, …). Soft amber fill when it's the
  * current value; the amber focus ring when it holds focus.
+ *
+ * [compact] is the pill form for rows of tabs and filters that flow (the second screen): fully
+ * rounded and as wide as its label, where the normal chip is sized by its row.
  */
 @Composable
 fun OptionChip(
@@ -81,10 +84,11 @@ fun OptionChip(
     active: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    fontSize: TextUnit = 11.sp
+    fontSize: TextUnit = 11.sp,
+    compact: Boolean = false
 ) {
     val (source, focused) = rememberFocusState()
-    val shape = RoundedCornerShape(9.dp)
+    val shape = if (compact) RoundedCornerShape(50) else RoundedCornerShape(9.dp)
     Box(
         modifier = modifier
             .clip(shape)
@@ -103,7 +107,8 @@ fun OptionChip(
                 shape
             )
             .clickable(interactionSource = source, indication = null, onClick = onClick)
-            .padding(vertical = 11.dp),
+            .then(if (compact) Modifier.padding(horizontal = 14.dp, vertical = 8.dp)
+                  else Modifier.padding(vertical = 11.dp)),
         contentAlignment = Alignment.Center
     ) {
         Text(label, fontSize = fontSize, fontFamily = JoeyFont,

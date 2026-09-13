@@ -72,43 +72,34 @@ object RomCompression {
     // GB and GBC share extensions, since many people keep both in one folder.
     val Systems: List<CompressSystem> = listOf(
         CompressSystem("nes", CompressionMethod.Zip, setOf("nes", "unf", "unif"),
-            "NES", setOf("nes", "famicom", "fc")),
+            "NES", RomFolders.namesFor("nes")),
         CompressSystem("snes", CompressionMethod.Zip, setOf("sfc", "smc", "swc", "fig"),
-            "SNES", setOf("snes", "sfc", "superfamicom")),
+            "SNES", RomFolders.namesFor("snes")),
         CompressSystem("n64", CompressionMethod.Zip, setOf("n64", "z64", "v64"),
-            "Nintendo 64", setOf("n64")),
+            "Nintendo 64", RomFolders.namesFor("n64")),
         CompressSystem("gb", CompressionMethod.Zip, setOf("gb", "gbc"),
-            "Game Boy", setOf("gb")),
+            "Game Boy", RomFolders.namesFor("gb")),
         CompressSystem("gbc", CompressionMethod.Zip, setOf("gbc", "gb"),
-            "Game Boy Color", setOf("gbc")),
+            "Game Boy Color", RomFolders.namesFor("gbc")),
         CompressSystem("gba", CompressionMethod.Zip, setOf("gba"),
-            "Game Boy Advance", setOf("gba")),
+            "Game Boy Advance", RomFolders.namesFor("gba")),
         CompressSystem("nds", CompressionMethod.Zip, setOf("nds"),
-            "Nintendo DS", setOf("nds", "ds")),
+            "Nintendo DS", RomFolders.namesFor("nds")),
         CompressSystem("gamegear", CompressionMethod.Zip, setOf("gg"),
-            "Game Gear", setOf("gamegear", "gg")),
+            "Game Gear", RomFolders.namesFor("gamegear")),
         CompressSystem("genesis", CompressionMethod.Zip, setOf("md", "bin", "gen", "smd"),
-            "Genesis / Mega Drive", setOf("genesis", "megadrive", "md")),
+            "Genesis / Mega Drive", RomFolders.namesFor("genesis")),
         CompressSystem("master", CompressionMethod.Zip, setOf("sms"),
-            "Master System", setOf("mastersystem", "master", "sms")),
+            "Master System", RomFolders.namesFor("mastersystem")),
         CompressSystem("ngpc", CompressionMethod.Zip, setOf("ngc"),
-            "Neo Geo Pocket Color", setOf("ngpc")),
+            "Neo Geo Pocket Color", RomFolders.namesFor("ngpc")),
         CompressSystem("ngp", CompressionMethod.Zip, setOf("ngp"),
-            "Neo Geo Pocket", setOf("ngp")),
+            "Neo Geo Pocket", RomFolders.namesFor("ngp")),
     )
 
     /** Every `ROMs/<folder>` on every storage volume, grouped by the console it holds. */
-    fun romFolders(roots: List<File>): Map<CompressSystem, List<File>> {
-        val found = mutableMapOf<CompressSystem, MutableList<File>>()
-        for (root in roots) {
-            val roms = root.listFiles()?.firstOrNull { it.isDirectory && it.name.equals("roms", true) } ?: continue
-            roms.listFiles()?.filter { it.isDirectory }?.forEach { dir ->
-                val system = Systems.firstOrNull { dir.name.lowercase() in it.folderNames } ?: return@forEach
-                found.getOrPut(system) { mutableListOf() } += dir
-            }
-        }
-        return found
-    }
+    fun romFolders(roots: List<File>): Map<CompressSystem, List<File>> =
+        RomFolders.group(roots, Systems) { it.folderNames }
 
     val Shortnames: Set<String> = Systems.map { it.shortname }.toSet()
 

@@ -1,7 +1,5 @@
 ﻿package com.joeyos.app.data
 
-import com.joeyos.app.AppLog
-
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -73,8 +71,7 @@ object RetroArchLauncher {
             ?.takeIf { !it.startsWith("/") }
             ?.let { systemFolderForCoreHint(it) }
         // The system id isn't always the folder name (ES-DE keeps PlayStation games in "psx").
-        val aliases = coreHintSystemFolder
-            ?.let { id -> ES_DE_FOLDER_MAP.filterValues { it == id }.keys }.orEmpty()
+        val aliases = coreHintSystemFolder?.let { RomFolders.esDeFoldersFor(it) }.orEmpty()
         val romPath = RomFinder.resolveRomFromSave(game.path, systemFolder = coreHintSystemFolder, folderAliases = aliases)
         Log.d(TAG, "launch: game.path=${game.path} coreHintSystemFolder=$coreHintSystemFolder romPath=$romPath")
         if (romPath == null) return false
@@ -114,81 +111,16 @@ object RetroArchLauncher {
             putExtra("ROM", romPath)
             if (corePath != null) putExtra("LIBRETRO", corePath)
             putExtra("CONFIGFILE", configFile)
-            addFlags(
-                Intent.FLAG_ACTIVITY_NEW_TASK or
-                Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                Intent.FLAG_ACTIVITY_CLEAR_TOP
-            )
+            addFlags(FRESH_TASK)
         }
         Log.d(TAG, "launch: firing intent ROM=$romPath LIBRETRO=${corePath ?: "(none - RetroArch will pick core)"}")
-        return try {
-            context.startGame(intent)
-            true
-        } catch (e: Exception) {
-            AppLog.e(TAG, "launch: startActivity failed", e)
-            false
-        }
+        return context.tryStartGame(TAG, intent)
     }
 
-    // Maps ES-DE ROM folder names → ALL_SYSTEMS ids where they differ
-    private val ES_DE_FOLDER_MAP = mapOf(
-        // Sony
-        "psx"           to "ps1",
-        "psvita"        to "vita",
-        // Sega
-        "dreamcast"     to "dc",
-        "gamegear"      to "gg",
-        "mastersystem"  to "sms",
-        "megadrive"     to "genesis",
-        "megadrivejp"   to "genesis",
-        "megacd"        to "segacd",
-        "megacdjp"      to "segacd",
-        "sega32xjp"     to "sega32x",
-        "sega32xna"     to "sega32x",
-        "saturnjp"      to "saturn",
-        "naomi2"        to "naomi",
-        "naomigd"       to "naomi",
-        "atomiswave"    to "naomi",
-        // Nintendo
-        "famicom"       to "nes",
-        "fds"           to "nes",
-        "sfc"           to "snes",
-        "snesna"        to "snes",
-        "gbc"           to "gb",
-        "sgb"           to "gb",
-        "wii"           to "gc",
-        "n64dd"         to "n64",
-        "satellaview"   to "snes",
-        "sufami"        to "snes",
-        // NEC
-        "pcengine"      to "pce",
-        "tg16"          to "pce",
-        "tg-cd"         to "pcenginecd",
-        // Atari
-        "atari2600"     to "a2600",
-        "atari5200"     to "a5200",
-        "atari7800"     to "a7800",
-        "atarijaguar"   to "jaguar",
-        "atarilynx"     to "lynx",
-        // SNK
-        "ngpc"          to "ngp",
-        "neogeocd"      to "neogeo",
-        "neogeocdjp"    to "neogeo",
-        // Arcade
-        "fbneo"         to "arcade",
-        "fba"           to "arcade",
-        "cps"           to "arcade",
-        "cps1"          to "arcade",
-        "cps2"          to "arcade",
-        "cps3"          to "arcade",
-        "mame"          to "arcade",
-        "consolearcade" to "arcade",
-        "stv"           to "arcade",
-    )
-
+    // ES-DE's folder names (e.g. "psx", "megadrive") map to ALL_SYSTEMS ids in RomFolders.
     private fun systemIdFromPath(romPath: String): String? {
-        val folder = File(romPath).parentFile?.name?.lowercase() ?: return null
-        return ES_DE_FOLDER_MAP[folder] ?: folder
+        val folder = File(romPath).parentFile?.name ?: return null
+        return RomFolders.systemIdForFolder(folder)
     }
 
     /**

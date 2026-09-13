@@ -50,6 +50,7 @@ import com.joeyos.app.data.M3uProgress
 import com.joeyos.app.data.M3uStatus
 import com.joeyos.app.data.M3uUndoAction
 import com.joeyos.app.data.RomFinder
+import com.joeyos.app.data.RomFolders
 import com.joeyos.app.data.RomPatcher
 import com.joeyos.app.data.RaHack
 import com.joeyos.app.data.RaPatches
@@ -218,9 +219,8 @@ private fun BiosCheckScreen(
     val autoFolders by produceState(emptyList<String>()) {
         value = withContext(Dispatchers.IO) {
             val roots = RomFinder.storageRoots()
-            val beside = roots.flatMap { root ->
-                root.listFiles()?.filter { it.isDirectory && it.name.equals("roms", true) }.orEmpty()
-                    .flatMap { roms -> roms.listFiles()?.filter { it.isDirectory && it.name.equals("bios", true) }.orEmpty() }
+            val beside = RomFolders.romsDirs(roots).flatMap { roms ->
+                roms.listFiles()?.filter { it.isDirectory && it.name.equals("bios", true) }.orEmpty()
             }
             val top = roots.flatMap { root ->
                 root.listFiles()?.filter { it.isDirectory && it.name.equals("bios", true) }.orEmpty()
@@ -1272,7 +1272,7 @@ private fun RaHacksScreen(firstFocus: FocusRequester, modifier: Modifier = Modif
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     remember { RaPatches.cacheDir = context.cacheDir; Unit }
-    val raRepo = remember { com.joeyos.app.data.RetroAchievementsRepository(context) }
+    val raRepo = remember { com.joeyos.app.data.RetroAchievementsRepository.get(context) }
 
     var chosen by rememberSaveable { mutableStateOf<String?>(null) }
     var openGame by remember { mutableStateOf<RaGameMatch?>(null) }

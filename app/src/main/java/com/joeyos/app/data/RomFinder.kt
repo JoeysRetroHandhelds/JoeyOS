@@ -25,7 +25,9 @@ object RomFinder {
      * file or no matching ROM is found.
      *
      * Optionally restrict the search to a specific ES-DE system folder name
-     * (e.g. "nds") to avoid scanning every system.
+     * (e.g. "nds") to avoid scanning every system. The folder's other names from
+     * [RomFolders] are searched too, plus any extra [folderAliases] (RetroArch passes
+     * ES-DE's regional folders, like "megadrivejp", this way).
      */
     fun resolveRomFromSave(
         savePath: String,
@@ -42,15 +44,12 @@ object RomFinder {
 
         val baseName = file.nameWithoutExtension
         Log.d(TAG, "resolveRomFromSave: baseName=$baseName systemFolder=$systemFolder")
-        val roots = storageRoots()
+        val names = systemFolder?.let { folder ->
+            (folderAliases + folder).flatMap { RomFolders.namesFor(it) }.toSet()
+        }
 
-        for (root in roots) {
-            val romsRoot = root.listFiles()?.firstOrNull {
-                it.isDirectory && it.name.equals("roms", ignoreCase = true)
-            } ?: continue
-
-            val systemDirs = if (systemFolder != null) {
-                val names = (folderAliases + systemFolder).map { it.lowercase() }.toSet()
+        for (romsRoot in RomFolders.romsDirs(storageRoots())) {
+            val systemDirs = if (names != null) {
                 romsRoot.listFiles()?.filter {
                     it.isDirectory && it.name.lowercase() in names
                 } ?: emptyList()
@@ -88,6 +87,7 @@ object RomFinder {
     /**
      * Scans an ES-DE system folder for a ROM whose filename contains [titleHint].
      * Used when the save file is named by serial rather than by game title.
+     * [systemFolder] can be any of the console's folder names (see [RomFolders]).
      */
     fun findRomByTitle(titleHint: String, systemFolder: String): String? {
         if (titleHint.isBlank()) return null
@@ -96,14 +96,8 @@ object RomFinder {
         // just the base part — ROM files rarely include edition suffixes.
         val shortHint = titleHint.substringBefore(" – ").substringBefore(" - ")
             .let { normalizeTitle(it) }.takeIf { it != normalHint && it.isNotBlank() }
-        val roots = storageRoots()
-        for (root in roots) {
-            val romsRoot = root.listFiles()?.firstOrNull {
-                it.isDirectory && it.name.equals("roms", ignoreCase = true)
-            } ?: continue
-            val systemDir = romsRoot.listFiles()?.firstOrNull {
-                it.isDirectory && it.name.equals(systemFolder, ignoreCase = true)
-            } ?: continue
+        // Every name the console goes by, so "psx" also searches a "ps1" or "PlayStation" folder.
+        for (systemDir in RomFolders.systemDirs(storageRoots(), systemFolder)) {
             val files = systemDir.listFiles()?.filter { it.isFile } ?: continue
             Log.d(TAG, "findRomByTitle: searching ${systemDir.absolutePath} for '$titleHint' (normalized='$normalHint' short='$shortHint') among ${files.size} files")
             val rom = pickBestMatch(files, normalHint) ?: shortHint?.let { pickBestMatch(files, it) }
@@ -205,14 +199,7 @@ object RomFinder {
      */
     fun findN64RomByHeaderTitle(headerTitleHint: String, systemFolder: String = "n64"): String? {
         if (headerTitleHint.isBlank()) return null
-        val roots = storageRoots()
-        for (root in roots) {
-            val romsRoot = root.listFiles()?.firstOrNull {
-                it.isDirectory && it.name.equals("roms", ignoreCase = true)
-            } ?: continue
-            val systemDir = romsRoot.listFiles()?.firstOrNull {
-                it.isDirectory && it.name.equals(systemFolder, ignoreCase = true)
-            } ?: continue
+        for (systemDir in RomFolders.systemDirs(storageRoots(), systemFolder)) {
             val files = systemDir.listFiles()?.filter { it.isFile } ?: continue
             for (file in files) {
                 val title = cachedHeaderTitle(file) ?: continue

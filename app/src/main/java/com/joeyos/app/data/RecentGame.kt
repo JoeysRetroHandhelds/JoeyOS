@@ -35,7 +35,7 @@ object RecentGamesReader {
 
     /**
      * Per-package locks. Scanning is expensive (walking storage, reading ROM headers) and
-     * several callers fire at once on resume — invalidateAndPreWarmRecentGames(),
+     * several callers fire at once on resume — refreshRecentGamesAfterLaunch(),
      * loadInstalledApps()'s preWarm, and the Dock's per-entry title load — all racing past
      * the just-cleared cache. Without a lock every one of them repeated the identical scan
      * concurrently (observed 3-4x duplicate work). Holding a per-package lock means the
@@ -50,6 +50,51 @@ object RecentGamesReader {
     fun invalidateCache() {
         pkgCacheTime.clear()
         pkgCacheResults.clear()
+    }
+
+    /**
+     * Emulators JoeyOS has started since the home screen was last in front. Only these can have
+     * a new game to show when you come back, so only these are rescanned then; every other
+     * emulator keeps its cached list until [CACHE_TTL_MS] runs out (which still catches one
+     * opened some other way, from Android's recents say).
+     */
+    private val launchedSinceHome = ConcurrentHashMap.newKeySet<String>()
+
+    /** An app was started from JoeyOS. Called by startGame / startApp, so every launch path counts. */
+    fun noteLaunched(packageName: String?) {
+        if (packageName != null && supportsRecentlyPlayed(packageName)) launchedSinceHome += packageName
+    }
+
+    /**
+     * Back home: forget the cached list of every emulator started since last time (and any other
+     * package read by the same reader, since e.g. the RetroArch builds share one history file),
+     * plus any list past [CACHE_TTL_MS], which would be rescanned on its next read anyway.
+     * Returns the packages dropped; empty means every cached list is still good.
+     */
+    fun invalidateLaunched(): Set<String> {
+        val launched = launchedSinceHome.toSet()
+        launchedSinceHome.removeAll(launched)
+        val families = launched.map { readerKey(it) }.toSet()
+        val now = System.currentTimeMillis()
+        val expired = pkgCacheTime.filterValues { now - it >= CACHE_TTL_MS }.keys
+        val dropped = pkgCacheTime.keys.filter { readerKey(it) in families }.toSet() + launched + expired
+        dropped.forEach { pkgCacheTime.remove(it); pkgCacheResults.remove(it) }
+        return dropped
+    }
+
+    /** Forget one package's cached list (and its reader-mates'), e.g. after it was updated or removed. */
+    fun invalidatePackage(packageName: String) {
+        val family = readerKey(packageName)
+        pkgCacheTime.keys.filter { readerKey(it) == family }.forEach { pkgCacheTime.remove(it); pkgCacheResults.remove(it) }
+    }
+
+    /** Which reader a package goes through: packages with the same key read the same files. */
+    private fun readerKey(packageName: String): String = when {
+        packageName.startsWith("me.magnum.melondualds") -> "me.magnum.melonds"
+        packageName.startsWith("com.joeyos.dolphinemu") -> "org.dolphinemu"
+        packageName.startsWith("net.nicholaswilde.nethersx2") -> "xyz.aethersx2"
+        packageName.startsWith("com.duckstation") -> "com.github.stenzek.duckstation"
+        else -> SUPPORTED_PREFIXES.firstOrNull { packageName.startsWith(it) } ?: packageName
     }
 
     /**

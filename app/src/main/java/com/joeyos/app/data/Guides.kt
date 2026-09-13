@@ -9,8 +9,6 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.ByteArrayInputStream
 import java.io.File
-import java.net.HttpURLConnection
-import java.net.URL
 import java.net.URLEncoder
 
 /*
@@ -228,15 +226,11 @@ object Guides {
         val url = "https://archive.org/download/$ArchiveItem/$ArchiveItem%2F$member/" +
             URLEncoder.encode(inside, "UTF-8").replace("+", "%20")
         return runCatching {
-            val c = (URL(url).openConnection() as HttpURLConnection).apply {
-                connectTimeout = 20_000; readTimeout = 120_000; instanceFollowRedirects = true
-                setRequestProperty("User-Agent", "JoeyOS")
-            }
-            c.inputStream.use { s ->
-                val body = s.readBytes()
-                if (body.size < 200 || body.first().toInt().toChar() == '<') return@runCatching false
-                target.parentFile?.mkdirs(); target.writeBytes(body); true
-            }
+            val response = Http.get(url, userAgent = "JoeyOS", connectMs = 20_000, readMs = 120_000)
+            // A failed answer is logged with the others below.
+            val body = response.bytes ?: throw java.io.IOException("HTTP ${response.code}")
+            if (body.size < 200 || body.first().toInt().toChar() == '<') return@runCatching false
+            target.parentFile?.mkdirs(); target.writeBytes(body); true
         }.getOrElse { AppLog.w(TAG, "Archive download failed: $archive/$inside", it); false }
     }
 
@@ -284,10 +278,7 @@ object Guides {
     fun searchFor(query: String) = GuideSource(query, "https://duckduckgo.com/?q=" + URLEncoder.encode(query, "UTF-8"))
 
     private fun httpText(url: String): String? = runCatching {
-        (URL(url).openConnection() as HttpURLConnection).run {
-            connectTimeout = 15_000; readTimeout = 30_000; setRequestProperty("User-Agent", "JoeyOS")
-            if (responseCode !in 200..299) null else inputStream.use { it.readBytes().toString(Charsets.UTF_8) }
-        }
+        Http.get(url, userAgent = "JoeyOS", connectMs = 15_000, readMs = 30_000).takeIf { it.ok }?.text
     }.getOrNull()
 }
 
@@ -296,21 +287,47 @@ object Guides {
  * and EasyPrivacy, matched on a request's host and its parent domains. Not uBlock's full engine
  * (no cosmetic hiding), but a blocked request stops the ad loading at all. The lists are fetched
  * daily with ETags and the host set cached; offline, nothing is blocked rather than held up.
+ *
+ * The host list (tens of thousands of names) is only held while a guide browser is open: each
+ * browser [acquire]s it and [release]s it when it closes, and the last one out drops it. Opening
+ * one again reads it back from the day's cached file, which is quick and works offline.
  */
 object GuideBlocklist {
     private val Lists = listOf("https://easylist.to/easylist/easylist.txt", "https://easylist.to/easylist/easyprivacy.txt")
-    @Volatile private var hosts: Set<String>? = null
+    // Sorted, for a binary search: far smaller in memory than a HashSet of the same names.
+    // Read from WebView's network threads, hence @Volatile.
+    @Volatile private var hosts: Array<String>? = null
+    private val users = java.util.concurrent.atomic.AtomicInteger(0)
     private fun blank() = WebResourceResponse("text/plain", "utf-8", ByteArrayInputStream(ByteArray(0)))
+
+    /** A guide browser opened: keep the list while it's open. Pair with [release]. */
+    fun acquire() { users.incrementAndGet() }
+
+    /** A guide browser closed: once none are open, let the list go. */
+    fun release() {
+        if (users.decrementAndGet() <= 0) { users.set(0); hosts = null }
+    }
 
     fun intercept(request: WebResourceRequest): WebResourceResponse? {
         val set = hosts ?: return null
         var name = request.url?.host?.lowercase() ?: return null
         while (true) {
-            if (name in set) return blank()
+            if (java.util.Arrays.binarySearch(set, name) >= 0) return blank()
             val dot = name.indexOf('.')
             if (dot < 0) return null
             name = name.substring(dot + 1)
         }
+    }
+
+    private fun sortedHosts(names: Collection<String>): Array<String> =
+        names.toTypedArray().also { java.util.Arrays.sort(it) }
+
+    private fun readCached(combined: File): Array<String>? =
+        runCatching { sortedHosts(combined.readLines().filter { it.isNotBlank() }.toHashSet()) }.getOrNull()
+
+    /** Publishes a loaded list, unless every browser closed while it was loading. */
+    private fun publish(list: Array<String>?) {
+        if (list != null && users.get() > 0) hosts = list
     }
 
     suspend fun ensureLoaded(cacheDir: File) {
@@ -318,8 +335,8 @@ object GuideBlocklist {
         withContext(Dispatchers.IO) {
             val combined = File(cacheDir, "adblock-hosts.txt")
             if (combined.isFile && System.currentTimeMillis() - combined.lastModified() < 24 * 3_600_000L) {
-                hosts = runCatching { combined.readLines().filter { it.isNotBlank() }.toHashSet() }.getOrNull()
-                if (hosts != null) return@withContext
+                val cached = readCached(combined)
+                if (cached != null) { publish(cached); return@withContext }
             }
             val rule = Regex("""^\|\|([a-z0-9.-]+)\^""")
             val fetched = HashSet<String>()
@@ -332,11 +349,11 @@ object GuideBlocklist {
                     }
             }
             if (fetched.isNotEmpty()) {
-                hosts = fetched
+                publish(sortedHosts(fetched))
                 runCatching { combined.writeText(fetched.joinToString("\n")) }
                 AppLog.i(TAG, "Ad blocking: ${fetched.size} hosts")
             } else if (combined.isFile) {
-                hosts = runCatching { combined.readLines().filter { it.isNotBlank() }.toHashSet() }.getOrNull()
+                publish(readCached(combined))
             }
         }
     }

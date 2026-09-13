@@ -28,13 +28,10 @@ object ThreeDsCompression {
     const val Shortname = "3ds"
 
     /** The ROM folder names people use for 3DS (JoeyOS reads `ROMs/<folder>`). */
-    val FolderNames = setOf("3ds", "n3ds", "nintendo3ds")
+    val FolderNames = RomFolders.namesFor(Shortname)
 
     /** Every 3DS folder under `ROMs/` on every storage volume. */
-    fun romFolders(roots: List<File>): List<File> = roots.flatMap { root ->
-        val roms = root.listFiles()?.firstOrNull { it.isDirectory && it.name.equals("roms", true) }
-        roms?.listFiles()?.filter { it.isDirectory && it.name.lowercase() in FolderNames }.orEmpty()
-    }
+    fun romFolders(roots: List<File>): List<File> = RomFolders.systemDirs(roots, Shortname)
 
     /** Uncompressed 3DS containers. A .3ds is the same NCSD format as a .cci. */
     val InputExtensions = setOf("3ds", "cci")
@@ -183,25 +180,36 @@ object ThreeDsCompression {
         if (job.status == Status.Conflict && !overwrite) {
             return Result(job.source.name, false, "skipped") to null
         }
-        if (job.target.exists() && !job.target.delete()) {
-            return Result(job.source.name, false, "could not replace ${job.target.name}") to null
+        // An existing ZCCI is set aside, not deleted, until the new one is known to be good: the
+        // tool picks the output name itself, so it can't be written somewhere else first.
+        val previous = File(job.target.parentFile, job.target.name + ".old")
+        if (job.target.exists()) {
+            previous.delete()
+            if (!job.target.renameTo(previous)) {
+                return Result(job.source.name, false, "could not replace ${job.target.name}") to null
+            }
         }
+        fun putBack() { runCatching { job.target.delete() }; if (previous.exists()) previous.renameTo(job.target) }
 
         // azahar-tool -c <input> -o <dir>: it names the output itself (base + .zcci) in dir.
         val ran = runTool(tool, listOf("-c", job.source.absolutePath, "-o", job.source.parent), shouldStop)
-        if (!ran || !job.target.isFile || job.target.length() == 0L) {
-            AppLog.w("Compress", "3ds: ${job.source.name} failed (ran=$ran, output=${job.target.isFile})")
-            runCatching { job.target.delete() }
+        // A good ZCCI is never tiny: a tool that exits cleanly but leaves a stub mustn't count as
+        // done (the source may be deleted next).
+        val size = if (job.target.isFile) job.target.length() else 0L
+        val plausible = size >= 64 * 1024 && size >= job.source.length() / 50
+        if (!ran || !plausible) {
+            AppLog.w("Compress", "3ds: ${job.source.name} failed (ran=$ran, output=$size bytes)")
+            putBack()
             return Result(job.source.name, false, "could not compress ${job.source.name}") to null
         }
+        previous.delete()
         AppLog.i("Compress", "3ds: wrote ${job.target.name}")
 
-        if (removeSource) {
-            if (job.source.delete()) AppLog.i("Compress", "3ds: removed ${job.source.name}")
-            else AppLog.w("Compress", "3ds: kept ${job.source.name}, could not remove it")
-        }
+        val removed = removeSource && job.source.delete()
+        if (removed) AppLog.i("Compress", "3ds: removed ${job.source.name}")
+        else if (removeSource) AppLog.w("Compress", "3ds: kept ${job.source.name}, could not remove it")
         return Result(job.source.name, true, "compressed ${job.source.name}") to
-            Undo(job.target, job.source, removeSource)
+            Undo(job.target, job.source, removed)
     }
 
     /**

@@ -18,6 +18,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.joeyos.app.ui.theme.*
@@ -90,7 +91,6 @@ fun JoeyPopup(
  * Sideways presses are cancelled: a full-width row has nothing beside it, and an unanswered one
  * would fall to a geometric search that jumps elsewhere (found in Chameleon).
  */
-@OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
 @Composable
 fun PopupRow(
     label: String,
@@ -98,6 +98,37 @@ fun PopupRow(
     modifier: Modifier = Modifier,
     isCurrent: Boolean? = null,
     detail: String? = null
+) {
+    PopupRowFrame(onClick, modifier) {
+        if (isCurrent != null) {
+            Box(Modifier.width(16.dp)) { if (isCurrent) JoeyIcon(R.drawable.ic_check, Amber, 16.dp) }
+        }
+        Column(Modifier.weight(1f)) {
+            Text(label, fontSize = 13.sp, fontFamily = JoeyFont,
+                color = if (isCurrent == true) Amber else TextPrimary,
+                maxLines = 1, overflow = TextOverflow.Ellipsis)
+            if (detail != null) {
+                Text(detail, fontSize = 10.sp, fontFamily = JoeyFont, color = TextFaint, maxLines = 2)
+            }
+        }
+    }
+}
+
+/**
+ * What every popup list row shares, so they all behave and light up the same: one focus target,
+ * the amber ring and lift when focused, sideways presses cancelled, and the chevron at the end.
+ * [content] is what sits before the chevron — [PopupRow]'s tick and text, or [GameListRow]'s
+ * number badge and title. Game rows are a little tighter ([verticalPadding]) as they carry two
+ * lines of text.
+ */
+@OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
+@Composable
+internal fun PopupRowFrame(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    verticalPadding: Dp = 12.dp,
+    spacing: Dp = 10.dp,
+    content: @Composable RowScope.() -> Unit
 ) {
     val (source, focused) = rememberFocusState()
     val shape = RoundedCornerShape(10.dp)
@@ -110,21 +141,11 @@ fun PopupRow(
             .background(if (focused) Color.White.copy(alpha = 0.10f) else Color.Transparent)
             .then(if (focused) Modifier.border(FocusWidth, FocusColor, shape) else Modifier)
             .clickable(interactionSource = source, indication = null, onClick = onClick)
-            .padding(horizontal = 12.dp, vertical = 12.dp),
+            .padding(horizontal = 12.dp, vertical = verticalPadding),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(10.dp)
+        horizontalArrangement = Arrangement.spacedBy(spacing)
     ) {
-        if (isCurrent != null) {
-            Box(Modifier.width(16.dp)) { if (isCurrent) JoeyIcon(R.drawable.ic_check, Amber, 16.dp) }
-        }
-        Column(Modifier.weight(1f)) {
-            Text(label, fontSize = 13.sp, fontFamily = JoeyFont,
-                color = if (isCurrent == true) Amber else TextPrimary,
-                maxLines = 1, overflow = TextOverflow.Ellipsis)
-            if (detail != null) {
-                Text(detail, fontSize = 10.sp, fontFamily = JoeyFont, color = TextFaint, maxLines = 2)
-            }
-        }
+        content()
         if (focused) JoeyIcon(R.drawable.ic_chevron_right, FocusColor, 18.dp)
     }
 }

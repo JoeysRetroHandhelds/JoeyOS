@@ -27,9 +27,32 @@ object GameDatabase {
         appContext = context.applicationContext
     }
 
-    /** Touch all lazy tables so CSV parsing happens on a background thread at startup. */
-    fun preWarm() {
-        ps2; gcwii; ds3; wiiu; switch; vita; ps3
+    /**
+     * GC/Wii game IDs by their first 4 characters (the title code), each mapped to the title of
+     * the first ID in file order that starts with it — what lookupGcWiiByCode's old scan of the
+     * whole table returned, without walking tens of thousands of entries per save folder.
+     */
+    private val gcwiiByCode by lazy {
+        val map = HashMap<String, String>()
+        gcwii.forEach { (key, value) -> if (key.length >= 4) map.putIfAbsent(key.substring(0, 4), value) }
+        map
+    }
+
+    /**
+     * Parse, on a background thread at startup, only the tables an installed emulator reads.
+     * Each one is a few hundred KB of CSV and several MB once in memory, so loading all seven for
+     * emulators that aren't there was wasted time and memory. Anything not loaded here still
+     * loads on its first lookup.
+     */
+    fun preWarm(installedPackages: Collection<String>) {
+        fun has(vararg prefixes: String) = installedPackages.any { pkg -> prefixes.any { pkg.startsWith(it) } }
+        if (has("xyz.aethersx2", "net.nicholaswilde.nethersx2", "com.armsx2")) ps2
+        if (has("org.dolphinemu", "com.joeyos.dolphinemu")) { gcwii; gcwiiByCode }
+        if (has("org.azahar_emu")) ds3
+        if (has("info.cemu")) wiiu
+        if (has("dev.eden")) switch
+        if (has("org.vita3k")) vita
+        if (has("aenu.aps3e", "com.armsx3")) ps3
     }
 
     /** PS2 serial e.g. "SLUS-20963" */
@@ -43,7 +66,8 @@ object GameDatabase {
         val prefix = code.uppercase()
         return gcwii[prefix + "01"]
             ?: gcwii[prefix + "E1"]
-            ?: gcwii.entries.firstOrNull { it.key.startsWith(prefix) }?.value
+            ?: (if (prefix.length == 4) gcwiiByCode[prefix]
+                else gcwii.entries.firstOrNull { it.key.startsWith(prefix) }?.value)
     }
 
     /** 3DS full 16-char title ID e.g. "0004000000030800" */

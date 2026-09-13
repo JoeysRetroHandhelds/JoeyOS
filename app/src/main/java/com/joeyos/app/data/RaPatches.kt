@@ -7,8 +7,6 @@ import org.apache.commons.compress.archivers.sevenz.SevenZFile
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
-import java.net.HttpURLConnection
-import java.net.URL
 import java.net.URLEncoder
 import java.util.concurrent.ConcurrentHashMap
 import java.util.zip.CRC32
@@ -117,31 +115,18 @@ object RaPatches {
      * of its common names, case-insensitively.
      */
     val Consoles: List<Pair<String, Set<String>>> = listOf(
-        "nes" to setOf("nes", "famicom", "fc"), "fds" to setOf("fds"),
-        "snes" to setOf("snes", "sfc", "superfamicom"), "n64" to setOf("n64"),
-        "gb" to setOf("gb"), "gbc" to setOf("gbc"), "gba" to setOf("gba"), "nds" to setOf("nds", "ds"),
-        "genesis" to setOf("genesis", "megadrive", "md"), "master" to setOf("mastersystem", "master", "sms"),
-        "gamegear" to setOf("gamegear", "gg"), "sega32x" to setOf("sega32x", "32x"),
-        "segacd" to setOf("segacd", "megacd"), "saturn" to setOf("saturn"),
-        "dreamcast" to setOf("dreamcast", "dc"), "tg16" to setOf("tg16", "pce", "pcengine", "turbografx16"),
-        "pcfx" to setOf("pcfx"), "neogeocd" to setOf("neogeocd", "ngcd"), "ngp" to setOf("ngp", "ngpc"),
-        "msx" to setOf("msx", "msx2"), "3do" to setOf("3do"), "gc" to setOf("gc", "gamecube", "ngc"),
-        "wii" to setOf("wii"), "ps2" to setOf("ps2"), "psp" to setOf("psp"),
-        "psx" to setOf("psx", "ps1", "playstation", "ps"),
+        "nes", "fds", "snes", "n64", "gb", "gbc", "gba", "nds", "genesis", "gamegear", "sega32x",
+        "segacd", "saturn", "dreamcast", "tg16", "pcfx", "neogeocd", "msx", "3do", "gc", "wii",
+        "ps2", "psp", "psx",
+    ).map { it to RomFolders.namesFor(it) } + listOf(
+        // The index names Master System "master", and has one file for both Neo Geo Pockets.
+        "master" to RomFolders.namesFor("mastersystem"),
+        "ngp" to RomFolders.namesFor("ngp") + RomFolders.namesFor("ngpc"),
     )
 
     /** Each covered console's `ROMs/<folder>` folders on every storage volume. */
-    fun romFolders(roots: List<File>): Map<String, List<File>> {
-        val found = mutableMapOf<String, MutableList<File>>()
-        for (root in roots) {
-            val roms = root.listFiles()?.firstOrNull { it.isDirectory && it.name.equals("roms", true) } ?: continue
-            roms.listFiles()?.filter { it.isDirectory }?.forEach { dir ->
-                val console = Consoles.firstOrNull { dir.name.lowercase() in it.second }?.first ?: return@forEach
-                found.getOrPut(console) { mutableListOf() } += dir
-            }
-        }
-        return found
-    }
+    fun romFolders(roots: List<File>): Map<String, List<File>> =
+        RomFolders.group(roots, Consoles) { it.second }.mapKeys { it.key.first }
 
     fun normaliseCrc(crc32: String): String =
         crc32.trim().lowercase().removePrefix("0x").padStart(8, '0').takeLast(8)
@@ -272,12 +257,7 @@ object RaPatches {
         path.split('/').joinToString("/") { URLEncoder.encode(it, "UTF-8").replace("+", "%20") }
 
     private fun fetchBytes(url: String): ByteArray? = runCatching {
-        (URL(url).openConnection() as HttpURLConnection).run {
-            connectTimeout = 15_000
-            readTimeout = 60_000
-            if (responseCode !in 200..299) return@run null
-            inputStream.use { it.readBytes() }
-        }
+        Http.get(url, connectMs = 15_000, readMs = 60_000).bytes
     }.getOrNull()
 
     private fun file(shortname: String) = cacheDir?.let { File(it, "ra-patches/$shortname.json") }

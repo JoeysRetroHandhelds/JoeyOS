@@ -2,7 +2,6 @@ package com.joeyos.app.ui.components
 
 import com.joeyos.app.R
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.Settings
 import android.widget.Toast
@@ -38,8 +37,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -288,21 +285,8 @@ fun AppGridItem(
 ) {
     val interaction = remember { MutableInteractionSource() }
     val isSelected by interaction.collectIsFocusedAsState()
-    val context = LocalContext.current
-    val icon by produceState<ImageBitmap?>(null, app.packageName) {
-        value = withContext(Dispatchers.IO) {
-            try {
-                val drawable = context.packageManager.getApplicationIcon(app.packageName)
-                val w = drawable.intrinsicWidth.coerceIn(1, 256)
-                val h = drawable.intrinsicHeight.coerceIn(1, 256)
-                val bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
-                val canvas = android.graphics.Canvas(bmp)
-                drawable.setBounds(0, 0, w, h)
-                drawable.draw(canvas)
-                bmp.asImageBitmap()
-            } catch (e: Exception) { null }
-        }
-    }
+    // Cached and drawn at the tile's size; shared with the dock and the second screen's grid.
+    val icon by rememberAppIcon(app.packageName, 52.dp)
 
     Column(
         modifier = modifier

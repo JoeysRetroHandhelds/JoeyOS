@@ -27,13 +27,7 @@ object PpssppLauncher {
             data = uri
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-        return try {
-            context.startGame(intent)
-            true
-        } catch (e: Exception) {
-            AppLog.e(TAG, "launch: startActivity failed", e)
-            false
-        }
+        return context.tryStartGame(TAG, intent)
     }
 
     private fun resolveRomPath(game: RecentGame): String? {
@@ -43,11 +37,10 @@ object PpssppLauncher {
         if (file.isFile) return path
         if (file.isDirectory) {
             val rom = RomFinder.findRomByTitle(game.title, "psp")
-                ?: RomFinder.findRomByTitle(game.title, "PSP")
             Log.d(TAG, "resolveRomPath: savedata dir, found ROM=$rom for '${game.title}'")
             return rom
         }
+        // Folder names match in any case, so "psp" finds a "PSP" folder too.
         return RomFinder.findRomByTitle(game.title, "psp")
-            ?: RomFinder.findRomByTitle(game.title, "PSP")
     }
 }

@@ -31,7 +31,7 @@ This was created for my personal use, and while it may work for a lot of people'
 
 ## Setting JoeyOS as your home screen
 
-After installing the APK, press the **Home** button. Android will ask which launcher to use — choose **JoeyOS** and tap **Always**.
+After installing the APK, press the **Home** button. Android will ask which launcher to use. Choose **JoeyOS** and tap **Always**.
 
 ---
 
@@ -66,17 +66,41 @@ JoeyOS checks GitHub for a new version when it starts and every hour after that,
 - Default cores are pre-selected based on recommendation, but games won't load unless the chosen core is actually installed
 
 ### Settings → Achievements
-- Log in with your RetroAchievements account (Account)
+- Log in with your RetroAchievements account (Account): enter your username and API key, then press **Connect**
 - Overview: games beaten this year and all-time, what you're currently playing, and beaten/mastered per year
 - Games: your beaten and mastered games by year and month, plus "Almost there" (the games you're closest to beating), with filters
 - Stats: totals, points, hours played and charts
 - Press A on any game for its details
 
 ### Settings → Tools
-None of the tools ever change or delete your original games.
+The tools never change your original games, and only remove them if you choose to when compressing.
 - **Check BIOS files**: shows which consoles have the BIOS they need and which are missing one
-- **Patch a ROM**: applies a romhack or translation patch (IPS, UPS, BPS, PPF, APS, xdelta). You name the new file and choose to save it next to the original or in Downloads
+- **Patch a ROM**: applies a romhack or translation patch (IPS, UPS, BPS, PPF, APS, xdelta). You name the new file and choose to save it next to the original or in Downloads. Tick **Save compressed** to get a zip (or CHD/RVZ/ZCCI) instead of the raw file
 - **Generate .m3u playlists**: turns multi-disc games into one playlist each, so each game shows once. Can be undone
 - **Compress ROMs**: zips cartridge games and converts discs to CHD, GameCube/Wii to RVZ and 3DS to ZCCI. Can be undone
 - **RetroAchievements romhacks**: finds hacks and translations with achievements for the games you own, and creates the patched game for you
-- **Check for updates** and **Share log** (send this to me if something goes wrong)
+- **Check for updates** and **Share log** (send this to me if something goes wrong). The log is also saved in **Internal storage › JoeyOS**
+
+---
+
+## Second screen (dual-screen handhelds like the AYN Thor)
+
+On a device with two screens, JoeyOS puts its own app on the other screen. Turn it on or off in **Settings → Appearance → Second screen**, where you can also choose which screen games open on.
+
+It's touch first, and it takes the controller only when your device sends it there (on the Thor, use its setting to lock controls to the top screen, the bottom screen, or whichever one you tap). The bottom screen's back arrow steps back inside it.
+
+Tabs:
+- **Apps**: every app on your device, to open on that screen
+- **Achievements** (when logged in to RetroAchievements): your points, what you're playing, recent awards, "Almost there", awards by year, and a search of every game on RetroAchievements. Tap any game for its achievements
+- **Now playing** (while a game runs): the achievements of the game RetroAchievements sees you playing, with its live status, session and play time, filters and sorts, an "Unlocked!" banner, and tips from each achievement's comments
+- **Guide** (while a game runs): see below
+- **Settings**: which tab shows while you're browsing JoeyOS (Apps or Achievements), whether a game opens on Now playing or the Guide, and hiding achievement spoilers
+
+The Achievements and Now playing tabs only appear when you're logged in to RetroAchievements. "Completed" is for games finished in casual (softcore) mode, "Mastered" for hardcore.
+
+### Guides
+Nothing downloads until you choose it. Guides are saved in **Internal storage › JoeyOS › guides**, and JoeyOS remembers which guide you picked for each game and where you were in it.
+- **GameFAQs archive**: download the text walkthrough for the game and read it offline, with text size, wrap, reflow, light/dark/sepia, Find and Contents
+- **Search the web**: a built-in browser with ad blocking (DuckDuckGo). Save any page to read offline later
+- **YouTube**: opens a search in your YouTube app (including ReVanced)
+- While reading, the tabs hide for room. Tap **Show tabs** at the top, or scroll back up, to bring them back

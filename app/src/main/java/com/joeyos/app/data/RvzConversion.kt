@@ -36,23 +36,14 @@ object RvzConversion {
     // folder takes every disc type dolphin-tool reads.
     private val Discs = setOf("iso", "gcm", "ciso", "wbfs")
     val Systems: List<RvzSystem> = listOf(
-        RvzSystem("gc", Discs, "GameCube", setOf("gc", "gamecube", "ngc")),
-        RvzSystem("wii", Discs, "Wii", setOf("wii")),
-        RvzSystem("gcwii", Discs, "GameCube & Wii", setOf("gcwii", "gc-wii", "gamecube-wii")),
+        RvzSystem("gc", Discs, "GameCube", RomFolders.namesFor("gc")),
+        RvzSystem("wii", Discs, "Wii", RomFolders.namesFor("wii")),
+        RvzSystem("gcwii", Discs, "GameCube & Wii", RomFolders.namesFor("gcwii")),
     )
 
     /** Every `ROMs/<folder>` on every storage volume, grouped by the console it holds. */
-    fun romFolders(roots: List<File>): Map<RvzSystem, List<File>> {
-        val found = mutableMapOf<RvzSystem, MutableList<File>>()
-        for (root in roots) {
-            val roms = root.listFiles()?.firstOrNull { it.isDirectory && it.name.equals("roms", true) } ?: continue
-            roms.listFiles()?.filter { it.isDirectory }?.forEach { dir ->
-                val system = Systems.firstOrNull { dir.name.lowercase() in it.folderNames } ?: return@forEach
-                found.getOrPut(system) { mutableListOf() } += dir
-            }
-        }
-        return found
-    }
+    fun romFolders(roots: List<File>): Map<RvzSystem, List<File>> =
+        RomFolders.group(roots, Systems) { it.folderNames }
 
     val Shortnames: Set<String> = Systems.map { it.shortname }.toSet()
 

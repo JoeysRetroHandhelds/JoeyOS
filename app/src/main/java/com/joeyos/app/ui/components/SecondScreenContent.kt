@@ -52,8 +52,17 @@ import com.joeyos.app.data.SecondScreenPrefs
 import com.joeyos.app.data.SecondScreenState
 import com.joeyos.app.ui.theme.*
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.Calendar
 import kotlin.math.roundToInt
+
+/**
+ * Which look the second screen wears. true = the app's shared controls (the settings' chips and
+ * text boxes); false = the original second-screen pills and search boxes, kept intact. Flip this
+ * one line to go back — every swapped widget ([Pill], [SearchField]) follows it.
+ */
+private const val UseSharedLook = true   // false = the original second-screen look
 
 /**
  * What the second screen shows. Touch only — the controller always stays with the home screen or
@@ -68,7 +77,7 @@ import kotlin.math.roundToInt
 @Composable
 fun SecondScreenContent() {
     val context = LocalContext.current
-    val raRepo = remember { RetroAchievementsRepository(context) }
+    val raRepo = remember { RetroAchievementsRepository.get(context) }
     val currentYear = remember { Calendar.getInstance().get(Calendar.YEAR) }
 
     var enabled by remember { mutableStateOf(SecondScreenPrefs.enabled(context)) }
@@ -156,11 +165,31 @@ fun SecondScreenContent() {
         }
     }
 
+    // Back (the bottom screen's own back arrow): out of an opened game or a "See all" list, and
+    // bring hidden tabs back. The guide's pages handle their own Back first.
+    androidx.activity.compose.BackHandler(enabled = openGame != null || !chrome || (tab == 0 && achNav.view != "home")) {
+        when {
+            openGame != null -> openGame = null
+            !chrome -> chrome = true
+            else -> achNav.view = "home"
+        }
+    }
+
     Box(Modifier.fillMaxSize().background(Background)) {
         when {
             !enabled -> Message("Second screen off", "Turn it on in Settings › Appearance › Second screen.")
             else -> Column(Modifier.fillMaxSize()) {
                 // Tabs, or a back button over an opened game. Hidden while reading a guide.
+                // Hidden: a slim strip in their place (not over the guide) brings them back.
+                if (!chrome && tab == 2) Box(
+                    Modifier.fillMaxWidth().clickable { chrome = true }.padding(vertical = 5.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                        Box(Modifier.size(width = 22.dp, height = 4.dp).clip(RoundedCornerShape(2.dp)).background(TextFaint))
+                        Text("Show tabs", fontSize = 11.sp, color = TextFaint)
+                    }
+                }
                 if (chrome || tab != 2) Row(
                     Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 10.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -290,9 +319,20 @@ private class AchNav {
     var year by mutableIntStateOf(0)
     var awardFilter by mutableIntStateOf(0)     // 0 all, 1 beaten, 2 completed / mastered
     var query by mutableStateOf("")
-    // Search: every RetroAchievements game (id, title, console), once loaded; [partial] while loading.
-    var catalogue by mutableStateOf<List<Triple<Int, String, String>>?>(null)
-    var partial by mutableStateOf<List<Triple<Int, String, String>>>(emptyList())
+    // Search: every RetroAchievements game, kept as the console batches they arrived in (so a new
+    // batch never means copying everything loaded so far); [loaded] once every console is in.
+    var chunks by mutableStateOf<List<List<RaGame>>>(emptyList())
+    var loaded by mutableStateOf(false)
+}
+
+/**
+ * One RetroAchievements game for search, with its title already broken into search words — done
+ * once when it loads rather than for every game on every keystroke.
+ */
+private class RaGame(val id: Int, val title: String, val console: String) {
+    val words: List<String> = searchWords(title)
+    val isHack = title.startsWith("~")       // romhacks ("~Hack~ …") list after the main games
+    val sortKey = title.lowercase()
 }
 
 @Composable
@@ -320,11 +360,17 @@ private fun Overview(
     val almost = remember(progress) {
         progress.filter { !it.isBeaten && it.numAwarded > 0 && it.percent < 1f }.sortedByDescending { it.percent }
     }
-    val years = remember(ra) {
-        ra.awards.groupBy { yearOf(it.awardedAt) }.keys.filter { it > 0 }.sortedDescending().map { y ->
-            val l = ra.awards.filter { yearOf(it.awardedAt) == y }
+    // Awards grouped by year once, rather than rescanning every award for each year.
+    val byYear = remember(ra) { ra.awards.groupBy { yearOf(it.awardedAt) } }
+    val years = remember(byYear) {
+        byYear.filterKeys { it > 0 }.toSortedMap(compareByDescending { it }).map { (y, l) ->
             Triple(y, l.count { !it.isFinished }, l.count { it.isFinished })
         }
+    }
+    val finishedLabel = remember(ra) { finishedTotal(ra.awards).second }
+    // The list behind "See all" / a year, built once per view rather than on every recomposition.
+    val awardsShown = remember(ra, byYear, nav.view, nav.year) {
+        if (nav.view == "awards") ra.awards else byYear[nav.year].orEmpty()
     }
 
     if (nav.view != "home") {
@@ -340,7 +386,7 @@ private fun Overview(
             when (nav.view) {
                 "playing" -> EntryList(recent.map { it.entry() to it.gameId }, "No recently played games.", onOpenGame)
                 "almost" -> EntryList(almost.map { it.entry() to it.gameId }, "Nothing in progress.", onOpenGame)
-                "awards", "year" -> AwardsList(ra.awards.filter { nav.view == "awards" || yearOf(it.awardedAt) == nav.year }, nav, onOpenGame)
+                "awards", "year" -> AwardsList(awardsShown, nav, onOpenGame)
                 else -> AchSearch(raRepo, nav, onOpenGame)
             }
         }
@@ -405,7 +451,7 @@ private fun Overview(
                     ) {
                         Text("$y", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = TextPrimary, modifier = Modifier.weight(1f))
                         Text("$b beaten", fontSize = 11.sp, color = RaColor, modifier = Modifier.width(80.dp))
-                        Text("$f " + finishedTotal(ra.awards).second, fontSize = 11.sp, color = MasteredColor, maxLines = 1)
+                        Text("$f $finishedLabel", fontSize = 11.sp, color = MasteredColor, maxLines = 1)
                         JoeyIcon(com.joeyos.app.R.drawable.ic_chevron_right, TextFaint, 16.dp)
                     }
                 }
@@ -445,28 +491,52 @@ private fun EntryList(rows: List<Pair<GameEntry, Int>>, empty: String, onOpenGam
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun AwardsList(list: List<RAAward>, nav: AchNav, onOpenGame: (Int) -> Unit) {
-    val finishedLabel = finishedTotal(list).second.replaceFirstChar { it.uppercase() }
-    val shown = list.filter { nav.awardFilter == 0 || (nav.awardFilter == 1) == !it.isFinished }
-    val byMonth = shown.groupBy { java.text.SimpleDateFormat("MMMM yyyy", java.util.Locale.US).format(it.awardedAt) }
+    val finishedLabel = remember(list) { finishedTotal(list).second.replaceFirstChar { it.uppercase() } }
+    val beatenCount = remember(list) { list.count { !it.isFinished } }
+    val finishedCount = list.size - beatenCount
+    val filter = nav.awardFilter
+    // Filtered and grouped by month once per list / filter, not on every recomposition. Each row's
+    // entry (its date text included) is built here too, so scrolling doesn't rebuild formatters.
+    val byMonth = remember(list, filter) {
+        val monthYear = monthYearFmt()   // one formatter for the whole list, used only here
+        list.filter { filter == 0 || (filter == 1) == !it.isFinished }
+            .groupBy { monthYear.format(it.awardedAt) }
+            .mapValues { (_, inMonth) -> inMonth.map { it.entry() to it.gameId } }
+    }
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(start = 14.dp, end = 14.dp, bottom = 18.dp),
         verticalArrangement = Arrangement.spacedBy(6.dp)) {
         item {
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Pill("All ${list.size}", nav.awardFilter == 0) { nav.awardFilter = 0 }
-                Pill("Beaten ${list.count { !it.isFinished }}", nav.awardFilter == 1) { nav.awardFilter = 1 }
-                Pill("$finishedLabel ${list.count { it.isFinished }}", nav.awardFilter == 2) { nav.awardFilter = 2 }
+                Pill("Beaten $beatenCount", nav.awardFilter == 1) { nav.awardFilter = 1 }
+                Pill("$finishedLabel $finishedCount", nav.awardFilter == 2) { nav.awardFilter = 2 }
             }
         }
-        if (shown.isEmpty()) item { Text("Nothing here.", fontSize = 11.sp, color = TextFaint) }
+        if (byMonth.isEmpty()) item { Text("Nothing here.", fontSize = 11.sp, color = TextFaint) }
         byMonth.forEach { (month, inMonth) ->
             item { SectionLabel("$month  ·  ${inMonth.size}", Modifier.padding(top = 6.dp)) }
-            items(inMonth.size) { i -> val a = inMonth[i]; GameRow(a.entry(), onClick = { onOpenGame(a.gameId) }) }
+            items(inMonth.size) { i -> val (e, id) = inMonth[i]; GameRow(e, onClick = { onOpenGame(id) }) }
         }
     }
 }
 
 /** Normalised words, so "zelda link" finds "The Legend of Zelda: A Link to the Past". */
-private fun searchWords(s: String) = s.lowercase().replace(Regex("[^a-z0-9 ]"), " ").split(' ').filter { it.isNotBlank() }
+private fun searchWords(s: String) = s.lowercase().replace(NonSearchChars, " ").split(' ').filter { it.isNotBlank() }
+
+// Compiled once: searchWords runs for every game title as the catalogue loads.
+private val NonSearchChars = Regex("[^a-z0-9 ]")
+// The "~Hack~ " tag in front of romhack titles, stripped for display.
+private val HackTag = Regex("~[^~]+~\\s*")
+
+/** Search results: every loaded game whose words start with each typed word; main games first, then A–Z. */
+private fun searchCatalogue(chunks: List<List<RaGame>>, words: List<String>): List<Pair<GameEntry, Int>> {
+    val matches = ArrayList<RaGame>()
+    for (chunk in chunks) for (g in chunk) {
+        if (words.all { w -> g.words.any { it.startsWith(w) } }) matches += g
+    }
+    return matches.sortedWith(compareBy({ it.isHack }, { it.sortKey })).take(200)
+        .map { g -> GameEntry(title = g.title.replace(HackTag, ""), subtitle = g.console, imageUrl = null) to g.id }
+}
 
 /**
  * Search every game on RetroAchievements and open its achievement list. The keyboard is allowed
@@ -483,45 +553,47 @@ private fun AchSearch(raRepo: RetroAchievementsRepository, nav: AchNav, onOpenGa
     var loadedConsoles by remember { mutableIntStateOf(0) }
     var totalConsoles by remember { mutableIntStateOf(0) }
     LaunchedEffect(Unit) {
-        if (nav.catalogue != null) return@LaunchedEffect
+        if (nav.loaded) return@LaunchedEffect
+        nav.chunks = emptyList()   // a load cut short last time starts over
         val consoles = raRepo.fetchConsoles()
         totalConsoles = consoles.size
-        val out = mutableListOf<Triple<Int, String, String>>()
         kotlinx.coroutines.coroutineScope {
             consoles.chunked(6).forEach { chunk ->
-                chunk.map { c -> async { c to raRepo.fetchGameTitles(listOf(c.first)) } }.awaitAll()
-                    .forEach { (c, titles) -> titles.forEach { (id, t) -> out += Triple(id, t, c.second) } }
+                val fetched = chunk.map { c -> async { c to raRepo.fetchGameTitles(listOf(c.first)) } }.awaitAll()
+                // Splitting thousands of titles into search words is real work: off the main thread.
+                val games = withContext(Dispatchers.Default) {
+                    fetched.flatMap { (c, titles) -> titles.map { (id, t) -> RaGame(id, t, c.second) } }
+                }
                 loadedConsoles += chunk.size
-                nav.partial = out.toList()
+                // Adds this batch alone; the batches already loaded aren't copied.
+                nav.chunks = nav.chunks + listOf(games)
             }
         }
-        nav.catalogue = out.toList()
+        nav.loaded = true
     }
-    val games = nav.catalogue ?: nav.partial
-    val loading = nav.catalogue == null
+    val loading = !nav.loaded
 
-    val words = searchWords(nav.query)
-    val results: List<Pair<GameEntry, Int>> = remember(words, games) {
-        if (words.isEmpty()) emptyList()
-        else games
-            .filter { (_, title, _) -> searchWords(title).let { t -> words.all { w -> t.any { it.startsWith(w) } } } }
-            .sortedWith(compareBy({ it.second.startsWith("~") }, { it.second.lowercase() })).take(200)
-            .map { (id, title, console) ->
-                GameEntry(title = title.replace(Regex("~[^~]+~\\s*"), ""), subtitle = console, imageUrl = null) to id
-            }
+    // Results for the typed words: worked out off the main thread, a moment after typing stops
+    // (and again as more consoles arrive). Kept with the words they're for, so "No games match"
+    // never shows for a query that hasn't been searched yet.
+    val words = remember(nav.query) { searchWords(nav.query) }
+    var searched by remember { mutableStateOf<Pair<List<String>, List<Pair<GameEntry, Int>>>>(emptyList<String>() to emptyList()) }
+    val chunks = nav.chunks
+    LaunchedEffect(words, chunks) {
+        if (words.isEmpty()) { searched = words to emptyList(); return@LaunchedEffect }
+        delay(150)
+        searched = words to withContext(Dispatchers.Default) { searchCatalogue(chunks, words) }
     }
+    val results: List<Pair<GameEntry, Int>> = if (words.isEmpty()) emptyList() else searched.second
+    val searchedCurrent = searched.first == words
 
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(start = 14.dp, end = 14.dp, bottom = 18.dp),
         verticalArrangement = Arrangement.spacedBy(6.dp)) {
         item {
-            Box(Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(Color.White.copy(alpha = 0.08f))
-                .border(1.dp, AmberSoft, RoundedCornerShape(12.dp)).padding(horizontal = 12.dp, vertical = 10.dp)) {
-                if (nav.query.isEmpty()) Text("Search RetroAchievements", fontSize = 13.sp, color = TextFaint)
-                androidx.compose.foundation.text.BasicTextField(nav.query, { nav.query = it }, singleLine = true,
-                    textStyle = androidx.compose.ui.text.TextStyle(color = TextPrimary, fontSize = 13.sp, fontFamily = JoeyFont),
-                    cursorBrush = androidx.compose.ui.graphics.SolidColor(Amber),
-                    modifier = Modifier.fillMaxWidth().focusRequester(focus))
-            }
+            SearchField(nav.query, { nav.query = it }, "Search RetroAchievements",
+                Modifier.fillMaxWidth(), focusRequester = focus,
+                classicBox = Modifier.clip(RoundedCornerShape(12.dp)).background(Color.White.copy(alpha = 0.08f))
+                    .border(1.dp, AmberSoft, RoundedCornerShape(12.dp)).padding(horizontal = 12.dp, vertical = 10.dp))
         }
         if (loading) item {
             Text(if (totalConsoles == 0) "Loading RetroAchievements games…"
@@ -529,7 +601,7 @@ private fun AchSearch(raRepo: RetroAchievementsRepository, nav: AchNav, onOpenGa
                 fontSize = 11.sp, color = TextFaint)
         }
         if (words.isEmpty()) item { Text("Type a game's name.", fontSize = 11.sp, color = TextFaint) }
-        else if (results.isEmpty() && !loading) item { Text("No games match “${nav.query}”.", fontSize = 11.sp, color = TextFaint) }
+        else if (results.isEmpty() && !loading && searchedCurrent) item { Text("No games match “${nav.query}”.", fontSize = 11.sp, color = TextFaint) }
         items(results.size) { i -> val (e, id) = results[i]; GameRow(e, onClick = { onOpenGame(id) }) }
     }
 }
@@ -828,9 +900,19 @@ private fun Tag(text: String, color: Color) {
             .padding(horizontal = 5.dp, vertical = 2.dp))
 }
 
-/** A tappable tab / filter: soft amber fill when it's the current one. */
+/**
+ * A tappable tab / filter: soft amber fill when it's the current one. The shared chip (the same
+ * one the settings use) or the original second-screen pill, per [UseSharedLook].
+ */
 @Composable
 internal fun Pill(label: String, active: Boolean, onClick: () -> Unit) {
+    if (UseSharedLook) OptionChip(label, active, onClick, fontSize = 12.sp, compact = true)
+    else ClassicPill(label, active, onClick)
+}
+
+/** The original second-screen pill, kept as it was so [UseSharedLook] = false brings it back. */
+@Composable
+private fun ClassicPill(label: String, active: Boolean, onClick: () -> Unit) {
     val shape = RoundedCornerShape(50)
     Text(
         label, fontSize = 12.sp, fontFamily = JoeyFont, fontWeight = FontWeight.SemiBold,
@@ -841,6 +923,39 @@ internal fun Pill(label: String, active: Boolean, onClick: () -> Unit) {
             .clickable(onClick = onClick)
             .padding(horizontal = 14.dp, vertical = 8.dp)
     )
+}
+
+/**
+ * The second screen's text boxes (RetroAchievements search, find in a guide): a placeholder
+ * until you type, amber cursor. With [UseSharedLook] it wears the settings' text-box look; with
+ * the original look each box keeps its own frame, passed in as [classicBox].
+ */
+@Composable
+internal fun SearchField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    placeholder: String,
+    modifier: Modifier = Modifier,
+    focusRequester: androidx.compose.ui.focus.FocusRequester? = null,
+    classicBox: Modifier = Modifier
+) {
+    val frame = if (UseSharedLook) {
+        val shape = RoundedCornerShape(10.dp)
+        Modifier.clip(shape).background(Color.White.copy(alpha = 0.06f))
+            .border(1.dp, Color.White.copy(alpha = 0.12f), shape)
+            .padding(horizontal = 14.dp, vertical = 10.dp)
+    } else classicBox
+    Box(modifier.then(frame)) {
+        if (value.isEmpty()) {
+            if (UseSharedLook) Text(placeholder, fontSize = 13.sp, fontFamily = JoeyFont, color = TextFaint)
+            else Text(placeholder, fontSize = 13.sp, color = TextFaint)
+        }
+        androidx.compose.foundation.text.BasicTextField(value, onValueChange, singleLine = true,
+            textStyle = androidx.compose.ui.text.TextStyle(color = TextPrimary, fontSize = 13.sp, fontFamily = JoeyFont),
+            cursorBrush = androidx.compose.ui.graphics.SolidColor(Amber),
+            modifier = Modifier.fillMaxWidth()
+                .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier))
+    }
 }
 
 @Composable

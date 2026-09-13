@@ -122,7 +122,7 @@ fun HomeScreen(viewModel: HomeViewModel) {
     }
 
 
-    LaunchedEffect(Unit) { viewModel.loadInstalledApps(context) }
+    // The app list is loaded by MainActivity (once at start, then on package changes).
     // Mirror Dock.kt's entry list so the A-button handler targets the same tiles.
     val dockEntries = remember(installedApps, lastLaunched, dockSortOrder, dockPinned, dockHidden) {
         buildDockEntries(installedApps, lastLaunched, dockSortOrder, dockPinned, dockHidden)
@@ -320,8 +320,8 @@ fun HomeScreen(viewModel: HomeViewModel) {
             verticalAlignment     = Alignment.Top
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                AppDrawerButton { showAppDrawer = true }
-                SettingsGearButton { showSettings = true }
+                CircleIconButton(R.drawable.ic_apps) { showAppDrawer = true }
+                CircleIconButton(R.drawable.ic_settings) { showSettings = true }
             }
             if (clockFormat != com.joeyos.app.data.ClockFormat.HIDDEN) {
                 Clock(use24h = clockFormat == com.joeyos.app.data.ClockFormat.H24)
@@ -503,10 +503,11 @@ fun Clock(use24h: Boolean = true) {
     }
 }
 
-// ── App drawer button ─────────────────────────────────────────────────────────
+// ── Top-bar round buttons (app drawer, settings) ─────────────────────────────
 
+/** A round, see-through button with a white icon: the app drawer and settings in the top bar. */
 @Composable
-fun AppDrawerButton(onClick: () -> Unit) {
+fun CircleIconButton(@androidx.annotation.DrawableRes icon: Int, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .size(36.dp)
@@ -516,24 +517,7 @@ fun AppDrawerButton(onClick: () -> Unit) {
     ) {
         Surface(modifier = Modifier.fillMaxSize(), shape = CircleShape,
             color = Color.White.copy(alpha = 0.14f), tonalElevation = 0.dp) {}
-        com.joeyos.app.ui.components.JoeyIcon(R.drawable.ic_apps, Color.White, 20.dp)
-    }
-}
-
-// ── Settings gear button ──────────────────────────────────────────────────────
-
-@Composable
-fun SettingsGearButton(onClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .size(36.dp)
-            .clip(CircleShape)
-            .pointerInput(Unit) { detectTapGestures(onTap = { onClick() }) },
-        contentAlignment = Alignment.Center
-    ) {
-        Surface(modifier = Modifier.fillMaxSize(), shape = CircleShape,
-            color = Color.White.copy(alpha = 0.14f), tonalElevation = 0.dp) {}
-        com.joeyos.app.ui.components.JoeyIcon(R.drawable.ic_settings, Color.White, 20.dp)
+        com.joeyos.app.ui.components.JoeyIcon(icon, Color.White, 20.dp)
     }
 }
 
@@ -591,16 +575,27 @@ suspend fun launchRecentGame(
         }
     }
     if (!launched) {
-        AppLog.w("Launch", "'${game.title}': ${game.emulatorPackage}'s launcher couldn't start it, trying a plain open")
-        com.joeyos.app.data.SecondScreenState.willLaunch(game.title, game.path)
+        // Hand the game file to the emulator the way Android allows (a content:// link it's granted
+        // to read; a file:// one is refused outright). A save file with no game found for it is
+        // no use to open, so then it's just the emulator.
+        val rom = withContext(Dispatchers.IO) {
+            com.joeyos.app.data.RomFinder.resolveRomFromSave(game.path)
+                ?.takeIf { it.startsWith("content://") || File(it).isFile }
+        }
+        if (rom == null) {
+            AppLog.w("Launch", "'${game.title}': ${game.emulatorPackage}'s launcher couldn't start it and no game file was found; opening ${game.emulatorPackage}")
+            viewModel.launchApp(context, game.emulatorPackage); return
+        }
+        AppLog.w("Launch", "'${game.title}': ${game.emulatorPackage}'s launcher couldn't start it, opening $rom")
+        com.joeyos.app.data.SecondScreenState.willLaunch(game.title, rom)
         val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.fromFile(File(game.path))
+            data = com.joeyos.app.data.RomFinder.pathToGrantableUri(context, rom)
             setPackage(game.emulatorPackage)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
         try { context.startGame(intent) }
         catch (e: Exception) {
-            AppLog.w("Launch", "'${game.title}': plain open failed too, opening ${game.emulatorPackage} instead", e)
+            AppLog.w("Launch", "'${game.title}': opening the file failed too, opening ${game.emulatorPackage} instead", e)
             viewModel.launchApp(context, game.emulatorPackage); return
         }
     }
