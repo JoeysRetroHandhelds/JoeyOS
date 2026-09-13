@@ -26,7 +26,8 @@ import com.joeyos.app.ui.theme.*
 /**
  * The one popup look, used by every popup in the app so they all match: the same sheet, corners,
  * border and width, and a header with the title on the left and the buttons that work on the
- * right. It sits on [JoeyDialog], which handles focus and the controller.
+ * right. It sits on [JoeyDialog], which handles focus and the controller: mark the item focus
+ * should open on with `Modifier.initialFocus()`, or it opens on the first one.
  *
  * Lists (Recently Played, pickers, options) pass `padded = false` and fill the body with
  * [PopupRow]s or [GameListRow]s, which carry their own inset. Anything else (a message, a form)
@@ -40,8 +41,6 @@ fun JoeyPopup(
     wide: Boolean = false,
     padded: Boolean = true,
     dismissible: Boolean = true,
-    focusKey: Any? = Unit,
-    initialFocus: FocusRequester? = null,
     interceptBack: (() -> Boolean)? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
@@ -50,8 +49,6 @@ fun JoeyPopup(
     JoeyDialog(
         onDismiss = onDismiss,
         dismissible = dismissible,
-        focusKey = focusKey,
-        initialFocus = initialFocus,
         interceptBack = interceptBack
     ) {
         Column(
@@ -86,7 +83,7 @@ fun JoeyPopup(
 }
 
 /**
- * A row in a popup list: one focus target, lit and ringed amber when focused. [isCurrent] marks
+ * A row in a popup list: one focus target, lit and ringed in the accent colour when focused. [isCurrent] marks
  * the chosen value in a picker with a tick (null for a plain action list, which has no tick column).
  * Sideways presses are cancelled: a full-width row has nothing beside it, and an unanswered one
  * would fall to a geometric search that jumps elsewhere (found in Chameleon).
@@ -116,7 +113,7 @@ fun PopupRow(
 
 /**
  * What every popup list row shares, so they all behave and light up the same: one focus target,
- * the amber ring and lift when focused, sideways presses cancelled, and the chevron at the end.
+ * the accent ring and lift when focused, sideways presses cancelled, and the chevron at the end.
  * [content] is what sits before the chevron — [PopupRow]'s tick and text, or [GameListRow]'s
  * number badge and title. Game rows are a little tighter ([verticalPadding]) as they carry two
  * lines of text.

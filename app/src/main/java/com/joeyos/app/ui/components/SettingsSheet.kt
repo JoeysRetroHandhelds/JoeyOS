@@ -1,5 +1,6 @@
 package com.joeyos.app.ui.components
 
+import androidx.compose.foundation.lazy.LazyListScope
 import com.joeyos.app.R
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -30,6 +31,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.layout.ContentScale
@@ -102,37 +104,23 @@ fun SettingsSheet(
     val tabs = listOf("Appearance", "Emulators", "Achievements", "Tools")
     var selectedTab by remember { mutableIntStateOf(0) }
     val tabFocus = remember { List(tabs.size) { FocusRequester() } }
-    val scope = rememberCoroutineScope()
-    val focusManager = LocalFocusManager.current
-    // Each tab's list, hoisted so Down from the tab row can scroll it back to the top.
+    // Each tab's list, hoisted so a tab keeps its place while you look at another.
     val panelLists = remember { List(tabs.size) { LazyListState() } }
+    // The panel under the tabs, as one focus group that remembers where you were in it.
+    val panel = remember { FocusRequester() }
     val panelFirst = remember { FocusRequester() }
 
     /**
-     * Down from the full-width tab row goes to the tab's first control. Left to itself, focus
-     * search picks whatever sits nearest the tab's centre (found on device: 42, not 32).
+     * Switch tab and put focus on its tab button in the same step, since whatever was focused in
+     * the old panel is about to go. The tab buttons are always composed, so this can't miss.
      */
-    fun enterPanel() {
-        scope.launch {
-            panelLists[selectedTab].scrollToItem(0)
-            withFrameNanos { }
-            val landed = runCatching { panelFirst.requestFocus() }.isSuccess
-            if (!landed) focusManager.moveFocus(FocusDirection.Down)
-        }
-    }
-
-    /** Switch tab and put focus on its tab button, since whatever was focused has just gone. */
     fun switchTab(to: Int) {
         selectedTab = to.coerceIn(0, tabs.lastIndex)
-        scope.launch {
-            withFrameNanos { }
-            runCatching { tabFocus[selectedTab].requestFocus() }
-        }
+        tabFocus[selectedTab].requestFocus()
     }
 
     JoeyPage(
         onClose      = onDismiss,
-        initialFocus = tabFocus[0],
         onControl    = { control ->
             when (control) {
                 Control.Options  -> onDismiss()   // Start opened Settings, so Start closes it too
@@ -163,8 +151,12 @@ fun SettingsSheet(
                     verticalAlignment     = Alignment.CenterVertically
                 ) {
                     Text("JoeyOS", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = Accent)
-                    Text("L1/R1 tabs  •  B close", fontSize = 9.sp,
-                        fontFamily = JoeyFont, color = TextFaint)
+                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                        Text("L1/R1 tabs  •  B close", fontSize = 9.sp,
+                            fontFamily = JoeyFont, color = TextFaint)
+                        // Touch: back to the home screen (B does the same on a controller).
+                        CircleIconButton(com.joeyos.app.R.drawable.ic_close, onClick = onDismiss)
+                    }
                 }
 
                 // Tabs
@@ -183,12 +175,13 @@ fun SettingsSheet(
                             modifier = Modifier
                                 .weight(1f)
                                 .focusRequester(tabFocus[i])
-                                .onPreviewKeyEvent { e ->
-                                    if (e.key == Key.DirectionDown) {
-                                        if (e.type == KeyEventType.KeyDown) enterPanel()
-                                        true
-                                    } else false
-                                }
+                                .initialFocus(i == 0)
+                                // Down from the full-width tab row goes into the panel as a whole,
+                                // which lands where you were in it, else on its first control
+                                // (focusProperties + focusRestorer, "Focus in Compose"). Left to
+                                // itself, focus search picks whatever sits nearest the tab's
+                                // centre (found on device: 42, not 32).
+                                .focusProperties { down = panel }
                                 .clip(RoundedCornerShape(10.dp))
                                 .background(if (active) Accent.copy(alpha = 0.22f) else Color.White.copy(alpha = 0.05f))
                                 .border(if (focused) FocusWidth else 1.dp,
@@ -212,6 +205,13 @@ fun SettingsSheet(
                 }
 
                 // Panel
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .focusRequester(panel)
+                        .focusRestorer(panelFirst)
+                        .focusGroup()
+                ) {
                 when (selectedTab) {
                     0 -> AppearancePanel(
                         wallpaperState           = wallpaperState,
@@ -233,7 +233,7 @@ fun SettingsSheet(
                         onRecentDepthChange      = onRecentDepthChange,
                         onDockBgOpacityChange    = onDockBgOpacityChange,
                         onDockTitleSizeChange    = onDockTitleSizeChange,
-                        modifier                 = Modifier.weight(1f),
+                        modifier                 = Modifier.fillMaxSize(),
                         listState                = panelLists[0],
                         firstFocus               = panelFirst
                     )
@@ -242,13 +242,13 @@ fun SettingsSheet(
                         installedApps      = installedApps,
                         onAssignmentChange = onAssignmentChange,
                         onRefresh          = onRefreshApps,
-                        modifier           = Modifier.weight(1f),
+                        modifier           = Modifier.fillMaxSize(),
                         listState          = panelLists[1],
                         firstFocus         = panelFirst
                     )
                     2 -> RetroAchievementsTab(
                         raRepo   = raRepo,
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.fillMaxSize(),
                         listState = panelLists[2],
                         firstFocus = panelFirst
                     )
@@ -256,12 +256,13 @@ fun SettingsSheet(
                         installedApps      = installedApps,
                         biosFolder         = biosFolder,
                         onBiosFolderChange = onBiosFolderChange,
-                        modifier           = Modifier.weight(1f),
+                        modifier           = Modifier.fillMaxSize(),
                         listState          = panelLists[3],
                         firstFocus         = panelFirst,
                         onCheckUpdates     = onCheckUpdates,
                         onShareLog         = onShareCrashLog
                     )
+                }
                 }
             }
         }
@@ -359,11 +360,19 @@ fun AppearancePanel(
 ) {
     // A on a custom wallpaper opens its options (use / remove). The × inside the tile can't be
     // reached with the D-pad — it sits within the tile's bounds — so this is the controller way.
-    var wallpaperOptions by remember { mutableStateOf<Uri?>(null) }
-    wallpaperOptions?.let { uri ->
+    // (The image, and whether it was picked in the second screen's wallpapers.)
+    var wallpaperOptions by remember { mutableStateOf<Pair<Uri, Boolean>?>(null) }
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val prefsRepo = remember { com.joeyos.app.data.PreferencesRepository(context) }
+    val hasSecondScreen = remember { DisplayTargets.hasSecondScreen(context) }
+    val secondWallpaper by prefsRepo.secondWallpaper.collectAsState(initial = null)
+    wallpaperOptions?.let { (uri, forSecond) ->
         JoeyPopup(title = "Custom wallpaper", onDismiss = { wallpaperOptions = null }, padded = false) {
-            PopupRow("Use as wallpaper", {
-                onWallpaperChange(WallpaperState.Custom(uri)); wallpaperOptions = null
+            PopupRow(if (forSecond) "Use on the second screen" else "Use as wallpaper", {
+                if (forSecond) scope.launch { prefsRepo.setSecondWallpaper(WallpaperState.Custom(uri)) }
+                else onWallpaperChange(WallpaperState.Custom(uri))
+                wallpaperOptions = null
             })
             PopupRow("Remove", {
                 onRemoveWallpaper(uri); wallpaperOptions = null
@@ -374,7 +383,6 @@ fun AppearancePanel(
     val steps = listOf(32, 42, 52, 62, 72, 84, 96)
     val currentStep = (steps.indexOfFirst { it >= dockIconSize }.takeIf { it >= 0 } ?: steps.lastIndex)
 
-    val context = LocalContext.current
     val imagePicker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
         if (uri != null) {
             val dir  = java.io.File(context.filesDir, "wallpapers").also { it.mkdirs() }
@@ -394,8 +402,11 @@ fun AppearancePanel(
         contentPadding = PaddingValues(top = 4.dp, bottom = 28.dp)
     ) {
         // ── Icon size ────────────────────────────────────────────────────
-        item { SectionLabel("DOCK ICON SIZE") }
+        // The heading, the preview and the size row are one item that comes into view whole
+        // whenever the row has focus, so the heading and preview show above it.
         item {
+            Column(Modifier.revealWholeOnFocus(), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+            SectionLabel("DOCK ICON SIZE")
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
@@ -411,10 +422,8 @@ fun AppearancePanel(
                     JoeyIcon(R.drawable.ic_sports_esports, Color.White, (dockIconSize * 0.5f).dp)
                 }
             }
-        }
-        item {
             val first = remember { FocusRequester() }
-            Row(modifier = Modifier.fillMaxWidth().revealListTop(listState).focusRow(first), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            Row(modifier = Modifier.fillMaxWidth().focusRow(first), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                 steps.forEachIndexed { i, size ->
                     OptionChip("$size", size == steps[currentStep], { onSizeChange(size) },
                         Modifier.weight(1f).then(
@@ -423,6 +432,7 @@ fun AppearancePanel(
                             else Modifier),
                         fontSize = 9.sp)
                 }
+            }
             }
         }
         item {
@@ -458,103 +468,22 @@ fun AppearancePanel(
         }
 
         // ── Wallpaper ────────────────────────────────────────────────────
-        item {
-            Spacer(Modifier.height(4.dp))
-            SectionLabel("WALLPAPER")
-        }
-        PRESET_WALLPAPERS.chunked(4).forEach { row ->
-            item {
-                val first = remember { FocusRequester() }
-                Row(modifier = Modifier.focusRow(first), horizontalArrangement = Arrangement.spacedBy(7.dp)) {
-                    row.forEachIndexed { i, preset ->
-                        WallpaperTile(
-                            focusModifier = if (i == 0) Modifier.focusRequester(first) else Modifier,
-                            isActive   = wallpaperState is WallpaperState.Preset && wallpaperState.id == preset.id,
-                            label      = preset.name,
-                            background = Brush.linearGradient(preset.colors),
-                            modifier   = Modifier.weight(1f).aspectRatio(1.6f),
-                            onClick    = { onWallpaperChange(WallpaperState.Preset(preset.id)) }
-                        )
-                    }
-                    repeat(4 - row.size) { Spacer(Modifier.weight(1f)) }
-                }
-            }
-        }
-        item {
-            Row(horizontalArrangement = Arrangement.spacedBy(7.dp)) {
-                WallpaperTile(
-                    isActive   = wallpaperState is WallpaperState.Animated,
-                    label      = "Animated",
-                    badge      = "LIVE",
-                    background = Brush.radialGradient(listOf(Color(0xFF4F0A60), Color(0xFF0A0A2A))),
-                    modifier   = Modifier.weight(1f).aspectRatio(1.6f),
-                    onClick    = { onWallpaperChange(WallpaperState.Animated) }
-                )
-                Spacer(Modifier.weight(3f))
-            }
-        }
-
-        // ── Custom wallpapers ────────────────────────────────────────────
-        item {
-            Spacer(Modifier.height(4.dp))
-            SectionLabel("CUSTOM WALLPAPERS")
-        }
-        item {
-            // Tile width matches the 4-column preset grid: (availableWidth - 3 gaps) / 4
-            BoxWithConstraints {
-                val tileW = (maxWidth - 21.dp) / 4
-                val first = remember { FocusRequester() }
-                LazyRow(modifier = Modifier.focusRow(first), horizontalArrangement = Arrangement.spacedBy(7.dp)) {
-                    itemsIndexed(customWallpapers, key = { _, uri -> uri.toString() }) { i, uri ->
-                        val isActive = wallpaperState is WallpaperState.Custom && wallpaperState.uri == uri
-                        val (source, focused) = rememberFocusState()
-                        val imgBorder = when {
-                            focused  -> FocusColor
-                            isActive -> AccentSoft
-                            else     -> Color.White.copy(alpha = 0.15f)
-                        }
-                        Box(modifier = Modifier.width(tileW).aspectRatio(1.6f)) {
-                            AsyncImage(
-                                model              = uri,
-                                contentDescription = null,
-                                contentScale       = ContentScale.Crop,
-                                modifier           = (if (i == 0) Modifier.focusRequester(first) else Modifier)
-                                    .fillMaxSize()
-                                    .clip(RoundedCornerShape(10.dp))
-                                    .border(if (focused) 3.dp else 2.dp, imgBorder, RoundedCornerShape(10.dp))
-                                    .clickable(interactionSource = source, indication = null) {
-                                        wallpaperOptions = uri
-                                    }
-                            )
-                            if (isActive) ActiveTick(Modifier.align(Alignment.TopStart))
-                            // Quick remove by touch. (Not a D-pad stop: A on the tile has Remove.)
-                            Box(
-                                modifier = Modifier
-                                    .align(Alignment.TopEnd)
-                                    .padding(4.dp)
-                                    .size(22.dp)
-                                    .clip(CircleShape)
-                                    .background(Color.Black.copy(alpha = 0.55f))
-                                    .focusProperties { canFocus = false }
-                                    .clickable { onRemoveWallpaper(uri) },
-                                contentAlignment = Alignment.Center
-                            ) {
-                                JoeyIcon(R.drawable.ic_close, Color.White, 14.dp)
-                            }
-                        }
-                    }
-                    item {
-                        JoeyButton("+", { imagePicker.launch(arrayOf("image/*")) },
-                            Modifier.width(tileW).aspectRatio(1.6f).then(
-                                if (customWallpapers.isEmpty()) Modifier.focusRequester(first) else Modifier),
-                            fontSize = 22.sp)
-                    }
-                }
-            }
-        }
+        wallpaperPicker("WALLPAPER", wallpaperState, plainLabel = null, customWallpapers,
+            onChange = { it?.let(onWallpaperChange) },
+            onCustomOptions = { wallpaperOptions = it to false },
+            onRemoveWallpaper = onRemoveWallpaper,
+            onAddImage = { imagePicker.launch(arrayOf("image/*")) })
 
         // ── Second screen (dual-screen handhelds only) ───────────────────
         item { SecondScreenSection() }
+        // The second screen's own wallpaper (dual-screen handhelds only), from the same choices.
+        if (hasSecondScreen) {
+            wallpaperPicker("SECOND SCREEN WALLPAPER", secondWallpaper, plainLabel = "Plain", customWallpapers,
+                onChange = { w -> scope.launch { prefsRepo.setSecondWallpaper(w) } },
+                onCustomOptions = { wallpaperOptions = it to true },
+                onRemoveWallpaper = onRemoveWallpaper,
+                onAddImage = { imagePicker.launch(arrayOf("image/*")) })
+        }
     }
 }
 
@@ -574,7 +503,7 @@ private fun SecondScreenSection() {
         ToggleRow(
             "Use the second screen",
             "Your RetroAchievements, the game you're playing and its guide on the other screen (its own Settings tab has more). " +
-                "Touch only: your controller always stays with the game.",
+                "Your handheld decides which screen gets the controller.",
             enabled,
             { on ->
                 enabled = on
@@ -684,10 +613,10 @@ private fun EmulatorPickerPopup(
     onChoose: (String?) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val currentRow = remember { FocusRequester() }
     val currentIsSet = current != null && options.any { it.value == current }
     JoeyPopup(title = system.fullName, hint = "A set  •  B cancel", onDismiss = onDismiss,
-        padded = false, initialFocus = currentRow) {
+        padded = false) {
+        // Opens scrolled to the current choice, so its row is composed and takes focus.
         LazyColumn(
             state = rememberLazyListState(
                 initialFirstVisibleItemIndex = if (currentIsSet) options.indexOfFirst { it.value == current } + 1 else 0),
@@ -695,11 +624,11 @@ private fun EmulatorPickerPopup(
         ) {
             item(key = "notset") {
                 PopupRow("Not set", isCurrent = !currentIsSet, onClick = { onChoose(null) },
-                    modifier = if (!currentIsSet) Modifier.focusRequester(currentRow) else Modifier)
+                    modifier = Modifier.initialFocus(!currentIsSet))
             }
             items(options, key = { it.value }) { opt ->
                 PopupRow(opt.label, isCurrent = current == opt.value, onClick = { onChoose(opt.value) },
-                    modifier = if (current == opt.value) Modifier.focusRequester(currentRow) else Modifier)
+                    modifier = Modifier.initialFocus(current == opt.value))
             }
         }
     }
@@ -764,6 +693,120 @@ fun EmulatorRow(
                 modifier   = Modifier.weight(1f)
             )
             JoeyIcon(R.drawable.ic_chevron_right, TextFaint, 16.dp)
+        }
+    }
+}
+
+/**
+ * A wallpaper picker in a settings list: the presets, Animated, and the custom images (shared by
+ * both screens) with + to add one. [current] null means Plain, offered only when [plainLabel] is
+ * given (the second screen's own dark background).
+ */
+private fun LazyListScope.wallpaperPicker(
+    title: String,
+    current: WallpaperState?,
+    plainLabel: String?,
+    customWallpapers: List<Uri>,
+    onChange: (WallpaperState?) -> Unit,
+    onCustomOptions: (Uri) -> Unit,
+    onRemoveWallpaper: (Uri) -> Unit,
+    onAddImage: () -> Unit,
+) {
+    item {
+        Spacer(Modifier.height(4.dp))
+        SectionLabel(title)
+    }
+    PRESET_WALLPAPERS.chunked(4).forEach { row ->
+        item {
+            val first = remember { FocusRequester() }
+            Row(modifier = Modifier.focusRow(first), horizontalArrangement = Arrangement.spacedBy(7.dp)) {
+                row.forEachIndexed { i, preset ->
+                    WallpaperTile(
+                        focusModifier = if (i == 0) Modifier.focusRequester(first) else Modifier,
+                        isActive   = current is WallpaperState.Preset && current.id == preset.id,
+                        label      = preset.name,
+                        background = Brush.linearGradient(preset.colors),
+                        modifier   = Modifier.weight(1f).aspectRatio(1.6f),
+                        onClick    = { onChange(WallpaperState.Preset(preset.id)) }
+                    )
+                }
+                repeat(4 - row.size) { Spacer(Modifier.weight(1f)) }
+            }
+        }
+    }
+    item {
+        val first = remember { FocusRequester() }
+        Row(modifier = Modifier.focusRow(first), horizontalArrangement = Arrangement.spacedBy(7.dp)) {
+            WallpaperTile(
+                focusModifier = Modifier.focusRequester(first),
+                isActive   = current is WallpaperState.Animated,
+                label      = "Animated",
+                badge      = "LIVE",
+                background = Brush.radialGradient(listOf(Color(0xFF4F0A60), Color(0xFF0A0A2A))),
+                modifier   = Modifier.weight(1f).aspectRatio(1.6f),
+                onClick    = { onChange(WallpaperState.Animated) }
+            )
+            if (plainLabel != null) {
+                WallpaperTile(
+                    isActive   = current == null,
+                    label      = plainLabel,
+                    background = Brush.linearGradient(listOf(Background, Background)),
+                    modifier   = Modifier.weight(1f).aspectRatio(1.6f),
+                    onClick    = { onChange(null) }
+                )
+                Spacer(Modifier.weight(2f))
+            } else Spacer(Modifier.weight(3f))
+        }
+    }
+    item {
+        // Tile width matches the 4-column preset grid: (availableWidth - 3 gaps) / 4
+        BoxWithConstraints {
+            val tileW = (maxWidth - 21.dp) / 4
+            val first = remember { FocusRequester() }
+            LazyRow(modifier = Modifier.focusRow(first), horizontalArrangement = Arrangement.spacedBy(7.dp)) {
+                itemsIndexed(customWallpapers, key = { _, uri -> uri.toString() }) { i, uri ->
+                    val isActive = current is WallpaperState.Custom && current.uri == uri
+                    val (source, focused) = rememberFocusState()
+                    val imgBorder = when {
+                        focused  -> FocusColor
+                        isActive -> AccentSoft
+                        else     -> Color.White.copy(alpha = 0.15f)
+                    }
+                    Box(modifier = Modifier.width(tileW).aspectRatio(1.6f)) {
+                        AsyncImage(
+                            model              = uri,
+                            contentDescription = null,
+                            contentScale       = ContentScale.Crop,
+                            modifier           = (if (i == 0) Modifier.focusRequester(first) else Modifier)
+                                .fillMaxSize()
+                                .clip(RoundedCornerShape(10.dp))
+                                .border(if (focused) 3.dp else 2.dp, imgBorder, RoundedCornerShape(10.dp))
+                                .clickable(interactionSource = source, indication = null) { onCustomOptions(uri) }
+                        )
+                        if (isActive) ActiveTick(Modifier.align(Alignment.TopStart))
+                        // Quick remove by touch. (Not a D-pad stop: A on the tile has Remove.)
+                        Box(
+                            modifier = Modifier
+                                .align(Alignment.TopEnd)
+                                .padding(4.dp)
+                                .size(22.dp)
+                                .clip(CircleShape)
+                                .background(Color.Black.copy(alpha = 0.55f))
+                                .focusProperties { canFocus = false }
+                                .clickable { onRemoveWallpaper(uri) },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            JoeyIcon(R.drawable.ic_close, Color.White, 14.dp)
+                        }
+                    }
+                }
+                item {
+                    JoeyButton("+", onAddImage,
+                        Modifier.width(tileW).aspectRatio(1.6f).then(
+                            if (customWallpapers.isEmpty()) Modifier.focusRequester(first) else Modifier),
+                        fontSize = 22.sp)
+                }
+            }
         }
     }
 }

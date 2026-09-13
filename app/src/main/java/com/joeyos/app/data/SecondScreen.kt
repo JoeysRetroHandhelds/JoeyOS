@@ -6,8 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.hardware.display.DisplayManager
 import android.os.Build
-import android.os.Handler
-import android.os.Looper
 import android.view.Display
 import com.joeyos.app.AppLog
 import com.joeyos.app.MainActivity
@@ -154,7 +152,10 @@ object SecondScreenState {
 
 /** Opens, keeps and closes the second screen. Driven by MainActivity. */
 object SecondScreenController {
-    private var lastOpenAt = 0L
+    /** When JoeyOS last asked for the second screen, until it's open (see [onOpened]). */
+    @Volatile private var openingSince = 0L
+    /** The home screen's display, to hand the front back to once the new screen is in front. */
+    @Volatile private var handBackTo: Int? = null
 
     /**
      * Makes sure the second screen is showing when it should be: enabled, a second display
@@ -171,11 +172,11 @@ object SecondScreenController {
         when {
             !want -> open?.finish()
             open != null && open.displayId() == other!!.displayId -> {}
-            // Handing focus back resumes the home screen, which calls this again before the new
-            // screen has registered itself: don't open a second one.
-            System.currentTimeMillis() - lastOpenAt < 3_000 -> {}
+            // Asked already and it isn't open yet (the home screen resumes again while it starts):
+            // don't open a second one. A request that never opened stops counting after a while.
+            System.currentTimeMillis() - openingSince < 10_000 -> {}
             else -> {
-                lastOpenAt = System.currentTimeMillis()
+                openingSince = System.currentTimeMillis()
                 open?.finish()
                 AppLog.i(TAG, "Opening the second screen on display ${other!!.displayId} (${other.name})")
                 runCatching {
@@ -183,22 +184,38 @@ object SecondScreenController {
                         Intent(home, SecondScreenActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                         DisplayTargets.optionsFor(other.displayId)
                     )
-                }.onFailure { AppLog.e(TAG, "Couldn't open the second screen", it); return }
-                // The screen started last gets the controller, and that just became the second
-                // screen (whose window can't take it). Hand it straight back to the home screen
-                // by bringing it to the front again: the launch-order trick Mjolnir uses.
-                val homeDisplay = DisplayTargets.currentDisplayId(home)
-                Handler(Looper.getMainLooper()).postDelayed({
-                    runCatching {
-                        home.startActivity(
-                            Intent(home, MainActivity::class.java)
-                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_REORDER_TO_FRONT),
-                            DisplayTargets.optionsFor(homeDisplay)
-                        )
-                    }
-                }, 350)
+                }.onFailure { AppLog.e(TAG, "Couldn't open the second screen", it); openingSince = 0L; return }
+                // The activity started last is the one in front, so opening this screen takes the
+                // front (and the controller) from the home screen. Android has no public way to
+                // start an activity without that (the "avoid move to front" option is system-only),
+                // so the front goes straight back once this screen reports it's in front: see
+                // [onInFront]. That replaced a fixed 350 ms wait.
+                handBackTo = DisplayTargets.currentDisplayId(home)
             }
         }
+    }
+
+    /** The home screen is in front again by itself: nothing left to hand back. */
+    fun onHomeInFront() { handBackTo = null }
+
+    /** The second screen has been created: a new request may open it again after this. */
+    fun onOpened() { openingSince = 0L }
+
+    /**
+     * The second screen just became the activity in front (onTopResumedActivityChanged). The
+     * first time after JoeyOS opened it, hand the front back to the home screen, the way Mjolnir
+     * does, by bringing the home screen forward again. Later times are you tapping it: left alone.
+     */
+    fun onInFront(screen: Activity) {
+        val display = handBackTo ?: return
+        handBackTo = null
+        runCatching {
+            screen.startActivity(
+                Intent(screen, MainActivity::class.java)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_REORDER_TO_FRONT),
+                DisplayTargets.optionsFor(display)
+            )
+        }.onFailure { AppLog.w(TAG, "Couldn't hand the front back to the home screen", it) }
     }
 
     fun close() {

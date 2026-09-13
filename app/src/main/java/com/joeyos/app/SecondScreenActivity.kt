@@ -57,6 +57,7 @@ class SecondScreenActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         ref = WeakReference(this)
         shownOn = displayId()
+        com.joeyos.app.data.SecondScreenController.onOpened()
         AppLog.i("SecondScreen", "Second screen open on display ${displayId()}")
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         // Back steps back inside this screen (its pages handle it); with nothing left, it does
@@ -88,6 +89,13 @@ class SecondScreenActivity : ComponentActivity() {
      */
     @Suppress("UNUSED_PARAMETER")
     fun allowTyping(on: Boolean) {}
+
+    // In front: the first time after opening, the home screen gets the front back (see
+    // SecondScreenController.onInFront).
+    override fun onTopResumedActivityChanged(isTopResumedActivity: Boolean) {
+        super.onTopResumedActivityChanged(isTopResumedActivity)
+        if (isTopResumedActivity) com.joeyos.app.data.SecondScreenController.onInFront(this)
+    }
 
     override fun onResume() {
         super.onResume()

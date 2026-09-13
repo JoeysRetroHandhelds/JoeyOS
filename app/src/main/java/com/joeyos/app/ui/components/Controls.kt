@@ -9,6 +9,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
@@ -47,7 +49,7 @@ fun SectionLabel(text: String, modifier: Modifier = Modifier) {
 }
 
 /**
- * The one button. Plain by default (Refresh, Cancel, Later); [primary] is the amber one for the
+ * The one button. Plain by default (Refresh, Cancel, Later); [primary] is the accent one for the
  * main action on a screen (Connect, Get started). Disabled buttons are greyed and not a focus stop.
  */
 @Composable
@@ -96,7 +98,7 @@ fun JoeyButton(
 
 /**
  * A full-width card in a list (a tool, a setting with a tick box, a console's emulator): one
- * focus target, lit and ringed amber when focused. Sideways presses are cancelled, since a
+ * focus target, lit and ringed in the accent colour when focused. Sideways presses are cancelled, since a
  * full-width row has nothing beside it (an unanswered one jumps elsewhere, found in Chameleon).
  */
 @OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
@@ -168,3 +170,23 @@ fun <T> ChoiceRow(
         }
     }
 }
+
+/**
+ * A round, see-through touch button with a white icon: the home screen's App Drawer and Settings
+ * buttons, and a page's close button. Touch only: not a focus stop, so the D-pad never lands on it.
+ */
+@Composable
+fun CircleIconButton(@androidx.annotation.DrawableRes icon: Int, onClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .size(36.dp)
+            .clip(androidx.compose.foundation.shape.CircleShape)
+            .pointerInput(Unit) { detectTapGestures(onTap = { onClick() }) },
+        contentAlignment = Alignment.Center
+    ) {
+        androidx.compose.material3.Surface(modifier = Modifier.fillMaxSize(), shape = androidx.compose.foundation.shape.CircleShape,
+            color = Color.White.copy(alpha = 0.14f), tonalElevation = 0.dp) {}
+        JoeyIcon(icon, Color.White, 20.dp)
+    }
+}
+

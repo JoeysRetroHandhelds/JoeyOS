@@ -133,15 +133,12 @@ fun RecentGamesPopup(
     onLaunch: (RecentGame) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val firstRow = remember { FocusRequester() }
-    // Rows load after the popup opens, so focus lands on the first one when they arrive.
+    // Rows load after the popup opens; the first one takes focus when it arrives.
     JoeyPopup(
         title = "Recently Played",
         hint = "A launch  •  B cancel",
         onDismiss = onDismiss,
-        padded = false,
-        focusKey = games.isNotEmpty(),
-        initialFocus = if (games.isNotEmpty()) firstRow else null
+        padded = false
     ) {
         if (games.isEmpty()) {
             PopupNote("Loading…")
@@ -153,7 +150,7 @@ fun RecentGamesPopup(
                         index    = i + 1,
                         game     = game,
                         onClick  = { onLaunch(game) },
-                        modifier = if (i == 0) Modifier.focusRequester(firstRow) else Modifier
+                        modifier = Modifier.initialFocus(i == 0)
                     )
                 }
             }

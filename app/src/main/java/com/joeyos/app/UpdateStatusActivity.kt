@@ -43,9 +43,13 @@ class UpdateStatusActivity : Activity() {
             }
             PackageInstaller.STATUS_SUCCESS -> {
                 AppLog.i("Updater", "Update installed, reopening JoeyOS")
+                // On the main screen: started from here it opened wherever the installer's result
+                // landed, the Thor's bottom screen, leaving the top one on the old version (found
+                // on device). The second screen follows from the home screen as usual.
                 runCatching {
                     startActivity(Intent(this, MainActivity::class.java)
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP),
+                        ActivityOptions.makeBasic().setLaunchDisplayId(android.view.Display.DEFAULT_DISPLAY).toBundle())
                 }
             }
             PackageInstaller.STATUS_FAILURE_ABORTED -> { /* the user tapped Cancel */ }

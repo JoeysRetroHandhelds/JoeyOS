@@ -7,12 +7,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import kotlinx.coroutines.delay
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -27,8 +22,8 @@ import com.joeyos.app.ui.theme.TextFaint
 /**
  * "Update available" popup. It has to be answered: B, Back and a tap outside don't close it, only
  * Update or Later do, so it can't be missed by a stray press (at the user's request). The buttons
- * also ignore presses for a moment after it appears, so a tap or button press meant for whatever
- * was on screen before can't choose for you. Focus lands on Update; left/right moves, A presses.
+ * answer straight away (a short pause that ignored presses felt like the controls were blocked,
+ * found on device). Focus lands on Update; left/right moves, A presses.
  */
 @Composable
 fun UpdatePrompt(
@@ -39,11 +34,8 @@ fun UpdatePrompt(
     onUpdate: () -> Unit,
     onLater: () -> Unit
 ) {
-    val updateButton = remember { FocusRequester() }
-    var armed by remember { mutableStateOf(false) }
-    LaunchedEffect(Unit) { delay(800); armed = true }
     JoeyPopup(title = "Update available", hint = if (downloading) "" else "Choose Update or Later",
-        onDismiss = {}, dismissible = false, initialFocus = updateButton) {
+        onDismiss = {}, dismissible = false) {
         Text("v$installedVersion  →  v${release.versionName}", fontSize = 12.sp,
             fontFamily = JoeyFont, color = TextDim)
         if (release.notes.isNotBlank()) {
@@ -61,8 +53,8 @@ fun UpdatePrompt(
                 fontFamily = JoeyFont, color = TextDim)
         } else {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                JoeyButton("Update", { if (armed) onUpdate() }, Modifier.weight(1f).focusRequester(updateButton))
-                JoeyButton("Later", { if (armed) onLater() }, Modifier.weight(1f))
+                JoeyButton("Update", onUpdate, Modifier.weight(1f).initialFocus())
+                JoeyButton("Later", onLater, Modifier.weight(1f))
             }
         }
     }

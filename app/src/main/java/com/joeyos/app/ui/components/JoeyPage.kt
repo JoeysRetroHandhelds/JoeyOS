@@ -1,22 +1,21 @@
 package com.joeyos.app.ui.components
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.withFrameNanos
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.foundation.focusGroup
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalInputModeManager
 import com.joeyos.app.ui.controls.Control
 import com.joeyos.app.ui.controls.ControlBus
@@ -32,18 +31,17 @@ import com.joeyos.app.ui.controls.ControlBus
  * What a page does that a window would have done for it:
  *  - B / Back closes it (a text field being typed in registers after, so it's asked first).
  *  - While open it takes the app's own buttons (Start, L1/R1, …) via the ControlBus stack.
- *  - On open it asks for keyboard input mode and lands focus on [initialFocus] (or the first
- *    item). The caller keeps the home screen out of focus while a page is open, and puts focus
- *    back on the dock when it closes.
+ *  - It contains focus: the page is one focus group that cancels any move out of it ("Focus in
+ *    Compose", focusProperties onExit), so the D-pad can't reach the home screen beneath. The
+ *    home screen doesn't have to switch its dock off, and when the page closes the dock's own
+ *    focusRestorer puts focus back on the icon you left.
+ *  - Focus lands on the item marked `Modifier.initialFocus()` as soon as it's attached (see
+ *    [FocusLanding]), so content that arrives after the page opens still gets it.
  *  - It swallows touches, so nothing underneath reacts.
  */
-@OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
 @Composable
 fun JoeyPage(
     onClose: () -> Unit,
-    initialFocus: FocusRequester? = null,
-    /** Re-lands focus when this changes (content that arrives after the page opens). */
-    focusKey: Any? = Unit,
     /** The page's own buttons; return true when handled. Unhandled ones do nothing. */
     onControl: (Control) -> Boolean = { false },
     content: @Composable () -> Unit
@@ -57,21 +55,22 @@ fun JoeyPage(
         onDispose { ControlBus.pop(handler) }
     }
 
+    // A page can be opened by a tap (the top bar's buttons), which leaves the window in touch
+    // mode, where Compose won't focus a clickable: nothing inside would hold focus, so the page
+    // couldn't contain it. A page is a controller screen first, so it asks for keyboard mode on
+    // open; a page opened from the pad is already in it and this does nothing. Launched ahead of
+    // the content's effects, so it's in place before the marked item asks for focus.
     val inputMode = LocalInputModeManager.current
-    val focusManager = LocalFocusManager.current
-    LaunchedEffect(focusKey) {
-        withFrameNanos { }
-        inputMode.requestInputMode(InputMode.Keyboard)
-        val landed = initialFocus != null && runCatching { initialFocus.requestFocus() }.isSuccess
-        if (!landed) focusManager.moveFocus(FocusDirection.Next)
-    }
+    LaunchedEffect(Unit) { inputMode.requestInputMode(InputMode.Keyboard) }
 
+    val landing = remember { FocusLanding() }
     Box(
         modifier = Modifier
             .fillMaxSize()
             .pointerInput(Unit) { detectTapGestures { } }
+            .focusProperties { onExit = { cancelFocusChange() } }
             .focusGroup()
     ) {
-        content()
+        CompositionLocalProvider(LocalFocusLanding provides landing) { content() }
     }
 }

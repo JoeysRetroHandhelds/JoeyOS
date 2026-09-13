@@ -31,6 +31,8 @@ class PreferencesRepository(private val context: Context) {
     companion object {
         private val WALLPAPER_MODE     = stringPreferencesKey("wallpaper_mode")
         private val WALLPAPER_VALUE    = stringPreferencesKey("wallpaper_value")
+        private val SECOND_WALLPAPER_MODE  = stringPreferencesKey("second_wallpaper_mode")
+        private val SECOND_WALLPAPER_VALUE = stringPreferencesKey("second_wallpaper_value")
         private val DOCK_ICON_SIZE     = stringPreferencesKey("dock_icon_size")
         private val DOCK_SORT_ORDER    = stringPreferencesKey("dock_sort_order")
         private val FAVORITE_GAME      = stringPreferencesKey("favorite_game")
@@ -61,6 +63,34 @@ class PreferencesRepository(private val context: Context) {
                 else WallpaperState.Preset("space")
             }
             else -> WallpaperState.Preset(prefs[WALLPAPER_VALUE] ?: "space")
+        }
+    }
+
+    /**
+     * The second screen's wallpaper; null is Plain, its own dark background (the default, so it
+     * looks as it always did until you pick one).
+     */
+    val secondWallpaper: Flow<WallpaperState?> = context.dataStore.data.map { prefs ->
+        val value = prefs[SECOND_WALLPAPER_VALUE].orEmpty()
+        when (prefs[SECOND_WALLPAPER_MODE]) {
+            "animated" -> WallpaperState.Animated
+            "custom"   -> value.takeIf { it.isNotEmpty() }?.let { WallpaperState.Custom(Uri.parse(it)) }
+            "preset"   -> value.takeIf { it.isNotEmpty() }?.let { WallpaperState.Preset(it) }
+            else       -> null
+        }
+    }
+
+    suspend fun setSecondWallpaper(state: WallpaperState?) {
+        context.dataStore.edit { prefs ->
+            prefs[SECOND_WALLPAPER_MODE] = when (state) {
+                null -> "plain"; is WallpaperState.Preset -> "preset"
+                is WallpaperState.Animated -> "animated"; is WallpaperState.Custom -> "custom"
+            }
+            prefs[SECOND_WALLPAPER_VALUE] = when (state) {
+                is WallpaperState.Preset -> state.id
+                is WallpaperState.Custom -> state.uri.toString()
+                else -> ""
+            }
         }
     }
 

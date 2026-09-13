@@ -38,21 +38,18 @@ fun FavoritePickerPopup(
     fun isCurrent(game: RecentGame) = currentFavorite != null &&
         currentFavorite.title == game.title && currentFavorite.emulatorPackage == game.emulatorPackage
     val currentIndex = games?.indexOfFirst(::isCurrent)?.takeIf { it >= 0 } ?: 0
-    val currentRow = remember { FocusRequester() }
 
     JoeyPopup(
         title = "Set Favorite",
         hint = "A set  •  B cancel",
         onDismiss = onDismiss,
-        padded = false,
-        focusKey = !games.isNullOrEmpty(),
-        initialFocus = if (!games.isNullOrEmpty()) currentRow else null
+        padded = false
     ) {
         when {
             games == null -> PopupNote("Loading…")
             games.isEmpty() -> PopupNote("No recent games found.\nPlay some games first.")
             else -> {
-                // Start scrolled to the current favourite so its row exists to take focus.
+                // Start scrolled to the current favourite, so its row is composed and takes focus as it arrives.
                 val listState = rememberLazyListState(initialFirstVisibleItemIndex = currentIndex)
                 LazyColumn(state = listState, modifier = Modifier.fillMaxWidth()) {
                     itemsIndexed(games, key = { i, g -> "$i:${g.emulatorPackage}:${g.path}" }) { i, game ->
@@ -61,7 +58,7 @@ fun FavoritePickerPopup(
                             game      = game,
                             isCurrent = isCurrent(game),
                             onClick   = { onSelect(game); onDismiss() },
-                            modifier  = if (i == currentIndex) Modifier.focusRequester(currentRow) else Modifier
+                            modifier  = Modifier.initialFocus(i == currentIndex)
                         )
                     }
                 }

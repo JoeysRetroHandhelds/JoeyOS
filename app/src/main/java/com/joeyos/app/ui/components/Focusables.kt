@@ -6,6 +6,8 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.focusGroup
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
@@ -48,7 +50,7 @@ import kotlinx.coroutines.launch
 
 /**
  * The one highlight colour for "this is where you are", used by every focusable in the app.
- * A setting's current value is shown differently (a soft amber fill), so the two never collide.
+ * A setting's current value is shown differently (a soft accent fill), so the two never collide.
  */
 val FocusColor = Accent
 val FocusWidth = 2.dp
@@ -63,6 +65,51 @@ val FocusWidth = 2.dp
 fun Modifier.focusRow(first: FocusRequester): Modifier =
     this.focusRestorer(first).focusGroup()
 
+/**
+ * A one-shot "focus lands here next" hand-off, for when something opens or changes and focus has
+ * to go to an element that may not exist yet: a popup's rows that are still loading, a lazy row
+ * that is only composed at the next layout, the Cancel button a run is about to show.
+ *
+ * The element itself asks for focus ([landFocus]), from an effect that only starts once it is in
+ * the tree ("Focus in Compose": request focus from an effect or an event, never before the target
+ * is attached). So there is no frame wait, no retry, and no "not attached" error to swallow: if
+ * the target isn't there yet, the request simply happens when it arrives. [arm] it in the same
+ * event that makes the change (opening a tool, starting a run), and the next marked element to be
+ * attached — or the one already there — takes focus once.
+ */
+@Stable
+class FocusLanding(armed: Boolean = true) {
+    internal var armedAt by mutableIntStateOf(if (armed) 1 else 0)
+    internal var landedAt by mutableIntStateOf(0)
+    val pending: Boolean get() = armedAt != landedAt
+    /** Land again, on the next marked element that is attached (at once if one already is). */
+    fun arm() { armedAt = maxOf(armedAt, landedAt) + 1 }
+}
+
+/** The landing a popup or page provides for its content ([initialFocus]). */
+val LocalFocusLanding = staticCompositionLocalOf<FocusLanding?> { null }
+
+/**
+ * Marks where focus lands for [landing] (see [FocusLanding]). [enabled] picks which of several
+ * candidates is the target (the row you came from, the current choice). Works in lazy lists: a
+ * row that isn't composed yet takes focus when the list composes it.
+ */
+fun Modifier.landFocus(landing: FocusLanding?, enabled: Boolean = true): Modifier = composed {
+    val requester = remember { FocusRequester() }
+    if (landing != null && enabled && landing.pending) {
+        val generation = landing.armedAt
+        LaunchedEffect(landing, generation) {
+            if (requester.requestFocus(FocusDirection.Enter)) landing.landedAt = generation
+        }
+    }
+    this.focusRequester(requester)
+}
+
+/** Where focus lands when the popup ([JoeyDialog]) or page ([JoeyPage]) around it opens. */
+fun Modifier.initialFocus(enabled: Boolean = true): Modifier = composed {
+    this.landFocus(LocalFocusLanding.current, enabled)
+}
+
 /** An interaction source plus whether it currently holds focus — the highlight for one element. */
 @Composable
 fun rememberFocusState(): Pair<MutableInteractionSource, Boolean> {
@@ -72,8 +119,8 @@ fun rememberFocusState(): Pair<MutableInteractionSource, Boolean> {
 }
 
 /**
- * One choice in a row of choices (dock size, clock format, …). Soft amber fill when it's the
- * current value; the amber focus ring when it holds focus.
+ * One choice in a row of choices (dock size, clock format, …). Soft accent fill when it's the
+ * current value; the accent focus ring when it holds focus.
  *
  * [compact] is the pill form for rows of tabs and filters that flow (the second screen): fully
  * rounded and as wide as its label, where the normal chip is sized by its row.
@@ -167,23 +214,22 @@ fun ControllerTextField(
     trailing: (@Composable () -> Unit)? = null
 ) {
     var typing by remember { mutableStateOf(false) }
-    val boxFocus = remember { FocusRequester() }
     val fieldFocus = remember { FocusRequester() }
+    // The highlight-only stop comes back when typing stops; this puts focus on it as it arrives.
+    val backToBox = remember { FocusLanding(armed = false) }
     val keyboard = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
-    val scope = rememberCoroutineScope()
     val (boxSource, boxFocused) = rememberFocusState()
     val (fieldSource, fieldFocused) = rememberFocusState()
     val lit = boxFocused || fieldFocused
 
     fun stopTyping(moveOn: Boolean) {
+        // Done moves on while the field still holds focus, so the move starts from here; B (or
+        // a Done with nothing below) goes back to the field's own stop.
+        val movedOn = moveOn && (if (onDone != null) { onDone(); true } else focusManager.moveFocus(FocusDirection.Down))
+        if (!movedOn) backToBox.arm()
         keyboard?.hide()
         typing = false
-        scope.launch {
-            withFrameNanos { }
-            runCatching { boxFocus.requestFocus() }
-            if (moveOn) { if (onDone != null) onDone() else focusManager.moveFocus(FocusDirection.Down) }
-        }
     }
 
     val registry = LocalDialogBack.current
@@ -198,10 +244,11 @@ fun ControllerTextField(
     // Tell the second screen, so a keyboard shown under it (the Thor's) can be seen and used.
     LaunchedEffect(typing) { com.joeyos.app.data.SecondScreenState.setTyping(typing) }
     DisposableEffect(Unit) { onDispose { com.joeyos.app.data.SecondScreenState.setTyping(false) } }
+    // The field is always composed (only its canFocus follows typing), so it is attached when
+    // this runs, after the recomposition that turned typing on.
     LaunchedEffect(typing) {
         if (typing) {
-            withFrameNanos { }
-            runCatching { fieldFocus.requestFocus() }
+            fieldFocus.requestFocus()
             keyboard?.show()
         }
     }
@@ -246,7 +293,7 @@ fun ControllerTextField(
                 Box(
                     modifier = Modifier
                         .matchParentSize()
-                        .focusRequester(boxFocus)
+                        .landFocus(backToBox)
                         .clickable(interactionSource = boxSource, indication = null) { typing = true }
                 )
             }
@@ -256,33 +303,17 @@ fun ControllerTextField(
 }
 
 /**
- * Keeps a page from being left with nothing focused. A page's first rows can arrive after it
- * opens (a scan of your ROM folders), and a run's Cancel button disappears when the run ends;
- * either way focus had nowhere to be and the controls did nothing (found on device: Generate
- * .m3u). Whenever [keys] change and nothing on the page holds focus, [target] gets it, with the
- * list scrolled to the top first so the row exists to take it.
+ * Brings this whole block into view (a heading, a preview and the row of choices under them)
+ * whenever focus is anywhere inside it. The list on its own only scrolls far enough to show the
+ * focused control, so a tall heading above a first row stayed hidden (found on device:
+ * Appearance's dock-size row hid "Dock icon size" and its preview). This asks for the block's
+ * bounds with a BringIntoViewRequester, the Compose API for exactly this, so no scroll index
+ * or frame wait is involved; the theme's BringIntoViewSpec still keeps its margin.
  */
-@Composable
-fun Modifier.keepFocus(target: FocusRequester, listState: androidx.compose.foundation.lazy.LazyListState, vararg keys: Any?): Modifier {
-    var hasFocus by remember { mutableStateOf(false) }
-    LaunchedEffect(*keys) {
-        withFrameNanos { }
-        if (!hasFocus) {
-            runCatching { listState.scrollToItem(0) }
-            withFrameNanos { }
-            runCatching { target.requestFocus() }
-        }
-    }
-    return this.onFocusChanged { hasFocus = it.hasFocus }
-}
-
-/**
- * For the first row of a page whose heading sits above it (a label, a preview): moving onto it
- * scrolls the whole list back to the top, so the heading shows. The margin scrolling in the theme
- * covers a line of text; this covers a tall preview too (found on device: Appearance's dock-size
- * row hid "Dock icon size" and its icon).
- */
-fun Modifier.revealListTop(listState: androidx.compose.foundation.lazy.LazyListState): Modifier = composed {
+fun Modifier.revealWholeOnFocus(): Modifier = composed {
+    val requester = remember { BringIntoViewRequester() }
     val scope = rememberCoroutineScope()
-    onFocusChanged { if (it.hasFocus) scope.launch { withFrameNanos { }; listState.animateScrollToItem(0) } }
+    this
+        .bringIntoViewRequester(requester)
+        .onFocusChanged { if (it.hasFocus) scope.launch { requester.bringIntoView() } }
 }

@@ -142,28 +142,44 @@ fun HomeScreen(viewModel: HomeViewModel) {
             ?: entries.firstOrNull()?.packageName
     }
 
-    val inputModeManager = LocalInputModeManager.current
-    /** Moves focus to a dock icon by identity, scrolling it into the list first if needed. */
-    suspend fun focusDock(pkg: String?) {
-        val entries = currentDockEntries
-        val idx = entries.indexOfFirst { it.packageName == pkg }
-        if (idx < 0) return
-        if (dockListState.layoutInfo.visibleItemsInfo.none { it.index == idx }) dockListState.scrollToItem(idx)
-        withFrameNanos { }
-        inputModeManager.requestInputMode(InputMode.Keyboard)
-        runCatching { dockFocusRequesters[entries[idx].packageName]?.requestFocus() }
-    }
-
-    // Settings and the App Drawer are pages drawn over the home screen; while one is open the
-    // dock is kept out of focus, and focus comes back to the icon you left when it closes.
+    // Settings and the App Drawer are pages drawn over the home screen. A page contains focus
+    // itself (JoeyPage), so the dock needn't be switched off while one is open.
     val pageOpen = showSettings || showAppDrawer
 
-    // Always keep something focused on the home screen, so a press always has a target: on start
-    // and whenever a page closes. (Popups are real Dialogs, which hand focus back by themselves.)
-    LaunchedEffect(pageOpen, dockEntries.isNotEmpty()) {
-        if (pageOpen || dockEntries.isEmpty()) return@LaunchedEffect
-        val keep = focusedDockPkg?.takeIf { p -> dockEntries.any { it.packageName == p } }
-        focusDock(keep ?: defaultDockPkg())
+    // Moving focus to a dock icon by identity: the icon for [dockLandOn] takes focus as soon as
+    // it's composed (FocusLanding), so an icon scrolled off the row is scrolled in and then asks
+    // for focus itself — no frame wait, no request on an icon that isn't there yet.
+    // Armed from the start: the first landing is the default icon, once the dock has entries.
+    val dockLanding = remember { FocusLanding() }
+    var dockLandOn by remember { mutableStateOf<String?>(null) }
+    /** Moves focus to a dock icon by identity, scrolling it into the row if it's off screen. */
+    suspend fun focusDock(pkg: String?) {
+        val idx = currentDockEntries.indexOfFirst { it.packageName == pkg }
+        if (idx < 0) return
+        dockLandOn = pkg
+        dockLanding.arm()
+        if (dockListState.layoutInfo.visibleItemsInfo.none { it.index == idx }) dockListState.scrollToItem(idx)
+    }
+
+    // The home screen is where the controller starts, so something is always focused on it.
+    // On start the window is in touch mode (Android's default until a key is pressed), where
+    // Compose won't focus a clickable, so the dock would start with nothing highlighted and the
+    // first press would have no target. It asks for keyboard mode once, on start; after that
+    // the window's mode is left to Android (a tap shows no highlight, the next key brings it).
+    val inputModeManager = LocalInputModeManager.current
+    LaunchedEffect(Unit) { inputModeManager.requestInputMode(InputMode.Keyboard) }
+    // First start: the default icon, once the dock has its entries.
+    LaunchedEffect(dockEntries.isNotEmpty()) {
+        if (dockEntries.isNotEmpty() && focusedDockPkg == null) focusDock(defaultDockPkg())
+    }
+    // Coming back from a page, focus goes to the dock as a group and its focusRestorer lands it
+    // on the icon you left ("Focus in Compose"); the dock row is always composed, so it's there to
+    // ask. (Popups are real Dialogs, which hand focus back by themselves.)
+    val dockGroupFocus = remember { FocusRequester() }
+    var pageWasOpen by remember { mutableStateOf(false) }
+    LaunchedEffect(pageOpen) {
+        if (pageOpen) { pageWasOpen = true; return@LaunchedEffect }
+        if (pageWasOpen) dockGroupFocus.requestFocus()
     }
     // Focus follows the icon when the dock re-sorts after a launch; keep that icon on screen.
     LaunchedEffect(dockEntries) {
@@ -238,7 +254,7 @@ fun HomeScreen(viewModel: HomeViewModel) {
     // Also every minute while home is showing. Checking only on resume missed updates after a
     // restart or waking from sleep: the first check ran before Wi-Fi was back and failed, and
     // nothing asked again until you left home and came back (found on the Thor). A failed check
-    // doesn't count, so this retries until one gets through, then settles to hourly.
+    // doesn't count, so this retries until one gets through, then settles to every 15 minutes.
     LaunchedEffect(lifecycleOwner) {
         lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
             while (true) {
@@ -375,7 +391,12 @@ fun HomeScreen(viewModel: HomeViewModel) {
             focusedPackage      = focusedDockPkg,
             onFocusedChange     = { focusedDockPkg = it },
             focusRequesters     = dockFocusRequesters,
-            focusEnabled        = { !showSettings && !showAppDrawer },
+            groupFocus          = dockGroupFocus,
+            restoreFallback     = dockFocusRequesters.getOrPut(defaultDockPkg() ?: "") { FocusRequester() },
+            // Not while a page is up: the page holds focus, and an icon arriving under it
+            // mustn't take it.
+            landing             = dockLanding.takeIf { !pageOpen },
+            landOn              = dockLandOn,
             onEmulatorLongClick = { pkg ->
                 scope.launch {
                     when (pkg) {
@@ -518,21 +539,6 @@ fun Clock(use24h: Boolean = true) {
 
 // ── Top-bar round buttons (app drawer, settings) ─────────────────────────────
 
-/** A round, see-through button with a white icon: the app drawer and settings in the top bar. */
-@Composable
-fun CircleIconButton(@androidx.annotation.DrawableRes icon: Int, onClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .size(36.dp)
-            .clip(CircleShape)
-            .pointerInput(Unit) { detectTapGestures(onTap = { onClick() }) },
-        contentAlignment = Alignment.Center
-    ) {
-        Surface(modifier = Modifier.fillMaxSize(), shape = CircleShape,
-            color = Color.White.copy(alpha = 0.14f), tonalElevation = 0.dp) {}
-        com.joeyos.app.ui.components.JoeyIcon(icon, Color.White, 20.dp)
-    }
-}
 
 private fun formattedDate(): String = SimpleDateFormat("EEE, MMM d", Locale.getDefault()).format(Date())
 

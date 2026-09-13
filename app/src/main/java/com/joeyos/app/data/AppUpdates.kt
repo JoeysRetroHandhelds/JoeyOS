@@ -28,9 +28,10 @@ object AppUpdates {
     private const val PREFS = "app_updates"
     private const val KEY_LAST_CHECK = "last_check"
     private const val KEY_SKIPPED = "skipped_version"
-    // Hourly on resume (GitHub allows 60 unauthenticated checks an hour), plus once every time
-    // JoeyOS starts fresh. 6 hours was too long: a release could sit unseen most of a day.
-    private const val AUTO_CHECK_INTERVAL_MS = 60 * 60 * 1000L
+    // Every 15 minutes while home is showing (GitHub allows 60 unauthenticated checks an hour),
+    // plus once every time JoeyOS starts fresh. Hourly was too long: a release could sit unseen
+    // for most of an hour, sleep or not (found on device).
+    private const val AUTO_CHECK_INTERVAL_MS = 15 * 60 * 1000L
     @Volatile private var checkedThisRun = false
 
     data class Release(

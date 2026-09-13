@@ -110,7 +110,7 @@ class MainActivity : ComponentActivity() {
     // becomes the screen in front again.
     override fun onTopResumedActivityChanged(isTopResumedActivity: Boolean) {
         super.onTopResumedActivityChanged(isTopResumedActivity)
-        if (isTopResumedActivity) SecondScreenState.backHome()
+        if (isTopResumedActivity) { SecondScreenState.backHome(); SecondScreenController.onHomeInFront() }
     }
 
     // A screen plugged in or removed (HDMI, a dock): open or close the second screen to match.

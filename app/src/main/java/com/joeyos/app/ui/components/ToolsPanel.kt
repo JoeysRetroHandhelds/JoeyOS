@@ -67,7 +67,9 @@ import java.io.File
  *
  * A hub lists the tools; A opens one inside the tab, B returns to the hub (this BackHandler is
  * registered after the Settings page's, so it's asked first), and focus goes back to the row
- * that opened it.
+ * that opened it. Each move is a [FocusLanding] armed in the same event that swaps the screen:
+ * the row to land on asks for focus itself once it's composed. The hub keeps its own list state,
+ * so on the way back the row you opened is where it was, on screen, and is composed at once.
  */
 private enum class ToolScreen { Hub, Bios, Patch, M3u, Compress, RaHacks }
 
@@ -84,20 +86,13 @@ fun ToolsPanel(
 ) {
     var screen by rememberSaveable { mutableStateOf(ToolScreen.Hub) }
     var lastTool by rememberSaveable { mutableStateOf(ToolScreen.Bios) }
-    val hubRows = remember { ToolScreen.entries.associateWith { FocusRequester() } }
-    val toolFirst = remember { FocusRequester() }
+    // Not armed on first show: arriving on the Tools tab, focus stays on the tab.
+    val backToHub = remember { FocusLanding(armed = false) }
+    val toolFirst = remember { FocusLanding(armed = false) }
+    fun open(tool: ToolScreen) { lastTool = tool; toolFirst.arm(); screen = tool }
+    fun hubRow(tool: ToolScreen) = Modifier.landFocus(backToHub, enabled = lastTool == tool)
 
-    BackHandler(enabled = screen != ToolScreen.Hub) { screen = ToolScreen.Hub }
-
-    // Land focus when the screen changes: the tool's first item on open, the row that opened
-    // it on the way back.
-    LaunchedEffect(screen) {
-        withFrameNanos { }
-        runCatching {
-            if (screen == ToolScreen.Hub) hubRows.getValue(lastTool).requestFocus()
-            else { lastTool = screen; toolFirst.requestFocus() }
-        }
-    }
+    BackHandler(enabled = screen != ToolScreen.Hub) { backToHub.arm(); screen = ToolScreen.Hub }
 
     when (screen) {
         ToolScreen.Hub -> LazyColumn(
@@ -111,9 +106,8 @@ fun ToolsPanel(
                     label = "Check BIOS files",
                     detail = "Tells you which consoles have the BIOS they need and which are " +
                         "missing one, checked against your BIOS folder.",
-                    onClick = { screen = ToolScreen.Bios },
-                    modifier = Modifier
-                        .focusRequester(hubRows.getValue(ToolScreen.Bios))
+                    onClick = { open(ToolScreen.Bios) },
+                    modifier = hubRow(ToolScreen.Bios)
                         .then(if (firstFocus != null) Modifier.focusRequester(firstFocus) else Modifier)
                 )
             }
@@ -123,8 +117,8 @@ fun ToolsPanel(
                     detail = "Applies a patch to a game, for romhacks and fan translations " +
                         "(IPS, UPS, BPS, PPF, APS, xdelta). Writes a new patched file and never " +
                         "changes the original.",
-                    onClick = { screen = ToolScreen.Patch },
-                    modifier = Modifier.focusRequester(hubRows.getValue(ToolScreen.Patch))
+                    onClick = { open(ToolScreen.Patch) },
+                    modifier = hubRow(ToolScreen.Patch)
                 )
             }
             item {
@@ -132,8 +126,8 @@ fun ToolsPanel(
                     label = "Generate .m3u playlists",
                     detail = "Turns multi-disc games into one playlist each, moving the discs " +
                         "out of sight so each game shows once in your emulator.",
-                    onClick = { screen = ToolScreen.M3u },
-                    modifier = Modifier.focusRequester(hubRows.getValue(ToolScreen.M3u))
+                    onClick = { open(ToolScreen.M3u) },
+                    modifier = hubRow(ToolScreen.M3u)
                 )
             }
             item {
@@ -141,8 +135,8 @@ fun ToolsPanel(
                     label = "Compress ROMs",
                     detail = "Saves space: zips cartridge ROMs and converts discs to CHD, GameCube/Wii to RVZ " +
                         "and 3DS to ZCCI, the formats their emulators read directly. Can be undone.",
-                    onClick = { screen = ToolScreen.Compress },
-                    modifier = Modifier.focusRequester(hubRows.getValue(ToolScreen.Compress))
+                    onClick = { open(ToolScreen.Compress) },
+                    modifier = hubRow(ToolScreen.Compress)
                 )
             }
             item {
@@ -150,8 +144,8 @@ fun ToolsPanel(
                     label = "RetroAchievements romhacks",
                     detail = "Finds romhacks and translations for the games you own, and applies one to make " +
                         "a version RetroAchievements recognises, achievements and all.",
-                    onClick = { screen = ToolScreen.RaHacks },
-                    modifier = Modifier.focusRequester(hubRows.getValue(ToolScreen.RaHacks))
+                    onClick = { open(ToolScreen.RaHacks) },
+                    modifier = hubRow(ToolScreen.RaHacks)
                 )
             }
             // ── System: kept last, below the tools ──
@@ -184,7 +178,7 @@ fun ToolsPanel(
     }
 }
 
-/** A full-width tool action: a title and a line of detail, amber-ringed when focused. */
+/** A full-width tool action: a title and a line of detail, accent-ringed when focused. */
 @Composable
 internal fun ToolRow(label: String, detail: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
     CardRow(onClick = onClick, modifier = modifier) { focused -> CardText(label, detail, focused) }
@@ -201,7 +195,7 @@ private fun BiosCheckScreen(
     installedApps: List<InstalledApp>,
     biosFolder: String,
     onBiosFolderChange: (String) -> Unit,
-    firstFocus: FocusRequester,
+    firstFocus: FocusLanding,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -270,7 +264,7 @@ private fun BiosCheckScreen(
                         "from other apps on Android."
                 },
                 onClick = { runCatching { picker.launch(null) } },
-                modifier = Modifier.focusRequester(firstFocus)
+                modifier = Modifier.landFocus(firstFocus)
             )
         }
         if (biosFolder.isNotBlank()) {
@@ -352,7 +346,7 @@ private fun BiosResultRow(result: BiosSystemResult) {
  * came from somewhere with no file path (cloud storage, another app).
  */
 @Composable
-private fun PatchScreen(firstFocus: FocusRequester, modifier: Modifier = Modifier) {
+private fun PatchScreen(firstFocus: FocusLanding, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
@@ -462,7 +456,7 @@ private fun PatchScreen(firstFocus: FocusRequester, modifier: Modifier = Modifie
                     "This isn't a patch JoeyOS can apply. Use an .ips, .ups, .bps, .ppf, .aps or .xdelta file."
                 else "An .ips, .ups, .bps, .ppf, .aps or .xdelta file.",
                 onClick = { runCatching { patchPicker.launch(arrayOf("*/*")) } },
-                modifier = Modifier.focusRequester(firstFocus)
+                modifier = Modifier.landFocus(firstFocus)
             )
         }
         item {
@@ -496,7 +490,7 @@ private fun PatchScreen(firstFocus: FocusRequester, modifier: Modifier = Modifie
 }
 
 
-/** A tick-box row: amber-ringed when focused, a check mark when on. One focus target. */
+/** A tick-box row: accent-ringed when focused, a check mark when on. One focus target. */
 @Composable
 internal fun ToggleRow(
     label: String,
@@ -544,7 +538,7 @@ private data class M3uConsolePlan(
  * has no library of its own, only the reminder to refresh the emulator's game list.
  */
 @Composable
-private fun M3uScreen(firstFocus: FocusRequester, modifier: Modifier = Modifier) {
+private fun M3uScreen(firstFocus: FocusLanding, modifier: Modifier = Modifier) {
     val scope = rememberCoroutineScope()
     var refresh by remember { mutableIntStateOf(0) }
     var applying by remember { mutableStateOf(false) }
@@ -555,7 +549,9 @@ private fun M3uScreen(firstFocus: FocusRequester, modifier: Modifier = Modifier)
     val selected = remember { mutableStateMapOf<String, Boolean>() }
     var progress by remember { mutableStateOf<M3uProgress?>(null) }
     val stopToken = remember { java.util.concurrent.atomic.AtomicBoolean(false) }
-    val cancelFocus = remember { FocusRequester() }
+    // While a run is going its only control is Cancel, and when it ends Cancel goes: each time
+    // focus is moved on in the same step that removes what held it (see [FocusLanding]).
+    val toCancel = remember { FocusLanding(armed = false) }
 
     val plans by produceState<List<M3uConsolePlan>?>(null, refresh) {
         value = null
@@ -573,15 +569,9 @@ private fun M3uScreen(firstFocus: FocusRequester, modifier: Modifier = Modifier)
     }
     // Consoles with work start ticked, once their plan is known; a manual choice then sticks.
     LaunchedEffect(plans) { plans?.forEach { if (it.label !in selected) selected[it.label] = it.hasWork } }
-    // While a run is going, the only control is Cancel: put focus on it so the D-pad has a target.
-    LaunchedEffect(applying) {
-        if (applying) { withFrameNanos { }; runCatching { cancelFocus.requestFocus() } }
-    }
 
-    val listState = rememberLazyListState()
     LazyColumn(
-        state = listState,
-        modifier = modifier.keepFocus(firstFocus, listState, plans, applying).padding(horizontal = 18.dp),
+        modifier = modifier.padding(horizontal = 18.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
         contentPadding = PaddingValues(top = 4.dp, bottom = 28.dp)
     ) {
@@ -603,7 +593,7 @@ private fun M3uScreen(firstFocus: FocusRequester, modifier: Modifier = Modifier)
             }
             item {
                 ToolRow("Cancel", "Stops after the game in progress. Anything already done stays and can be undone.",
-                    onClick = { stopToken.set(true) }, modifier = Modifier.focusRequester(cancelFocus))
+                    onClick = { stopToken.set(true) }, modifier = Modifier.landFocus(toCancel))
             }
             return@LazyColumn
         }
@@ -630,7 +620,7 @@ private fun M3uScreen(firstFocus: FocusRequester, modifier: Modifier = Modifier)
                     }
                     // Keep something focusable on the page.
                     item { ToolRow("Scan again", "Look through your ROMs folders again.",
-                        onClick = { refresh++ }, modifier = Modifier.focusRequester(firstFocus)) }
+                        onClick = { refresh++ }, modifier = Modifier.landFocus(firstFocus)) }
                     return@LazyColumn
                 }
                 item { SectionLabel("CONSOLES") }
@@ -640,14 +630,14 @@ private fun M3uScreen(firstFocus: FocusRequester, modifier: Modifier = Modifier)
                         ToolRow(if (allOn) "Select none" else "Select all",
                             if (allOn) "Untick every console below." else "Tick every console below.",
                             onClick = { list.forEach { selected[it.label] = !allOn } },
-                            modifier = Modifier.focusRequester(firstFocus))
+                            modifier = Modifier.landFocus(firstFocus))
                     }
                 }
                 list.forEachIndexed { i, plan ->
                     item(key = "console_${plan.label}") {
                         ToggleRow(plan.label, plan.status, selected[plan.label] == true,
                             onToggle = { selected[plan.label] = it },
-                            modifier = if (i == 0 && list.size < 2) Modifier.focusRequester(firstFocus) else Modifier)
+                            modifier = Modifier.landFocus(firstFocus, enabled = i == 0 && list.size < 2))
                     }
                 }
 
@@ -680,7 +670,7 @@ private fun M3uScreen(firstFocus: FocusRequester, modifier: Modifier = Modifier)
                             "For the ticked consoles: creates the ready ones, plus any conflicts you chose to overwrite.",
                             onClick = {
                                 summary = null; undoActions = emptyList(); changedAny = false
-                                stopToken.set(false); applying = true
+                                stopToken.set(false); applying = true; toCancel.arm()
                                 scope.launch {
                                     try {
                                         val run = M3uPlaylist.applyAll(
@@ -702,7 +692,10 @@ private fun M3uScreen(firstFocus: FocusRequester, modifier: Modifier = Modifier)
                                         AppLog.i("Tools", "m3u: $summary " + run.results.filter { !it.created }
                                             .joinToString("; ") { "${it.game}: ${it.message}" })
                                     } finally {
+                                        // Cancel goes with the run: back to the top of the tool,
+                                        // which takes focus once the new scan shows it.
                                         overwrite.clear(); progress = null; applying = false; refresh++
+                                        firstFocus.arm()
                                     }
                                 }
                             })
@@ -720,7 +713,8 @@ private fun M3uScreen(firstFocus: FocusRequester, modifier: Modifier = Modifier)
                                 "Games you overwrote can't be restored.",
                             onClick = {
                                 val actions = undoActions
-                                undoActions = emptyList(); changedAny = false
+                                // This row goes as it's pressed: focus moves to the top of the tool.
+                                undoActions = emptyList(); changedAny = false; firstFocus.arm()
                                 scope.launch {
                                     val n = M3uPlaylist.undo(actions)
                                     summary = "Undone $n game${plural(n)}."
@@ -803,7 +797,7 @@ private data class CompressRunState(val done: Int, val total: Int, val current: 
  * are dropped (JoeyOS has no library); the reminder to refresh the emulator stays.
  */
 @Composable
-private fun CompressScreen(firstFocus: FocusRequester, modifier: Modifier = Modifier) {
+private fun CompressScreen(firstFocus: FocusLanding, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val libDir = context.applicationInfo.nativeLibraryDir
@@ -832,7 +826,8 @@ private fun CompressScreen(firstFocus: FocusRequester, modifier: Modifier = Modi
     val selected = remember { mutableStateMapOf<String, Boolean>() }
     var progress by remember { mutableStateOf<CompressRunState?>(null) }
     val stopToken = remember { java.util.concurrent.atomic.AtomicBoolean(false) }
-    val cancelFocus = remember { FocusRequester() }
+    // As in M3uScreen: focus moves to Cancel as a run starts, and off it as the run ends.
+    val toCancel = remember { FocusLanding(armed = false) }
 
     LaunchedEffect(Unit) {
         val missing = CompressFormat.entries.filter { !available(it) }.mapNotNull { it.tool }
@@ -884,9 +879,6 @@ private fun CompressScreen(firstFocus: FocusRequester, modifier: Modifier = Modi
     LaunchedEffect(plans) {
         plans?.forEach { if (it.label !in selected) selected[it.label] = it.hasWork && available(it.format) }
     }
-    LaunchedEffect(applying) {
-        if (applying) { withFrameNanos { }; runCatching { cancelFocus.requestFocus() } }
-    }
 
     showLicence?.let { asset ->
         val text = remember(asset) {
@@ -903,10 +895,8 @@ private fun CompressScreen(firstFocus: FocusRequester, modifier: Modifier = Modi
         }
     }
 
-    val listState = rememberLazyListState()
     LazyColumn(
-        state = listState,
-        modifier = modifier.keepFocus(firstFocus, listState, plans, applying).padding(horizontal = 18.dp),
+        modifier = modifier.padding(horizontal = 18.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
         contentPadding = PaddingValues(top = 4.dp, bottom = 28.dp)
     ) {
@@ -929,7 +919,7 @@ private fun CompressScreen(firstFocus: FocusRequester, modifier: Modifier = Modi
             }
             item {
                 ToolRow("Cancel", "Stops after the file in progress. Anything already done stays and can be undone.",
-                    onClick = { stopToken.set(true) }, modifier = Modifier.focusRequester(cancelFocus))
+                    onClick = { stopToken.set(true) }, modifier = Modifier.landFocus(toCancel))
             }
             return@LazyColumn
         }
@@ -952,7 +942,7 @@ private fun CompressScreen(firstFocus: FocusRequester, modifier: Modifier = Modi
                     "the new file is verified, which is what saves the space.",
                 checked = keepBoth,
                 onToggle = { keepBoth = it },
-                modifier = Modifier.focusRequester(firstFocus)
+                modifier = Modifier.landFocus(firstFocus)
             )
         }
         val unavailable = CompressFormat.entries.filter { !available(it) }
@@ -1041,7 +1031,7 @@ private fun CompressScreen(firstFocus: FocusRequester, modifier: Modifier = Modi
                             onClick = {
                                 summary = null; zipUndo = emptyList(); chdUndo = emptyList()
                                 rvzUndo = emptyList(); dsUndo = emptyList(); changedAny = false
-                                stopToken.set(false); applying = true
+                                stopToken.set(false); applying = true; toCancel.arm()
                                 AppLog.i("Tools", "Compress: starting ${zipRun.size} to zip, ${chdRun.size} to CHD, " +
                                     "${rvzRun.size} to RVZ, ${dsRun.size} to ZCCI on " +
                                     chosen.joinToString { "${it.label} (${it.format})" } +
@@ -1136,7 +1126,9 @@ private fun CompressScreen(firstFocus: FocusRequester, modifier: Modifier = Modi
                                         AppLog.e("Tools", "Compress: run failed", e)
                                         summary = "Something went wrong. Anything already done can be undone."
                                     } finally {
+                                        // Cancel goes with the run: focus back to the top of the tool.
                                         overwrite.clear(); progress = null; applying = false; refresh++
+                                        firstFocus.arm()
                                     }
                                 }
                             })
@@ -1156,7 +1148,8 @@ private fun CompressScreen(firstFocus: FocusRequester, modifier: Modifier = Modi
                             onClick = {
                                 val zips = zipUndo; val chds = chdUndo; val rvzs = rvzUndo; val dss = dsUndo
                                 zipUndo = emptyList(); chdUndo = emptyList(); rvzUndo = emptyList(); dsUndo = emptyList()
-                                changedAny = false
+                                // This row goes as it's pressed: focus moves to the top of the tool.
+                                changedAny = false; firstFocus.arm()
                                 scope.launch {
                                     val n = RomCompression.undo(zips) +
                                         (if (chdman != null) ChdConversion.undo(chdman, chds) else 0) +
@@ -1268,7 +1261,7 @@ private const val RaMaxRomBytes = 1024L * 1024 * 1024
  * asked first) and focus returns to the row you came from.
  */
 @Composable
-private fun RaHacksScreen(firstFocus: FocusRequester, modifier: Modifier = Modifier) {
+private fun RaHacksScreen(firstFocus: FocusLanding, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     remember { RaPatches.cacheDir = context.cacheDir; Unit }
@@ -1282,9 +1275,11 @@ private fun RaHacksScreen(firstFocus: FocusRequester, modifier: Modifier = Modif
     var checked by remember { mutableIntStateOf(0) }
     var indexMissing by remember { mutableStateOf(false) }
     var retries by remember { mutableIntStateOf(0) }
-    val consoleRows = remember { mutableMapOf<String, FocusRequester>() }
-    val gameRows = remember { mutableMapOf<String, FocusRequester>() }
-    val levelFirst = remember { FocusRequester() }
+    // Focus: a level's first row on the way in, the row you came from on the way back. Set in
+    // the same step that changes level; the row asks for focus itself once it's composed.
+    val landing = remember { FocusLanding(armed = false) }
+    var landOn by remember { mutableStateOf<String?>(null) }
+    fun landOnRow(key: String) { landOn = key; landing.arm() }
     var lastConsole by remember { mutableStateOf<String?>(null) }
     var lastGame by remember { mutableStateOf<String?>(null) }
     var pendingHack by remember { mutableStateOf<RaHack?>(null) }
@@ -1321,6 +1316,7 @@ private fun RaHacksScreen(firstFocus: FocusRequester, modifier: Modifier = Modif
                         val (worked, text) = createRaHack(context, console, game, hack, target,
                             compress = hackFormat.takeIf { compress })
                         ok = worked; message = text; busy = false; openGame = null
+                        landOnRow("game_${game.rom.absolutePath}")
                     }
                 },
                 onCancel = { pendingHack = null }
@@ -1328,8 +1324,10 @@ private fun RaHacksScreen(firstFocus: FocusRequester, modifier: Modifier = Modif
         }
     }
 
-    BackHandler(enabled = openGame != null && !busy) { openGame = null }
-    BackHandler(enabled = openGame == null && chosen != null && !busy) { chosen = null; message = null }
+    BackHandler(enabled = openGame != null && !busy) { openGame = null; landOnRow("game_$lastGame") }
+    BackHandler(enabled = openGame == null && chosen != null && !busy) {
+        chosen = null; message = null; landOnRow("console_$lastConsole")
+    }
 
     val folders by produceState<Map<String, List<File>>?>(null) {
         value = withContext(Dispatchers.IO) { RaPatches.romFolders(RomFinder.storageRoots()) }
@@ -1363,37 +1361,17 @@ private fun RaHacksScreen(firstFocus: FocusRequester, modifier: Modifier = Modif
         }
     }
 
-    // Focus: the first row when a level opens, the row you came from when you step back. The row
-    // is scrolled into view first: the list keeps its scroll position across levels, and a row
-    // that's off screen doesn't exist yet in a lazy list, so it can't take focus. Found on device:
-    // opening Fire Emblem, far down the GBA list, opened its 76 hacks scrolled part-way, the first
-    // hack wasn't there to focus, and nothing was focused, so the controls did nothing.
-    val listState = rememberLazyListState()
-    LaunchedEffect(chosen, openGame, matches != null, folders != null, busy) {
-        if (busy) return@LaunchedEffect
-        // Rows above the level's list: the title, a result message, and the level's own heading.
-        val header = 2 + (if (message != null) 1 else 0)
-        val (index, target) = when {
-            openGame != null -> header to levelFirst
-            chosen != null && matches != null -> {
-                val i = matches.orEmpty().indexOfFirst { it.rom.absolutePath == lastGame }
-                if (i >= 0) (header + i) to gameRows.getValue(lastGame!!) else header to levelFirst
-            }
-            chosen == null && folders != null -> {
-                val keys = folders.orEmpty().keys.sortedBy { RaConsoleNames[it] ?: it }
-                val i = keys.indexOf(lastConsole)
-                if (i >= 0) (header + i) to consoleRows.getValue(lastConsole!!) else header to firstFocus
-            }
-            else -> return@LaunchedEffect
-        }
-        runCatching { listState.scrollToItem((index - 1).coerceAtLeast(0)) }
-        withFrameNanos { }
-        if (runCatching { target.requestFocus() }.isFailure) {
-            // Never leave the page with nothing focused: fall back to the top of the list.
-            runCatching { listState.scrollToItem(0) }
-            withFrameNanos { }
-            runCatching { (if (openGame != null || chosen != null) levelFirst else firstFocus).requestFocus() }
-        }
+    // Each level has its own list state, so stepping back finds the list where you left it,
+    // with the row you came from on screen and composed, ready to take focus. (One shared state
+    // left a level scrolled part-way, the row to focus not composed and nothing focused — found
+    // on device: Fire Emblem's 76 hacks.) A game's hacks always open at the top.
+    val consoleList = rememberLazyListState()
+    val gameLists = remember { mutableMapOf<String, LazyListState>() }
+    val hackList = remember(openGame) { LazyListState() }
+    val listState = when {
+        openGame != null -> hackList
+        chosen != null   -> gameLists.getOrPut(chosen!!) { LazyListState() }
+        else             -> consoleList
     }
 
     LazyColumn(
@@ -1431,10 +1409,10 @@ private fun RaHacksScreen(firstFocus: FocusRequester, modifier: Modifier = Modif
                     else -> list.keys.sortedBy { RaConsoleNames[it] ?: it }.forEachIndexed { i, key ->
                         item(key = "console_$key") {
                             ToolRow(RaConsoleNames[key] ?: key, list.getValue(key).joinToString { it.absolutePath },
-                                onClick = { lastConsole = key; lastGame = null; chosen = key; message = null },
+                                onClick = { lastConsole = key; lastGame = null; chosen = key; message = null; landOnRow(FirstRow) },
                                 modifier = Modifier
-                                    .focusRequester(consoleRows.getOrPut(key) { FocusRequester() })
-                                    .then(if (i == 0) Modifier.focusRequester(firstFocus) else Modifier))
+                                    .landFocus(landing, enabled = landOn == "console_$key")
+                                    .landFocus(firstFocus, enabled = i == 0))
                         }
                     }
                 }
@@ -1451,21 +1429,21 @@ private fun RaHacksScreen(firstFocus: FocusRequester, modifier: Modifier = Modif
                     list.isEmpty() && indexMissing -> item {
                         ToolRow("Couldn't load the romhack list",
                             "Check your connection and try again. Press A to retry, or B to go back.",
-                            onClick = { chosen?.let(RaPatches::retry); retries++ },
-                            modifier = Modifier.focusRequester(levelFirst))
+                            onClick = { chosen?.let(RaPatches::retry); retries++; landOnRow(FirstRow) },
+                            modifier = Modifier.landFocus(landing, enabled = landOn == FirstRow))
                     }
                     list.isEmpty() -> item {
                         ToolRow("No hacks for your games yet",
                             "None of the games you own for this console have a hack in the set. Press B to go back.",
-                            onClick = { chosen = null }, modifier = Modifier.focusRequester(levelFirst))
+                            onClick = { chosen = null; landOnRow("console_$lastConsole") },
+                            modifier = Modifier.landFocus(landing, enabled = landOn == FirstRow))
                     }
                     else -> list.forEachIndexed { i, match ->
                         item(key = "game_${match.rom.absolutePath}") {
                             ToolRow(match.title, "${match.hacks.size} available",
-                                onClick = { lastGame = match.rom.absolutePath; openGame = match; message = null },
-                                modifier = Modifier
-                                    .focusRequester(gameRows.getOrPut(match.rom.absolutePath) { FocusRequester() })
-                                    .then(if (i == 0) Modifier.focusRequester(levelFirst) else Modifier))
+                                onClick = { lastGame = match.rom.absolutePath; openGame = match; message = null; landOnRow(FirstRow) },
+                                modifier = Modifier.landFocus(landing,
+                                    enabled = landOn == "game_${match.rom.absolutePath}" || (landOn == FirstRow && i == 0)))
                         }
                     }
                 }
@@ -1477,13 +1455,16 @@ private fun RaHacksScreen(firstFocus: FocusRequester, modifier: Modifier = Modif
                     item(key = "hack_${hack.path}") {
                         ToolRow(label.title, label.detail + "  •  A to save it",
                             onClick = { pendingHack = hack },
-                            modifier = if (i == 0) Modifier.focusRequester(levelFirst) else Modifier)
+                            modifier = Modifier.landFocus(landing, enabled = landOn == FirstRow && i == 0))
                     }
                 }
             }
         }
     }
 }
+
+/** [RaHacksScreen]'s landing target for "the first row of the level just opened". */
+private const val FirstRow = "first"
 
 /** The suggested file name for a romhack: the base game's name plus the hack's, keeping its extension. */
 private fun raSuggestedName(match: RaGameMatch, hackTitle: String): String {
@@ -1592,10 +1573,9 @@ private fun SaveResultDialog(
         target.exists() || File(folder, shownName).exists() -> "A file with that name is already there. Change the name."
         else -> null
     }
-    val saveFocus = remember { FocusRequester() }
     val placeFirst = remember { FocusRequester() }
 
-    JoeyPopup(title = title, onDismiss = onCancel, initialFocus = saveFocus) {
+    JoeyPopup(title = title, onDismiss = onCancel) {
         SectionLabel("Name")
         ControllerTextField(value = name, onValueChange = { name = it }, placeholder = "File name")
 
@@ -1636,7 +1616,7 @@ private fun SaveResultDialog(
                 }.apply()
                 AppLog.i("Tools", "Save: ${target.absolutePath}" + if (compress) " (compressed, ${compressFormat?.label})" else "")
                 onSave(target, toBeside, compress && compressFormat != null)
-            }, Modifier.weight(1f).focusRequester(saveFocus))
+            }, Modifier.weight(1f).initialFocus())
             JoeyButton("Cancel", onCancel, Modifier.weight(1f))
         }
     }

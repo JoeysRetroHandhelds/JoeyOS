@@ -13,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -56,15 +55,14 @@ fun IntroScreen(
     val continueFocus = remember { FocusRequester() }
     val inputMode = LocalInputModeManager.current
     // Land on the next thing to do; re-land when a step completes (returning from Settings).
+    // The buttons aren't in a lazy list, so the one to land on is composed in the same pass that
+    // starts this effect: it's attached when the request is made, no frame wait needed.
+    // Keyboard mode first: this is the first screen after install, and a window starts in touch
+    // mode (and comes back from Settings in it if you tapped there), where Compose won't focus a
+    // clickable — the first step would show no highlight and the first press would have no target.
     LaunchedEffect(grantDone, homeDone) {
-        withFrameNanos { }
         inputMode.requestInputMode(InputMode.Keyboard)
-        runCatching {
-            when {
-                !grantDone -> grantFocus.requestFocus()
-                else       -> continueFocus.requestFocus()
-            }
-        }
+        if (!grantDone) grantFocus.requestFocus() else continueFocus.requestFocus()
     }
 
     BoxWithConstraints(
@@ -124,7 +122,7 @@ fun IntroScreen(
     }
 }
 
-/** One setup step: amber-ringed when focused; greyed out (and not a stop) once done. */
+/** One setup step: accent-ringed when focused; greyed out (and not a stop) once done. */
 @Composable
 private fun IntroButton(
     label: String,

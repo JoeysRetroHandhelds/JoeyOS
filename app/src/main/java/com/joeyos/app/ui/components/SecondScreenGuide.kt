@@ -39,6 +39,7 @@ import com.joeyos.app.data.GuideSource
 import com.joeyos.app.data.GuideTarget
 import com.joeyos.app.data.Guides
 import com.joeyos.app.ui.theme.*
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.Dispatchers
@@ -558,16 +559,20 @@ private fun GuideText(
     }
 
     // Your place is kept as a fraction of the whole (ten-thousandths), not a pixel offset, so it
-    // survives changing the text size. Restored once the text has been measured.
+    // survives changing the text size. Restored once the text has been measured: the scroll's
+    // range is set in the same layout pass that reports this text's layout, so wait for that
+    // layout (this text, this size, this wrapping) rather than polling for a range. A guide that
+    // fits the screen has no range and nothing to restore.
     var restored by remember(file) { mutableStateOf(false) }
     LaunchedEffect(file, textSize, wrapping, text) {
-        if (text == null) return@LaunchedEffect
+        val t = text ?: return@LaunchedEffect
         try {
-            repeat(20) {
-                val max = scroll.maxValue
-                if (max > 0) { runCatching { scroll.scrollTo((startAt / 10_000f * max).toInt()) }; return@LaunchedEffect }
-                kotlinx.coroutines.delay(16)
+            snapshotFlow { layout }.first { l ->
+                l != null && l.layoutInput.text.text == t && l.layoutInput.softWrap == wrapping &&
+                    l.layoutInput.style.fontSize == textSize.sp
             }
+            val max = scroll.maxValue
+            if (max > 0) scroll.scrollTo((startAt / 10_000f * max).toInt())
         } finally { restored = true }
     }
     LaunchedEffect(scroll.value == 0) { if (scroll.value == 0) onChrome(true) }
@@ -703,13 +708,28 @@ private fun GuideHtmlPage(file: File, chrome: Boolean, onChrome: (Boolean) -> Un
                     webViewClient = object : WebViewClient() {
                         var restored = false
                         override fun onPageFinished(view: WebView, url: String?) {
-                            if (reader) view.evaluateJavascript(ReaderScript, null)
-                            // Back to where you were, once the page has laid out.
-                            if (!restored) view.postDelayed({
-                                restored = true
-                                val at = prefs.getInt(guidePosKey(file), 0)
-                                if (at > 0) view.scrollTo(0, (at / 10_000f * view.scrollRange()).toInt())
-                            }, 400)
+                            val restore = !restored
+                            restored = true
+                            // Reader mode rewrites the page, so the place is restored after its
+                            // script has run, against the page as it will be read.
+                            if (reader) view.evaluateJavascript(ReaderScript) { if (restore) restorePlace(view) }
+                            else if (restore) restorePlace(view)
+                        }
+                        /**
+                         * Back to where you were, on the first frame drawn once the page has a
+                         * height (contentHeight), rather than after a guessed delay.
+                         */
+                        fun restorePlace(view: WebView) {
+                            val at = prefs.getInt(guidePosKey(file), 0)
+                            if (at <= 0) return
+                            view.viewTreeObserver.addOnPreDrawListener(object : android.view.ViewTreeObserver.OnPreDrawListener {
+                                override fun onPreDraw(): Boolean {
+                                    if (view.contentHeight == 0) return true
+                                    view.viewTreeObserver.takeIf { it.isAlive }?.removeOnPreDrawListener(this)
+                                    view.scrollTo(0, (at / 10_000f * view.scrollRange()).toInt())
+                                    return true
+                                }
+                            })
                         }
                         override fun onRenderProcessGone(view: WebView, detail: android.webkit.RenderProcessGoneDetail) =
                             webGone(view, detail) { web = null; webGen++ }

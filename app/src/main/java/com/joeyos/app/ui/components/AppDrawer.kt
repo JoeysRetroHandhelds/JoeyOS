@@ -14,7 +14,9 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.runtime.LaunchedEffect
@@ -55,8 +57,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 /**
- * All installed apps, full screen. A real Dialog window (JoeyDialog), so focus stays inside it
- * and returns to the dock icon you left when it closes. Focus opens on the first app; the search
+ * All installed apps, full screen. A page (JoeyPage), so focus stays inside it and returns to
+ * the dock icon you left when it closes. Focus opens on the first app; the search
  * box is a normal stop above the grid (Up from the top row) and never pops the keyboard on open.
  * Start on an app opens its options (App Info), as long-press does by touch.
  */
@@ -76,6 +78,7 @@ fun AppDrawer(
     var focusedApp by remember { mutableStateOf<InstalledApp?>(null) }
     var contextApp by remember { mutableStateOf<InstalledApp?>(null) }
     val firstApp = remember { FocusRequester() }
+    val grid = remember { FocusRequester() }
     val context = LocalContext.current
     val keyboard = LocalSoftwareKeyboardController.current
     val scope = rememberCoroutineScope()
@@ -85,35 +88,25 @@ fun AppDrawer(
     LaunchedEffect(typing) { com.joeyos.app.data.SecondScreenState.setTyping(typing) }
     DisposableEffect(Unit) { onDispose { com.joeyos.app.data.SecondScreenState.setTyping(false) } }
     val fieldFocus = remember { FocusRequester() }
-    val boxFocus = remember { FocusRequester() }
+    // The search box's highlight-only stop comes back when typing stops; this lands on it.
+    val backToBox = remember { FocusLanding(armed = false) }
+    // A new search starts at the top of its results, so the first result is the one on screen.
+    LaunchedEffect(query) { gridState.scrollToItem(0) }
+
     /**
-     * Down from the full-width search box goes to the first result. Left to itself, focus search
-     * picks the app nearest the box's centre (found on device), so this one step is explicit.
-     * The grid is scrolled to the top first, so the first result exists to take focus.
+     * Leave typing: hide the keyboard and land on the search box, or (the keyboard's Done) go
+     * down to the results. Done moves while the field still holds focus, so the move starts from
+     * the field and goes through the same Down route as the box (below).
      */
-    fun goToFirstResult() {
-        if (filtered.isEmpty()) return
-        scope.launch {
-            gridState.scrollToItem(0)
-            withFrameNanos { }
-            runCatching { firstApp.requestFocus() }
-        }
-    }
-    /** Leave typing: hide the keyboard and land on the search box, or on the first result. */
     fun stopTyping(toResults: Boolean) {
+        val moved = toResults && filtered.isNotEmpty() && grid.requestFocus(FocusDirection.Down)
+        if (!moved) backToBox.arm()
         keyboard?.hide()
         typing = false
-        if (toResults && filtered.isNotEmpty()) goToFirstResult()
-        else scope.launch {
-            withFrameNanos { }
-            runCatching { boxFocus.requestFocus() }
-        }
     }
 
     JoeyPage(
         onClose      = onDismiss,
-        focusKey     = installedApps.isNotEmpty(),
-        initialFocus = if (filtered.isNotEmpty()) firstApp else null,
         onControl    = { control ->
             if (control == Control.Options) focusedApp?.let { contextApp = it }
             true
@@ -136,8 +129,12 @@ fun AppDrawer(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text("All Apps", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = TextPrimary)
-                Text("A open  •  Start options  •  B close", fontSize = 9.sp,
-                    fontFamily = JoeyFont, color = TextFaint)
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Text("A open  •  Start options  •  B close", fontSize = 9.sp,
+                        fontFamily = JoeyFont, color = TextFaint)
+                    // Touch: back to the home screen (B does the same on a controller).
+                    CircleIconButton(com.joeyos.app.R.drawable.ic_close, onClick = onDismiss)
+                }
             }
 
             // Search box. Two states, the TV way: landing on it only highlights it (the overlay
@@ -197,34 +194,40 @@ fun AppDrawer(
                     Box(
                         modifier = Modifier
                             .matchParentSize()
-                            .focusRequester(boxFocus)
-                            .onPreviewKeyEvent { e ->
-                                if (e.key == Key.DirectionDown && filtered.isNotEmpty()) {
-                                    if (e.type == KeyEventType.KeyDown) goToFirstResult()
-                                    true
-                                } else false
-                            }
+                            .landFocus(backToBox)
+                            // Down from the full-width box goes into the grid as a whole: the app
+                            // you came up from, else the first result (focusProperties +
+                            // focusRestorer, "Focus in Compose"). Left to itself, focus search
+                            // picks the app nearest the box's centre (found on device).
+                            .focusProperties { down = grid }
                             .clickable(interactionSource = boxInteraction, indication = null) { typing = true }
                     )
                 }
             }
+            // The field is always composed (only its canFocus follows typing), so it's attached
+            // when this runs, after the recomposition that turned typing on.
             LaunchedEffect(typing) {
                 if (typing) {
-                    withFrameNanos { }
-                    runCatching { fieldFocus.requestFocus() }
+                    fieldFocus.requestFocus()
                     keyboard?.show()
                 }
             }
 
             // App grid. Keyed by package, so focus follows an app if the list changes; the grid
-            // brings the focused app into view itself as the D-pad walks it.
+            // brings the focused app into view itself as the D-pad walks it. One focus group
+            // that remembers the app you left it from; the first app is where it starts, and
+            // where the drawer opens (it takes focus as soon as the grid composes it).
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(minSize = 96.dp),
                 state = gridState,
                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .focusRequester(grid)
+                    .focusRestorer(firstApp)
+                    .focusGroup()
             ) {
                 itemsIndexed(filtered, key = { _, app -> app.packageName }) { i, app ->
                     AppGridItem(
@@ -232,7 +235,7 @@ fun AppDrawer(
                         onClick     = { onLaunch(app.packageName) },
                         onLongClick = { contextApp = app },
                         onFocused   = { focusedApp = app },
-                        modifier    = if (i == 0) Modifier.focusRequester(firstApp) else Modifier
+                        modifier    = if (i == 0) Modifier.focusRequester(firstApp).initialFocus() else Modifier
                     )
                 }
             }

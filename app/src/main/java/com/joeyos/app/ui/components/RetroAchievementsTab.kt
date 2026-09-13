@@ -161,11 +161,9 @@ fun RetroAchievementsTab(
     // ── Popups ───────────────────────────────────────────────────────────────
     listYear?.let { y ->
         val list = remember(y, ra) { awardsFor(y) }
-        val first = remember { FocusRequester() }
         JoeyPopup(
             title = if (y == 0) "All-time beaten (${list.size})" else "Beaten in $y (${list.size})",
-            hint = "A details  •  B close", onDismiss = { listYear = null }, padded = false, wide = true,
-            initialFocus = if (list.isNotEmpty()) first else null
+            hint = "A details  •  B close", onDismiss = { listYear = null }, padded = false, wide = true
         ) {
             if (list.isEmpty()) PopupNote("Nothing beaten yet.")
             else LazyColumn(
@@ -175,7 +173,7 @@ fun RetroAchievementsTab(
             ) {
                 itemsIndexed(list) { i, e ->
                     GameRow(e, onClick = { detail = e },
-                        modifier = if (i == 0) Modifier.focusRequester(first) else Modifier)
+                        modifier = Modifier.initialFocus(i == 0))
                 }
             }
         }
@@ -203,17 +201,18 @@ fun RetroAchievementsTab(
             (ra?.awards.orEmpty().map { it.consoleName } + raProg.map { it.consoleName })
                 .filter { it.isNotBlank() }.distinct().sorted()
         }
-        val current = remember { FocusRequester() }
         JoeyPopup(title = "Console", hint = "A set  •  B cancel", onDismiss = { consolePicker = false },
-            padded = false, initialFocus = current) {
-            LazyColumn(Modifier.fillMaxWidth()) {
+            padded = false) {
+            // Opens scrolled to the current choice, so its row is composed and takes focus.
+            LazyColumn(Modifier.fillMaxWidth(), state = rememberLazyListState(
+                initialFirstVisibleItemIndex = console?.let { consoles.indexOf(it) + 1 }?.coerceAtLeast(0) ?: 0)) {
                 item {
                     PopupRow("All consoles", { console = null; consolePicker = false }, isCurrent = console == null,
-                        modifier = if (console == null) Modifier.focusRequester(current) else Modifier)
+                        modifier = Modifier.initialFocus(console == null))
                 }
                 items(consoles) { c ->
                     PopupRow(c, { console = c; consolePicker = false }, isCurrent = console == c,
-                        modifier = if (console == c) Modifier.focusRequester(current) else Modifier)
+                        modifier = Modifier.initialFocus(console == c))
                 }
             }
         }
@@ -595,8 +594,7 @@ private fun GameDetailPopup(
     val extra by produceState<List<Pair<String, String>>?>(null, e.raGameId) {
         value = if (e.raGameId > 0) raRepo.fetchGameInfo(e.raGameId) else emptyList()
     }
-    val close = remember { FocusRequester() }
-    JoeyPopup(title = e.title, hint = "B close", onDismiss = onClose, initialFocus = close) {
+    JoeyPopup(title = e.title, hint = "B close", onDismiss = onClose) {
         Row(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
             Thumb(e.imageUrl, e.title, 96.dp)
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -614,7 +612,7 @@ private fun GameDetailPopup(
             e.url?.let { url ->
                 JoeyButton("Open on website", { onOpen(url) }, Modifier.weight(1f).focusRequester(first))
             }
-            JoeyButton("Close", onClose, Modifier.weight(1f).focusRequester(close)
+            JoeyButton("Close", onClose, Modifier.weight(1f).initialFocus()
                 .then(if (e.url == null) Modifier.focusRequester(first) else Modifier))
         }
     }

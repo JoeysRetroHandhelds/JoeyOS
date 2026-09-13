@@ -113,12 +113,19 @@ fun Dock(
     onFocusedChange: (String) -> Unit = {},
     focusRequesters: MutableMap<String, FocusRequester> = remember { mutableMapOf() },
     /**
-     * False while a page covers the home screen, so the D-pad can't wander onto the dock. A
-     * function, read when focus is asked for: the dock is a lazy row whose items only pick up a
-     * new plain value at the next layout, after the home screen has already asked for focus back
-     * on closing a page, so that request was refused and nothing was highlighted (found on device).
+     * The dock as one focus group that remembers its last focused icon (focusRestorer, per "Focus
+     * in Compose"): asking this for focus lands back on the icon you left, e.g. when a page closes.
+     * [restoreFallback] is where it lands when there's nothing to remember yet.
      */
-    focusEnabled: () -> Boolean = { true },
+    groupFocus: FocusRequester = remember { FocusRequester() },
+    restoreFallback: FocusRequester = FocusRequester.Default,
+    /**
+     * Moves focus to the icon for [landOn] as soon as it's composed (see [FocusLanding]): the
+     * default icon on first start, the target of L1/R1 when it's scrolled off. The caller
+     * scrolls the row to it; the icon then asks for focus itself.
+     */
+    landing: FocusLanding? = null,
+    landOn: String? = null,
     onEmulatorLongClick: (packageName: String) -> Unit = {},
     iconSizeDp: Int = 46,
     listState: LazyListState = rememberLazyListState(),
@@ -178,7 +185,7 @@ fun Dock(
         LazyRow(
             state          = listState,
             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
-            modifier       = Modifier.fillMaxWidth(),
+            modifier       = Modifier.fillMaxWidth().focusRequester(groupFocus).focusRow(restoreFallback),
             horizontalArrangement = Arrangement.spacedBy(9.dp),
             verticalAlignment     = Alignment.Bottom
         ) {
@@ -190,7 +197,7 @@ fun Dock(
                     sizeDp        = iconSizeDp,
                     favoriteTitle = favoriteTitle,
                     focusRequester = focusRequesters.getOrPut(entry.packageName) { FocusRequester() },
-                    focusEnabled  = focusEnabled,
+                    landing       = landing.takeIf { entry.packageName == landOn },
                     onFocused     = { onFocusedChange(entry.packageName) },
                     onClick       = { onEmulatorClick(entry.packageName) },
                     onLongClick   = { onEmulatorLongClick(entry.packageName) },
@@ -231,7 +238,7 @@ fun DockIcon(
     sizeDp: Int = 46,
     favoriteTitle: String? = null,
     focusRequester: FocusRequester = remember { FocusRequester() },
-    focusEnabled: () -> Boolean = { true },
+    landing: FocusLanding? = null,
     onFocused: () -> Unit = {},
     onClick: () -> Unit,
     onLongClick: () -> Unit = {},
@@ -264,7 +271,7 @@ fun DockIcon(
                 .scale(scale)
                 .clip(tileShape)
                 .focusRequester(focusRequester)
-                .focusProperties { canFocus = focusEnabled() }
+                .landFocus(landing)
                 .onFocusChanged { if (it.isFocused) onFocused() }
                 // One clickable node = one focus target. A / Select arrive as DPAD centre.
                 .combinedClickable(

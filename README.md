@@ -46,10 +46,11 @@ JoeyOS runs full screen. Swipe in from an edge to see the status and navigation 
 - **Long-press an app** or press **Y** → opens the Recently Played menu
 - Press **X** → launches your most recently played game directly
 - In the App Drawer, press **Start** on an app (or long-press it) → App Info, or add/remove it from the dock
+- In Settings or the App Drawer, tap the **✕** (top-right) or press **B** → back to the home screen
 - In any popup, **A** selects and **B** goes back
 
 ### Updates
-JoeyOS checks GitHub for a new version when it starts and every hour after that, and offers to install it. You can also check any time from **Settings → Tools → Check for updates**.
+JoeyOS checks GitHub for a new version when it starts and every 15 minutes after that, and offers to install it. You can also check any time from **Settings → Tools → Check for updates**.
 
 ### Settings → Appearance
 - Adjust dock icon size
@@ -85,7 +86,7 @@ The tools never change your original games, and only remove them if you choose t
 
 ## Second screen (dual-screen handhelds like the AYN Thor)
 
-On a device with two screens, JoeyOS puts its own app on the other screen. Turn it on or off in **Settings → Appearance → Second screen**, where you can also choose which screen games open on.
+On a device with two screens, JoeyOS puts its own app on the other screen. Turn it on or off in **Settings → Appearance → Second screen**, where you can also choose which screen games open on. Below that you can give it its own wallpaper: Plain (the default), any of the top screen's wallpapers, or your own image.
 
 It's touch first, and it takes the controller only when your device sends it there (on the Thor, use its setting to lock controls to the top screen, the bottom screen, or whichever one you tap). The bottom screen's back arrow steps back inside it.
 

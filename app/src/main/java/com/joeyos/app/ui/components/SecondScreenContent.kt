@@ -175,7 +175,16 @@ fun SecondScreenContent() {
         }
     }
 
+    // Your chosen wallpaper (Settings › Appearance), under a dark veil so lists and text stay
+    // readable; Plain is the screen's own background. Live: changing it on the other screen
+    // shows here at once.
+    val prefsRepo = remember { com.joeyos.app.data.PreferencesRepository(context) }
+    val wallpaper by prefsRepo.secondWallpaper.collectAsState(initial = null)
     Box(Modifier.fillMaxSize().background(Background)) {
+        wallpaper?.let { w ->
+            WallpaperLayer(w, Modifier.fillMaxSize())
+            Box(Modifier.fillMaxSize().background(Background.copy(alpha = 0.72f)))
+        }
         when {
             !enabled -> Message("Second screen off", "Turn it on in Settings › Appearance › Second screen.")
             else -> Column(Modifier.fillMaxSize()) {
@@ -551,8 +560,9 @@ private fun searchCatalogue(chunks: List<List<RaGame>>, words: List<String>): Li
 @Composable
 private fun AchSearch(raRepo: RetroAchievementsRepository, nav: AchNav, onOpenGame: (Int) -> Unit) {
     AllowTyping(true)
-    val focus = remember { androidx.compose.ui.focus.FocusRequester() }
-    LaunchedEffect(Unit) { kotlinx.coroutines.delay(150); runCatching { focus.requestFocus() } }
+    // The field is the list's first row, so it's composed at the list's first layout: it takes
+    // focus itself then (FocusLanding), rather than after a guessed delay.
+    val toField = remember { FocusLanding() }
 
     // Every game on RetroAchievements, loaded a few consoles at a time (kept a week on the device,
     // and on [nav] while the screen is open) so results appear while the rest arrive.
@@ -597,7 +607,7 @@ private fun AchSearch(raRepo: RetroAchievementsRepository, nav: AchNav, onOpenGa
         verticalArrangement = Arrangement.spacedBy(6.dp)) {
         item {
             SearchField(nav.query, { nav.query = it }, "Search RetroAchievements",
-                Modifier.fillMaxWidth(), focusRequester = focus,
+                Modifier.fillMaxWidth().landFocus(toField),
                 classicBox = Modifier.clip(RoundedCornerShape(12.dp)).background(Color.White.copy(alpha = 0.08f))
                     .border(1.dp, AccentSoft, RoundedCornerShape(12.dp)).padding(horizontal = 12.dp, vertical = 10.dp))
         }
@@ -907,7 +917,7 @@ private fun Tag(text: String, color: Color) {
 }
 
 /**
- * A tappable tab / filter: soft amber fill when it's the current one. The shared chip (the same
+ * A tappable tab / filter: soft accent fill when it's the current one. The shared chip (the same
  * one the settings use) or the original second-screen pill, per [UseSharedLook].
  */
 @Composable
@@ -933,7 +943,7 @@ private fun ClassicPill(label: String, active: Boolean, onClick: () -> Unit) {
 
 /**
  * The second screen's text boxes (RetroAchievements search, find in a guide): a placeholder
- * until you type, amber cursor. With [UseSharedLook] it wears the settings' text-box look; with
+ * until you type, accent cursor. With [UseSharedLook] it wears the settings' text-box look; with
  * the original look each box keeps its own frame, passed in as [classicBox].
  */
 @Composable

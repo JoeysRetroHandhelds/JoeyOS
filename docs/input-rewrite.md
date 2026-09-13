@@ -10,7 +10,8 @@ This is the from-scratch replacement, following the same approach as Chameleon's
 and D-pad rewrites. The old code is on the `legacy-input-reference` branch.
 
 Sources: developer.android.com/training/tv/get-started/controllers, .../navigation,
-Compose "Focus in Compose", and the Android dialogs guide.
+Compose "Focus in Compose" (traversal order, focus behaviour, focusRestorer, focusGroup,
+focusProperties, FocusRequester), the Android dialogs guide, and the game-controller input guide.
 
 ## Rules
 
@@ -20,6 +21,37 @@ Compose "Focus in Compose", and the Android dialogs guide.
 - Small steps, each tested on a device before the next.
 - No hold-A. One button, one job. (Chameleon: a hold on confirm caused the "opened a menu and
   went past it" bug.)
+- No timers in focus code. No `delay`, `withFrameNanos`, `postDelayed` or retry before a focus
+  request, and no `runCatching` around `requestFocus` to hide one that came too early. If a
+  request can come before its target exists, restructure so it can't (below).
+
+## Focus rules
+
+- **Request only targets that are attached.** A request is made from an event, or from an
+  effect in the same composition as its target (so the target is in the tree when it runs).
+  When the target may not exist yet — rows still loading, a lazy row the list hasn't composed,
+  a Cancel button a run is about to show — use a `FocusLanding`: arm it in the event that makes
+  the change, mark the target with `Modifier.landFocus(landing)`, and the target asks for focus
+  itself as it's attached. If it has to be scrolled in first, scroll; it then asks by itself.
+- **Popups and pages mark where focus opens** with `Modifier.initialFocus()` (a picker's
+  current row, a list's first row). A popup with no mark opens on its first item. A list that
+  opens on a row further down starts scrolled to it (`initialFirstVisibleItemIndex`), so the row
+  is composed.
+- **Containers remember, the app doesn't.** Rows, the dock, the App Drawer grid and the Settings
+  panel are focus groups with `focusRestorer(first)`: coming back into one lands on the item you
+  left, else its first item. To go back to a container, request the container.
+- **Explicit steps use `focusProperties`**, not key interception: Down from the full-width
+  search box is `down = grid`, Down from the Settings tabs is `down = panel`; a full-width popup
+  row cancels left/right.
+- **Pages contain focus**: a page is one focus group whose `onExit` cancels, so the D-pad can't
+  leave it. Nothing underneath is switched off.
+- **When a focused control disappears, move focus in the same event that removes it** (Cancel
+  at a run's end, Undo once used, a tab's panel on L1/R1).
+- **One list replacing another keeps each list's own state**, so going back finds the row you
+  came from on screen and composed (Tools hub, the romhack levels).
+- **Keyboard input mode** is asked for only where the window may be in touch mode when focus
+  has to show: a new Dialog window (always starts in touch mode), a page (may be opened by a
+  tap), the home screen and the first-run screen on start (a window starts in touch mode).
 
 ## Architecture
 
@@ -32,13 +64,16 @@ Compose "Focus in Compose", and the Android dialogs guide.
    element); the highlight is real focus, not an index. Lists are keyed by identity so focus
    follows the item when the order changes.
 3. **One owner for intents**: the screen in charge sets the single `ControlBus` handler.
-4. **Popups are real Dialog windows** (`JoeyDialog`): focus is contained and restored, Back
-   closes them, and on open they switch to keyboard input mode so focus shows at once. The
-   dialog's window gets keys before the Activity, so it does its own A/B translation.
+4. **Popups are real Dialog windows** (`JoeyDialog`): focus is contained and restored, and on
+   open they switch to keyboard input mode so focus shows at once. The dialog's window gets keys
+   before the Activity, so it does its own translation: A is a centre press on release (only a
+   release whose press it saw), B goes through the same exit route as Back (typing, then the
+   keyboard, then close if `dismissible`), and other pad buttons are swallowed on both edges.
 5. **Full-screen pages are not dialogs** (`JoeyPage`: Settings, the App Drawer). They're drawn in
    the main window, edge to edge like the home screen. A page closes on Back, pushes its own
-   `ControlBus` handler while open, lands focus on open, and the home screen keeps the dock out of
-   focus while it's up and refocuses the dock icon when it closes.
+   `ControlBus` handler while open, contains focus (its group cancels exits), and lands focus on
+   its marked item. When it closes, the home screen requests the dock group and the dock's
+   focusRestorer lands on the icon you left.
 
 ## Waves (one screen at a time, fully)
 
@@ -53,13 +88,15 @@ Compose "Focus in Compose", and the Android dialogs guide.
 
 ## Device findings
 
-- A dialog's `view.requestFocus()` only focuses the window, not its first item: name the
-  first item with a FocusRequester (fallback: `moveFocus(Next)`).
+- A dialog's `view.requestFocus()` only focuses the window, not its first item: request the
+  dialog body's focus group (it enters its first item) or mark an item.
+- A new Dialog window starts in touch mode, where Compose won't focus a clickable: nothing looked
+  selected until a second press. Ask for keyboard mode on open.
 - A plain text field pops the keyboard when focus lands on it and swallows B/Down. Use
   `ControllerTextField` (highlight first, A to type).
 - While the soft keyboard is up, the D-pad goes to the keyboard. B leaves typing.
-- A full-width box above a grid: Down lands on the item nearest its centre. Send it to the
-  first item explicitly.
+- A full-width box above a grid: Down lands on the item nearest its centre. Send it into the
+  grid with `focusProperties { down = … }`; the grid's focusRestorer picks the item.
 - A Dialog window is held inside the status / navigation bars; making it cover them
   (decorFitsSystemWindows=false, FLAG_LAYOUT_NO_LIMITS) made it worse. Full-screen content is a
   page in the main window instead.
