@@ -173,6 +173,58 @@ object RecentGamesReader {
 
     private fun readForPackageUncached(packageName: String, depth: Int = 20): List<RecentGame> {
         if (!supportsRecentlyPlayed(packageName)) return emptyList()
+        // A few extra read, since games that aren't there any more are left out after.
+        return withoutMissingGames(packageName, readFromEmulator(packageName, depth + 10)).take(depth)
+    }
+
+    /**
+     * Leaves out games whose file is gone. Most lists come from save folders, and an emulator
+     * keeps a save for every game ever played, deleted ones too (found with Eden). Careful not to
+     * hide a game that is there:
+     *  - a path into a ROMs folder (a real history entry) is kept while that file exists;
+     *  - a content:// link, which can't be checked cheaply, is kept;
+     *  - anything else (a save, a serial) is kept if the console's game folders have a file with
+     *    its id or its title's main words in the name ([RomFinder.libraryHas], loose on purpose);
+     *  - and when no game folder for the console is found at all, everything is kept.
+     */
+    private fun withoutMissingGames(packageName: String, games: List<RecentGame>): List<RecentGame> {
+        if (games.isEmpty()) return games
+        val library: List<String>? by lazy { RomFinder.libraryNames(libraryFoldersFor(packageName)) }
+        return games.filter { game ->
+            val path = game.path
+            val why = when {
+                path.startsWith("content://") -> null
+                // RetroArch names a game inside an archive "game.zip#game.sfc": check the archive.
+                path.contains("/roms/", ignoreCase = true) ->
+                    path.substringBefore('#').let { if (File(it).exists()) null else "its file $it is gone" }
+                else -> {
+                    val lib = library
+                    val id = File(path).nameWithoutExtension.takeIf { it.matches(GameIdLike) }
+                    if (lib == null || RomFinder.libraryHas(lib, game.title, id)) null
+                    else "no game file in its ROMs folder matches it (from $path)"
+                }
+            }
+            if (why != null && loggedMissing.add("$packageName::${game.title}")) {
+                // In the shareable log, once a run: someone missing a game can send it in.
+                AppLog.i(TAG, "Recently played: left out '${game.title}' ($packageName): $why")
+            }
+            why == null
+        }
+    }
+    private val loggedMissing = java.util.Collections.synchronizedSet(mutableSetOf<String>())
+
+    /** Ids that ROM file names often carry: Switch/Wii U title ids, disc serials (SLUS-20062…). */
+    private val GameIdLike = Regex("(?i)[0-9a-f]{16}|[A-Z]{4}[-_]?\\d{3,5}(\\.\\d{2})?")
+
+    /** The ROM folders an emulator's games live in; null (all of them) for multi-console ones. */
+    private fun libraryFoldersFor(packageName: String): Collection<String>? {
+        if (packageName.startsWith("com.retroarch")) return null
+        val systems = ALL_SYSTEMS.filter { sys -> sys.knownPackages.any { packageName.startsWith(it) } }
+        if (systems.isEmpty() || systems.size > 3) return null
+        return systems.flatMap { RomFolders.namesFor(it.id) + RomFolders.esDeFoldersFor(it.id) }.toSet()
+    }
+
+    private fun readFromEmulator(packageName: String, depth: Int): List<RecentGame> {
         return when {
             packageName.startsWith("org.ppsspp")            -> readPpsspp(packageName, depth)
             packageName.startsWith("com.retroarch")         -> readRetroArch(packageName, depth)

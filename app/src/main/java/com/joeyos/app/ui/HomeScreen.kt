@@ -25,6 +25,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.repeatOnLifecycle
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
@@ -233,6 +234,18 @@ fun HomeScreen(viewModel: HomeViewModel) {
         }
         lifecycleOwner.lifecycle.addObserver(observer)
         onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+    }
+    // Also every minute while home is showing. Checking only on resume missed updates after a
+    // restart or waking from sleep: the first check ran before Wi-Fi was back and failed, and
+    // nothing asked again until you left home and came back (found on the Thor). A failed check
+    // doesn't count, so this retries until one gets through, then settles to hourly.
+    LaunchedEffect(lifecycleOwner) {
+        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            while (true) {
+                kotlinx.coroutines.delay(60_000L)
+                if (update == null && !updateDownloading && AppUpdates.autoCheckDue(context)) checkForUpdates(manual = false)
+            }
+        }
     }
 
     // ── Dock actions ──────────────────────────────────────────────────────

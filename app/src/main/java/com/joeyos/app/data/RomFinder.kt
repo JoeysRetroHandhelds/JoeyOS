@@ -112,10 +112,71 @@ object RomFinder {
 
     // Normalize for fuzzy filename matching: strip punctuation that differs between
     // DB titles and ROM filenames (™, colons→dashes, brackets, etc.)
+    // Accents are dropped first ("Pokémon" -> "Pokemon"): \w only knows plain letters, so an é
+    // became a space and "New Pokémon Snap" never matched "New Pokemon Snap.nsp" (found on device).
     private fun normalizeTitle(title: String): String =
-        title.replace(Regex("[^\\w\\s]"), " ")
-             .replace(Regex("\\s+"), " ")
+        java.text.Normalizer.normalize(title, java.text.Normalizer.Form.NFD)
+             .replace(Diacritics, "")
+             .replace(NonWord, " ")
+             .replace(Spaces, " ")
              .trim()
+    private val Diacritics = Regex("\\p{M}+")
+    private val NonWord = Regex("[^\\w\\s]")
+    private val Spaces = Regex("\\s+")
+
+    /**
+     * The game files of one console, as normalized names, for a quick "is this game here?" check;
+     * null when there's no folder for it at all (then nothing should be hidden).
+     */
+    fun libraryNames(systemFolder: String): List<String>? = libraryNames(listOf(systemFolder))
+
+    /** [libraryNames] across several consoles' folders; null [systemFolders] means every console. */
+    fun libraryNames(systemFolders: Collection<String>?): List<String>? {
+        val roots = storageRoots()
+        val dirs = if (systemFolders == null) {
+            RomFolders.romsDirs(roots).flatMap { it.listFiles()?.filter { d -> d.isDirectory }.orEmpty() }
+        } else {
+            systemFolders.flatMap { RomFolders.systemDirs(roots, it) }.distinct()
+        }
+        if (dirs.isEmpty()) return null
+        return dirs.flatMap { dir ->
+            // One level of subfolders too: some keep each game (with its updates) in its own folder.
+            dir.listFiles().orEmpty().flatMap { f -> if (f.isDirectory) f.listFiles().orEmpty().toList() else listOf(f) }
+        }.filter { it.isFile }.map { normalizeTitle(it.name).lowercase() }
+    }
+
+    /**
+     * Whether [names] (from [libraryNames]) seems to hold the game: its [id] in a file name, or
+     * the title's main words all in one. Loose on purpose: a game should only be hidden when it's
+     * surely missing, not because its file is worded differently.
+     */
+    fun libraryHas(names: List<String>, title: String, id: String? = null): Boolean {
+        if (id != null && names.any { it.contains(id.lowercase()) }) return true
+        val words = normalizeTitle(title.substringBefore(" – ").substringBefore(" - ")).lowercase()
+            .split(' ').filter { it.length > 2 && it !in FillerWords }
+        if (words.isEmpty()) return true
+        val key = words.take(3)
+        return names.any { n -> key.all { w -> n.contains(w) } }
+    }
+    private val FillerWords = setOf("the", "and", "nintendo", "switch", "edition", "for", "of")
+
+    /**
+     * A ROM whose file name carries [id] (Switch dumps are usually named "Title [0100F4700B2E0000]
+     * [v0].nsp"). Surer than the title, which can be worded differently from the file.
+     */
+    fun findRomById(id: String, systemFolder: String): String? {
+        if (id.isBlank()) return null
+        for (systemDir in RomFolders.systemDirs(storageRoots(), systemFolder)) {
+            val rom = systemDir.listFiles()
+                ?.filter { it.isFile && it.name.contains(id, ignoreCase = true) }
+                ?.minByOrNull { it.name.length }
+            if (rom != null) {
+                Log.d(TAG, "findRomById: found ${rom.absolutePath} for $id")
+                return rom.absolutePath
+            }
+        }
+        return null
+    }
 
     private data class RomCandidate(val file: File, val normalized: String)
 

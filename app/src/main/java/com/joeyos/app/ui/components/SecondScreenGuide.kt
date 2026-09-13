@@ -78,17 +78,22 @@ fun GuideTab(
     val prefs = remember { guidePrefs(context) }
     // The guide you last opened for this game, else the best one found.
     // Looked up on a background thread: finding it walks the guides folder on shared storage.
-    var guide by remember(target.key) { mutableStateOf<File?>(null) }
-    var looked by remember(target.key) { mutableStateOf(false) }
+    // Not reset when the target changes: that happens once RetroAchievements names the game's
+    // console a few seconds in, and it's the same game, so a guide already open stays open (it
+    // used to close and reopen, found on device). A new lookup only replaces it with a different
+    // file it finds.
+    var guide by remember { mutableStateOf<File?>(null) }
+    var looked by remember { mutableStateOf(false) }
     LaunchedEffect(target.key) {
-        guide = withContext(Dispatchers.IO) {
+        val found = withContext(Dispatchers.IO) {
             prefs.getString("chosen_${target.key}", null)?.let(::File)?.takeIf { it.isFile } ?: Guides.find(target)
         }
+        if (found != null && found != guide) guide = found
         looked = true
     }
     fun choose(f: File) { guide = f; prefs.edit().putString("chosen_${target.key}", f.absolutePath).apply() }
-    var browsing by remember(target.key) { mutableStateOf<GuideSource?>(null) }
-    var finding by remember(target.key) { mutableStateOf(false) }   // "Change guide" from the reader
+    var browsing by remember { mutableStateOf<GuideSource?>(null) }
+    var finding by remember { mutableStateOf(false) }   // "Change guide" from the reader
 
     LaunchedEffect(search) { if (search != null) { browsing = search; onSearchShown() } }
     LaunchedEffect(guide) { guide?.let { Guides.remember(target, it) } }
