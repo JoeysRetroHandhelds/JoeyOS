@@ -1,0 +1,328 @@
+{
+  "30374681": [
+    {
+      "name": "Ensei, Jashin no Kuni e (Japan) (Debug Patch) (Bartis1989)",
+      "type": "Fix",
+      "path": "Game Gear/Fix/12638-SF-EnseiDebug.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Jashin no Kakusei (Japan) (Debug Patch) (Bartis1989)",
+      "type": "Fix",
+      "path": "Game Gear/Fix/12639-SF-HajyaDebug.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Final Conflict (Japan) (En) (Debug Patch) (Bartis1989)",
+      "type": "Fix",
+      "path": "Game Gear/Fix/12640-SF-FinalConflictDebug.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Final Conflict (Japan) (En) (v2006-07-07) (Shining Force Central)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/12640-ShiningForceGaidenFC-English.zip",
+      "format": "bps"
+    }
+  ],
+  "4d1f4699": [
+    {
+      "name": "Ensei, Jashin no Kuni e (Japan) (Debug Patch) (Bartis1989)",
+      "type": "Fix",
+      "path": "Game Gear/Fix/12638-SF-EnseiDebug.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Final Conflict (Japan) (En) (Debug Patch) (Bartis1989)",
+      "type": "Fix",
+      "path": "Game Gear/Fix/12640-SF-FinalConflictDebug.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Final Conflict (Japan) (En) (v2006-07-07) (Shining Force Central)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/12640-ShiningForceGaidenFC-English.zip",
+      "format": "bps"
+    }
+  ],
+  "6019fe5e": [
+    {
+      "name": "Ensei, Jashin no Kuni e (Japan) (Debug Patch) (Bartis1989)",
+      "type": "Fix",
+      "path": "Game Gear/Fix/12638-SF-EnseiDebug.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Final Conflict (Japan) (En) (Debug Patch) (Bartis1989)",
+      "type": "Fix",
+      "path": "Game Gear/Fix/12640-SF-FinalConflictDebug.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Final Conflict (Japan) (En) (v2006-07-07) (Shining Force Central)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/12640-ShiningForceGaidenFC-English.zip",
+      "format": "bps"
+    }
+  ],
+  "eb05c8ec": [
+    {
+      "name": "Ensei, Jashin no Kuni e (Japan) (Debug Patch) (Bartis1989)",
+      "type": "Fix",
+      "path": "Game Gear/Fix/12638-SF-EnseiDebug.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Final Conflict (Japan) (En) (Debug Patch) (Bartis1989)",
+      "type": "Fix",
+      "path": "Game Gear/Fix/12640-SF-FinalConflictDebug.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Final Conflict (Japan) (En) (v2006-07-07) (Shining Force Central)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/12640-ShiningForceGaidenFC-English.zip",
+      "format": "bps"
+    }
+  ],
+  "5ae64731": [
+    {
+      "name": "GG Aleste 3 (Japan) (En) (Playability Patch)",
+      "type": "Fix",
+      "path": "Game Gear/Fix/27591-GGAleste3-PlayabilityPatch.zip",
+      "format": "xdelta"
+    }
+  ],
+  "5bb6e5d6": [
+    {
+      "name": "Tails Adventures - Fire of Robollion (World) (v1.0) (Gabriel Sansigolo)",
+      "type": "Hack",
+      "path": "Game Gear/Hack/Tails Adventure/24339-TailsAdv-FireofRobollion.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Tails Adventures - LX (v1.0) (Lordxernom)",
+      "type": "Hack",
+      "path": "Game Gear/Hack/Tails Adventure/37854-TailsAdv-LX.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Tails Adventures - Uber Players (v0.2) (Bakayote)",
+      "type": "Hack",
+      "path": "Game Gear/Hack/Tails Adventure/37855-TailsAdv-UberPlayers.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Tails Adventures - Tails Kicks Ass (v1.00) (Supper)",
+      "type": "Hack",
+      "path": "Game Gear/Hack/Tails Adventure/37856-TailsAdv-TailsKicksAss.zip",
+      "format": "bps"
+    }
+  ],
+  "a354ea49": [
+    {
+      "name": "Tails Adventures - Fire of Robollion (World) (v1.0) (Gabriel Sansigolo)",
+      "type": "Hack",
+      "path": "Game Gear/Hack/Tails Adventure/24339-TailsAdv-FireofRobollion.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Tails Adventures - LX (v1.0) (Lordxernom)",
+      "type": "Hack",
+      "path": "Game Gear/Hack/Tails Adventure/37854-TailsAdv-LX.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Tails Adventures - Uber Players (v0.2) (Bakayote)",
+      "type": "Hack",
+      "path": "Game Gear/Hack/Tails Adventure/37855-TailsAdv-UberPlayers.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Tails Adventures - Tails Kicks Ass (v1.00) (Supper)",
+      "type": "Hack",
+      "path": "Game Gear/Hack/Tails Adventure/37856-TailsAdv-TailsKicksAss.zip",
+      "format": "bps"
+    }
+  ],
+  "2e4ec17b": [
+    {
+      "name": "Last Bible (Japan) (En) (v3.0) (Supper)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/11784-MTGaidenLastBible-English.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Last Bible Special (Japan) (En) (v1.02) (SSTranslations)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/12882-MegaTenGaidenLBS-English.zip",
+      "format": "bps"
+    }
+  ],
+  "4ec30806": [
+    {
+      "name": "Last Bible (Japan) (En) (v3.0) (Supper)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/11784-MTGaidenLastBible-English.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Last Bible Special (Japan) (En) (v1.02) (SSTranslations)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/12882-MegaTenGaidenLBS-English.zip",
+      "format": "bps"
+    }
+  ],
+  "c7598b81": [
+    {
+      "name": "Coca-Cola Kid (Japan) (En) (v1.1) (filler)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/11802-CocaColaKid-English.zip",
+      "format": "bps"
+    }
+  ],
+  "45ef2062": [
+    {
+      "name": "Sylvan Tale (Japan) (En) (v1.01) (Aeon Genesis)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/12517-SylvanTale-English.zip",
+      "format": "bps"
+    }
+  ],
+  "fe7374d2": [
+    {
+      "name": "Bishoujo Senshi Sailor Moon S (Japan) (En) (v1.1) (Supper)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/12619-SailorMoon-English.zip",
+      "format": "bps"
+    }
+  ],
+  "58459edd": [
+    {
+      "name": "Sanposuru Gakuen (Japan) (En) (v1.0) (Aeon Genesis)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/12629-Lunar-English.zip",
+      "format": "bps"
+    }
+  ],
+  "8f82a6b9": [
+    {
+      "name": "Magic Knight Rayearth (Japan) (En) (v1.0) (Filler)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/12630-MagicKnightRayearth-English.zip",
+      "format": "bps"
+    }
+  ],
+  "445d7cd2": [
+    {
+      "name": "Hirakareshi Toki no Tobira (Japan) (En) (v1.0) (Aeon Genesis)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/12673-RoyalStone-English.zip",
+      "format": "bps"
+    }
+  ],
+  "1a51579d": [
+    {
+      "name": "Phantasy Star Adventure (Japan) (En) (v1.0) (Aeon Genesis)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/12883-PhantasyStarAdv-English.zip",
+      "format": "bps"
+    }
+  ],
+  "a942514a": [
+    {
+      "name": "Phantasy Star Gaiden (Japan) (En) (v1.012) (Dynamic Designs)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/12884-PhantasyStarGaiden-English.zip",
+      "format": "bps"
+    }
+  ],
+  "7d622bdd": [
+    {
+      "name": "Kishin Douji Zenki (Japan) (En) (v1.0) (LIPEMCO! Translations)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/12896-KishinDoujiZenki-English.zip",
+      "format": "ips"
+    }
+  ],
+  "4d5d15fb": [
+    {
+      "name": "Hikari to Yami no Sister (Japan) (En) (v1.1) (LIPEMCO! Translations)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/13656-Moldorian-English.zip",
+      "format": "bps"
+    }
+  ],
+  "7e689995": [
+    {
+      "name": "Head Buster (Japan) (En) (v0.99) (Chris M. Covell)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/14172-HeadBuster-English.zip",
+      "format": "bps"
+    }
+  ],
+  "04302bbd": [
+    {
+      "name": "Eien no Densetsu (Japan)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/14297-EternalLegend-English.zip",
+      "format": "bps"
+    }
+  ],
+  "5e2b39b8": [
+    {
+      "name": "Winner's History (Japan) (En) (v0.99) (Gaijin Productions)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/14329-SDGundamWinnersHistory-English.zip",
+      "format": "bps"
+    }
+  ],
+  "46ae9159": [
+    {
+      "name": "Gekitou! Nanakyou no Tatakai (Japan) (En) (v1.0) (Gaijin Productions)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/14448-YuYuHakusho2-English.zip",
+      "format": "bps"
+    }
+  ],
+  "e123d9b8": [
+    {
+      "name": "Shugyou Hen (Japan) (En) (v1.0) (BacklogOddy)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/17328-FrayShugyouHen-English.zip",
+      "format": "bps"
+    }
+  ],
+  "03d28eab": [
+    {
+      "name": "Taiketsu! Kantam Panic!! (Japan) (En) (v1.0) (Psyklax)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/29324-CrayonShin-chan-English.zip",
+      "format": "bps"
+    }
+  ],
+  "937fd52b": [
+    {
+      "name": "Kaitou Saint Tail (Japan) (En) (v1.0-Alt) (Matt's Messy Room)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/English/34261-KaitouSaintTail-English.zip",
+      "format": "bps"
+    }
+  ],
+  "20ef017a": [
+    {
+      "name": "Ninja Gaiden (USA, Europe, Brazil) (Pt) (v1.0) (Manao)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/Portuguese/12623-NinjaGaiden-Portuguese.zip",
+      "format": "bps"
+    }
+  ],
+  "c578756b": [
+    {
+      "name": "Ninja Gaiden (USA, Europe, Brazil) (Pt) (v1.0) (Manao)",
+      "type": "Translation",
+      "path": "Game Gear/Translation/Portuguese/12623-NinjaGaiden-Portuguese.zip",
+      "format": "bps"
+    }
+  ]
+}
