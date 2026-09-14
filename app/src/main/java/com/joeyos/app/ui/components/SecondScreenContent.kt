@@ -229,7 +229,7 @@ fun SecondScreenContent() {
                         tab == 4 -> SecondScreenApps()
                         // Logged out while on an RA tab: back to Apps.
                         (tab == 0 || tab == 1) && !configured -> SecondScreenApps()
-                        tab == 2 && guideTarget != null -> GuideTab(guideTarget, guideSearch, onSearchShown = { guideSearch = null },
+                        tab == 2 && guideTarget != null -> GuideTab(guideTarget, session = s?.startedAt, search = guideSearch, onSearchShown = { guideSearch = null },
                             // Only the arrow above changes the guide's bar; scrolling doesn't.
                             chrome = chrome, onChrome = {})
                         tab == 1 && s != null && np != null -> GameAchievements(np.gameId, raRepo, live = LiveInfo(s, np),

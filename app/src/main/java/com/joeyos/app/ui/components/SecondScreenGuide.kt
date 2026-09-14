@@ -7,7 +7,11 @@ import android.webkit.WebViewClient
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,6 +29,9 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -39,6 +46,10 @@ import com.joeyos.app.data.GuideSource
 import com.joeyos.app.data.GuideTarget
 import com.joeyos.app.data.Guides
 import com.joeyos.app.ui.theme.*
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -70,6 +81,7 @@ private fun guidePrefs(context: Context) = context.getSharedPreferences("guides"
 @Composable
 fun GuideTab(
     target: GuideTarget,
+    session: Any?,
     search: GuideSource?,
     onSearchShown: () -> Unit,
     chrome: Boolean,
@@ -77,27 +89,41 @@ fun GuideTab(
 ) {
     val context = LocalContext.current
     val prefs = remember { guidePrefs(context) }
+    // What this tab kept for the game being played: switching to another tab and back reopens the
+    // guide at once instead of looking it up and reading it again. A new game starts afresh.
+    val memory = remember(session) { GuideMemory.forSession(session) }
     // The guide you last opened for this game, else the best one found.
     // Looked up on a background thread: finding it walks the guides folder on shared storage.
     // Not reset when the target changes: that happens once RetroAchievements names the game's
     // console a few seconds in, and it's the same game, so a guide already open stays open (it
     // used to close and reopen, found on device). A new lookup only replaces it with a different
     // file it finds.
-    var guide by remember { mutableStateOf<File?>(null) }
-    var looked by remember { mutableStateOf(false) }
-    LaunchedEffect(target.key) {
+    var guide by remember(memory) { mutableStateOf(memory.guide) }
+    var looked by remember(memory) { mutableStateOf(memory.guide != null) }
+    fun show(f: File) { guide = f; memory.guide = f }
+    LaunchedEffect(memory, target.key) {
+        // Already looked up under this name this game: coming back to the tab doesn't walk the
+        // guides folder again.
+        if (target.key in memory.lookedUp) { looked = true; return@LaunchedEffect }
         val found = withContext(Dispatchers.IO) {
             prefs.getString("chosen_${target.key}", null)?.let(::File)?.takeIf { it.isFile } ?: Guides.find(target)
         }
-        if (found != null && found != guide) guide = found
+        memory.lookedUp += target.key
+        if (found != null && found != guide) show(found)
         looked = true
     }
-    fun choose(f: File) { guide = f; prefs.edit().putString("chosen_${target.key}", f.absolutePath).apply() }
+    fun choose(f: File) { show(f); prefs.edit().putString("chosen_${target.key}", f.absolutePath).apply() }
     var browsing by remember { mutableStateOf<GuideSource?>(null) }
     var finding by remember { mutableStateOf(false) }   // "Change guide" from the reader
 
     LaunchedEffect(search) { if (search != null) { browsing = search; onSearchShown() } }
-    LaunchedEffect(guide) { guide?.let { Guides.remember(target, it) } }
+    // Noted once per guide per game (it writes a file), not every time the tab is opened again.
+    LaunchedEffect(guide) {
+        val g = guide ?: return@LaunchedEffect
+        if (memory.noted == g) return@LaunchedEffect
+        memory.noted = g
+        withContext(Dispatchers.IO) { Guides.remember(target, g) }
+    }
 
     val open = browsing
     val file = guide
@@ -110,7 +136,7 @@ fun GuideTab(
             Guides.remember(target, saved); choose(saved); finding = false; browsing = null
         }
         file != null && !finding -> if (Guides.isHtml(file)) GuideHtmlPage(file, chrome, onChrome, onChange = { finding = true })
-            else GuideTextPage(file, target, chrome, onChrome, onChange = { finding = true })
+            else GuideTextPage(file, target, memory, chrome, onChange = { finding = true })
         else -> Box(Modifier.fillMaxSize()) {
             GuideFinder(target, current = file, canGoBack = file != null, onBack = { finding = false },
                 onChosen = { choose(it); finding = false },
@@ -354,14 +380,15 @@ internal fun AllowTyping(on: Boolean) {
 // ── Reading a text guide ─────────────────────────────────────────────────────────────────
 
 @Composable
-private fun GuideTextPage(file: File, target: GuideTarget, chrome: Boolean, onChrome: (Boolean) -> Unit, onChange: () -> Unit) {
+private fun GuideTextPage(file: File, target: GuideTarget, memory: GuideMemory, chrome: Boolean, onChange: () -> Unit) {
     val context = LocalContext.current
     val prefs = remember { guidePrefs(context) }
     var size by remember { mutableIntStateOf(prefs.getInt("size", 15)) }
     var wrap by remember { mutableStateOf(prefs.getBoolean("wrap", true)) }
     var reflow by remember { mutableStateOf(prefs.getBoolean("reflow", false)) }
     var theme by remember { mutableStateOf(GuideTheme.entries.firstOrNull { it.name == prefs.getString("theme", null) } ?: GuideTheme.Night) }
-    var findOpen by remember { mutableStateOf(false) }
+    // Find stays open with its search when you come back from another tab.
+    var findOpen by remember(file) { mutableStateOf(memory.views[file.absolutePath]?.findOpen == true) }
     var tocOpen by remember { mutableStateOf(false) }
     var optionsOpen by remember { mutableStateOf(false) }
     fun save(block: android.content.SharedPreferences.Editor.() -> Unit) = prefs.edit().apply(block).apply()
@@ -380,11 +407,8 @@ private fun GuideTextPage(file: File, target: GuideTarget, chrome: Boolean, onCh
                 Spacer(Modifier.weight(1f))
                 Pill("Change guide", false, onChange)
             }
-            GuideText(file, theme, size, wrap, reflow,
-                startAt = prefs.getInt(guidePosKey(file), prefs.getInt("pos_${target.key}", 0)),
-                onPosition = { p -> save { putInt(guidePosKey(file), p) } },
-                findOpen = findOpen, onFindOpen = { findOpen = it }, tocOpen = tocOpen, onTocOpen = { tocOpen = it },
-                onChrome = onChrome)
+            GuideText(file, memory, legacyKey = "pos_${target.key}", theme, size, wrap, reflow,
+                findOpen = findOpen, onFindOpen = { findOpen = it }, tocOpen = tocOpen, onTocOpen = { tocOpen = it })
         }
 
         if (optionsOpen) GuideOptions(
@@ -488,148 +512,428 @@ private fun openInYouTube(context: Context, query: String): Boolean {
     return false
 }
 
+// ── Remembered while a game is played ────────────────────────────────────────────────────
+
+/**
+ * What the Guide tab keeps while one game is played, so switching to another tab and back opens
+ * the guide at once, at the same place, rather than looking it up, reading, reflowing and laying
+ * it out again (a GameFAQs guide can be a megabyte, found slow on device). Only the latest game's
+ * is kept; a new game starts a new one. Only used on the main thread (composition and effects).
+ */
+internal class GuideMemory private constructor(private val session: Any?) {
+    /** The guide showing, kept across the tab being closed. */
+    var guide: File? = null
+    /** The guide last noted against the game's names (see [Guides.remember]). */
+    var noted: File? = null
+    /** The game names already looked up. */
+    val lookedUp = HashSet<String>()
+    /** Where you were in each guide, by file path. */
+    val views = HashMap<String, ReaderView>()
+    // Read and prepared guides, newest last. Two at most: the one open, and the one before it
+    // (the same guide reflowed or not, or the guide you just changed from), to bound memory.
+    private val docs = ArrayList<GuideDoc>()
+
+    fun doc(file: File, reflow: Boolean): GuideDoc? = docs.lastOrNull { it.path == file.absolutePath && it.reflow == reflow }
+
+    fun keep(d: GuideDoc) {
+        docs.removeAll { it.path == d.path && it.reflow == d.reflow }
+        docs.add(d)
+        while (docs.size > 2) docs.removeAt(0)
+    }
+
+    companion object {
+        private var latest: GuideMemory? = null
+        /** The memory for [session] (the game being played), a fresh one when the game changed. */
+        fun forSession(session: Any?): GuideMemory =
+            latest?.takeIf { it.session == session } ?: GuideMemory(session).also { latest = it }
+    }
+}
+
+/** Where the reader was in a guide when the tab closed, and its search. */
+internal class ReaderView(
+    val stamp: Long, val reflow: Boolean, val length: Int,
+    /** The list's first item and how far into it, valid only for the same text size and wrapping. */
+    val index: Int, val offset: Int, val across: Int, val size: Int, val wrapping: Boolean,
+    /** The first character on screen, which works for any text size. */
+    val char: Int,
+    val query: String, val current: Int, val findOpen: Boolean,
+)
+
+/**
+ * A text guide, read and prepared for the reader: the text as shown (reflowed or not), cut into
+ * chunks at line breaks so the list only lays out what's on screen, its headings for Contents,
+ * and its widest line (how wide the page is when lines don't wrap).
+ */
+internal class GuideDoc(
+    val path: String, val stamp: Long, val reflow: Boolean, val text: String,
+    /** Chunk i is text[starts[i], ends[i]); the line break between two chunks belongs to neither. */
+    val starts: IntArray, val ends: IntArray,
+    val headings: List<Pair<String, Int>>,
+    val widest: String,
+) {
+    val count: Int get() = starts.size
+
+    /** The chunk holding character [c]. */
+    fun chunkFor(c: Int): Int {
+        var lo = 0
+        var hi = count - 1
+        while (lo < hi) {
+            val mid = (lo + hi + 1) / 2
+            if (starts[mid] <= c) lo = mid else hi = mid - 1
+        }
+        return lo
+    }
+
+    /** A place saved against [length] characters of this guide (reflowed or not) as a character here. */
+    fun placeOf(char: Int, length: Int, reflowed: Boolean): Int = when {
+        reflowed == reflow && length == text.length -> char.coerceIn(0, text.length)
+        // The other layout of the text (or the file changed): the same share of the way through.
+        length > 0 -> (char.toLong() * text.length / length).toInt().coerceIn(0, text.length)
+        else -> 0
+    }
+}
+
+// A chunk ends at a paragraph gap once it's this long, or anywhere once it's much longer (a long
+// ASCII map with no gaps). Small enough that laying one out is quick, big enough to keep the list
+// short.
+private const val ChunkLines = 30
+private const val ChunkChars = 2_500
+private const val ChunkMaxLines = 80
+private const val ChunkMaxChars = 8_000
+
+/** Cuts [text] into a [GuideDoc] (on a background thread: it walks every line). */
+private fun prepareGuide(path: String, stamp: Long, reflow: Boolean, text: String): GuideDoc {
+    val starts = ArrayList<Int>()
+    val ends = ArrayList<Int>()
+    val headings = ArrayList<Pair<String, Int>>()
+    var widestStart = 0
+    var widestEnd = 0
+    var widestCols = -1
+    var chunkStart = 0
+    var lines = 0
+    var lineStart = 0
+    var prevBlank = false
+    while (true) {
+        val nl = text.indexOf('\n', lineStart)
+        val lineEnd = if (nl < 0) text.length else nl
+        var blank = true
+        var cols = 0
+        for (k in lineStart until lineEnd) {
+            val ch = text[k]
+            if (!ch.isWhitespace()) blank = false
+            cols += if (ch == '\t') 8 else 1   // a tab is about a tab stop wide, for the widest line
+        }
+        if (cols > widestCols) { widestCols = cols; widestStart = lineStart; widestEnd = lineEnd }
+        // Break before this line: at the start of a paragraph gap once the chunk is long enough,
+        // or wherever it is once it's far too long.
+        val size = lineStart - chunkStart
+        if (lines > 0 && (((lines >= ChunkLines || size >= ChunkChars) && blank && !prevBlank) ||
+                lines >= ChunkMaxLines || size >= ChunkMaxChars)) {
+            starts.add(chunkStart); ends.add(lineStart - 1)
+            chunkStart = lineStart; lines = 0
+        }
+        if (!blank && lineEnd - lineStart <= 200) {
+            val trimmed = text.substring(lineStart, lineEnd).trim()
+            if (isGuideHeading(trimmed)) headings.add(trimmed to lineStart)
+        }
+        lines++
+        prevBlank = blank
+        if (nl < 0) break
+        lineStart = nl + 1
+    }
+    starts.add(chunkStart); ends.add(text.length)
+    return GuideDoc(path, stamp, reflow, text, starts.toIntArray(), ends.toIntArray(), headings,
+        text.substring(widestStart, widestEnd))
+}
+
+/**
+ * The guide in [file], read and prepared off the main thread (a GameFAQs guide can be a megabyte,
+ * and the guides folder is on shared storage, which is slow). [cached] is reused while the file is
+ * unchanged. Null when it can't be read.
+ */
+private suspend fun loadGuide(file: File, reflow: Boolean, cached: GuideDoc?): GuideDoc? {
+    val stamp = withContext(Dispatchers.IO) { file.lastModified() }
+    if (cached != null && cached.stamp == stamp) return cached
+    val raw = withContext(Dispatchers.IO) { runCatching { file.readText() }.getOrNull() } ?: return null
+    return withContext(Dispatchers.Default) {
+        prepareGuide(file.absolutePath, stamp, reflow, if (reflow) reflowGuide(raw) else raw)
+    }
+}
+
+/** Where your place in a text guide is kept: "character/length/reflowed". */
+private fun guidePlaceKey(path: String) = "place_file_$path"
+
+/** Your saved place in [doc], from this version's precise key or an older version's fraction. */
+private fun readPlace(prefs: android.content.SharedPreferences, doc: GuideDoc, legacyKey: String): Int {
+    prefs.getString(guidePlaceKey(doc.path), null)?.split('/')?.let { p ->
+        val c = p.getOrNull(0)?.toIntOrNull()
+        val len = p.getOrNull(1)?.toIntOrNull()
+        if (c != null && len != null) return doc.placeOf(c, len, p.getOrNull(2) == "1")
+    }
+    // Saved by an older version as ten-thousandths of the way down: near enough, by characters.
+    val fraction = runCatching { prefs.getInt("pos_file_" + doc.path, prefs.getInt(legacyKey, 0)) }.getOrDefault(0)
+    return (fraction.toLong() * doc.text.length / 10_000).toInt().coerceIn(0, doc.text.length)
+}
+
+/** A search's matches, with the query they're for (so a stale answer isn't shown for a newer one). */
+private class FindResult(val query: String, val offsets: List<Int>)
+
 @Composable
 private fun GuideText(
-    file: File, theme: GuideTheme, textSize: Int, wraps: Boolean, reflow: Boolean,
-    startAt: Int, onPosition: (Int) -> Unit,
+    file: File, memory: GuideMemory, legacyKey: String, theme: GuideTheme, textSize: Int, wraps: Boolean, reflow: Boolean,
     findOpen: Boolean, onFindOpen: (Boolean) -> Unit, tocOpen: Boolean, onTocOpen: (Boolean) -> Unit,
-    onChrome: (Boolean) -> Unit,
 ) {
-    // Read (and reflowed) on a background thread: a GameFAQs guide can be a megabyte, and the
-    // guides folder is on shared storage, which is slow to read.
-    var loading by remember(file) { mutableStateOf(true) }
-    // Reading down hides the tabs and the bar for room. A nudge back up doesn't bring them back
-    // (that got in the way of just reading, found on device); a real scroll up, the "Show tabs"
-    // strip, or reaching the very top does.
-    val revealPx = with(LocalDensity.current) { RevealUpDp.dp.toPx() }
-    val chromeOnScroll = remember(onChrome) { ChromeOnScroll(revealPx, onChrome) }
     // Reflowed to the screen when asked, rejoining hard-wrapped prose; find, contents and the
-    // saved position all work on the text as shown.
-    val text by produceState<String?>(null, file, reflow) {
-        value = withContext(Dispatchers.IO) {
-            runCatching { file.readText() }.getOrNull()?.let { if (reflow) reflowGuide(it) else it }
-        }
-        loading = false
+    // saved place all work on the text as shown. Shown at once when this game already opened it.
+    var doc by remember(file, reflow) { mutableStateOf(memory.doc(file, reflow)) }
+    var failed by remember(file, reflow) { mutableStateOf(false) }
+    LaunchedEffect(file, reflow) {
+        val cached = doc
+        val fresh = loadGuide(file, reflow, cached)
+        if (fresh == null) { if (cached == null) failed = true; return@LaunchedEffect }
+        memory.keep(fresh)
+        if (fresh !== cached) doc = fresh
     }
-    val wrapping = reflow || wraps
-    val scroll = rememberScrollState()
+    Box(Modifier.fillMaxSize().background(theme.paper)) {
+        val d = doc
+        if (d == null) Text(if (failed) "This guide couldn't be read." else "Opening the guide…",
+            color = theme.ink, fontFamily = FontFamily.Monospace, fontSize = textSize.sp,
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp))
+        // A new text (another file, or reflow switched) is a new list with its own state.
+        else key(d) { GuideReader(d, memory, legacyKey, theme, textSize, reflow || wraps, findOpen, onFindOpen, tocOpen, onTocOpen) }
+    }
+}
+
+/** The reader's bookkeeping that isn't shown: plain fields, so writing them doesn't recompose. */
+private class ReaderPlace(var char: Int, var skipRestore: Boolean) {
+    var restored = false
+    var jumpToMatch = false
+}
+
+/**
+ * A prepared guide in a lazy list of chunks: only the chunks on screen are laid out, so a
+ * megabyte guide opens as fast as a short one. Without wrapping, the whole list scrolls sideways
+ * together, as wide as the guide's widest line.
+ */
+@Composable
+private fun GuideReader(
+    doc: GuideDoc, memory: GuideMemory, legacyKey: String, theme: GuideTheme, textSize: Int, wrapping: Boolean,
+    findOpen: Boolean, onFindOpen: (Boolean) -> Unit, tocOpen: Boolean, onTocOpen: (Boolean) -> Unit,
+) {
+    val context = LocalContext.current
+    val prefs = remember { guidePrefs(context) }
     val density = LocalDensity.current
     val scope = rememberCoroutineScope()
-    var layout by remember(text) { mutableStateOf<TextLayoutResult?>(null) }
-    val topPadPx = with(density) { 10.dp.toPx() }
 
-    suspend fun scrollToChar(offset: Int) {
-        val l = layout ?: return
-        val length = text?.length ?: return
-        val box = runCatching { l.getBoundingBox(offset.coerceIn(0, (length - 1).coerceAtLeast(0))) }.getOrNull() ?: return
-        runCatching { scroll.scrollTo((box.top + topPadPx).toInt().coerceIn(0, scroll.maxValue)) }
+    // Coming back from another tab: the exact list position when nothing about the layout changed
+    // (it opens right there, with no jump), else the first character that was on screen.
+    val saved = remember { memory.views[doc.path] }
+    val exact = saved != null && saved.stamp == doc.stamp && saved.reflow == doc.reflow &&
+        saved.size == textSize && saved.wrapping == wrapping && saved.index < doc.count
+    val place = remember {
+        ReaderPlace(saved?.let { doc.placeOf(it.char, it.length, it.reflow) } ?: readPlace(prefs, doc, legacyKey), skipRestore = exact)
+    }
+    // Opens on the chunk holding your place, so it's composed and measured on the first frame.
+    val list = rememberLazyListState(
+        if (exact) saved!!.index else doc.chunkFor(place.char), if (exact) saved!!.offset else 0)
+    val across = rememberScrollState(if (exact) saved!!.across else 0)
+    // Each chunk on screen's text layout, for finding a line within it. Kept as state so waiting
+    // for a chunk to be measured is waiting on real state (snapshotFlow), not a guess.
+    val layouts = remember { mutableStateMapOf<Int, TextLayoutResult>() }
+    val size by rememberUpdatedState(textSize)
+    val wraps by rememberUpdatedState(wrapping)
+    val lineHeight = (textSize * 1.35f).sp
+    // Text guides keep a monospace face: they're drawn as ASCII maps and tables to a fixed column.
+    // No trimming at a chunk's first and last lines, so the gap between two chunks is exactly a
+    // line's, as if it were one text.
+    val style = remember(textSize) {
+        TextStyle(fontFamily = FontFamily.Monospace, fontSize = textSize.sp, lineHeight = lineHeight,
+            lineHeightStyle = LineHeightStyle(LineHeightStyle.Alignment.Proportional, LineHeightStyle.Trim.None))
+    }
+    val padPx = with(density) { 12.dp.toPx() }
+
+    fun fits(l: TextLayoutResult?): Boolean =
+        l != null && l.layoutInput.style.fontSize == size.sp && l.layoutInput.softWrap == wraps
+
+    /** The first character on screen: the start of the top line of the first chunk showing. */
+    fun firstVisibleChar(): Int {
+        if (doc.count == 0) return 0
+        val i = list.firstVisibleItemIndex.coerceIn(0, doc.count - 1)
+        val l = layouts[i]?.takeIf(::fits)
+        val local = l?.let { it.getLineStart(it.getLineForVerticalPosition(list.firstVisibleItemScrollOffset.toFloat())) } ?: 0
+        return doc.starts[i] + local
     }
 
-    // Find: every match of the query (two characters or more), and which is current.
-    var query by remember(text) { mutableStateOf("") }
-    var current by remember(text) { mutableIntStateOf(0) }
-    val matches by produceState(emptyList<Int>(), text, query) {
-        val t = text
-        val q = query
-        if (t == null || q.length < 2) { value = emptyList(); return@produceState }
-        kotlinx.coroutines.delay(250)   // wait for typing to pause
-        value = withContext(Dispatchers.Default) {
-            buildList {
-                var i = t.indexOf(q, 0, ignoreCase = true)
-                while (i >= 0) { add(i); i = t.indexOf(q, i + q.length, ignoreCase = true) }
-            }
+    /** Notes where you are, for coming back later (kept as a character, so any text size finds it). */
+    fun recordPlace() {
+        place.char = firstVisibleChar()
+        prefs.edit().putString(guidePlaceKey(doc.path), "${place.char}/${doc.text.length}/${if (doc.reflow) 1 else 0}").apply()
+    }
+
+    /**
+     * Scrolls so the line holding character [c] is at the top ([linesAbove] lines down, so a find
+     * bar doesn't cover it). Its chunk is scrolled in first if it isn't laid out, then this waits
+     * for its layout before placing the line.
+     */
+    suspend fun scrollToChar(c: Int, linesAbove: Int = 0, sideways: Boolean = false) {
+        if (doc.count == 0) return
+        val i = doc.chunkFor(c)
+        val local = (c - doc.starts[i]).coerceIn(0, doc.ends[i] - doc.starts[i])
+        val l = layouts[i]?.takeIf(::fits) ?: run {
+            list.scrollToItem(i)
+            snapshotFlow { layouts[i]?.takeIf(::fits) }.filterNotNull().first()
+        }
+        val line = l.getLineForOffset(local)
+        val y = l.getLineTop(line) - linesAbove * with(density) { (size * 1.35f).sp.toPx() }
+        if (y >= 0f) list.scrollToItem(i, y.toInt()) else { list.scrollToItem(i); list.scrollBy(y) }
+        if (sideways && !wraps && across.viewportSize > 0) {
+            val box = l.getBoundingBox(local.coerceAtMost((doc.ends[i] - doc.starts[i] - 1).coerceAtLeast(0)))
+            val x = box.left + padPx
+            if (x < across.value || x + box.width > across.value + across.viewportSize)
+                across.scrollTo((x - across.viewportSize / 3f).toInt().coerceIn(0, across.maxValue))
         }
     }
-    LaunchedEffect(matches) { if (current >= matches.size) current = 0 }
-    LaunchedEffect(current, matches, layout) { matches.getOrNull(current)?.let { scrollToChar(it) } }
 
-    // Section headings for Contents (a plain-text FAQ has no structure, so it's a heuristic).
-    val headings by produceState(emptyList<Pair<String, Int>>(), text) {
-        val t = text ?: return@produceState
-        value = withContext(Dispatchers.Default) {
-            buildList {
-                var offset = 0
-                t.lineSequence().forEach { line ->
-                    val trimmed = line.trim()
-                    if (isGuideHeading(trimmed)) add(trimmed to offset)
-                    offset += line.length + 1
+    // Back to your place, and again after the text size or wrapping changes (the same character
+    // stays at the top). Waits on the chunk's layout inside scrollToChar, no polling.
+    LaunchedEffect(textSize, wrapping) {
+        place.restored = false
+        if (place.skipRestore) place.skipRestore = false else scrollToChar(place.char)
+        place.restored = true
+    }
+    // Saved when scrolling stops, not on every pixel.
+    LaunchedEffect(Unit) {
+        snapshotFlow { list.isScrollInProgress }.drop(1).filter { !it }.collect { if (place.restored) recordPlace() }
+    }
+
+    // Find: every match of the query (two characters or more), and which is current. Searched on
+    // a background thread; a newer query cancels an older search.
+    var query by remember { mutableStateOf(saved?.query.orEmpty()) }
+    var current by remember { mutableIntStateOf(saved?.current ?: 0) }
+    val found by produceState(FindResult("", emptyList()), query) {
+        val q = query
+        value = if (q.length < 2) FindResult(q, emptyList()) else FindResult(q, withContext(Dispatchers.Default) {
+            val out = ArrayList<Int>()
+            var i = doc.text.indexOf(q, 0, ignoreCase = true)
+            while (i >= 0) {
+                out.add(i)
+                if (out.size % 256 == 0) ensureActive()
+                i = doc.text.indexOf(q, i + q.length, ignoreCase = true)
+            }
+            out
+        })
+    }
+    val matches = if (found.query == query) found.offsets else emptyList()
+    suspend fun showMatch(n: Int) {
+        matches.getOrNull(n)?.let { scrollToChar(it, linesAbove = 3, sideways = true) }
+        if (place.restored) recordPlace()
+    }
+    // A new search jumps to its first match once its matches are in (not when you come back to
+    // the tab with a search open: that keeps your place).
+    LaunchedEffect(found) {
+        if (found.query != query) return@LaunchedEffect
+        if (current >= found.offsets.size) current = 0
+        if (place.jumpToMatch) { place.jumpToMatch = false; showMatch(current) }
+    }
+
+    // Kept for coming back to this tab.
+    val latestQuery by rememberUpdatedState(query)
+    val latestCurrent by rememberUpdatedState(current)
+    val latestFind by rememberUpdatedState(findOpen)
+    DisposableEffect(Unit) {
+        onDispose {
+            if (place.restored) recordPlace()
+            memory.views[doc.path] = ReaderView(doc.stamp, doc.reflow, doc.text.length,
+                list.firstVisibleItemIndex, list.firstVisibleItemScrollOffset, across.value, size, wraps,
+                place.char, latestQuery, latestCurrent, latestFind)
+        }
+    }
+
+    val measurer = rememberTextMeasurer()
+    // How wide the page is without wrapping: its widest line, measured once per text size.
+    val widest = remember(doc, style, wrapping) {
+        if (wrapping) 0 else measurer.measure(doc.widest, style, softWrap = false, maxLines = 1).size.width
+    }
+    val currentAt = matches.getOrNull(current) ?: -1
+    val qLen = query.length
+
+    Box(Modifier.fillMaxSize()) {
+        BoxWithConstraints(Modifier.fillMaxSize()) {
+            val pageWidth = maxOf(maxWidth, with(density) { widest.toDp() } + 24.dp + 8.dp)
+            val chunks: LazyListScope.() -> Unit = {
+                items(doc.count, key = { it }, contentType = { 0 }) { i ->
+                    val start = doc.starts[i]
+                    val end = doc.ends[i]
+                    val chunk = remember(i) { doc.text.substring(start, end) }
+                    // Only the matches in this chunk are highlighted in it.
+                    val hereCurrent = if (currentAt in start until end) currentAt else -1
+                    val shown = remember(chunk, matches, hereCurrent, theme, qLen) {
+                        highlightChunk(chunk, start, matches, hereCurrent, qLen, theme)
+                    }
+                    DisposableEffect(i) { onDispose { layouts.remove(i) } }
+                    Text(shown, color = theme.ink, style = style, softWrap = wrapping,
+                        onTextLayout = { layouts[i] = it },
+                        modifier = if (wrapping) Modifier.fillMaxWidth() else Modifier)
                 }
             }
-        }
-    }
-
-    // Your place is kept as a fraction of the whole (ten-thousandths), not a pixel offset, so it
-    // survives changing the text size. Restored once the text has been measured: the scroll's
-    // range is set in the same layout pass that reports this text's layout, so wait for that
-    // layout (this text, this size, this wrapping) rather than polling for a range. A guide that
-    // fits the screen has no range and nothing to restore.
-    var restored by remember(file) { mutableStateOf(false) }
-    LaunchedEffect(file, textSize, wrapping, text) {
-        val t = text ?: return@LaunchedEffect
-        try {
-            snapshotFlow { layout }.first { l ->
-                l != null && l.layoutInput.text.text == t && l.layoutInput.softWrap == wrapping &&
-                    l.layoutInput.style.fontSize == textSize.sp
+            val padding = PaddingValues(horizontal = 12.dp, vertical = 10.dp)
+            if (wrapping) LazyColumn(Modifier.fillMaxSize(), state = list, contentPadding = padding, content = chunks)
+            // One sideways scroll around the whole list, so every line moves together.
+            else Box(Modifier.fillMaxSize().horizontalScroll(across)) {
+                LazyColumn(Modifier.fillMaxHeight().width(pageWidth), state = list, contentPadding = padding, content = chunks)
             }
-            val max = scroll.maxValue
-            if (max > 0) scroll.scrollTo((startAt / 10_000f * max).toInt())
-        } finally { restored = true }
-    }
-    LaunchedEffect(scroll.value == 0) { if (scroll.value == 0) onChrome(true) }
-    LaunchedEffect(scroll.value, scroll.maxValue, restored) {
-        val max = scroll.maxValue
-        // Saved once scrolling settles (this restarts on every move), not on every pixel.
-        if (restored && max > 0) { kotlinx.coroutines.delay(600); onPosition((scroll.value.toFloat() / max * 10_000f).toInt().coerceIn(0, 10_000)) }
-    }
-
-    val display: AnnotatedString = remember(text, query, current, matches, theme) {
-        val t = text ?: return@remember AnnotatedString(if (loading) "Opening the guide…" else "This guide couldn't be read.")
-        val q = query
-        if (matches.isEmpty() || q.length < 2) AnnotatedString(t) else buildAnnotatedString {
-            append(t)
-            matches.forEachIndexed { i, off ->
-                addStyle(SpanStyle(background = if (i == current) Accent else Accent.copy(alpha = 0.33f),
-                    color = if (i == current) Color(0xFF101010) else theme.ink), off.coerceAtMost(t.length), (off + q.length).coerceAtMost(t.length))
-            }
-        }
-    }
-
-    // Text guides keep a monospace face: they're drawn as ASCII maps and tables to a fixed column.
-    val body = @Composable {
-        Text(display, color = theme.ink, fontFamily = FontFamily.Monospace, fontSize = textSize.sp,
-            lineHeight = (textSize * 1.35f).sp, softWrap = wrapping, onTextLayout = { layout = it },
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp))
-    }
-
-    Box(Modifier.fillMaxSize().background(theme.paper)) {
-        Box(Modifier.fillMaxSize().nestedScroll(chromeOnScroll).verticalScroll(scroll)) {
-            if (wrapping) body() else Box(Modifier.horizontalScroll(rememberScrollState())) { body() }
         }
         if (findOpen) {
             AllowTyping(true)
-            FindBar(query, { query = it; current = 0 }, matches.size, if (matches.isEmpty()) 0 else current + 1,
-                onPrev = { if (matches.isNotEmpty()) current = (current - 1 + matches.size) % matches.size },
-                onNext = { if (matches.isNotEmpty()) current = (current + 1) % matches.size },
+            FindBar(query, { query = it; current = 0; place.jumpToMatch = true }, matches.size, if (matches.isEmpty()) 0 else current + 1,
+                onPrev = { if (matches.isNotEmpty()) { current = (current - 1 + matches.size) % matches.size; val n = current; scope.launch { showMatch(n) } } },
+                onNext = { if (matches.isNotEmpty()) { current = (current + 1) % matches.size; val n = current; scope.launch { showMatch(n) } } },
                 onClose = { onFindOpen(false); query = "" })
         }
         if (tocOpen) {
             Box(Modifier.fillMaxSize().background(Color(0xE6000000)).clickable { onTocOpen(false) }) {
-                Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(12.dp),
+                // A list too: a long FAQ can have hundreds of headings.
+                LazyColumn(Modifier.fillMaxWidth(), contentPadding = PaddingValues(12.dp),
                     verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                    Row(Modifier.fillMaxWidth().padding(bottom = 6.dp), horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically) {
-                        Text("Contents", color = TextPrimary, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
-                        Pill("Close", false) { onTocOpen(false) }
+                    item {
+                        Row(Modifier.fillMaxWidth().padding(bottom = 6.dp), horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically) {
+                            Text("Contents", color = TextPrimary, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+                            Pill("Close", false) { onTocOpen(false) }
+                        }
                     }
-                    if (headings.isEmpty()) Text("No sections found in this guide.", color = TextFaint, fontSize = 13.sp)
-                    headings.forEach { (title, offset) ->
+                    if (doc.headings.isEmpty()) item { Text("No sections found in this guide.", color = TextFaint, fontSize = 13.sp) }
+                    items(doc.headings.size) { k ->
+                        val (title, offset) = doc.headings[k]
                         Text(title, color = TextPrimary, fontSize = 13.sp, maxLines = 1, overflow = TextOverflow.Ellipsis,
                             modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(6.dp))
-                                .clickable { onTocOpen(false); scope.launch { scrollToChar(offset) } }
+                                .clickable {
+                                    onTocOpen(false)
+                                    scope.launch { scrollToChar(offset); if (place.restored) recordPlace() }
+                                }
                                 .padding(horizontal = 8.dp, vertical = 8.dp))
                     }
                 }
             }
+        }
+    }
+}
+
+/** [chunk] (starting at [start] in the guide) with the matches inside it highlighted. */
+private fun highlightChunk(chunk: String, start: Int, matches: List<Int>, current: Int, length: Int, theme: GuideTheme): AnnotatedString {
+    if (matches.isEmpty() || length < 2) return AnnotatedString(chunk)
+    val end = start + chunk.length
+    var k = matches.binarySearch(start).let { if (it >= 0) it else -it - 1 }
+    if (k >= matches.size || matches[k] >= end) return AnnotatedString(chunk)
+    return buildAnnotatedString {
+        append(chunk)
+        while (k < matches.size && matches[k] < end) {
+            val off = matches[k]
+            val on = off == current
+            addStyle(SpanStyle(background = if (on) Accent else Accent.copy(alpha = 0.33f),
+                color = if (on) Color(0xFF101010) else theme.ink),
+                off - start, (off - start + length).coerceAtMost(chunk.length))
+            k++
         }
     }
 }

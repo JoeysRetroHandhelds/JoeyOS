@@ -32,6 +32,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.platform.LocalInputModeManager
 import com.joeyos.app.ui.controls.Control
@@ -172,14 +173,31 @@ fun HomeScreen(viewModel: HomeViewModel) {
     LaunchedEffect(dockEntries.isNotEmpty()) {
         if (dockEntries.isNotEmpty() && focusedDockPkg == null) focusDock(defaultDockPkg())
     }
-    // Coming back from a page, focus goes to the dock as a group and its focusRestorer lands it
-    // on the icon you left ("Focus in Compose"); the dock row is always composed, so it's there to
-    // ask. (Popups are real Dialogs, which hand focus back by themselves.)
+    // Coming back from a page: the icon you were on (focusedDockPkg, which the dock reports as
+    // focus moves) asks for focus itself, through the same landing as above — one request on an
+    // attached target, per "Focus in Compose". Asking the dock as a group and relying on its
+    // focusRestorer didn't land there on the Thor (found on device), so the icon is named.
+    // (Popups are real Dialogs, which hand focus back by themselves.)
     val dockGroupFocus = remember { FocusRequester() }
     var pageWasOpen by remember { mutableStateOf(false) }
+    var returnedTo by remember { mutableStateOf<String?>(null) }   // for the log below
     LaunchedEffect(pageOpen) {
         if (pageOpen) { pageWasOpen = true; return@LaunchedEffect }
-        if (pageWasOpen) dockGroupFocus.requestFocus()
+        if (!pageWasOpen) return@LaunchedEffect
+        val back = focusedDockPkg?.takeIf { p -> currentDockEntries.any { it.packageName == p } }
+            ?: defaultDockPkg()
+        returnedTo = back
+        AppLog.i("Controls", "Page closed: putting focus back on $back")
+        focusDock(back)
+    }
+    // Which icon focus actually reached after a page closed, once, so a report shows it plainly
+    // (no second line means nothing on the dock got focus).
+    var dockHasFocus by remember { mutableStateOf(false) }
+    LaunchedEffect(dockHasFocus, focusedDockPkg, returnedTo) {
+        val wanted = returnedTo ?: return@LaunchedEffect
+        if (!dockHasFocus) return@LaunchedEffect
+        AppLog.i("Controls", "Focus back on the dock: $focusedDockPkg" + if (focusedDockPkg == wanted) "" else " (not $wanted)")
+        returnedTo = null
     }
     // Focus follows the icon when the dock re-sorts after a launch; keep that icon on screen.
     LaunchedEffect(dockEntries) {
@@ -386,7 +404,8 @@ fun HomeScreen(viewModel: HomeViewModel) {
             modifier            = Modifier
                 .align(Alignment.BottomCenter)
                 .navigationBarsPadding()
-                .padding(bottom = 10.dp),
+                .padding(bottom = 10.dp)
+                .onFocusChanged { dockHasFocus = it.hasFocus },
             favoriteTitle       = favoriteGame?.title,
             focusedPackage      = focusedDockPkg,
             onFocusedChange     = { focusedDockPkg = it },
