@@ -89,14 +89,30 @@ fun JoeyDialog(
         val view = LocalView.current
         // A dialog is its own window with its own bar state: without this, opening a popup
         // brings the status and navigation bars back over the full-screen home screen.
-        SideEffect {
+        //
+        // Done while the popup is first composed, before its window draws, not in a SideEffect
+        // (which runs after the first layout): otherwise the window is born showing the
+        // navigation bar for a frame, which read as the screen flashing on Y (found on device,
+        // as in Chameleon). The controller's hide can itself land a frame late, so the older
+        // immersive flags are set too: they apply on the window's very first traversal.
+        remember(view) {
             (view.parent as? androidx.compose.ui.window.DialogWindowProvider)?.window?.let { window ->
                 androidx.core.view.WindowCompat.setDecorFitsSystemWindows(window, false)
+                @Suppress("DEPRECATION")
+                window.decorView.systemUiVisibility = (
+                    android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                        android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                        android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                        android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+                        android.view.View.SYSTEM_UI_FLAG_FULLSCREEN or
+                        android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    )
                 androidx.core.view.WindowInsetsControllerCompat(window, view).apply {
                     systemBarsBehavior = androidx.core.view.WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
                     hide(WindowInsetsCompat.Type.systemBars())
                 }
             }
+            Unit
         }
         val keyboard = LocalSoftwareKeyboardController.current
         SideEffect {

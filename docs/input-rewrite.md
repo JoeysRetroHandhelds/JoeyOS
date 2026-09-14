@@ -40,8 +40,10 @@ focusProperties, FocusRequester), the Android dialogs guide, and the game-contro
 - **Containers remember, the app doesn't.** Rows, the App Drawer grid and the Settings panel are
   focus groups with `focusRestorer(first)`: coming back into one lands on the item you left, else
   its first item. To go back to a container, request the container.
-- **Except the dock**, a plain `focusGroup` with no restorer: the home screen names the icon to
-  return to (the one reported focused) and that icon requests focus. A restorer steps in on every
+- **Except the dock**, a `focusGroup` with no restorer whose `focusProperties { enter }` sends
+  every entry to the icon you were last on (tracked by package as the dock reports focus), when
+  it's on screen. Android re-enters the dock after a page closes and on coming back from a game;
+  left to itself it picks the first icon on screen (found on device). A restorer steps in on every
   entry into its group, including a request on a child, so it sent those requests to its fallback
   (found on device: always the first emulator). Don't mix a restorer with explicit child requests.
 - **Explicit steps use `focusProperties`**, not key interception: Down from the full-width

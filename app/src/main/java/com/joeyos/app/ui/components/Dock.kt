@@ -103,7 +103,7 @@ fun buildDockEntries(
     ) + emulators
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, androidx.compose.ui.ExperimentalComposeUiApi::class)
 @Composable
 fun Dock(
     dockEntries: List<DockEntry>,
@@ -182,7 +182,20 @@ fun Dock(
         LazyRow(
             state          = listState,
             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
-            modifier       = Modifier.fillMaxWidth().focusGroup(),
+            modifier       = Modifier.fillMaxWidth()
+                // Where focus goes when it comes into the dock from outside: the icon you were on
+                // ("Focus in Compose": redirect focus on enter). Android re-enters the dock after a
+                // page closes and when you come back from a game, and left to itself it picks the
+                // first icon on screen, so you lost your place every time (found on device). Only
+                // an icon that's on screen can take it; otherwise the default applies.
+                .focusProperties {
+                    @Suppress("DEPRECATION")
+                    enter = {
+                        val onScreen = listState.layoutInfo.visibleItemsInfo.any { it.key == focusedPackage }
+                        focusedPackage?.takeIf { onScreen }?.let { focusRequesters[it] } ?: FocusRequester.Default
+                    }
+                }
+                .focusGroup(),
             horizontalArrangement = Arrangement.spacedBy(9.dp),
             verticalAlignment     = Alignment.Bottom
         ) {

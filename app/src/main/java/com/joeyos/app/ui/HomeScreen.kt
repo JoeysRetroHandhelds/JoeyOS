@@ -186,18 +186,17 @@ fun HomeScreen(viewModel: HomeViewModel) {
         val back = focusedDockPkg?.takeIf { p -> currentDockEntries.any { it.packageName == p } }
             ?: defaultDockPkg()
         returnedTo = back
-        AppLog.i("Controls", "Page closed: putting focus back on $back")
+        val idx = currentDockEntries.indexOfFirst { it.packageName == back }
+        val onScreen = dockListState.layoutInfo.visibleItemsInfo.any { it.index == idx }
+        AppLog.i("Controls", "Page closed: putting focus back on $back (dock position $idx, " +
+            (if (onScreen) "on screen)" else "off screen)"))
         focusDock(back)
     }
-    // Which icon focus actually reached after a page closed, once, so a report shows it plainly
-    // (no second line means nothing on the dock got focus).
+    // For a report: the icons that actually gain focus after a page closes (the first three, as
+    // the icons report it), so a jump elsewhere after landing shows plainly in the log.
     var dockHasFocus by remember { mutableStateOf(false) }
-    LaunchedEffect(dockHasFocus, focusedDockPkg, returnedTo) {
-        val wanted = returnedTo ?: return@LaunchedEffect
-        if (!dockHasFocus) return@LaunchedEffect
-        AppLog.i("Controls", "Focus back on the dock: $focusedDockPkg" + if (focusedDockPkg == wanted) "" else " (not $wanted)")
-        returnedTo = null
-    }
+    var focusEventsToLog by remember { mutableIntStateOf(0) }
+    LaunchedEffect(returnedTo) { if (returnedTo != null) focusEventsToLog = 3 }
     // Focus follows the icon when the dock re-sorts after a launch; keep that icon on screen.
     LaunchedEffect(dockEntries) {
         val idx = dockEntries.indexOfFirst { it.packageName == focusedDockPkg }
@@ -282,21 +281,21 @@ fun HomeScreen(viewModel: HomeViewModel) {
     }
 
     // ── Dock actions ──────────────────────────────────────────────────────
+    // The list is read first and the popup opens with it, already filled. Opening it empty and
+    // filling it a moment later flashed the screen, and for an emulator with no games it opened
+    // and closed again at once (found on device). The lists are cached, so the wait is short.
     suspend fun openRecentGames(packageName: String) {
         if (!RecentGamesReader.supportsRecentlyPlayed(packageName)) return
-        recentGames = emptyList(); showRecentGames = true
         val games = withContext(Dispatchers.IO) { RecentGamesReader.readForPackage(packageName, recentDepth) }
-        if (games.isNotEmpty()) recentGames = games else showRecentGames = false
+        if (games.isNotEmpty()) { recentGames = games; showRecentGames = true }
     }
     suspend fun openAllRecentGames() {
-        recentGames = emptyList(); showRecentGames = true
         val games = withContext(Dispatchers.IO) { RecentGamesReader.readAll(installedApps, recentDepth) }
-        if (games.isNotEmpty()) recentGames = games else showRecentGames = false
+        if (games.isNotEmpty()) { recentGames = games; showRecentGames = true }
     }
     suspend fun openFavoritePicker() {
-        favoritePickerGames = null; showFavoritePicker = true
         val games = withContext(Dispatchers.IO) { RecentGamesReader.readAll(installedApps) }
-        favoritePickerGames = games
+        favoritePickerGames = games; showFavoritePicker = true
     }
     /** Y: Recently Played for the focused emulator, all of them on Recent, the picker on Favorite. */
     suspend fun openDockSecondary(pkg: String?) = when (pkg) {
@@ -360,7 +359,7 @@ fun HomeScreen(viewModel: HomeViewModel) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .statusBarsPadding()
+                .windowInsetsPadding(WindowInsets.displayCutout.only(WindowInsetsSides.Top))
                 .padding(horizontal = 18.dp, vertical = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment     = Alignment.Top
@@ -383,13 +382,7 @@ fun HomeScreen(viewModel: HomeViewModel) {
                     FAVORITE_PACKAGE -> {
                         val fav = favoriteGame
                         if (fav != null) scope.launch { launchRecentGame(context, fav, assignments, viewModel) }
-                        else {
-                            favoritePickerGames = null; showFavoritePicker = true
-                            scope.launch {
-                                val games = withContext(Dispatchers.IO) { RecentGamesReader.readAll(installedApps) }
-                                favoritePickerGames = games
-                            }
-                        }
+                        else scope.launch { openFavoritePicker() }
                     }
                     RECENT_ALL_PACKAGE -> {
                         scope.launch {
@@ -402,12 +395,18 @@ fun HomeScreen(viewModel: HomeViewModel) {
             },
             modifier            = Modifier
                 .align(Alignment.BottomCenter)
-                .navigationBarsPadding()
+                .windowInsetsPadding(WindowInsets.displayCutout.only(WindowInsetsSides.Bottom))
                 .padding(bottom = 10.dp)
                 .onFocusChanged { dockHasFocus = it.hasFocus },
             favoriteTitle       = favoriteGame?.title,
             focusedPackage      = focusedDockPkg,
-            onFocusedChange     = { focusedDockPkg = it },
+            onFocusedChange     = { pkg ->
+                focusedDockPkg = pkg
+                if (focusEventsToLog > 0) {
+                    focusEventsToLog--
+                    AppLog.i("Controls", "Dock focus now on $pkg" + if (pkg == returnedTo) "" else " (was aiming for $returnedTo)")
+                }
+            },
             focusRequesters     = dockFocusRequesters,
             // Not while a page is up: the page holds focus, and an icon arriving under it
             // mustn't take it.
@@ -415,27 +414,10 @@ fun HomeScreen(viewModel: HomeViewModel) {
             landOn              = dockLandOn,
             onEmulatorLongClick = { pkg ->
                 scope.launch {
-                    when (pkg) {
-                        FAVORITE_PACKAGE -> {
-                            favoritePickerGames = null; showFavoritePicker = true
-                            val games = withContext(Dispatchers.IO) { RecentGamesReader.readAll(installedApps) }
-                            favoritePickerGames = games
-                        }
-                        RECENT_ALL_PACKAGE -> {
-                            recentGames = emptyList(); showRecentGames = true
-                            val games = withContext(Dispatchers.IO) { RecentGamesReader.readAll(installedApps, recentDepth) }
-                            if (games.isNotEmpty()) recentGames = games else showRecentGames = false
-                        }
-                        else -> {
-                            if (!RecentGamesReader.supportsRecentlyPlayed(pkg)) {
-                                viewModel.launchApp(context, pkg)
-                            } else {
-                                recentGames = emptyList(); showRecentGames = true
-                                val games = withContext(Dispatchers.IO) { RecentGamesReader.readForPackage(pkg, recentDepth) }
-                                if (games.isNotEmpty()) recentGames = games else showRecentGames = false
-                            }
-                        }
-                    }
+                    // Long-press is Y by touch; an app without Recently Played just opens.
+                    if (pkg != FAVORITE_PACKAGE && pkg != RECENT_ALL_PACKAGE && !RecentGamesReader.supportsRecentlyPlayed(pkg))
+                        viewModel.launchApp(context, pkg)
+                    else openDockSecondary(pkg)
                 }
             },
             iconSizeDp          = effectiveIconSize,

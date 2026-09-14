@@ -118,7 +118,7 @@ fun AppDrawer(
             modifier = Modifier
                 .fillMaxSize()
                 .background(SheetBg)
-                .systemBarsPadding()
+                .windowInsetsPadding(WindowInsets.displayCutout)  // not the bars: always hidden, see JoeyDialog
         ) {
             // Header
             Row(

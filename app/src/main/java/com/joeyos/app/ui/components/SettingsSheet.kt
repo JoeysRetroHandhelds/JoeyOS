@@ -140,7 +140,7 @@ fun SettingsSheet(
             Column(modifier = Modifier
                 .fillMaxHeight()
                 .fillMaxWidth()
-                .systemBarsPadding()) {
+                .windowInsetsPadding(WindowInsets.displayCutout)) {  // not the bars: always hidden, see JoeyDialog
 
                 // Header
                 Row(

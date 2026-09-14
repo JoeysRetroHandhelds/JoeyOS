@@ -100,6 +100,9 @@ fun Modifier.landFocus(landing: FocusLanding?, enabled: Boolean = true): Modifie
         val generation = landing.armedAt
         LaunchedEffect(landing, generation) {
             if (requester.requestFocus(FocusDirection.Enter)) landing.landedAt = generation
+            // Refused (not focusable right now, or another window has focus): say so in the log,
+            // since the symptom is only "nothing highlighted".
+            else com.joeyos.app.AppLog.i("Controls", "A focus request was refused (landing $generation)")
         }
     }
     this.focusRequester(requester)
