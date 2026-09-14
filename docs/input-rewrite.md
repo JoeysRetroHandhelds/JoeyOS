@@ -37,9 +37,13 @@ focusProperties, FocusRequester), the Android dialogs guide, and the game-contro
   current row, a list's first row). A popup with no mark opens on its first item. A list that
   opens on a row further down starts scrolled to it (`initialFirstVisibleItemIndex`), so the row
   is composed.
-- **Containers remember, the app doesn't.** Rows, the dock, the App Drawer grid and the Settings
-  panel are focus groups with `focusRestorer(first)`: coming back into one lands on the item you
-  left, else its first item. To go back to a container, request the container.
+- **Containers remember, the app doesn't.** Rows, the App Drawer grid and the Settings panel are
+  focus groups with `focusRestorer(first)`: coming back into one lands on the item you left, else
+  its first item. To go back to a container, request the container.
+- **Except the dock**, a plain `focusGroup` with no restorer: the home screen names the icon to
+  return to (the one reported focused) and that icon requests focus. A restorer steps in on every
+  entry into its group, including a request on a child, so it sent those requests to its fallback
+  (found on device: always the first emulator). Don't mix a restorer with explicit child requests.
 - **Explicit steps use `focusProperties`**, not key interception: Down from the full-width
   search box is `down = grid`, Down from the Settings tabs is `down = panel`; a full-width popup
   row cancels left/right.
@@ -72,8 +76,8 @@ focusProperties, FocusRequester), the Android dialogs guide, and the game-contro
 5. **Full-screen pages are not dialogs** (`JoeyPage`: Settings, the App Drawer). They're drawn in
    the main window, edge to edge like the home screen. A page closes on Back, pushes its own
    `ControlBus` handler while open, contains focus (its group cancels exits), and lands focus on
-   its marked item. When it closes, the home screen requests the dock group and the dock's
-   focusRestorer lands on the icon you left.
+   its marked item. When it closes, the home screen asks the icon you were on for focus (it's
+   tracked by package as the dock reports focus).
 
 ## Waves (one screen at a time, fully)
 

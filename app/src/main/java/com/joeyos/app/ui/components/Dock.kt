@@ -8,6 +8,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -113,13 +114,6 @@ fun Dock(
     onFocusedChange: (String) -> Unit = {},
     focusRequesters: MutableMap<String, FocusRequester> = remember { mutableMapOf() },
     /**
-     * The dock as one focus group that remembers its last focused icon (focusRestorer, per "Focus
-     * in Compose"): asking this for focus lands back on the icon you left, e.g. when a page closes.
-     * [restoreFallback] is where it lands when there's nothing to remember yet.
-     */
-    groupFocus: FocusRequester = remember { FocusRequester() },
-    restoreFallback: FocusRequester = FocusRequester.Default,
-    /**
      * Moves focus to the icon for [landOn] as soon as it's composed (see [FocusLanding]): the
      * default icon on first start, the target of L1/R1 when it's scrolled off. The caller
      * scrolls the row to it; the icon then asks for focus itself.
@@ -182,10 +176,13 @@ fun Dock(
             .fillMaxWidth()
             .background(Color.Black.copy(alpha = bgAlpha))
     ) {
+        // A plain focus group, no focusRestorer: the home screen names the icon to return to
+        // (the one you were on), and a restorer steps in on every entry into the row, which sent
+        // those requests to its fallback icon instead, the first emulator (found on device).
         LazyRow(
             state          = listState,
             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
-            modifier       = Modifier.fillMaxWidth().focusRequester(groupFocus).focusRow(restoreFallback),
+            modifier       = Modifier.fillMaxWidth().focusGroup(),
             horizontalArrangement = Arrangement.spacedBy(9.dp),
             verticalAlignment     = Alignment.Bottom
         ) {

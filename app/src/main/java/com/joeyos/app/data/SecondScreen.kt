@@ -73,6 +73,10 @@ object SecondScreenPrefs {
     fun openGuideOnLaunch(context: Context) = prefs(context).getBoolean("open_guide", false)
     fun setOpenGuideOnLaunch(context: Context, on: Boolean) = prefs(context).edit().putBoolean("open_guide", on).apply()
 
+    /** The Guide's own bar (Options, Find, Contents…) shown or hidden with the tab row's arrow. */
+    fun guideBarShown(context: Context) = prefs(context).getBoolean("guide_bar_shown", true)
+    fun setGuideBarShown(context: Context, shown: Boolean) = prefs(context).edit().putBoolean("guide_bar_shown", shown).apply()
+
     /** Hide a locked achievement's name and description until you tap it. */
     fun hideSpoilers(context: Context) = prefs(context).getBoolean("hide_spoilers", false)
     fun setHideSpoilers(context: Context, on: Boolean) = prefs(context).edit().putBoolean("hide_spoilers", on).apply()

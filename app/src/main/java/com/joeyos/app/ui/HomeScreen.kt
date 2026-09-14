@@ -175,10 +175,9 @@ fun HomeScreen(viewModel: HomeViewModel) {
     }
     // Coming back from a page: the icon you were on (focusedDockPkg, which the dock reports as
     // focus moves) asks for focus itself, through the same landing as above — one request on an
-    // attached target, per "Focus in Compose". Asking the dock as a group and relying on its
-    // focusRestorer didn't land there on the Thor (found on device), so the icon is named.
+    // attached target, per "Focus in Compose". (A focusRestorer on the dock redirected every such
+    // request to its fallback, the first emulator, so the dock has none: found on device.)
     // (Popups are real Dialogs, which hand focus back by themselves.)
-    val dockGroupFocus = remember { FocusRequester() }
     var pageWasOpen by remember { mutableStateOf(false) }
     var returnedTo by remember { mutableStateOf<String?>(null) }   // for the log below
     LaunchedEffect(pageOpen) {
@@ -410,8 +409,6 @@ fun HomeScreen(viewModel: HomeViewModel) {
             focusedPackage      = focusedDockPkg,
             onFocusedChange     = { focusedDockPkg = it },
             focusRequesters     = dockFocusRequesters,
-            groupFocus          = dockGroupFocus,
-            restoreFallback     = dockFocusRequesters.getOrPut(defaultDockPkg() ?: "") { FocusRequester() },
             // Not while a page is up: the page holds focus, and an icon arriving under it
             // mustn't take it.
             landing             = dockLanding.takeIf { !pageOpen },

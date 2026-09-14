@@ -100,7 +100,10 @@ fun SecondScreenContent() {
     var tab by remember { mutableIntStateOf(homeTab()) }
     // Logged out of RetroAchievements while on one of its tabs: go to Apps.
     LaunchedEffect(configured) { if (!configured && (tab == 0 || tab == 1)) tab = 4 }
-    var chrome by remember { mutableStateOf(true) }                      // the guide's own bar shown (arrow in the tab row)
+    // The guide's own bar, shown or hidden with the arrow in the tab row: kept as you left it,
+    // across tab switches and restarts.
+    var chrome by remember { mutableStateOf(SecondScreenPrefs.guideBarShown(context)) }
+    fun setChrome(shown: Boolean) { chrome = shown; SecondScreenPrefs.setGuideBarShown(context, shown) }
     var wantGuide by remember { mutableStateOf(false) }                  // open the Guide once the game is known
     var guideSearch by remember { mutableStateOf<GuideSource?>(null) }   // "find a guide for this achievement"
     // RA's own title and console for the game, which name its guide and say where to look for one.
@@ -170,7 +173,7 @@ fun SecondScreenContent() {
     androidx.activity.compose.BackHandler(enabled = openGame != null || !chrome || (tab == 0 && achNav.view != "home")) {
         when {
             openGame != null -> openGame = null
-            !chrome -> chrome = true
+            !chrome -> setChrome(true)
             else -> achNav.view = "home"
         }
     }
@@ -211,7 +214,7 @@ fun SecondScreenContent() {
                             // Up: hide the guide's bar. Down: show it again.
                             Box(
                                 Modifier.clip(RoundedCornerShape(50)).background(Color.White.copy(alpha = 0.08f))
-                                    .clickable { chrome = !chrome }.padding(4.dp),
+                                    .clickable { setChrome(!chrome) }.padding(4.dp),
                                 contentAlignment = Alignment.Center
                             ) {
                                 JoeyIcon(R.drawable.ic_chevron_right, TextDim, 22.dp,
