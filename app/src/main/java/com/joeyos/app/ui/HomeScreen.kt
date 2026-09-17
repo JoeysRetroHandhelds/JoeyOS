@@ -369,7 +369,7 @@ fun HomeScreen(viewModel: HomeViewModel) {
                 CircleIconButton(R.drawable.ic_settings) { showSettings = true }
             }
             if (clockFormat != com.joeyos.app.data.ClockFormat.HIDDEN) {
-                Clock(use24h = clockFormat == com.joeyos.app.data.ClockFormat.H24)
+                StatusCluster(use24h = clockFormat == com.joeyos.app.data.ClockFormat.H24)
             }
         }
 
@@ -514,31 +514,9 @@ fun HomeScreen(viewModel: HomeViewModel) {
 
 // ── Clock ─────────────────────────────────────────────────────────────────────
 
-@Composable
-fun Clock(use24h: Boolean = true) {
-    val timeFmt = remember(use24h) { SimpleDateFormat(if (use24h) "HH:mm" else "h:mm a", Locale.getDefault()) }
-    var time by remember(use24h) { mutableStateOf(timeFmt.format(Date())) }
-    var date by remember { mutableStateOf(formattedDate()) }
-    LaunchedEffect(use24h) {
-        while (true) {
-            delay(10.seconds)
-            time = timeFmt.format(Date())
-            date = formattedDate()
-        }
-    }
-    val screenH = androidx.compose.ui.platform.LocalConfiguration.current.screenHeightDp
-    val timeSp = (screenH * 0.085f).coerceIn(18f, 36f).sp
-    val dateSp = (screenH * 0.028f).coerceIn(8f, 13f).sp
-    Column(horizontalAlignment = Alignment.End) {
-        Text(time, fontSize = timeSp, fontWeight = FontWeight.Bold, color = Color.White)
-        Text(date, fontSize = dateSp, color = Color.White.copy(alpha = 0.85f), fontFamily = JoeyFont)
-    }
-}
-
 // ── Top-bar round buttons (app drawer, settings) ─────────────────────────────
 
 
-private fun formattedDate(): String = SimpleDateFormat("EEE, MMM d", Locale.getDefault()).format(Date())
 
 suspend fun launchRecentGame(
     context: android.content.Context,
