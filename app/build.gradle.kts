@@ -19,8 +19,8 @@ android {
         applicationId = "com.joeyos.app"
         minSdk = 26
         targetSdk = 34
-        versionCode = 34
-        versionName = "1.0.33"
+        versionCode = 35
+        versionName = "1.0.34"
     }
 
     signingConfigs {
