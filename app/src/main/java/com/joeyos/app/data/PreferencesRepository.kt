@@ -248,7 +248,8 @@ class PreferencesRepository(private val context: Context) {
         when (prefs[CLOCK_FORMAT]) {
             "24h" -> ClockFormat.H24
             "12h" -> ClockFormat.H12
-            else  -> ClockFormat.HIDDEN
+            "off" -> ClockFormat.HIDDEN
+            else  -> ClockFormat.H12   // default: 12h clock (and the status cluster) shown
         }
     }
 

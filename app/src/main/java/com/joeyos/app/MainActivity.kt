@@ -215,7 +215,19 @@ class MainActivity : ComponentActivity() {
         Controls.intentFor(event.keyCode)?.let { control ->
             // Both edges are consumed, so Android never synthesises a fallback from a button
             // we took (an unhandled Start's fallback is a confirm on whatever is focused).
-            if (event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0) ControlBus.dispatch(control)
+            if (event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0) {
+                // Some handhelds emit two keycodes for one press (the Odin 2 Portal's Start sends
+                // Start and Menu, which both mean Options): Settings would open on the first and
+                // close on the second, so it looked like it never opened. Ignore the same intent
+                // if it repeats within a short window — no human presses this fast.
+                val now = android.os.SystemClock.uptimeMillis()
+                if (control == lastControl && now - lastControlAt < 300L) {
+                    AppLog.i("Controls", "Ignored a repeated $control (${KeyEvent.keyCodeToString(event.keyCode)}) ${now - lastControlAt}ms after the last")
+                    return true
+                }
+                lastControl = control; lastControlAt = now
+                ControlBus.dispatch(control)
+            }
             return true
         }
         if (event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0 &&
@@ -229,6 +241,8 @@ class MainActivity : ComponentActivity() {
 
     private val loggedUnknownKeys = mutableSetOf<Int>()
     private var centerDownTime = -1L
+    private var lastControl: Control? = null
+    private var lastControlAt = 0L
 
     private fun KeyEvent.withKeyCode(keyCode: Int, action: Int) = KeyEvent(
         downTime, eventTime, action, keyCode, 0, metaState, deviceId, scanCode, flags, source
