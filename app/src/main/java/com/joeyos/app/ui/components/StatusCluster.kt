@@ -70,15 +70,19 @@ fun StatusCluster(use24h: Boolean, modifier: Modifier = Modifier) {
         val battery = context.getSystemService(BatteryManager::class.java)
         val connectivity = context.getSystemService(ConnectivityManager::class.java)
         while (true) {
-            value = SystemStatus(
-                time = timeFmt.format(Date()),
-                batteryPercent = battery?.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY) ?: -1,
-                // isCharging, not the plugged-in extra: a device can be attached to a source that
-                // isn't charging it, and the question here is whether the number is going up.
-                charging = battery?.isCharging == true,
-                network = readNetwork(connectivity),
-                bluetoothOn = readBluetooth(context.contentResolver),
-            )
+            // The whole read is guarded: nothing in the status bar is worth crashing the home
+            // screen for (a missing permission, an OEM quirk).
+            runCatching {
+                value = SystemStatus(
+                    time = timeFmt.format(Date()),
+                    batteryPercent = battery?.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY) ?: -1,
+                    // isCharging, not the plugged-in extra: a device can be attached to a source
+                    // that isn't charging it, and the question here is whether the number goes up.
+                    charging = battery?.isCharging == true,
+                    network = readNetwork(connectivity),
+                    bluetoothOn = readBluetooth(context.contentResolver),
+                )
+            }
             delay(10_000)
         }
     }
@@ -236,16 +240,19 @@ private fun DrawScope.drawBolt(colour: Color) {
     drawPath(path, colour)
 }
 
-private fun readNetwork(connectivity: ConnectivityManager?): NetworkState {
+// Wrapped in runCatching: reading the network needs ACCESS_NETWORK_STATE (declared in the
+// manifest); if it's ever missing the call throws a SecurityException, and a status glyph must
+// never take the home screen down with it.
+private fun readNetwork(connectivity: ConnectivityManager?): NetworkState = runCatching {
     val caps = connectivity?.activeNetwork?.let { connectivity.getNetworkCapabilities(it) } ?: return NetworkState.Offline
-    return when {
+    when {
         !caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) -> NetworkState.Offline
         caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
             caps.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> NetworkState.Wifi
         caps.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> NetworkState.Cellular
         else -> NetworkState.Offline
     }
-}
+}.getOrDefault(NetworkState.Offline)
 
 /**
  * Whether Bluetooth is on, without a Bluetooth permission. BluetoothAdapter.isEnabled needs
