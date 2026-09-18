@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -183,7 +184,33 @@ fun SecondScreenContent() {
     // shows here at once.
     val prefsRepo = remember { com.joeyos.app.data.PreferencesRepository(context) }
     val wallpaper by prefsRepo.secondWallpaper.collectAsState(initial = null)
-    Box(Modifier.fillMaxSize().background(Background)) {
+
+    // Dim the screen after no touch while a game is running (Settings › Second screen › Dim),
+    // to save power and avoid burn-in. A touch wakes it; the waking touch is swallowed so it
+    // doesn't also press a tab. Idle browsing (no game) never dims.
+    val activity = context as? com.joeyos.app.SecondScreenActivity
+    var lastTouch by remember { mutableStateOf(android.os.SystemClock.uptimeMillis()) }
+    var dimmed by remember { mutableStateOf(false) }
+    LaunchedEffect(session) {
+        while (true) {
+            val secs = SecondScreenPrefs.dimSeconds(context)
+            dimmed = session != null && secs > 0 &&
+                android.os.SystemClock.uptimeMillis() - lastTouch >= secs * 1000L
+            kotlinx.coroutines.delay(500)
+        }
+    }
+    LaunchedEffect(dimmed) { activity?.setDim(dimmed) }
+    DisposableEffect(Unit) { onDispose { activity?.setDim(false) } }
+
+    Box(Modifier.fillMaxSize().background(Background).pointerInput(Unit) {
+        awaitPointerEventScope {
+            while (true) {
+                val event = awaitPointerEvent(androidx.compose.ui.input.pointer.PointerEventPass.Initial)
+                lastTouch = android.os.SystemClock.uptimeMillis()
+                if (dimmed) { event.changes.forEach { it.consume() }; dimmed = false }
+            }
+        }
+    }) {
         wallpaper?.let { w ->
             WallpaperLayer(w, Modifier.fillMaxSize())
             Box(Modifier.fillMaxSize().background(Background.copy(alpha = 0.72f)))
@@ -245,6 +272,9 @@ fun SecondScreenContent() {
                 }
             }
         }
+        // Dim veil on top of everything. In case the backlight override is ignored on a device,
+        // this still darkens the screen; the pointer observer above wakes it on any touch.
+        if (dimmed) Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.72f)))
     }
 }
 
@@ -302,6 +332,7 @@ private fun SecondScreenSettings() {
     var openGuide by remember { mutableStateOf(SecondScreenPrefs.openGuideOnLaunch(context)) }
     var homeApps by remember { mutableStateOf(SecondScreenPrefs.homeTabIsApps(context)) }
     var hideSpoilers by remember { mutableStateOf(SecondScreenPrefs.hideSpoilers(context)) }
+    var dimSecs by remember { mutableStateOf(SecondScreenPrefs.dimSeconds(context)) }
     Column(
         Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 14.dp).padding(bottom = 18.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -317,6 +348,11 @@ private fun SecondScreenSettings() {
         ToggleRow("Hide achievement spoilers",
             "A locked achievement's name and description stay hidden until you tap it.",
             hideSpoilers, { on -> hideSpoilers = on; SecondScreenPrefs.setHideSpoilers(context, on) })
+        ChoiceRow("Dim this screen in a game after",
+            listOf(0 to "Off", 30 to "30s", 60 to "1m", 120 to "2m", 300 to "5m"), dimSecs, { v ->
+                dimSecs = v; SecondScreenPrefs.setDimSeconds(context, v)
+                AppLog.i("SecondScreen", "Dim after ${if (v == 0) "off" else "${v}s"}")
+            })
         Text("The rest of the second screen's settings are on the main screen: Settings › Appearance › Second screen.",
             fontSize = 10.sp, color = TextFaint)
     }

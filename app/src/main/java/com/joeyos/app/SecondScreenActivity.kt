@@ -90,6 +90,16 @@ class SecondScreenActivity : ComponentActivity() {
     @Suppress("UNUSED_PARAMETER")
     fun allowTyping(on: Boolean) {}
 
+    /**
+     * Dims this screen's backlight (not just the pixels) to save power and avoid burn-in when it's
+     * idle during a game. BRIGHTNESS_OVERRIDE_NONE hands brightness back to the system.
+     */
+    fun setDim(on: Boolean) {
+        window.attributes = window.attributes.apply {
+            screenBrightness = if (on) 0.02f else WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE
+        }
+    }
+
     // In front: the first time after opening, the home screen gets the front back (see
     // SecondScreenController.onInFront).
     override fun onTopResumedActivityChanged(isTopResumedActivity: Boolean) {

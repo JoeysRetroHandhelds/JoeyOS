@@ -95,7 +95,7 @@ Tabs:
 - **Achievements** (when logged in to RetroAchievements): your points, what you're playing, recent awards, "Almost there", awards by year, and a search of every game on RetroAchievements. Tap any game for its achievements
 - **Now playing** (while a game runs): the achievements of the game RetroAchievements sees you playing, with its live status, session and play time, filters and sorts, an "Unlocked!" banner, and tips from each achievement's comments
 - **Guide** (while a game runs): see below
-- **Settings**: which tab shows while you're browsing JoeyOS (Apps or Achievements), whether a game opens on Now playing or the Guide, and hiding achievement spoilers
+- **Settings**: which tab shows while you're browsing JoeyOS (Apps or Achievements), whether a game opens on Now playing or the Guide, and hiding achievement spoilers, and dimming the screen after a set idle time while a game is running (off by choice)
 
 The Achievements and Now playing tabs only appear when you're logged in to RetroAchievements. "Completed" is for games finished in casual (softcore) mode, "Mastered" for hardcore.
 

@@ -81,6 +81,13 @@ object SecondScreenPrefs {
     fun hideSpoilers(context: Context) = prefs(context).getBoolean("hide_spoilers", false)
     fun setHideSpoilers(context: Context, on: Boolean) = prefs(context).edit().putBoolean("hide_spoilers", on).apply()
 
+    /**
+     * Seconds of no touch on the second screen, while a game is running, before it dims to save
+     * power and stop burn-in. 0 is off. Default 60s.
+     */
+    fun dimSeconds(context: Context) = prefs(context).getInt("dim_seconds", 60)
+    fun setDimSeconds(context: Context, seconds: Int) = prefs(context).edit().putInt("dim_seconds", seconds).apply()
+
     /** Games open on the other screen instead of the one JoeyOS is on. */
     fun gamesOnOther(context: Context) = prefs(context).getBoolean("games_on_other", false)
     fun setGamesOnOther(context: Context, on: Boolean) = prefs(context).edit().putBoolean("games_on_other", on).apply()
