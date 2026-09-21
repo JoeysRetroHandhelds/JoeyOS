@@ -255,6 +255,175 @@ object Guides {
     private val RomanNumerals = listOf("i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x",
         "xi", "xii", "xiii", "xiv", "xv", "xvi").mapIndexed { i, n -> n to (i + 1).toString() }.toMap()
 
+    // ── Live GameFAQs (the current site) ───────────────────────────────────────────────────
+
+    private const val GameFaqs = "https://gamefaqs.gamespot.com"
+    // A real desktop browser, not "JoeyOS": GameFAQs serves an anti-bot stripped page to anything
+    // else. This is a native app, so there's no CORS to work around (a web tool needs a proxy only
+    // because the browser blocks the cross-origin fetch); we can talk to the site directly.
+    private const val LiveUa = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
+        "(KHTML, like Gecko) Chrome/124.0 Safari/537.36"
+
+    /**
+     * RetroAchievements console id → the platform slug GameFAQs uses in its URLs
+     * (gamefaqs.gamespot.com/<slug>/<id>-<name>). A partial map, so that when a console isn't here
+     * the search results aren't filtered by platform (the first hit is taken instead).
+     */
+    private val LivePlatforms: Map<Int, String> = mapOf(
+        7 to "nes", 3 to "snes", 5 to "gba", 6 to "gbc", 4 to "gameboy", 2 to "n64",
+        16 to "gamecube", 19 to "wii", 1 to "genesis", 39 to "saturn", 40 to "dreamcast",
+        15 to "gamegear", 11 to "sms", 12 to "ps", 21 to "ps2", 41 to "psp", 18 to "ds",
+        62 to "3ds", 9 to "segacd", 8 to "tg16", 76 to "tg16", 14 to "ngp", 13 to "lynx",
+        17 to "jaguar", 25 to "atari2600", 53 to "wonderswan", 29 to "msx",
+    )
+
+    /**
+     * Downloads the game's guide straight from the current gamefaqs.gamespot.com, rather than the
+     * archive's snapshot: searches the site, opens the game's FAQs list, reads the plain text out of
+     * the first real full FAQ, and saves it. Only ever run when the user asks. Best-effort at every
+     * step (each network call is guarded); returns null and logs when a step yields nothing, and
+     * never throws.
+     */
+    suspend fun downloadLiveGameFaqs(t: GuideTarget, cacheDir: File): File? = withContext(Dispatchers.IO) {
+        val title = t.titles.firstOrNull()?.takeIf { it.isNotBlank() } ?: run {
+            AppLog.w(TAG, "Live GameFAQs: no title to search for"); return@withContext null
+        }
+
+        // 1. Search. The result links look like /<platform>/<id>-<slug>; prefer one on the game's
+        //    own platform when we know GameFAQs' slug for it, else take the first result.
+        val searchUrl = "$GameFaqs/search?game=" + URLEncoder.encode(title, "UTF-8")
+        val searchHtml = liveGet(searchUrl) ?: run {
+            AppLog.w(TAG, "Live GameFAQs: search request failed for '$title'"); return@withContext null
+        }
+        val resultRe = Regex("""/([a-z0-9]+)/(\d+)-([a-z0-9-]+)""")
+        val results = LinkedHashSet<String>()   // de-duped, in the order the page lists them
+        for (m in resultRe.findAll(searchHtml)) results.add("/${m.groupValues[1]}/${m.groupValues[2]}-${m.groupValues[3]}")
+        if (results.isEmpty()) {
+            AppLog.i(TAG, "Live GameFAQs: no search results for '$title'"); return@withContext null
+        }
+        val wantPlatform = t.raConsoleId?.let { LivePlatforms[it] }
+        val gamePath = results.firstOrNull { wantPlatform != null && it.startsWith("/$wantPlatform/") }
+            ?: results.first()
+        AppLog.i(TAG, "Live GameFAQs: '$title' → $gamePath (${results.size} results, want ${wantPlatform ?: "any"})")
+
+        // 2. FAQs list. Collect the plain-text FAQ links (/<gamePath>/faqs/<id>), and the guide-page
+        //    links (/faqs/<slug>) as a fallback. Push anything labelled a full FAQ/Walkthrough ahead
+        //    of Cheats/Trophy/Achievement pages; otherwise keep the page's own order.
+        val faqsHtml = liveGet("$GameFaqs$gamePath/faqs") ?: run {
+            AppLog.w(TAG, "Live GameFAQs: FAQs list request failed ($gamePath)"); return@withContext null
+        }
+        val faqLinkRe = Regex(Regex.escape(gamePath) + """/faqs/([A-Za-z0-9]+)"[^>]*>([^<]*)""")
+        data class Candidate(val path: String, val label: String)
+        val candidates = LinkedHashMap<String, Candidate>()   // path → label, de-duped
+        for (m in faqLinkRe.findAll(faqsHtml)) {
+            val path = "$gamePath/faqs/${m.groupValues[1]}"
+            val label = m.groupValues[2].trim()
+            if (path !in candidates) candidates[path] = Candidate(path, label)
+        }
+        if (candidates.isEmpty()) {
+            AppLog.i(TAG, "Live GameFAQs: no FAQ links on the list page ($gamePath)"); return@withContext null
+        }
+        // A full walkthrough/FAQ is what we want; a cheats or trophy list isn't a guide to read.
+        val ordered = candidates.values.sortedByDescending { c ->
+            val l = c.label.lowercase()
+            when {
+                Regex("walkthrough|faq/walkthrough|faq/move|game script|guide|faq").containsMatchIn(l) -> 2
+                Regex("cheat|trophy|achievement|save|map|code").containsMatchIn(l) -> 0
+                else -> 1
+            }
+        }
+
+        // 3. FAQ page. Try each candidate until one yields a long enough plaintext to count as a
+        //    real guide; concatenate a bounded number of pages when the FAQ is paged.
+        for (c in ordered) {
+            val text = liveFaqText(c.path)
+            if (text != null && text.length >= 500) {
+                val target = destination(t, "txt")
+                runCatching { target.parentFile?.mkdirs(); target.writeText(text) }
+                    .onFailure { AppLog.w(TAG, "Live GameFAQs: couldn't write ${target.name}", it); return@withContext null }
+                remember(t, target)
+                AppLog.i(TAG, "Downloaded the latest GameFAQs guide for '$title' ($gamePath)")
+                return@withContext target
+            }
+        }
+        AppLog.i(TAG, "Live GameFAQs: no candidate FAQ yielded a full guide ($gamePath)")
+        null
+    }
+
+    /** One live GameFAQs GET, browser-disguised and guarded; null on any failure or a non-2xx answer. */
+    private fun liveGet(url: String): String? = runCatching {
+        Http.get(url, userAgent = LiveUa, connectMs = 20_000, readMs = 60_000).takeIf { it.ok }?.text
+    }.getOrElse { AppLog.w(TAG, "Live GameFAQs: request threw", it); null }
+
+    /**
+     * Reads a FAQ's plaintext from [faqPath]. Text FAQs render inside a <pre> block; when there's
+     * none, the main content div is stripped to text. When the FAQ is paged (?page=N), a bounded
+     * number of pages are fetched and joined; if paging can't be read cleanly, page 1 is taken.
+     */
+    private fun liveFaqText(faqPath: String): String? {
+        val first = liveGet("$GameFaqs$faqPath") ?: return null
+        // How many pages the FAQ has: the page selector links carry ?page=N (0-based on GameFAQs).
+        val pageRe = Regex(Regex.escape(faqPath) + """\?page=(\d+)""")
+        var maxPage = 0
+        for (m in pageRe.findAll(first)) maxPage = maxOf(maxPage, m.groupValues[1].toIntOrNull() ?: 0)
+        val pages = maxPage.coerceAtMost(14)   // page 0 plus up to 14 more, so ~15 in all
+        val builder = StringBuilder()
+        extractFaqText(first)?.let { builder.append(it) }
+        if (pages >= 1) {
+            for (p in 1..pages) {
+                val html = liveGet("$GameFaqs$faqPath?page=$p") ?: break
+                extractFaqText(html)?.let { if (it.isNotBlank()) { builder.append("\n\n"); builder.append(it) } }
+            }
+        } else if (pageRe.containsMatchIn(first)) {
+            AppLog.i(TAG, "Live GameFAQs: page selector unclear, taking page 1 only ($faqPath)")
+        }
+        return builder.toString().takeIf { it.isNotBlank() }
+    }
+
+    /**
+     * The readable text of one FAQ page: the largest <pre> block (text FAQs), else the main content
+     * div stripped to text (HTML guide pages). Null when neither yields anything.
+     */
+    private fun extractFaqText(html: String): String? {
+        // Largest <pre>…</pre> wins: the FAQ itself, not a small snippet elsewhere on the page.
+        val preRe = Regex("""<pre[^>]*>([\s\S]*?)</pre>""", RegexOption.IGNORE_CASE)
+        var best: String? = null
+        for (m in preRe.findAll(html)) {
+            val body = unescapeHtml(m.groupValues[1])
+            if (best == null || body.length > best!!.length) best = body
+        }
+        if (best != null && best!!.trim().length >= 200) return best!!.trim()
+
+        // No usable <pre>: fall back to the main content region (an HTML guide page). Take the
+        // faqwrap/ffaq block when it's there, else the whole document.
+        val region = Regex("""<(?:div|article)[^>]*(?:id|class)\s*=\s*"[^"]*(?:faqwrap|ffaq|faqtext)[^"]*"[^>]*>([\s\S]*?)</(?:div|article)>""",
+            RegexOption.IGNORE_CASE).find(html)?.groupValues?.get(1) ?: html
+        val text = htmlToText(region)
+        return text.takeIf { it.trim().length >= 200 }?.trim()
+    }
+
+    /** Strips a block of HTML to plain text: scripts/styles gone, <br> and block tags to newlines. */
+    private fun htmlToText(html: String): String {
+        var s = html
+        s = Regex("""<script[\s\S]*?</script>""", RegexOption.IGNORE_CASE).replace(s, " ")
+        s = Regex("""<style[\s\S]*?</style>""", RegexOption.IGNORE_CASE).replace(s, " ")
+        s = Regex("""<br\s*/?>""", RegexOption.IGNORE_CASE).replace(s, "\n")
+        s = Regex("""</(?:p|div|li|tr|h[1-6]|section|article|blockquote)>""", RegexOption.IGNORE_CASE).replace(s, "\n")
+        s = Regex("""<[^>]+>""").replace(s, "")   // every remaining tag
+        s = unescapeHtml(s)
+        // Collapse the runs of blank lines the tag stripping leaves behind.
+        return Regex("""[ \t]+\n""").replace(s, "\n").let { Regex("""\n{3,}""").replace(it, "\n\n") }
+    }
+
+    /** Unescapes the HTML entities that turn up in FAQ text: the named few, and numeric &#NNN;. */
+    private fun unescapeHtml(text: String): String {
+        var s = text
+        s = Regex("""&#(\d+);""").replace(s) { m -> m.groupValues[1].toIntOrNull()?.toChar()?.toString() ?: m.value }
+        s = Regex("""&#x([0-9a-fA-F]+);""").replace(s) { m -> m.groupValues[1].toIntOrNull(16)?.toChar()?.toString() ?: m.value }
+        return s.replace("&nbsp;", " ").replace("&quot;", "\"").replace("&#39;", "'")
+            .replace("&apos;", "'").replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&")
+    }
+
     // ── Search links ─────────────────────────────────────────────────────────────────────
 
     /** Searches that work for every game: GameFAQs' own, guide sites via a web search, YouTube. */

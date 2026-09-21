@@ -162,6 +162,7 @@ private fun GuideFinder(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var archive by remember(target.key) { mutableStateOf<String?>(null) }   // status line
+    var live by remember(target.key) { mutableStateOf<String?>(null) }      // status line, live fetch
     var working by remember { mutableStateOf(false) }
     val saved by produceState(emptyList<File>(), target.key, current) {
         value = withContext(Dispatchers.IO) { Guides.savedFor(target) }
@@ -202,6 +203,21 @@ private fun GuideFinder(
             }
             if (working) LinearProgressIndicator(Modifier.fillMaxWidth(), color = Accent)
         }
+
+        // Always offered (not gated on the archive covering this console): the live site has games
+        // and consoles the archive's snapshot never will (PS2/Switch-era, anything recent).
+        SectionLabel("Live from GameFAQs", Modifier.padding(top = 6.dp))
+        GuideChoice("Get the latest from GameFAQs (online)",
+            live ?: "Fetches the current guide straight from GameFAQs. Needs a connection.") {
+            if (working) return@GuideChoice
+            working = true; live = "Fetching from GameFAQs…"
+            scope.launch {
+                val f = Guides.downloadLiveGameFaqs(target, context.cacheDir)
+                working = false
+                if (f != null) onDownloaded(f) else live = "Couldn't fetch it from GameFAQs. Try a search below."
+            }
+        }
+        if (working) LinearProgressIndicator(Modifier.fillMaxWidth(), color = Accent)
 
         SectionLabel("Search on", Modifier.padding(top = 6.dp))
         Text("Opens here: find a guide, then Save to keep the page to read offline.", fontSize = 10.sp, color = TextFaint)
