@@ -5,6 +5,8 @@ import android.content.Intent
 import android.util.Log
 import java.io.File
 
+import com.joeyos.app.AppLog
+
 private const val TAG = "RetroArchLauncher"
 
 object RetroArchLauncher {
@@ -67,22 +69,24 @@ object RetroArchLauncher {
         // the ROM search to that core's system. Without this, a save file gets matched
         // against a same-named ROM in ANY system folder (e.g. "Aladdin" exists on both SNES
         // and Genesis) — the wrong game can launch even though the displayed core is correct.
+        // Logged to the shareable joeyos.log (not just logcat): a RetroArch launch that opens the
+        // wrong game, the menu, or crashes RetroArch is only diagnosable from what JoeyOS handed
+        // it — the resolved ROM, the core, and the final intent. Each step says why it stopped.
         val coreHintSystemFolder = game.corePath
             ?.takeIf { !it.startsWith("/") }
             ?.let { systemFolderForCoreHint(it) }
         // The system id isn't always the folder name (ES-DE keeps PlayStation games in "psx").
         val aliases = coreHintSystemFolder?.let { RomFolders.esDeFoldersFor(it) }.orEmpty()
         val romPath = RomFinder.resolveRomFromSave(game.path, systemFolder = coreHintSystemFolder, folderAliases = aliases)
-        Log.d(TAG, "launch: game.path=${game.path} coreHintSystemFolder=$coreHintSystemFolder romPath=$romPath")
-        if (romPath == null) return false
+        AppLog.i(TAG, "RetroArch: from ${game.path} | core hint=${game.corePath ?: "none"} " +
+            "→ folder=${coreHintSystemFolder ?: "any"} → ROM=${romPath ?: "NONE FOUND"}")
+        if (romPath == null) { AppLog.w(TAG, "RetroArch: no ROM matched the save; opening RetroArch to its menu"); return false }
 
         val systemId = systemIdFromPath(romPath)
-        Log.d(TAG, "launch: systemId=$systemId")
-        if (systemId == null) return false
+        if (systemId == null) { AppLog.w(TAG, "RetroArch: couldn't tell the system from ${File(romPath).parent}; RetroArch will pick the core"); return false }
 
         val system = ALL_SYSTEMS.firstOrNull { it.id == systemId }
-        Log.d(TAG, "launch: system=${system?.id} cores=${system?.retroarchCores}")
-        if (system == null) return false
+        if (system == null) { AppLog.w(TAG, "RetroArch: system '$systemId' isn't one JoeyOS knows; RetroArch will pick the core"); return false }
 
         val pkg = game.emulatorPackage
         // corePath from RecentGame is either a full .so path (from history) or a core
@@ -102,7 +106,14 @@ object RetroArchLauncher {
             coreName != null -> corePathForName(coreName, pkg)
             else -> null
         }
-        Log.d(TAG, "launch: coreName=$coreName corePath=$corePath")
+        // How the core was decided, so a wrong-core crash is traceable: the save's own subfolder
+        // name, the user's per-system assignment, or the system's default first core.
+        val coreSource = when {
+            game.corePath?.startsWith("/") == true -> "full path from history"
+            game.corePath != null -> "save folder '${game.corePath}'"
+            packageFromAssignment(assignments[systemId] ?: "").startsWith("com.retroarch") -> "your $systemId assignment"
+            else -> "$systemId default"
+        }
 
         val configFile = "/storage/emulated/0/Android/data/$pkg/files/retroarch.cfg"
 
@@ -113,8 +124,11 @@ object RetroArchLauncher {
             putExtra("CONFIGFILE", configFile)
             addFlags(FRESH_TASK)
         }
-        Log.d(TAG, "launch: firing intent ROM=$romPath LIBRETRO=${corePath ?: "(none - RetroArch will pick core)"}")
-        return context.tryStartGame(TAG, intent)
+        AppLog.i(TAG, "RetroArch: system=$systemId core=${coreName ?: "(RetroArch picks)"} ($coreSource) " +
+            "LIBRETRO=${corePath ?: "none"} CONFIG=$configFile")
+        val ok = context.tryStartGame(TAG, intent)
+        AppLog.i(TAG, "RetroArch: launch intent ${if (ok) "sent" else "failed to start"}")
+        return ok
     }
 
     // ES-DE's folder names (e.g. "psx", "megadrive") map to ALL_SYSTEMS ids in RomFolders.
