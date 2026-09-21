@@ -192,6 +192,10 @@ fun SecondScreenContent() {
     var lastTouch by remember { mutableStateOf(android.os.SystemClock.uptimeMillis()) }
     var dimmed by remember { mutableStateOf(false) }
     LaunchedEffect(session) {
+        // Start of a game (or its end): the idle clock restarts, so a game never opens already
+        // dimmed just because the second screen hadn't been touched while browsing.
+        lastTouch = android.os.SystemClock.uptimeMillis()
+        dimmed = false
         while (true) {
             val secs = SecondScreenPrefs.dimSeconds(context)
             dimmed = session != null && secs > 0 &&
@@ -274,7 +278,7 @@ fun SecondScreenContent() {
         }
         // Dim veil on top of everything. In case the backlight override is ignored on a device,
         // this still darkens the screen; the pointer observer above wakes it on any touch.
-        if (dimmed) Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.72f)))
+        if (dimmed) Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.45f)))
     }
 }
 

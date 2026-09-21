@@ -96,7 +96,7 @@ class SecondScreenActivity : ComponentActivity() {
      */
     fun setDim(on: Boolean) {
         window.attributes = window.attributes.apply {
-            screenBrightness = if (on) 0.02f else WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE
+            screenBrightness = if (on) 0.12f else WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE
         }
     }
 
