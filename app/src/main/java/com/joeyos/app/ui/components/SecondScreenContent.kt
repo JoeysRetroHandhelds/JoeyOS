@@ -159,13 +159,17 @@ fun SecondScreenContent() {
         }
         openGame = null; nowPlaying = null
         if (!configured) return@LaunchedEffect
-        while (true) {
-            raRepo.fetchNowPlaying(s.startedAt, lastGameId)?.let { np ->
-                if (np.gameId != nowPlaying?.gameId) AppLog.i("SecondScreen", "Now playing: RetroAchievements game ${np.gameId}")
-                nowPlaying = np
+        // Asks only while this screen is visible; a stopped second screen picks up again (with a
+        // fresh ask) when it's shown.
+        lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            while (true) {
+                raRepo.fetchNowPlaying(s.startedAt, lastGameId)?.let { np ->
+                    if (np.gameId != nowPlaying?.gameId) AppLog.i("SecondScreen", "Now playing: RetroAchievements game ${np.gameId}")
+                    nowPlaying = np
+                }
+                val fast = System.currentTimeMillis() - s.startedAt < 2 * 60_000L
+                delay(if (nowPlaying == null && fast) 5_000L else 30_000L)
             }
-            val fast = System.currentTimeMillis() - s.startedAt < 2 * 60_000L
-            delay(if (nowPlaying == null && fast) 5_000L else 30_000L)
         }
     }
 
@@ -191,17 +195,20 @@ fun SecondScreenContent() {
     val activity = context as? com.joeyos.app.SecondScreenActivity
     var lastTouch by remember { mutableStateOf(android.os.SystemClock.uptimeMillis()) }
     var dimmed by remember { mutableStateOf(false) }
-    LaunchedEffect(session) {
-        // Start of a game (or its end): the idle clock restarts, so a game never opens already
-        // dimmed just because the second screen hadn't been touched while browsing.
-        lastTouch = android.os.SystemClock.uptimeMillis()
-        dimmed = false
-        while (true) {
-            val secs = SecondScreenPrefs.dimSeconds(context)
-            dimmed = session != null && secs > 0 &&
-                android.os.SystemClock.uptimeMillis() - lastTouch >= secs * 1000L
-            kotlinx.coroutines.delay(500)
-        }
+    // The chosen dim delay, held here so changing it in this screen's Settings tab takes effect
+    // at once without re-reading the prefs on a timer.
+    var dimSeconds by remember { mutableIntStateOf(SecondScreenPrefs.dimSeconds(context)) }
+    // Start of a game (or its end): the idle clock restarts, so a game never opens already
+    // dimmed just because the second screen hadn't been touched while browsing.
+    LaunchedEffect(session) { lastTouch = android.os.SystemClock.uptimeMillis() }
+    // One wait per touch instead of a poll: sleep until the idle time is up, then dim. A new touch,
+    // a new delay or a game starting/ending restarts it.
+    LaunchedEffect(session, lastTouch, dimSeconds) {
+        val secs = dimSeconds
+        if (session == null || secs <= 0) { dimmed = false; return@LaunchedEffect }
+        val remaining = lastTouch + secs * 1000L - android.os.SystemClock.uptimeMillis()
+        if (remaining > 0) delay(remaining)
+        dimmed = true
     }
     LaunchedEffect(dimmed) { activity?.setDim(dimmed) }
     DisposableEffect(Unit) { onDispose { activity?.setDim(false) } }
@@ -210,8 +217,22 @@ fun SecondScreenContent() {
         awaitPointerEventScope {
             while (true) {
                 val event = awaitPointerEvent(androidx.compose.ui.input.pointer.PointerEventPass.Initial)
+                // Only the first finger down of a gesture counts as a touch; moves don't need to
+                // restart the idle clock (and would restart it dozens of times a second).
+                val firstDown = event.changes.none { it.previousPressed } && event.changes.any { it.pressed }
+                if (!firstDown) continue
                 lastTouch = android.os.SystemClock.uptimeMillis()
-                if (dimmed) { event.changes.forEach { it.consume() }; dimmed = false }
+                if (dimmed) {
+                    // Waking touch: swallow the whole gesture, not just the down, so a swipe to
+                    // wake doesn't also scroll the guide or press a tab underneath.
+                    dimmed = false
+                    event.changes.forEach { it.consume() }
+                    while (true) {
+                        val next = awaitPointerEvent(androidx.compose.ui.input.pointer.PointerEventPass.Initial)
+                        next.changes.forEach { it.consume() }
+                        if (next.changes.none { it.pressed }) break
+                    }
+                }
             }
         }
     }) {
@@ -259,7 +280,7 @@ fun SecondScreenContent() {
                     val np = nowPlaying
                     when {
                         openGame != null -> GameAchievements(openGame!!, raRepo, live = null)
-                        tab == 3 -> SecondScreenSettings()
+                        tab == 3 -> SecondScreenSettings(onDimChange = { dimSeconds = it })
                         tab == 4 -> SecondScreenApps()
                         // Logged out while on an RA tab: back to Apps.
                         (tab == 0 || tab == 1) && !configured -> SecondScreenApps()
@@ -278,7 +299,7 @@ fun SecondScreenContent() {
         }
         // Dim veil on top of everything. In case the backlight override is ignored on a device,
         // this still darkens the screen; the pointer observer above wakes it on any touch.
-        if (dimmed) Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.45f)))
+        if (dimmed) Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.30f)))
     }
 }
 
@@ -331,7 +352,7 @@ private fun openHere(context: android.content.Context, app: InstalledApp) {
 
 /** The second screen's own settings: what it opens when a game starts, and achievement spoilers. */
 @Composable
-private fun SecondScreenSettings() {
+private fun SecondScreenSettings(onDimChange: (Int) -> Unit = {}) {
     val context = LocalContext.current
     var openGuide by remember { mutableStateOf(SecondScreenPrefs.openGuideOnLaunch(context)) }
     var homeApps by remember { mutableStateOf(SecondScreenPrefs.homeTabIsApps(context)) }
@@ -354,7 +375,7 @@ private fun SecondScreenSettings() {
             hideSpoilers, { on -> hideSpoilers = on; SecondScreenPrefs.setHideSpoilers(context, on) })
         ChoiceRow("Dim this screen in a game after",
             listOf(0 to "Off", 30 to "30s", 60 to "1m", 120 to "2m", 300 to "5m"), dimSecs, { v ->
-                dimSecs = v; SecondScreenPrefs.setDimSeconds(context, v)
+                dimSecs = v; SecondScreenPrefs.setDimSeconds(context, v); onDimChange(v)
                 AppLog.i("SecondScreen", "Dim after ${if (v == 0) "off" else "${v}s"}")
             })
         Text("The rest of the second screen's settings are on the main screen: Settings › Appearance › Second screen.",
@@ -689,24 +710,33 @@ private fun GameAchievements(gameId: Int, raRepo: RetroAchievementsRepository, l
     var banner by remember(gameId) { mutableStateOf<RAAchievement?>(null) }
     var now by remember { mutableLongStateOf(System.currentTimeMillis()) }
 
-    LaunchedEffect(gameId, live != null) {
-        var known: Set<Int>? = null
-        while (true) {
-            val g = raRepo.fetchGameProgress(gameId, maxAgeMs = if (live != null) 55_000 else 5 * 60_000)
-            if (g != null) {
-                val earned = g.achievements.filter { it.earned }.map { it.id }.toSet()
-                // A new unlock since the last look: show it for a few seconds.
-                if (live != null && known != null) g.achievements.firstOrNull { it.earned && it.id !in known!! }?.let { banner = it }
-                known = earned
-                game = g
-            } else if (game == null) failed = true
-            if (live == null) break
-            delay(60_000L)
+    // Only while this screen is visible: a stopped or covered second screen shouldn't keep asking
+    // RetroAchievements every minute. It picks up again (with a fresh look) when it's shown.
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    LaunchedEffect(gameId, live != null, lifecycle) {
+        var known: Set<Int>? = null   // kept across stop/start so an unlock while hidden still shows its banner
+        lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            while (true) {
+                val g = raRepo.fetchGameProgress(gameId, maxAgeMs = if (live != null) 55_000 else 5 * 60_000)
+                if (g != null) {
+                    val earned = g.achievements.filter { it.earned }.map { it.id }.toSet()
+                    // A new unlock since the last look: show it for a few seconds.
+                    if (live != null && known != null) g.achievements.firstOrNull { it.earned && it.id !in known!! }?.let { banner = it }
+                    known = earned
+                    game = g
+                } else if (game == null) failed = true
+                if (live == null) break
+                delay(60_000L)
+            }
         }
     }
     LaunchedEffect(banner) { if (banner != null) { delay(6_000L); banner = null } }
-    // The session clock ticks every half minute.
-    if (live != null) LaunchedEffect(Unit) { while (true) { now = System.currentTimeMillis(); delay(30_000L) } }
+    // The session clock ticks every half minute, only while the screen is visible.
+    if (live != null) LaunchedEffect(lifecycle) {
+        lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            while (true) { now = System.currentTimeMillis(); delay(30_000L) }
+        }
+    }
 
     detail?.let { a -> game?.let { g -> AchievementDetail(a, g, raRepo, onFindGuide) { detail = null } }; return }
 

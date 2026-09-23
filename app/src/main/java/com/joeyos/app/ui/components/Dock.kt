@@ -189,10 +189,11 @@ fun Dock(
                 // first icon on screen, so you lost your place every time (found on device). Only
                 // an icon that's on screen can take it; otherwise the default applies.
                 .focusProperties {
-                    @Suppress("DEPRECATION")
-                    enter = {
+                    onEnter = {
                         val onScreen = listState.layoutInfo.visibleItemsInfo.any { it.key == focusedPackage }
-                        focusedPackage?.takeIf { onScreen }?.let { focusRequesters[it] } ?: FocusRequester.Default
+                        val target = focusedPackage?.takeIf { onScreen }?.let { focusRequesters[it] }
+                        // Redirect to the remembered icon; with none (or off screen) the default entry applies.
+                        if (target != null && !target.requestFocus()) cancelFocusChange()
                     }
                 }
                 .focusGroup(),

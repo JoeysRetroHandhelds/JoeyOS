@@ -19,7 +19,11 @@ import com.joeyos.app.R
 import com.joeyos.app.ui.theme.JoeyFont
 import com.joeyos.app.ui.theme.TextFaint
 import com.joeyos.app.ui.theme.TextPrimary
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
+import com.joeyos.app.data.SecondScreenState
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -52,26 +56,37 @@ private const val LowPercent = 20
 @Composable
 fun StatusCluster(use24h: Boolean, modifier: Modifier = Modifier) {
     val context = LocalContext.current
+    val lifecycle = androidx.compose.ui.platform.LocalLifecycleOwner.current.lifecycle
     val timeFmt = remember(use24h) { SimpleDateFormat(if (use24h) "HH:mm" else "h:mm a", Locale.getDefault()) }
 
     val status by produceState(
         initialValue = SystemStatus(timeFmt.format(Date()), -1, false, NetworkState.Offline, false),
-        timeFmt
+        timeFmt, lifecycle
     ) {
         val battery = context.getSystemService(BatteryManager::class.java)
         val connectivity = context.getSystemService(ConnectivityManager::class.java)
-        while (true) {
-            // Guarded whole: nothing in the status bar is worth crashing the home screen for.
-            runCatching {
-                value = SystemStatus(
-                    time = timeFmt.format(Date()),
-                    batteryPercent = battery?.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY) ?: -1,
-                    charging = readCharging(context),
-                    network = readNetwork(connectivity),
-                    bluetoothOn = readBluetooth(context.contentResolver),
-                )
+        // Only while the home screen is showing and no game is running: on the Thor home stays
+        // resumed behind a game on the other screen, so the lifecycle alone wouldn't stop this.
+        // When a game ends the status is read at once, so the clock is never stale on return.
+        lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            SecondScreenState.session.collectLatest { session ->
+                if (session != null) return@collectLatest
+                while (true) {
+                    // Guarded whole: nothing in the status bar is worth crashing the home screen for.
+                    runCatching {
+                        value = SystemStatus(
+                            time = timeFmt.format(Date()),
+                            batteryPercent = battery?.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY) ?: -1,
+                            charging = readCharging(context),
+                            network = readNetwork(connectivity),
+                            bluetoothOn = readBluetooth(context.contentResolver),
+                        )
+                    }
+                    // Every 10 seconds, but land just after the minute turns so the clock flips on time.
+                    val toMinute = 60_000L - System.currentTimeMillis() % 60_000L + 50L
+                    delay(minOf(10_000L, toMinute))
+                }
             }
-            delay(10_000)
         }
     }
 

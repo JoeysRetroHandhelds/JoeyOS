@@ -167,7 +167,8 @@ private fun GuideFinder(
     val saved by produceState(emptyList<File>(), target.key, current) {
         value = withContext(Dispatchers.IO) { Guides.savedFor(target) }
     }
-    val hasArchive = saved.any { it.extension.equals("txt", true) }
+    // The live fetch saves to its own file, so it doesn't count as having the archive's copy.
+    val hasArchive = saved.any { it.extension.equals("txt", true) && !Guides.isLive(it) }
 
     Column(
         Modifier.fillMaxSize().hideChromeOnScroll(onChrome).verticalScroll(rememberScrollState())
@@ -181,7 +182,8 @@ private fun GuideFinder(
             SectionLabel("Your guides", Modifier.padding(top = 6.dp))
             saved.forEach { f ->
                 GuideChoice(
-                    if (f.extension.equals("txt", true)) "GameFAQs guide" else f.nameWithoutExtension.substringAfter(" - "),
+                    if (Guides.isLive(f)) "GameFAQs guide (latest)"
+                    else if (f.extension.equals("txt", true)) "GameFAQs guide" else f.nameWithoutExtension.substringAfter(" - "),
                     (if (Guides.isHtml(f)) "Saved page" else "Text guide") + if (f == current) "  ·  open now" else ""
                 ) { onChosen(f) }
             }

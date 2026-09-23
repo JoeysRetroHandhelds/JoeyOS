@@ -66,6 +66,7 @@ import com.joeyos.app.ui.components.FavoritePickerPopup
 import com.joeyos.app.ui.components.RecentGamesPopup
 import com.joeyos.app.ui.viewmodel.HomeViewModel
 import kotlin.time.Duration.Companion.seconds
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -271,11 +272,17 @@ fun HomeScreen(viewModel: HomeViewModel) {
     // restart or waking from sleep: the first check ran before Wi-Fi was back and failed, and
     // nothing asked again until you left home and came back (found on the Thor). A failed check
     // doesn't count, so this retries until one gets through, then settles to every 15 minutes.
+    // Not during a game, though: on the Thor home stays resumed behind a game on the other screen,
+    // and there's no point waking the radio for a popup nobody is looking at. The minute count
+    // starts over when the game ends.
     LaunchedEffect(lifecycleOwner) {
         lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-            while (true) {
-                kotlinx.coroutines.delay(60_000L)
-                if (update == null && !updateDownloading && AppUpdates.autoCheckDue(context)) checkForUpdates(manual = false)
+            com.joeyos.app.data.SecondScreenState.session.collectLatest { session ->
+                if (session != null) return@collectLatest
+                while (true) {
+                    kotlinx.coroutines.delay(60_000L)
+                    if (update == null && !updateDownloading && AppUpdates.autoCheckDue(context)) checkForUpdates(manual = false)
+                }
             }
         }
     }

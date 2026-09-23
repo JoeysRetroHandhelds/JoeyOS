@@ -5,6 +5,8 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import com.joeyos.app.AppLog
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.ByteArrayInputStream
@@ -267,15 +269,28 @@ object Guides {
     /**
      * RetroAchievements console id → the platform slug GameFAQs uses in its URLs
      * (gamefaqs.gamespot.com/<slug>/<id>-<name>). A partial map, so that when a console isn't here
-     * the search results aren't filtered by platform (the first hit is taken instead).
+     * the search results aren't filtered by platform — the title check alone picks the game.
+     * PS3, Vita, Switch and Wii U have no RetroAchievements console id, so they can't be mapped
+     * here; the title check keeps those from picking an unrelated game.
      */
     private val LivePlatforms: Map<Int, String> = mapOf(
         7 to "nes", 3 to "snes", 5 to "gba", 6 to "gbc", 4 to "gameboy", 2 to "n64",
         16 to "gamecube", 19 to "wii", 1 to "genesis", 39 to "saturn", 40 to "dreamcast",
         15 to "gamegear", 11 to "sms", 12 to "ps", 21 to "ps2", 41 to "psp", 18 to "ds",
         62 to "3ds", 9 to "segacd", 8 to "tg16", 76 to "tg16", 14 to "ngp", 13 to "lynx",
-        17 to "jaguar", 25 to "atari2600", 53 to "wonderswan", 29 to "msx",
+        17 to "jaguar", 25 to "atari2600", 53 to "wonderswan", 29 to "msx", 10 to "sega32x",
+        28 to "virtualboy",
     )
+
+    /** Where a guide fetched live is saved: its own file, so it sits beside the archive's copy rather than replacing it. */
+    fun liveDestination(t: GuideTarget): File =
+        File(folderFor(t).apply { mkdirs() }, safe(t.title) + LiveSuffix + ".txt")
+
+    /** The name ending that marks a guide fetched live (see [liveDestination]). */
+    const val LiveSuffix = " - GameFAQs (latest)"
+
+    /** Whether [file] is a guide fetched live from GameFAQs rather than the archive's. */
+    fun isLive(file: File) = file.nameWithoutExtension.endsWith(LiveSuffix)
 
     /**
      * Downloads the game's guide straight from the current gamefaqs.gamespot.com, rather than the
@@ -289,26 +304,30 @@ object Guides {
             AppLog.w(TAG, "Live GameFAQs: no title to search for"); return@withContext null
         }
 
-        // 1. Search. The result links look like /<platform>/<id>-<slug>; prefer one on the game's
-        //    own platform when we know GameFAQs' slug for it, else take the first result.
+        // 1. Search. The result links look like /<platform>/<id>-<slug>. Only the results list is
+        //    read — the page's header, nav and "trending" links are other games entirely — and a
+        //    result counts only when its slug carries the title's words, so a search that doesn't
+        //    find the game gives nothing rather than a guide for something else.
         val searchUrl = "$GameFaqs/search?game=" + URLEncoder.encode(title, "UTF-8")
         val searchHtml = liveGet(searchUrl) ?: run {
             AppLog.w(TAG, "Live GameFAQs: search request failed for '$title'"); return@withContext null
         }
         val resultRe = Regex("""/([a-z0-9]+)/(\d+)-([a-z0-9-]+)""")
         val results = LinkedHashSet<String>()   // de-duped, in the order the page lists them
-        for (m in resultRe.findAll(searchHtml)) results.add("/${m.groupValues[1]}/${m.groupValues[2]}-${m.groupValues[3]}")
+        for (m in resultRe.findAll(searchResultsRegion(searchHtml))) {
+            if (slugMatches(title, m.groupValues[3])) results.add("/${m.groupValues[1]}/${m.groupValues[2]}-${m.groupValues[3]}")
+        }
         if (results.isEmpty()) {
-            AppLog.i(TAG, "Live GameFAQs: no search results for '$title'"); return@withContext null
+            AppLog.i(TAG, "Live GameFAQs: no matching GameFAQs game for '$title'"); return@withContext null
         }
         val wantPlatform = t.raConsoleId?.let { LivePlatforms[it] }
         val gamePath = results.firstOrNull { wantPlatform != null && it.startsWith("/$wantPlatform/") }
             ?: results.first()
-        AppLog.i(TAG, "Live GameFAQs: '$title' → $gamePath (${results.size} results, want ${wantPlatform ?: "any"})")
+        AppLog.i(TAG, "Live GameFAQs: '$title' → $gamePath (${results.size} matching results, want ${wantPlatform ?: "any"})")
+        currentCoroutineContext().ensureActive()
 
-        // 2. FAQs list. Collect the plain-text FAQ links (/<gamePath>/faqs/<id>), and the guide-page
-        //    links (/faqs/<slug>) as a fallback. Push anything labelled a full FAQ/Walkthrough ahead
-        //    of Cheats/Trophy/Achievement pages; otherwise keep the page's own order.
+        // 2. FAQs list. Collect the FAQ links (/<gamePath>/faqs/<id>). Push anything labelled a full
+        //    FAQ/Walkthrough ahead of Cheats/Trophy/Achievement pages; otherwise keep the page's order.
         val faqsHtml = liveGet("$GameFaqs$gamePath/faqs") ?: run {
             AppLog.w(TAG, "Live GameFAQs: FAQs list request failed ($gamePath)"); return@withContext null
         }
@@ -336,9 +355,12 @@ object Guides {
         // 3. FAQ page. Try each candidate until one yields a long enough plaintext to count as a
         //    real guide; concatenate a bounded number of pages when the FAQ is paged.
         for (c in ordered) {
+            currentCoroutineContext().ensureActive()
             val text = liveFaqText(c.path)
+            // Checked again here: leaving the screen mid-fetch must not leave a half guide saved.
+            currentCoroutineContext().ensureActive()
             if (text != null && text.length >= 500) {
-                val target = destination(t, "txt")
+                val target = liveDestination(t)
                 runCatching { target.parentFile?.mkdirs(); target.writeText(text) }
                     .onFailure { AppLog.w(TAG, "Live GameFAQs: couldn't write ${target.name}", it); return@withContext null }
                 remember(t, target)
@@ -357,27 +379,78 @@ object Guides {
 
     /**
      * Reads a FAQ's plaintext from [faqPath]. Text FAQs render inside a <pre> block; when there's
-     * none, the main content div is stripped to text. When the FAQ is paged (?page=N), a bounded
-     * number of pages are fetched and joined; if paging can't be read cleanly, page 1 is taken.
+     * none, the main content div is stripped to text. A FAQ comes in more than one piece two ways:
+     * paged (?page=N), or — the HTML guides — split into sections at <faqPath>/<section-slug>.
+     * Both are fetched and joined, up to [MaxLivePages] pages in all so a huge guide can't run on.
      */
-    private fun liveFaqText(faqPath: String): String? {
+    private suspend fun liveFaqText(faqPath: String): String? {
         val first = liveGet("$GameFaqs$faqPath") ?: return null
-        // How many pages the FAQ has: the page selector links carry ?page=N (0-based on GameFAQs).
+        val builder = StringBuilder()
+        extractFaqText(first)?.let { builder.append(it) }
+        var fetched = 1
+
+        // Paged: the page selector links carry ?page=N (0-based on GameFAQs).
         val pageRe = Regex(Regex.escape(faqPath) + """\?page=(\d+)""")
         var maxPage = 0
         for (m in pageRe.findAll(first)) maxPage = maxOf(maxPage, m.groupValues[1].toIntOrNull() ?: 0)
-        val pages = maxPage.coerceAtMost(14)   // page 0 plus up to 14 more, so ~15 in all
-        val builder = StringBuilder()
-        extractFaqText(first)?.let { builder.append(it) }
-        if (pages >= 1) {
-            for (p in 1..pages) {
-                val html = liveGet("$GameFaqs$faqPath?page=$p") ?: break
-                extractFaqText(html)?.let { if (it.isNotBlank()) { builder.append("\n\n"); builder.append(it) } }
+        for (p in 1..maxPage) {
+            if (fetched >= MaxLivePages) break
+            currentCoroutineContext().ensureActive()
+            val html = liveGet("$GameFaqs$faqPath?page=$p") ?: break
+            fetched++
+            extractFaqText(html)?.let { if (it.isNotBlank()) { builder.append("\n\n"); builder.append(it) } }
+        }
+
+        // Sectioned: the guide's contents link each section under the FAQ's own path. Page order,
+        // de-duped, and not the page we're on; each gets a heading so the joined text reads in parts.
+        val sectionRe = Regex("""href\s*=\s*"(?:https?://gamefaqs\.gamespot\.com)?""" + Regex.escape(faqPath) +
+            """/([A-Za-z0-9_-]+)"[^>]*>([\s\S]*?)</a>""", RegexOption.IGNORE_CASE)
+        val sections = LinkedHashMap<String, String>()   // slug → its link text
+        for (m in sectionRe.findAll(first)) {
+            val slug = m.groupValues[1]
+            if (slug !in sections) sections[slug] = htmlToText(m.groupValues[2]).trim()
+        }
+        for ((slug, label) in sections) {
+            if (fetched >= MaxLivePages) {
+                AppLog.i(TAG, "Live GameFAQs: stopped at $MaxLivePages pages ($faqPath)"); break
             }
-        } else if (pageRe.containsMatchIn(first)) {
-            AppLog.i(TAG, "Live GameFAQs: page selector unclear, taking page 1 only ($faqPath)")
+            currentCoroutineContext().ensureActive()
+            val html = liveGet("$GameFaqs$faqPath/$slug") ?: continue
+            fetched++
+            val text = extractFaqText(html) ?: continue
+            val heading = label.ifBlank { slug.replace('-', ' ') }
+            builder.append("\n\n\n== ").append(heading).append(" ==\n\n").append(text)
         }
         return builder.toString().takeIf { it.isNotBlank() }
+    }
+
+    /** At most this many pages (and sections) of one live FAQ are fetched. */
+    private const val MaxLivePages = 30
+
+    /**
+     * Just the results list of a GameFAQs search page, so the header, nav and "trending" game
+     * links aren't read as results. From the first results marker to the footer; when no marker is
+     * found, the whole page (the title check in [slugMatches] still keeps out other games).
+     */
+    private fun searchResultsRegion(html: String): String {
+        val start = Regex("""class\s*=\s*"[^"]*(?:search_result|sr_)[^"]*"""", RegexOption.IGNORE_CASE)
+            .find(html)?.range?.first ?: return html
+        val end = Regex("""<footer|id\s*=\s*"footer"|class\s*=\s*"[^"]*footer""", RegexOption.IGNORE_CASE)
+            .find(html, start)?.range?.first ?: html.length
+        return html.substring(start, end)
+    }
+
+    /**
+     * Whether a GameFAQs URL slug ("super-mario-world") is the game titled [title]: the title's
+     * first significant word must be in it, and at least 60% of its significant words. Both are
+     * reduced the way [archiveKey] reduces names, so "Super Mario Bros. 3" meets "super-mario-bros-3".
+     */
+    private fun slugMatches(title: String, slug: String): Boolean {
+        val want = archiveKey(title).split(' ').filter { it.isNotBlank() }
+        if (want.isEmpty()) return false
+        val have = archiveKey(slug.replace('-', ' ')).split(' ').toSet()
+        if (want.first() !in have) return false
+        return want.count { it in have } * 10 >= want.size * 6
     }
 
     /**
@@ -394,12 +467,33 @@ object Guides {
         }
         if (best != null && best!!.trim().length >= 200) return best!!.trim()
 
-        // No usable <pre>: fall back to the main content region (an HTML guide page). Take the
-        // faqwrap/ffaq block when it's there, else the whole document.
-        val region = Regex("""<(?:div|article)[^>]*(?:id|class)\s*=\s*"[^"]*(?:faqwrap|ffaq|faqtext)[^"]*"[^>]*>([\s\S]*?)</(?:div|article)>""",
-            RegexOption.IGNORE_CASE).find(html)?.groupValues?.get(1) ?: html
-        val text = htmlToText(region)
+        // No usable <pre>: fall back to the main content region (an HTML guide page), the
+        // faqwrap/ffaq/faqtext block when it's there, else the whole document.
+        val text = htmlToText(contentRegion(html) ?: html)
         return text.takeIf { it.trim().length >= 200 }?.trim()
+    }
+
+    /**
+     * The faqwrap/ffaq/faqtext container of an HTML guide page, whole. The guide nests divs
+     * inside it, so its end is found by counting opening and closing tags of its kind rather than
+     * stopping at the first close (which cut guides off after their first block). When the count
+     * never balances (broken markup), it runs to the page footer, or the end of the page.
+     */
+    private fun contentRegion(html: String): String? {
+        val open = Regex("""<(div|article|section)\b[^>]*(?:id|class)\s*=\s*"[^"]*(?:faqwrap|ffaq|faqtext)[^"]*"[^>]*>""",
+            RegexOption.IGNORE_CASE).find(html) ?: return null
+        val tag = open.groupValues[1].lowercase()
+        val start = open.range.last + 1
+        val tagRe = Regex("""<(/?)$tag\b[^>]*>""", RegexOption.IGNORE_CASE)
+        var depth = 1
+        for (m in tagRe.findAll(html, start)) {
+            if (m.value.endsWith("/>")) continue   // self-closed, no depth
+            depth += if (m.groupValues[1].isEmpty()) 1 else -1
+            if (depth == 0) return html.substring(start, m.range.first)
+        }
+        val end = Regex("""<footer|id\s*=\s*"footer"""", RegexOption.IGNORE_CASE).find(html, start)?.range?.first
+            ?: html.length
+        return html.substring(start, end)
     }
 
     /** Strips a block of HTML to plain text: scripts/styles gone, <br> and block tags to newlines. */
@@ -418,8 +512,13 @@ object Guides {
     /** Unescapes the HTML entities that turn up in FAQ text: the named few, and numeric &#NNN;. */
     private fun unescapeHtml(text: String): String {
         var s = text
-        s = Regex("""&#(\d+);""").replace(s) { m -> m.groupValues[1].toIntOrNull()?.toChar()?.toString() ?: m.value }
-        s = Regex("""&#x([0-9a-fA-F]+);""").replace(s) { m -> m.groupValues[1].toIntOrNull(16)?.toChar()?.toString() ?: m.value }
+        // Through code points, not toChar(): an emoji or other character past U+FFFF needs two
+        // chars, and toChar() quietly mangled it. A number that isn't a character is left as written.
+        fun char(digits: String, radix: Int, whole: String): String =
+            digits.toIntOrNull(radix)?.takeIf { Character.isValidCodePoint(it) }
+                ?.let { String(Character.toChars(it)) } ?: whole
+        s = Regex("""&#(\d+);""").replace(s) { m -> char(m.groupValues[1], 10, m.value) }
+        s = Regex("""&#[xX]([0-9a-fA-F]+);""").replace(s) { m -> char(m.groupValues[1], 16, m.value) }
         return s.replace("&nbsp;", " ").replace("&quot;", "\"").replace("&#39;", "'")
             .replace("&apos;", "'").replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&")
     }
