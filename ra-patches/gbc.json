@@ -1,0 +1,4866 @@
+{
+  "d1a65d74": [
+    {
+      "name": "The Demon Slayer (USA) (Sprite Hack) (v1.0) (DaveAugusta)",
+      "type": "Cosmetic",
+      "path": "GBC/Cosmetic/4972-Revelations-SpriteHack.zip",
+      "format": "bps"
+    }
+  ],
+  "1ef9fa6b": [
+    {
+      "name": "Shantae (USA) (GBC Palettes) (v1.1) (Drenn)",
+      "type": "Cosmetic",
+      "path": "GBC/Cosmetic/728-Shantae-GBCPalettes.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Shantae (USA) (Ru) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "GBC/Translation/Russian/728-Shantae-Russian.zip",
+      "format": "bps"
+    }
+  ],
+  "3b4d6c50": [
+    {
+      "name": "Shantae (USA) (GBC Palettes) (v1.1) (Drenn)",
+      "type": "Cosmetic",
+      "path": "GBC/Cosmetic/728-Shantae-GBCPalettes.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Shantae (USA) (Ru) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "GBC/Translation/Russian/728-Shantae-Russian.zip",
+      "format": "bps"
+    }
+  ],
+  "5009b832": [
+    {
+      "name": "Shantae (USA) (GBC Palettes) (v1.1) (Drenn)",
+      "type": "Cosmetic",
+      "path": "GBC/Cosmetic/728-Shantae-GBCPalettes.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Shantae (USA) (Ru) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "GBC/Translation/Russian/728-Shantae-Russian.zip",
+      "format": "bps"
+    }
+  ],
+  "96d2774e": [
+    {
+      "name": "Shantae (USA) (GBC Palettes) (v1.1) (Drenn)",
+      "type": "Cosmetic",
+      "path": "GBC/Cosmetic/728-Shantae-GBCPalettes.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Shantae (USA) (Ru) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "GBC/Translation/Russian/728-Shantae-Russian.zip",
+      "format": "bps"
+    }
+  ],
+  "e994b59b": [
+    {
+      "name": "Shantae (USA) (GBC Palettes) (v1.1) (Drenn)",
+      "type": "Cosmetic",
+      "path": "GBC/Cosmetic/728-Shantae-GBCPalettes.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Shantae (USA) (Ru) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "GBC/Translation/Russian/728-Shantae-Russian.zip",
+      "format": "bps"
+    }
+  ],
+  "55494332": [
+    {
+      "name": "Matel Gear II (Taiwan) (En) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/17031-MatelGearII-Fix.zip",
+      "format": "bps"
+    }
+  ],
+  "03ce8d9a": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon Pinball Generations (v1.5) (RainbowDevs)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Pinball/6081-PokemonPinballGenerations.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "0d009399": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "13c70de9": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon Pinball Generations (v1.5) (RainbowDevs)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Pinball/6081-PokemonPinballGenerations.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "1926f570": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "1b5bef4b": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "1d9faac5": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "2705ca20": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "2930fa45": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "3358e30a": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "old/Pokemon Crystal - Crystal Clear (v2.5.11) (ShockSlayer)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/13389-Pokemon-CrystalClear.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon - Crystal Version - Crystal Kaizo (v3.0) (SinisterHoodedFigure)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/14431-PokemonCrystalKaizo.zip",
+      "format": "bps"
+    },
+    {
+      "name": "old/Pokemon Crystal - Polished Crystal (v2.2.0) (Rangi)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/16191-PokemonPolishedCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon - Fool's Gold (v1.3) (Kingbigb0y, Froqpond, G.eeb)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/16252-PokemonFoolsGold.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Twitch Plays Pokemon - Anniversary Crystal (v1.2.3) (TPPDevs)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/17398-TwitchPlaysPokemonAnniversaryCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "17429-PokemonGaS97Reforged/Pokemon - Crystal Version - Gold & Silver 97 Reforged (v6.1c) (Camerupt)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/17429-PokemonGaS97Reforged.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon Bronze 2 (v1.05) (Freako)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/19697-PokemonCrystal-Bronze2.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Sour Crystal (v5.3) (SoupPotato)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/19801-PokemonCrystal-SourCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal 251 (v2.3) (Razormime)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/20354-PokemonCrystal-Crystal251.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon Peridot (v2.0 Beta 8) (Sea_Tree)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/20396-PokemonPeridot.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Black and White 3 - Genesis (V1.2) (Azure_Keys)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/24118-PokemonBlack&White3Genesis.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Little Cup (GreenAndACat)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/26277-PokemonCrystal-LittleCup.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon Battleship (v1.0) (Anonymous)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/31190-PokemonCrystal-Battleship.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Quarantine Crystal (v0.804) (QTDex Team)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/31890-PokemonCrystal-QuarantineCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legacy (v1.3.1) (TheSmithPlays)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/31952-PokemonCrystal-Legacy.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Nightmare Crystal (v1.0.2) (Aerogod223)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/31953-PokemonCrystal-NightmareCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Lunatic Crystal (v1.6) (GetKosiorekt)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/32074-PokemonCrystal-LunaticCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Digimon Crystal (v20250214) (Guzeinbuick)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/32383-PokemonCrystal-DigimonCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon Ambrosia (v2025-03-21) (DrUltimaMan)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/32780-PokemonCrystal-PokemonAmbrosia.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon Orange (Suloku Patch - PSS) (PiaCRT)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/33102-PokemonCrystal-Orange.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Core Crystal (v1.0.3) (Sakaysen)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/35102-Pokemon-Core-Crystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Awakening (v1.2.8) (FrenchOrange)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/37350-Pokemon-CrystalAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Wasteland (v1.5) (z3bra)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/37857-PokemonCrystal-Wasteland.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Maeson (v1.31) (Original) (Maeson)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/38442-PokemonCrystal-Maeson.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Inheritance (v1.0.4) (dwg)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/38667-PokemonCrystal-Inheritance.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Genwunner's Crystal, A (v1.1) (Hydrochlorination)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/5874-PokemonGenwunnersCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Clear (v1.6) (bynine)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/6525-PokemonCrystalClear2016.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Joel's Bizarre Pokeventure (v1.0) (Freako)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/8685-PokemonCrystalJBP.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Perfect Crystal (v1.1) (SuperEgz)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/9019-Pokemon-PerfectCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon - Kalos Crystal (Azure_Keys)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/9269-PokemonKalosCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon - Crystal Version - Pokemon Prism (v0.94,Build 237) (Koolboyman,RainbowDevs)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/9491-PokemonPrism.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pyrite (v1.1) (Crystal_)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/9562-PokemonPyrite.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "3434a92b": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "37a70702": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "39c432a4": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon Pinball Generations (v1.5) (RainbowDevs)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Pinball/6081-PokemonPinballGenerations.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "3f1d7e58": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "TCG Neo (v1.11) (Cataclyptic)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Trading Card Game/25072-PokemonTCG-Neo.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon TCG - Digimon Adventure TCG Remastered (Guzeinbuick)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Trading Card Game/32384-PokemonTCG-DigimonAdventureTCG.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon TCG - Generations (v1.7.1) (PaperFire88)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Trading Card Game/37858-PokemonTCG-Generations.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "4523376e": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "TCG Neo (v1.11) (Cataclyptic)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Trading Card Game/25072-PokemonTCG-Neo.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon TCG - Digimon Adventure TCG Remastered (Guzeinbuick)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Trading Card Game/32384-PokemonTCG-DigimonAdventureTCG.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon TCG - Generations (v1.7.1) (PaperFire88)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Trading Card Game/37858-PokemonTCG-Generations.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "479f3c4e": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon Gold Sinnoh (v4.0) (ericgall23)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Gold/12390-PokemonGold-GoldSinnoh.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon Orb Version (Hacker) (Fixed)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Gold/17358-PokemonOrb.zip",
+      "format": "ips"
+    },
+    {
+      "name": "Christmas 2014 - Johto + Elite Four (Mateo)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Gold/18613-PokemonChristmas.zip",
+      "format": "ips"
+    },
+    {
+      "name": "Bronze Version (v1.23) (Girl Patch) (Freako)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Gold/19696-PokemonGold-BronzeVersion.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Unova Gold (v1.0) (ericgall23)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Gold/20069-PokemonUnovaGold.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Dark Graystone (Final) (Freako)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Gold/20207-PokemonGold-DarkGraystone.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon New Gold Era (v3.0) (ericgall23)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Gold/5219-PokemonGold-NewGoldEra.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Super Gold 97 (v7.42) (lvl_3)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Gold/5508-PokemonGold-SuperGold97.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Secrets and Rumors (2012 Demo) (Skeetendo)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Gold/8756-PokemonGold-SecretsRumors.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon XY - Naturia Version (Beta 0.4.1) (com3tiin)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Gold/8786-PokemonXYNaturiaVersion.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "4889dfaa": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "4c184ce3": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "576f5ced": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "5eab2b1e": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "616d85de": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "6bde3c3e": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "6bf7e4a6": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "6c933a14": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "6e447a33": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "71536b8e": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "7309551a": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "7a2fc378": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "8077dd95": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "81069d53": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "TCG Neo (v1.11) (Cataclyptic)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Trading Card Game/25072-PokemonTCG-Neo.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon TCG - Digimon Adventure TCG Remastered (Guzeinbuick)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Trading Card Game/32384-PokemonTCG-DigimonAdventureTCG.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon TCG - Generations (v1.7.1) (PaperFire88)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Trading Card Game/37858-PokemonTCG-Generations.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "8206b1ce": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "878b2aa7": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "8ad48636": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Touhoumon Ordinary Version (v1.3) (GeminiRage)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Silver/16595-TouhoumonOrdinaryVersion.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Dark Energy (Beta) (v5.01) (miksy91)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Silver/6785-PokemonSilver-DarkEnergy.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "8edb9eb7": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "942d0b7f": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "TCG Neo (v1.11) (Cataclyptic)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Trading Card Game/25072-PokemonTCG-Neo.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon TCG - Digimon Adventure TCG Remastered (Guzeinbuick)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Trading Card Game/32384-PokemonTCG-DigimonAdventureTCG.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon TCG - Generations (v1.7.1) (PaperFire88)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Trading Card Game/37858-PokemonTCG-Generations.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "966daef1": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "TCG Neo (v1.11) (Cataclyptic)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Trading Card Game/25072-PokemonTCG-Neo.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon TCG - Digimon Adventure TCG Remastered (Guzeinbuick)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Trading Card Game/32384-PokemonTCG-DigimonAdventureTCG.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon TCG - Generations (v1.7.1) (PaperFire88)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Trading Card Game/37858-PokemonTCG-Generations.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "96c9db95": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "aa07f269": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "b9ffd78c": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "bb6dd80c": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "old/Pokemon Crystal - Crystal Clear (v2.5.11) (ShockSlayer)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/13389-Pokemon-CrystalClear.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon - Crystal Version - Crystal Kaizo (v3.0) (SinisterHoodedFigure)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/14431-PokemonCrystalKaizo.zip",
+      "format": "bps"
+    },
+    {
+      "name": "old/Pokemon Crystal - Polished Crystal (v2.2.0) (Rangi)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/16191-PokemonPolishedCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon - Fool's Gold (v1.3) (Kingbigb0y, Froqpond, G.eeb)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/16252-PokemonFoolsGold.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Twitch Plays Pokemon - Anniversary Crystal (v1.2.3) (TPPDevs)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/17398-TwitchPlaysPokemonAnniversaryCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "17429-PokemonGaS97Reforged/Pokemon - Crystal Version - Gold & Silver 97 Reforged (v6.1c) (Camerupt)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/17429-PokemonGaS97Reforged.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon Bronze 2 (v1.05) (Freako)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/19697-PokemonCrystal-Bronze2.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Sour Crystal (v5.3) (SoupPotato)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/19801-PokemonCrystal-SourCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal 251 (v2.3) (Razormime)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/20354-PokemonCrystal-Crystal251.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon Peridot (v2.0 Beta 8) (Sea_Tree)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/20396-PokemonPeridot.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Black and White 3 - Genesis (V1.2) (Azure_Keys)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/24118-PokemonBlack&White3Genesis.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Little Cup (GreenAndACat)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/26277-PokemonCrystal-LittleCup.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon Battleship (v1.0) (Anonymous)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/31190-PokemonCrystal-Battleship.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Quarantine Crystal (v0.804) (QTDex Team)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/31890-PokemonCrystal-QuarantineCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legacy (v1.3.1) (TheSmithPlays)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/31952-PokemonCrystal-Legacy.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Nightmare Crystal (v1.0.2) (Aerogod223)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/31953-PokemonCrystal-NightmareCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Lunatic Crystal (v1.6) (GetKosiorekt)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/32074-PokemonCrystal-LunaticCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Digimon Crystal (v20250214) (Guzeinbuick)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/32383-PokemonCrystal-DigimonCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon Ambrosia (v2025-03-21) (DrUltimaMan)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/32780-PokemonCrystal-PokemonAmbrosia.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon Orange (Suloku Patch - PSS) (PiaCRT)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/33102-PokemonCrystal-Orange.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Core Crystal (v1.0.3) (Sakaysen)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/35102-Pokemon-Core-Crystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Awakening (v1.2.8) (FrenchOrange)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/37350-Pokemon-CrystalAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Wasteland (v1.5) (z3bra)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/37857-PokemonCrystal-Wasteland.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Maeson (v1.31) (Original) (Maeson)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/38442-PokemonCrystal-Maeson.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Inheritance (v1.0.4) (dwg)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/38667-PokemonCrystal-Inheritance.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Genwunner's Crystal, A (v1.1) (Hydrochlorination)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/5874-PokemonGenwunnersCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Clear (v1.6) (bynine)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/6525-PokemonCrystalClear2016.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Joel's Bizarre Pokeventure (v1.0) (Freako)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/8685-PokemonCrystalJBP.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Perfect Crystal (v1.1) (SuperEgz)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/9019-Pokemon-PerfectCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon - Kalos Crystal (Azure_Keys)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/9269-PokemonKalosCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon - Crystal Version - Pokemon Prism (v0.94,Build 237) (Koolboyman,RainbowDevs)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/9491-PokemonPrism.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pyrite (v1.1) (Crystal_)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/9562-PokemonPyrite.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "cba6d2d4": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "cf647f4b": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon Picross (Japan) (Proto) (En) (v1.2) (LeonarthCG)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/16597-PokemonPicross-English.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "d06bba96": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "d45ac039": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "e0c216ea": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "e2f527ff": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "e9488e13": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "ee6f5188": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "old/Pokemon Crystal - Crystal Clear (v2.5.11) (ShockSlayer)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/13389-Pokemon-CrystalClear.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon - Crystal Version - Crystal Kaizo (v3.0) (SinisterHoodedFigure)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/14431-PokemonCrystalKaizo.zip",
+      "format": "bps"
+    },
+    {
+      "name": "old/Pokemon Crystal - Polished Crystal (v2.2.0) (Rangi)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/16191-PokemonPolishedCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon - Fool's Gold (v1.3) (Kingbigb0y, Froqpond, G.eeb)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/16252-PokemonFoolsGold.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Twitch Plays Pokemon - Anniversary Crystal (v1.2.3) (TPPDevs)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/17398-TwitchPlaysPokemonAnniversaryCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "17429-PokemonGaS97Reforged/Pokemon - Crystal Version - Gold & Silver 97 Reforged (v6.1c) (Camerupt)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/17429-PokemonGaS97Reforged.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon Bronze 2 (v1.05) (Freako)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/19697-PokemonCrystal-Bronze2.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Sour Crystal (v5.3) (SoupPotato)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/19801-PokemonCrystal-SourCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal 251 (v2.3) (Razormime)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/20354-PokemonCrystal-Crystal251.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon Peridot (v2.0 Beta 8) (Sea_Tree)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/20396-PokemonPeridot.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Black and White 3 - Genesis (V1.2) (Azure_Keys)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/24118-PokemonBlack&White3Genesis.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Little Cup (GreenAndACat)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/26277-PokemonCrystal-LittleCup.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon Battleship (v1.0) (Anonymous)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/31190-PokemonCrystal-Battleship.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Quarantine Crystal (v0.804) (QTDex Team)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/31890-PokemonCrystal-QuarantineCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legacy (v1.3.1) (TheSmithPlays)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/31952-PokemonCrystal-Legacy.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Nightmare Crystal (v1.0.2) (Aerogod223)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/31953-PokemonCrystal-NightmareCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Lunatic Crystal (v1.6) (GetKosiorekt)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/32074-PokemonCrystal-LunaticCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Digimon Crystal (v20250214) (Guzeinbuick)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/32383-PokemonCrystal-DigimonCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon Ambrosia (v2025-03-21) (DrUltimaMan)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/32780-PokemonCrystal-PokemonAmbrosia.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon Orange (Suloku Patch - PSS) (PiaCRT)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/33102-PokemonCrystal-Orange.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Core Crystal (v1.0.3) (Sakaysen)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/35102-Pokemon-Core-Crystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Awakening (v1.2.8) (FrenchOrange)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/37350-Pokemon-CrystalAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Wasteland (v1.5) (z3bra)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/37857-PokemonCrystal-Wasteland.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Maeson (v1.31) (Original) (Maeson)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/38442-PokemonCrystal-Maeson.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Inheritance (v1.0.4) (dwg)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/38667-PokemonCrystal-Inheritance.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Genwunner's Crystal, A (v1.1) (Hydrochlorination)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/5874-PokemonGenwunnersCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Clear (v1.6) (bynine)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/6525-PokemonCrystalClear2016.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Joel's Bizarre Pokeventure (v1.0) (Freako)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/8685-PokemonCrystalJBP.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Perfect Crystal (v1.1) (SuperEgz)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/9019-Pokemon-PerfectCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon - Kalos Crystal (Azure_Keys)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/9269-PokemonKalosCrystal.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pokemon - Crystal Version - Pokemon Prism (v0.94,Build 237) (Koolboyman,RainbowDevs)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/9491-PokemonPrism.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Pyrite (v1.1) (Crystal_)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Pokemon Crystal/9562-PokemonPyrite.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "f3c1c00c": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "ff0a6f8a": [
+    {
+      "name": "Sapphire Version (USA) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/32600-PocketMonsterCarbuncle-Fix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Silver Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/11720-PokemonSilverSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version [Subset - Shiny Pokemon]",
+      "type": "Subset",
+      "path": "GBC/Subset/11841-PokemonCrystalVersionSubset.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gold Version [Subset - Professor Oak Challenge]",
+      "type": "Subset",
+      "path": "GBC/Subset/25657-PokemonGoldSubsetPOC.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Crystal Version (USA) (Vt) (v5.3.0) (runlevel5)",
+      "type": "Translation",
+      "path": "GBC/Translation/Vietnamese/810-PokemonCrystal-Vietnamese.zip",
+      "format": "bps"
+    }
+  ],
+  "1a369dd5": [
+    {
+      "name": "The Journey of Over Time and Space (Taiwan) (En) (Unl) (Fixed)",
+      "type": "Fix",
+      "path": "GBC/Fix/8539-DK5-Fix.zip",
+      "format": "bps"
+    }
+  ],
+  "ab7bfdd5": [
+    {
+      "name": "DWM2CJ - Dragon Warrior Monsters 2 Ultimate (v1.03) (JonahStrix)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Dragon Warrior Monsters 2 - Cobi's Journey/38150-DWM2CJ-DragonWarriorMonsters2Ultimate.zip",
+      "format": "bps"
+    }
+  ],
+  "0559bc89": [
+    {
+      "name": "~Hack~ Legend of Zelda, The - Link's Awakening DX - 3 Heart Hack",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/11201-LegendofZeldaLADX3HeartHack.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - Link's Awakening DX (USA, Europe) - Hard Awakening (v1.1) (Jeville)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/6251-LoZHardAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - New Awakening (4.1) (katage)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/9028-LoZLADX-NewAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "05f23861": [
+    {
+      "name": "~Hack~ Legend of Zelda, The - Link's Awakening DX - 3 Heart Hack",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/11201-LegendofZeldaLADX3HeartHack.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - Link's Awakening DX (USA, Europe) - Hard Awakening (v1.1) (Jeville)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/6251-LoZHardAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - New Awakening (4.1) (katage)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/9028-LoZLADX-NewAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "06887a34": [
+    {
+      "name": "~Hack~ Legend of Zelda, The - Link's Awakening DX - 3 Heart Hack",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/11201-LegendofZeldaLADX3HeartHack.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - Link's Awakening DX (USA, Europe) - Hard Awakening (v1.1) (Jeville)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/6251-LoZHardAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - New Awakening (4.1) (katage)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/9028-LoZLADX-NewAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "33c65722": [
+    {
+      "name": "~Hack~ Legend of Zelda, The - Link's Awakening DX - 3 Heart Hack",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/11201-LegendofZeldaLADX3HeartHack.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - Link's Awakening DX (USA, Europe) - Hard Awakening (v1.1) (Jeville)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/6251-LoZHardAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - New Awakening (4.1) (katage)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/9028-LoZLADX-NewAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "3e88a24a": [
+    {
+      "name": "~Hack~ Legend of Zelda, The - Link's Awakening DX - 3 Heart Hack",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/11201-LegendofZeldaLADX3HeartHack.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - Link's Awakening DX (USA, Europe) - Hard Awakening (v1.1) (Jeville)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/6251-LoZHardAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - New Awakening (4.1) (katage)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/9028-LoZLADX-NewAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "4e2b75e7": [
+    {
+      "name": "~Hack~ Legend of Zelda, The - Link's Awakening DX - 3 Heart Hack",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/11201-LegendofZeldaLADX3HeartHack.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - Link's Awakening DX (USA, Europe) - Hard Awakening (v1.1) (Jeville)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/6251-LoZHardAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - New Awakening (4.1) (katage)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/9028-LoZLADX-NewAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "5715d896": [
+    {
+      "name": "~Hack~ Legend of Zelda, The - Link's Awakening DX - 3 Heart Hack",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/11201-LegendofZeldaLADX3HeartHack.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - Link's Awakening DX (USA, Europe) - Hard Awakening (v1.1) (Jeville)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/6251-LoZHardAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - New Awakening (4.1) (katage)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/9028-LoZLADX-NewAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "84415b28": [
+    {
+      "name": "~Hack~ Legend of Zelda, The - Link's Awakening DX - 3 Heart Hack",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/11201-LegendofZeldaLADX3HeartHack.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - Link's Awakening DX (USA, Europe) - Hard Awakening (v1.1) (Jeville)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/6251-LoZHardAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - New Awakening (4.1) (katage)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/9028-LoZLADX-NewAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "865cc1ed": [
+    {
+      "name": "~Hack~ Legend of Zelda, The - Link's Awakening DX - 3 Heart Hack",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/11201-LegendofZeldaLADX3HeartHack.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - Link's Awakening DX (USA, Europe) - Hard Awakening (v1.1) (Jeville)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/6251-LoZHardAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - New Awakening (4.1) (katage)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/9028-LoZLADX-NewAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "8afd751e": [
+    {
+      "name": "~Hack~ Legend of Zelda, The - Link's Awakening DX - 3 Heart Hack",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/11201-LegendofZeldaLADX3HeartHack.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - Link's Awakening DX (USA, Europe) - Hard Awakening (v1.1) (Jeville)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/6251-LoZHardAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - New Awakening (4.1) (katage)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/9028-LoZLADX-NewAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "97822948": [
+    {
+      "name": "~Hack~ Legend of Zelda, The - Link's Awakening DX - 3 Heart Hack",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/11201-LegendofZeldaLADX3HeartHack.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - Link's Awakening DX (USA, Europe) - Hard Awakening (v1.1) (Jeville)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/6251-LoZHardAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - New Awakening (4.1) (katage)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/9028-LoZLADX-NewAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "a8855c67": [
+    {
+      "name": "~Hack~ Legend of Zelda, The - Link's Awakening DX - 3 Heart Hack",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/11201-LegendofZeldaLADX3HeartHack.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - Link's Awakening DX (USA, Europe) - Hard Awakening (v1.1) (Jeville)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/6251-LoZHardAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - New Awakening (4.1) (katage)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/9028-LoZLADX-NewAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "b38eb9de": [
+    {
+      "name": "~Hack~ Legend of Zelda, The - Link's Awakening DX - 3 Heart Hack",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/11201-LegendofZeldaLADX3HeartHack.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - Link's Awakening DX (USA, Europe) - Hard Awakening (v1.1) (Jeville)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/6251-LoZHardAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - New Awakening (4.1) (katage)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/9028-LoZLADX-NewAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "be5e366e": [
+    {
+      "name": "~Hack~ Legend of Zelda, The - Link's Awakening DX - 3 Heart Hack",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/11201-LegendofZeldaLADX3HeartHack.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - Link's Awakening DX (USA, Europe) - Hard Awakening (v1.1) (Jeville)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/6251-LoZHardAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - New Awakening (4.1) (katage)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/9028-LoZLADX-NewAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "c17259db": [
+    {
+      "name": "~Hack~ Legend of Zelda, The - Link's Awakening DX - 3 Heart Hack",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/11201-LegendofZeldaLADX3HeartHack.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - Link's Awakening DX (USA, Europe) - Hard Awakening (v1.1) (Jeville)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/6251-LoZHardAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - New Awakening (4.1) (katage)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/9028-LoZLADX-NewAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "efb76777": [
+    {
+      "name": "~Hack~ Legend of Zelda, The - Link's Awakening DX - 3 Heart Hack",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/11201-LegendofZeldaLADX3HeartHack.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - Link's Awakening DX (USA, Europe) - Hard Awakening (v1.1) (Jeville)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/6251-LoZHardAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - New Awakening (4.1) (katage)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/9028-LoZLADX-NewAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "f48824fe": [
+    {
+      "name": "~Hack~ Legend of Zelda, The - Link's Awakening DX - 3 Heart Hack",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/11201-LegendofZeldaLADX3HeartHack.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - Link's Awakening DX (USA, Europe) - Hard Awakening (v1.1) (Jeville)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/6251-LoZHardAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - New Awakening (4.1) (katage)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/9028-LoZLADX-NewAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "f9a66cda": [
+    {
+      "name": "~Hack~ Legend of Zelda, The - Link's Awakening DX - 3 Heart Hack",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/11201-LegendofZeldaLADX3HeartHack.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - Link's Awakening DX (USA, Europe) - Hard Awakening (v1.1) (Jeville)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/6251-LoZHardAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - New Awakening (4.1) (katage)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/9028-LoZLADX-NewAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "fdccc2bd": [
+    {
+      "name": "~Hack~ Legend of Zelda, The - Link's Awakening DX - 3 Heart Hack",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/11201-LegendofZeldaLADX3HeartHack.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - Link's Awakening DX (USA, Europe) - Hard Awakening (v1.1) (Jeville)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/6251-LoZHardAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - New Awakening (4.1) (katage)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/9028-LoZLADX-NewAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "fed5959b": [
+    {
+      "name": "~Hack~ Legend of Zelda, The - Link's Awakening DX - 3 Heart Hack",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/11201-LegendofZeldaLADX3HeartHack.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - Link's Awakening DX (USA, Europe) - Hard Awakening (v1.1) (Jeville)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/6251-LoZHardAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - New Awakening (4.1) (katage)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Link's Awakening DX/9028-LoZLADX-NewAwakening.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "3800a387": [
+    {
+      "name": "Legend of Zelda, The - Archipelago (Nobody)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Oracle of Ages/22849-LoZ-Archipelago.zip",
+      "format": "bps"
+    },
+    {
+      "name": "LoZOoA - Kharon's Crypt - Even Death May Die (v0.9.1) (FerranArevalo)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Oracle of Ages/32612-LoZOoA-KharonsCrypt.zip",
+      "format": "bps"
+    },
+    {
+      "name": "LoZOoA - Dungeon Pack 1 (jangler)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Oracle of Ages/32613-LoZOoA-DungeonPack1.zip",
+      "format": "bps"
+    },
+    {
+      "name": "LoZOoA - The Legend of Zelda - Oracle of Hours (v5.5) (Luigi)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Oracle of Ages/37859-LoZOoA-OracleOfHours.zip",
+      "format": "bps"
+    },
+    {
+      "name": "LoZOoA - The Legend of Zelda - Oracle of Nature (Lin, Fatories)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Oracle of Ages/37860-LoZOoA-OracleOfNature.zip",
+      "format": "bps"
+    },
+    {
+      "name": "LoZOoA - The Legend of Zelda - Oracle of Weather (ElVis002)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Oracle of Ages/37861-LoZOoA-OracleOfWeather.zip",
+      "format": "bps"
+    },
+    {
+      "name": "LoZOoA - Moonrise Regalia (v1.0.6) (Pontius Stone)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Oracle of Ages/41260-LoZOoA-MoonriseRegalia.zip",
+      "format": "bps"
+    },
+    {
+      "name": "LoZOoA - Gifts of Kinomi (v1.1.2) (ZerotoKoops)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Oracle of Ages/42564-LoZOoA-GiftsofKinomi.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - Oracle of Ages (USA) (Force GBA) (v0.2) (DuoDreamer)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Oracle of Ages/710-LoZOoA-ForceGBA.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "5933e3fa": [
+    {
+      "name": "Legend of Zelda, The - Archipelago (Nobody)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Oracle of Ages/22849-LoZ-Archipelago.zip",
+      "format": "bps"
+    },
+    {
+      "name": "LoZOoA - Kharon's Crypt - Even Death May Die (v0.9.1) (FerranArevalo)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Oracle of Ages/32612-LoZOoA-KharonsCrypt.zip",
+      "format": "bps"
+    },
+    {
+      "name": "LoZOoA - Dungeon Pack 1 (jangler)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Oracle of Ages/32613-LoZOoA-DungeonPack1.zip",
+      "format": "bps"
+    },
+    {
+      "name": "LoZOoA - The Legend of Zelda - Oracle of Hours (v5.5) (Luigi)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Oracle of Ages/37859-LoZOoA-OracleOfHours.zip",
+      "format": "bps"
+    },
+    {
+      "name": "LoZOoA - The Legend of Zelda - Oracle of Nature (Lin, Fatories)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Oracle of Ages/37860-LoZOoA-OracleOfNature.zip",
+      "format": "bps"
+    },
+    {
+      "name": "LoZOoA - The Legend of Zelda - Oracle of Weather (ElVis002)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Oracle of Ages/37861-LoZOoA-OracleOfWeather.zip",
+      "format": "bps"
+    },
+    {
+      "name": "LoZOoA - Moonrise Regalia (v1.0.6) (Pontius Stone)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Oracle of Ages/41260-LoZOoA-MoonriseRegalia.zip",
+      "format": "bps"
+    },
+    {
+      "name": "LoZOoA - Gifts of Kinomi (v1.1.2) (ZerotoKoops)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Oracle of Ages/42564-LoZOoA-GiftsofKinomi.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Legend of Zelda, The - Oracle of Ages (USA) (Force GBA) (v0.2) (DuoDreamer)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Oracle of Ages/710-LoZOoA-ForceGBA.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "d7e9f5d7": [
+    {
+      "name": "LoZOoS - Temple of Seasons (v1.072) (Jay)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Oracle of Seasons/44818-LoZOoS-TempleofSeasons.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "dbac1357": [
+    {
+      "name": "LoZOoS - Temple of Seasons (v1.072) (Jay)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Legend of Zelda - Oracle of Seasons/44818-LoZOoS-TempleofSeasons.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Restoration) (v1.1) (Artemis251)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/5371-LoZLinksAwakeningDX-Restoration.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Oracle of Seasons [Subset - Bonus]",
+      "type": "Subset",
+      "path": "GBC/Subset/12399-LegendofZeldaOracleBonus.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Du) (v1.0) (Xslicer)",
+      "type": "Translation",
+      "path": "GBC/Translation/Dutch/5371-LoZLinksAwakeningDX-Dutch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (It) (v1.0) (Edward Pendley)",
+      "type": "Translation",
+      "path": "GBC/Translation/Italian/5371-LoZLinksAwakeningDX-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Link's Awakening DX (USA, Europe) (Rev 2) (Es) (v1.1) (toruzz)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5371-LoZLinksAwakeningDX-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "5042450b": [
+    {
+      "name": "Combat Rebalanced (v3) (Biscuit)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Magi Nation/4731-MagiNation-CombatRebalanced.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Add Missing Creatures (v2) (Aplier)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/4731-MagiNation-AddMissingCreatures.zip",
+      "format": "bps"
+    }
+  ],
+  "188b06f8": [
+    {
+      "name": "Terrifying 911 (Unl) (Metal Slug Patch) (v1.1) (4l3j4ndr0)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Terrifying 911/8926-Terrifying911-MetalSlugPatch.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Terrifying 911 (Unl) (Zh) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "GBC/Translation/Chinese/8926-Terryfying911-Chinese.zip",
+      "format": "bps"
+    }
+  ],
+  "b30fdbf5": [
+    {
+      "name": "Wario Land II - Remix (v1.0) (Neko_Baron)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Wario Land 2/22888-WarioLand2Remix.zip",
+      "format": "bps"
+    }
+  ],
+  "480d0259": [
+    {
+      "name": "Master Quest! (World) (v0.14) (Tiger21820)",
+      "type": "Hacks",
+      "path": "GBC/Hacks/Wario Land 3/14226-WarioLand3-MasterQuest.zip",
+      "format": "bps"
+    }
+  ],
+  "8fedb6d8": [
+    {
+      "name": "Mega Man Xtreme 2 (Dash Button) (v1.0) (ArcadeGamer1929)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/4912-MegaManXtreme2-DashButton.zip",
+      "format": "bps"
+    }
+  ],
+  "e541acf1": [
+    {
+      "name": "Kirby Tilt n Tumble (USA) (Accelerometer Removal) (v1.2) (infinest)",
+      "type": "Improvement",
+      "path": "GBC/Improvement/709-KirbyTnT-AccelerometerRemoval.zip",
+      "format": "bps"
+    }
+  ],
+  "4853f586": [
+    {
+      "name": "Ain Version [Subset - Max Charabom Levels]",
+      "type": "Subset",
+      "path": "GBC/Subset/23793-BombermanMaxAinVer-SubsetMaxCharaLv.zip",
+      "format": "bps"
+    }
+  ],
+  "48b60e8e": [
+    {
+      "name": "Ain Version [Subset - Max Charabom Levels]",
+      "type": "Subset",
+      "path": "GBC/Subset/23793-BombermanMaxAinVer-SubsetMaxCharaLv.zip",
+      "format": "bps"
+    }
+  ],
+  "545e0da2": [
+    {
+      "name": "Ain Version [Subset - Max Charabom Levels]",
+      "type": "Subset",
+      "path": "GBC/Subset/23793-BombermanMaxAinVer-SubsetMaxCharaLv.zip",
+      "format": "bps"
+    }
+  ],
+  "5ccb66cf": [
+    {
+      "name": "Ain Version [Subset - Max Charabom Levels]",
+      "type": "Subset",
+      "path": "GBC/Subset/23793-BombermanMaxAinVer-SubsetMaxCharaLv.zip",
+      "format": "bps"
+    }
+  ],
+  "7a44ce88": [
+    {
+      "name": "Ain Version [Subset - Max Charabom Levels]",
+      "type": "Subset",
+      "path": "GBC/Subset/23793-BombermanMaxAinVer-SubsetMaxCharaLv.zip",
+      "format": "bps"
+    }
+  ],
+  "30daecbb": [
+    {
+      "name": "Dark Duel Stories [Subset - Rare Card Drops]",
+      "type": "Subset",
+      "path": "GBC/Subset/38665-YGOIIDarkDuelStories-Subset-RareCardDrops.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "32158e04": [
+    {
+      "name": "Dark Duel Stories [Subset - Rare Card Drops]",
+      "type": "Subset",
+      "path": "GBC/Subset/38665-YGOIIDarkDuelStories-Subset-RareCardDrops.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "4a657067": [
+    {
+      "name": "Dark Duel Stories [Subset - Rare Card Drops]",
+      "type": "Subset",
+      "path": "GBC/Subset/38665-YGOIIDarkDuelStories-Subset-RareCardDrops.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "6a5c73ff": [
+    {
+      "name": "Dark Duel Stories [Subset - Rare Card Drops]",
+      "type": "Subset",
+      "path": "GBC/Subset/38665-YGOIIDarkDuelStories-Subset-RareCardDrops.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "ba7182c3": [
+    {
+      "name": "Dark Duel Stories [Subset - Rare Card Drops]",
+      "type": "Subset",
+      "path": "GBC/Subset/38665-YGOIIDarkDuelStories-Subset-RareCardDrops.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "d6f4ba0a": [
+    {
+      "name": "Dark Duel Stories [Subset - Rare Card Drops]",
+      "type": "Subset",
+      "path": "GBC/Subset/38665-YGOIIDarkDuelStories-Subset-RareCardDrops.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "e514f2bc": [
+    {
+      "name": "Dark Duel Stories [Subset - Rare Card Drops]",
+      "type": "Subset",
+      "path": "GBC/Subset/38665-YGOIIDarkDuelStories-Subset-RareCardDrops.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "c8a6f68a": [
+    {
+      "name": "Harvest Moon GB (USA) (Zh) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "GBC/Translation/Chinese/5151-HMGB-Chinese.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Harvest Moon GB (USA) (Pl) (v0.97) (Unknown)",
+      "type": "Translation",
+      "path": "GBC/Translation/Polish/5151-HMGB-Polish.zip",
+      "format": "bps"
+    }
+  ],
+  "d3896652": [
+    {
+      "name": "Harvest Moon GB (USA) (Zh) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "GBC/Translation/Chinese/5151-HMGB-Chinese.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Harvest Moon GB (USA) (Pl) (v0.97) (Unknown)",
+      "type": "Translation",
+      "path": "GBC/Translation/Polish/5151-HMGB-Polish.zip",
+      "format": "bps"
+    }
+  ],
+  "f6768930": [
+    {
+      "name": "Hello Kitty no Magical Museum (Japan) (En) (v1.0) (Doki Doki Translations)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/11149-HKnMM-English.zip",
+      "format": "bps"
+    }
+  ],
+  "ab8b25d8": [
+    {
+      "name": "Survival Kids 2 (Japan) (En) (v0.9) (USC,hattontown)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/12803-SurvivalKids2-English.zip",
+      "format": "bps"
+    }
+  ],
+  "bd366d22": [
+    {
+      "name": "Survival Kids 2 (Japan) (En) (v0.9) (USC,hattontown)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/12803-SurvivalKids2-English.zip",
+      "format": "bps"
+    }
+  ],
+  "15e5d499": [
+    {
+      "name": "Magical Chase GB (Japan) (En) (v1.0) (Gaijin Productions)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/12881-MagicalChase-English.zip",
+      "format": "bps"
+    }
+  ],
+  "419befcc": [
+    {
+      "name": "Yume no Luffy Kaizokudan Tanjou! (Japan) (En) (v11) (Parmentation)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/15449-FTVAOnePiece-YnLKT-English.zip",
+      "format": "bps"
+    }
+  ],
+  "a4dde805": [
+    {
+      "name": "Yume no Luffy Kaizokudan Tanjou! (Japan) (En) (v11) (Parmentation)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/15449-FTVAOnePiece-YnLKT-English.zip",
+      "format": "bps"
+    }
+  ],
+  "a7317bb8": [
+    {
+      "name": "Yume no Luffy Kaizokudan Tanjou! (Japan) (En) (v11) (Parmentation)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/15449-FTVAOnePiece-YnLKT-English.zip",
+      "format": "bps"
+    }
+  ],
+  "a86de7b7": [
+    {
+      "name": "Yume no Luffy Kaizokudan Tanjou! (Japan) (En) (v11) (Parmentation)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/15449-FTVAOnePiece-YnLKT-English.zip",
+      "format": "bps"
+    }
+  ],
+  "c693aa37": [
+    {
+      "name": "Yume no Luffy Kaizokudan Tanjou! (Japan) (En) (v11) (Parmentation)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/15449-FTVAOnePiece-YnLKT-English.zip",
+      "format": "bps"
+    }
+  ],
+  "e0386f84": [
+    {
+      "name": "Sutte Hakkun GB (Japan) (Proto) (En) (v1.0) (Raccoon Sam)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/15592-SutteHakkunGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "6e330fcd": [
+    {
+      "name": "Super Robot Pinball (Japan) (En) (v1.0) (marc_max)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/15635-SuperRobotPinball-English.zip",
+      "format": "bps"
+    }
+  ],
+  "8b61cfcc": [
+    {
+      "name": "Power Version (Japan) (En) (v1.62) (kmeisthax,andwhyisit)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/15932-Telefang-PowerVersion-English.zip",
+      "format": "bps"
+    }
+  ],
+  "fb528f66": [
+    {
+      "name": "Power Version (Japan) (En) (v1.62) (kmeisthax,andwhyisit)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/15932-Telefang-PowerVersion-English.zip",
+      "format": "bps"
+    }
+  ],
+  "bc617834": [
+    {
+      "name": "Kabuto Version (Japan) (En-Us) (20260516) (Cash Medal Chamaleon)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/16089-Medarot3-KabutoVer-English.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Kuwagata Version (Japan) (En-Us) (20260516) (Cash Medal Chamaleon)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/16090-Medarot3-KuwagataVer-English.zip",
+      "format": "bps"
+    }
+  ],
+  "e655632c": [
+    {
+      "name": "Kabuto Version (Japan) (En-Us) (20260516) (Cash Medal Chamaleon)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/16089-Medarot3-KabutoVer-English.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Kuwagata Version (Japan) (En-Us) (20260516) (Cash Medal Chamaleon)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/16090-Medarot3-KuwagataVer-English.zip",
+      "format": "bps"
+    }
+  ],
+  "ee2d977f": [
+    {
+      "name": "Kabuto Version (Japan) (En-Us) (20260516) (Cash Medal Chamaleon)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/16089-Medarot3-KabutoVer-English.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Kuwagata Version (Japan) (En-Us) (20260516) (Cash Medal Chamaleon)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/16090-Medarot3-KuwagataVer-English.zip",
+      "format": "bps"
+    }
+  ],
+  "35fc5b32": [
+    {
+      "name": "Mobile Golf (Japan) (En) (v1.1) (marc_max)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/17522-MobileGolfEnglish.zip",
+      "format": "bps"
+    }
+  ],
+  "25b480c3": [
+    {
+      "name": "Geheimnis der Happy Hippo-Insel, Das (Germany) (En) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/17975-GeheimnisderHappyHippo-Insel-English.zip",
+      "format": "bps"
+    }
+  ],
+  "725cf31c": [
+    {
+      "name": "Narikiri Dungeon (Japan) (En) (v009m) (ChangeV)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/18551-TalesofPhantasia-NarikiriDungeon-English.zip",
+      "format": "bps"
+    }
+  ],
+  "228d0b0c": [
+    {
+      "name": "Gimmick Land (Japan) (Proto) (En) (v1.0) (TomatoAdventure_Fan)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/20412-GimmickLand-English.zip",
+      "format": "ips"
+    }
+  ],
+  "7adc90e1": [
+    {
+      "name": "Staff of Resurrection (Japan) (En) (v1.16) (MrRichard999) (Debug Patch)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/25502-WizardryEmpireSoR-English.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Wizardry Empire (Japan) (Rev 1) (En) (v1.03) (MrRichard999) (Debug Patch)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/5463-WizardryEmpire-English.zip",
+      "format": "bps"
+    }
+  ],
+  "fa82620f": [
+    {
+      "name": "Staff of Resurrection (Japan) (En) (v1.16) (MrRichard999) (Debug Patch)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/25502-WizardryEmpireSoR-English.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Wizardry Empire (Japan) (Rev 1) (En) (v1.03) (MrRichard999) (Debug Patch)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/5463-WizardryEmpire-English.zip",
+      "format": "bps"
+    }
+  ],
+  "abf32b8b": [
+    {
+      "name": "Otogi no Kuni no Pendant (Japan) (En) (v1.1b) (Ryusui)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/26568-SylvanianFamilies-English.zip",
+      "format": "bps"
+    }
+  ],
+  "ad6f3bdf": [
+    {
+      "name": "Otogi no Kuni no Pendant (Japan) (En) (v1.1b) (Ryusui)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/26568-SylvanianFamilies-English.zip",
+      "format": "bps"
+    }
+  ],
+  "c6fe4497": [
+    {
+      "name": "Otogi no Kuni no Pendant (Japan) (En) (v1.1b) (Ryusui)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/26568-SylvanianFamilies-English.zip",
+      "format": "bps"
+    }
+  ],
+  "f82d391f": [
+    {
+      "name": "Otogi no Kuni no Pendant (Japan) (En) (v1.1b) (Ryusui)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/26568-SylvanianFamilies-English.zip",
+      "format": "bps"
+    }
+  ],
+  "6dd8ac91": [
+    {
+      "name": "Mori no Nakama to Odori Masho! (Japan) (En) (v1.0) (Ryusui)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/30985-SylvanianMelodies-English.zip",
+      "format": "bps"
+    }
+  ],
+  "28d7e8d3": [
+    {
+      "name": "Dinky Kong & Dixie Kong (Japan) (En) (v1.3) (Blaziken257)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/31776-DKGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "44a9ddfb": [
+    {
+      "name": "Samurai Kid (Japan) (En) (v1.0) (marc_max)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/3637-SamuraiKid-English.zip",
+      "format": "bps"
+    }
+  ],
+  "23223670": [
+    {
+      "name": "Parallel Trippers (Japan) (En) (v1.03) (Adventurous)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/3649-GrandiaParallelTrippers-English.zip",
+      "format": "bps"
+    }
+  ],
+  "8c7ddbda": [
+    {
+      "name": "Blue Sphere (Japan) (En) (v1.0a) (4l3j4ndr0)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/5228-SOBS-English.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Blue Sphere (Japan) (Fr) (v1.0) (Le Noble Bahamut)",
+      "type": "Translation",
+      "path": "GBC/Translation/French/5228-SOBS-French.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Blue Sphere (Japan) (Es) (v2.0) (4l3j4ndr0)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/5228-SOBS-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "ac52f6ef": [
+    {
+      "name": "Kite no Bouken (Japan) (En) (v2.0) (JaytheHam)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/5334-NushiTsuriAdv-English.zip",
+      "format": "bps"
+    }
+  ],
+  "09d03ee2": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "1371e872": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "147bfd68": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "1a60f198": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "1de1259c": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "21560017": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "24023cd2": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "298bd054": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "2a684a14": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "2f869cf5": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "3199f6f4": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "338e2cda": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "38c11949": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "3b68d368": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "44fcdab6": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "49831345": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "49f9197a": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "4a88c023": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "4d6105f6": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "4d825f68": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "4dab1217": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "51e31889": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "561c0268": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "5ad815ee": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "5b72bab5": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "6ca75ba0": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "70b0ccc8": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "72a68eee": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "7c3d2b6e": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "7fb85bc0": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "803a56ae": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "87c7b4ba": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "8813b725": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "88198db7": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "8a6b0948": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "8ef209b9": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "9187f577": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "975d1612": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "98575306": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "997e4860": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "9f9dbab4": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "9fd5a202": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "a4d06001": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "a6a73b37": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "a702897c": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "aeca7189": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "af367799": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "b211c694": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "b5abda21": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "c0dd1b26": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "c2d789e7": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "c9e2b613": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "cb291fda": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "cd6b782d": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "d1ba23f1": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "d45cca53": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "dc160f10": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "dfaa9338": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "e3febb5b": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "eec7efb9": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "fc398a9b": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "ffd35e8b": [
+    {
+      "name": "Monster Capsule GB (Japan) (En) (v1.1) (Bownly)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/597-YuGiOh-MonsterCapsuleGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "d2af64ce": [
+    {
+      "name": "Balloon Fight GB (Japan) (En) (v1.0) (dACE)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/6523-BalloonFightGB-English.zip",
+      "format": "bps"
+    }
+  ],
+  "8ee043ea": [
+    {
+      "name": "Arle no Bouken (Japan) (En) (v1.0) (Jazz)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/6619-ArlenoBouken-English.zip",
+      "format": "bps"
+    }
+  ],
+  "39a10855": [
+    {
+      "name": "Kuro no Sho (Japan) (En (v1.2) (Specialagentape)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/7083-SMT-DCKnS-English.zip",
+      "format": "bps"
+    }
+  ],
+  "3d4ae536": [
+    {
+      "name": "Kuro no Sho (Japan) (En (v1.2) (Specialagentape)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/7083-SMT-DCKnS-English.zip",
+      "format": "bps"
+    }
+  ],
+  "55b9af51": [
+    {
+      "name": "Kuro no Sho (Japan) (En (v1.2) (Specialagentape)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/7083-SMT-DCKnS-English.zip",
+      "format": "bps"
+    }
+  ],
+  "79ea53f4": [
+    {
+      "name": "Kuro no Sho (Japan) (En (v1.2) (Specialagentape)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/7083-SMT-DCKnS-English.zip",
+      "format": "bps"
+    }
+  ],
+  "c1e27556": [
+    {
+      "name": "Kuro no Sho (Japan) (En (v1.2) (Specialagentape)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/7083-SMT-DCKnS-English.zip",
+      "format": "bps"
+    }
+  ],
+  "f90c4977": [
+    {
+      "name": "Kuro no Sho (Japan) (En (v1.2) (Specialagentape)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/7083-SMT-DCKnS-English.zip",
+      "format": "bps"
+    }
+  ],
+  "e2071293": [
+    {
+      "name": "Kachikachi no Tonkachi ga Kachi (Japan) (En) (v1.0) (PentarouZero)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/7882-DaikunoGensan-English.zip",
+      "format": "bps"
+    }
+  ],
+  "9caa00b5": [
+    {
+      "name": "Last Bible II (Japan) (En) (v1.0) (EsperKnight)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/8009-MT-LastBible2-English.zip",
+      "format": "bps"
+    }
+  ],
+  "bd9ba639": [
+    {
+      "name": "Last Bible II (Japan) (En) (v1.0) (EsperKnight)",
+      "type": "Translation",
+      "path": "GBC/Translation/English/8009-MT-LastBible2-English.zip",
+      "format": "bps"
+    }
+  ],
+  "08906220": [
+    {
+      "name": "Harvest Moon 2 GBC (USA) (Fr) (v0.95) (BahaBulle,Happexamendios)",
+      "type": "Translation",
+      "path": "GBC/Translation/French/5155-HarvestMoon2-French.zip",
+      "format": "bps"
+    }
+  ],
+  "160ca990": [
+    {
+      "name": "Harvest Moon 2 GBC (USA) (Fr) (v0.95) (BahaBulle,Happexamendios)",
+      "type": "Translation",
+      "path": "GBC/Translation/French/5155-HarvestMoon2-French.zip",
+      "format": "bps"
+    }
+  ],
+  "32a04c29": [
+    {
+      "name": "Harvest Moon 2 GBC (USA) (Fr) (v0.95) (BahaBulle,Happexamendios)",
+      "type": "Translation",
+      "path": "GBC/Translation/French/5155-HarvestMoon2-French.zip",
+      "format": "bps"
+    }
+  ],
+  "c46aba56": [
+    {
+      "name": "Survival Kids (USA) (Pt) (v1.1) (LobisOne)",
+      "type": "Translation",
+      "path": "GBC/Translation/Portuguese/4923-SurvivalKids-Portuguese.zip",
+      "format": "bps"
+    }
+  ],
+  "f85c3f2c": [
+    {
+      "name": "Resident Evil Gaiden (Europe) (Pt) (v1.1) (ajkmetiuk)",
+      "type": "Translation",
+      "path": "GBC/Translation/Portuguese/5133-REGaiden-Portuguese.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Resident Evil Gaiden (USA) (Ru) (v1.0) (TagTeam)",
+      "type": "Translation",
+      "path": "GBC/Translation/Russian/5133-ResidentEvilGaiden-Russian.zip",
+      "format": "bps"
+    }
+  ],
+  "f8c5021b": [
+    {
+      "name": "Resident Evil Gaiden (Europe) (Pt) (v1.1) (ajkmetiuk)",
+      "type": "Translation",
+      "path": "GBC/Translation/Portuguese/5133-REGaiden-Portuguese.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Resident Evil Gaiden (USA) (Ru) (v1.0) (TagTeam)",
+      "type": "Translation",
+      "path": "GBC/Translation/Russian/5133-ResidentEvilGaiden-Russian.zip",
+      "format": "bps"
+    }
+  ],
+  "909bb02d": [
+    {
+      "name": "Crystalis (USA) (Pt) (v1.2) (RomHackBR)",
+      "type": "Translation",
+      "path": "GBC/Translation/Portuguese/6385-Crystalis-Portuguese.zip",
+      "format": "bps"
+    }
+  ],
+  "69989152": [
+    {
+      "name": "Tetris DX (Japan, USA) (Es) (v1.0) (PalKnights)",
+      "type": "Translation",
+      "path": "GBC/Translation/Spanish/4939-TetrisDX-Spanish.zip",
+      "format": "bps"
+    }
+  ]
+}

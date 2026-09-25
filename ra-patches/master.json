@@ -1,0 +1,716 @@
+{
+  "2663bf18": [
+    {
+      "name": "Mortal Kombat II (Europe, Brazil) (Palette Improvement) (v1.2) (cireza)",
+      "type": "Cosmetic",
+      "path": "Master System/Cosmetic/10738-MKII-PaletteImprovement.zip",
+      "format": "bps"
+    }
+  ],
+  "17a40e29": [
+    {
+      "name": "AKIMW - Voyage - A Sorceress Vacation (v1.05) (SNAGS)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/22067-Voyage.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Barn 51 (Demo 3.5) (PinkeyeFR)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/31871-AlexKiddMW-Barn51.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Duke Nukem Mod (v0.93) (tibone, Calindro)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/32330-AKiMW-DoomMod.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Rusty Adventure (v1.1) (Rusty Hackmix)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/34207-AlexKiddMW-RustyAdventure.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Fall of Radaxian (v1.01) (TheSegaGuru)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/34208-AlexKiddMW-FallOfRadaxian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Radaxian Rumble (v1.04b) (Alianger)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/34209-AlexKiddMW-RadaxianRumble.zip",
+      "format": "bps"
+    },
+    {
+      "name": "AKIMW - Alex Kidd in Mushroom World (v1.0) (Bluestreak)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/38489-AKIMW-AlexKiddinMushroomWorld.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Alex Kidd in Miracle World (USA, Europe, Brazil) (En) (Rev 1) (Fr) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "Master System/Translation/French/9998-AKiMW-French.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Alex Kidd in Miracle World (USA, Europe, Brazil) (En) (Rev 1) (It) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "Master System/Translation/Italian/9998-AKiMW-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Alex Kidd in Miracle World (USA, Europe, Brazil) (Rev 1) (Pt) (v1.0) (CBT)",
+      "type": "Translation",
+      "path": "Master System/Translation/Portuguese/9998-AKiMW-Portuguese.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Alex Kidd in Miracle World (USA, Europe, Brazil) (En) (Rev 1) (Es) (v1.0) (Wave)",
+      "type": "Translation",
+      "path": "Master System/Translation/Spanish/9998-AKiMW-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "50a8e8a7": [
+    {
+      "name": "AKIMW - Voyage - A Sorceress Vacation (v1.05) (SNAGS)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/22067-Voyage.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Barn 51 (Demo 3.5) (PinkeyeFR)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/31871-AlexKiddMW-Barn51.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Duke Nukem Mod (v0.93) (tibone, Calindro)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/32330-AKiMW-DoomMod.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Rusty Adventure (v1.1) (Rusty Hackmix)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/34207-AlexKiddMW-RustyAdventure.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Fall of Radaxian (v1.01) (TheSegaGuru)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/34208-AlexKiddMW-FallOfRadaxian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Radaxian Rumble (v1.04b) (Alianger)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/34209-AlexKiddMW-RadaxianRumble.zip",
+      "format": "bps"
+    },
+    {
+      "name": "AKIMW - Alex Kidd in Mushroom World (v1.0) (Bluestreak)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/38489-AKIMW-AlexKiddinMushroomWorld.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Alex Kidd in Miracle World (USA, Europe, Brazil) (En) (Rev 1) (Fr) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "Master System/Translation/French/9998-AKiMW-French.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Alex Kidd in Miracle World (USA, Europe, Brazil) (En) (Rev 1) (It) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "Master System/Translation/Italian/9998-AKiMW-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Alex Kidd in Miracle World (USA, Europe, Brazil) (Rev 1) (Pt) (v1.0) (CBT)",
+      "type": "Translation",
+      "path": "Master System/Translation/Portuguese/9998-AKiMW-Portuguese.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Alex Kidd in Miracle World (USA, Europe, Brazil) (En) (Rev 1) (Es) (v1.0) (Wave)",
+      "type": "Translation",
+      "path": "Master System/Translation/Spanish/9998-AKiMW-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "6f5f3daa": [
+    {
+      "name": "AKIMW - Voyage - A Sorceress Vacation (v1.05) (SNAGS)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/22067-Voyage.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Barn 51 (Demo 3.5) (PinkeyeFR)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/31871-AlexKiddMW-Barn51.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Duke Nukem Mod (v0.93) (tibone, Calindro)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/32330-AKiMW-DoomMod.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Rusty Adventure (v1.1) (Rusty Hackmix)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/34207-AlexKiddMW-RustyAdventure.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Fall of Radaxian (v1.01) (TheSegaGuru)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/34208-AlexKiddMW-FallOfRadaxian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Radaxian Rumble (v1.04b) (Alianger)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/34209-AlexKiddMW-RadaxianRumble.zip",
+      "format": "bps"
+    },
+    {
+      "name": "AKIMW - Alex Kidd in Mushroom World (v1.0) (Bluestreak)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/38489-AKIMW-AlexKiddinMushroomWorld.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Alex Kidd in Miracle World (USA, Europe, Brazil) (En) (Rev 1) (Fr) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "Master System/Translation/French/9998-AKiMW-French.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Alex Kidd in Miracle World (USA, Europe, Brazil) (En) (Rev 1) (It) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "Master System/Translation/Italian/9998-AKiMW-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Alex Kidd in Miracle World (USA, Europe, Brazil) (Rev 1) (Pt) (v1.0) (CBT)",
+      "type": "Translation",
+      "path": "Master System/Translation/Portuguese/9998-AKiMW-Portuguese.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Alex Kidd in Miracle World (USA, Europe, Brazil) (En) (Rev 1) (Es) (v1.0) (Wave)",
+      "type": "Translation",
+      "path": "Master System/Translation/Spanish/9998-AKiMW-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "aed9aac4": [
+    {
+      "name": "AKIMW - Voyage - A Sorceress Vacation (v1.05) (SNAGS)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/22067-Voyage.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Barn 51 (Demo 3.5) (PinkeyeFR)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/31871-AlexKiddMW-Barn51.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Duke Nukem Mod (v0.93) (tibone, Calindro)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/32330-AKiMW-DoomMod.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Rusty Adventure (v1.1) (Rusty Hackmix)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/34207-AlexKiddMW-RustyAdventure.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Fall of Radaxian (v1.01) (TheSegaGuru)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/34208-AlexKiddMW-FallOfRadaxian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Radaxian Rumble (v1.04b) (Alianger)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/34209-AlexKiddMW-RadaxianRumble.zip",
+      "format": "bps"
+    },
+    {
+      "name": "AKIMW - Alex Kidd in Mushroom World (v1.0) (Bluestreak)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Alex Kidd in Miracle World/38489-AKIMW-AlexKiddinMushroomWorld.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Alex Kidd in Miracle World (USA, Europe, Brazil) (En) (Rev 1) (Fr) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "Master System/Translation/French/9998-AKiMW-French.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Alex Kidd in Miracle World (USA, Europe, Brazil) (En) (Rev 1) (It) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "Master System/Translation/Italian/9998-AKiMW-Italian.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Alex Kidd in Miracle World (USA, Europe, Brazil) (Rev 1) (Pt) (v1.0) (CBT)",
+      "type": "Translation",
+      "path": "Master System/Translation/Portuguese/9998-AKiMW-Portuguese.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Alex Kidd in Miracle World (USA, Europe, Brazil) (En) (Rev 1) (Es) (v1.0) (Wave)",
+      "type": "Translation",
+      "path": "Master System/Translation/Spanish/9998-AKiMW-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "2c61ed88": [
+    {
+      "name": "Oh No! More Lemmings (v0.04) (slogra, maxim)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Lemmings/37772-LemmingsOhNoMoreLemmings.zip",
+      "format": "bps"
+    }
+  ],
+  "f369b2d8": [
+    {
+      "name": "Oh No! More Lemmings (v0.04) (slogra, maxim)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Lemmings/37772-LemmingsOhNoMoreLemmings.zip",
+      "format": "bps"
+    }
+  ],
+  "5b3b922c": [
+    {
+      "name": "Sonic 2 - Sweet Relief (v1.1) (Ambil)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Sonic the Hedgehog 2/16058-Sonic2-SweetRelief.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Sonic 2 - Spin Dash in Sonic 2 SMS (SHC2024) (pixelcat)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Sonic the Hedgehog 2/37148-Sonic2-SpinDashinSonic2.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Frenzy (v1.1) (Yoshister)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Sonic the Hedgehog 2/37773-Sonic2-Frenzy.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Re Mastered (v1.0) (MrCat)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Sonic the Hedgehog 2/37774-Sonic2-ReMastered.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Zen Island (v1.1) (Yoshister)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Sonic the Hedgehog 2/37775-Sonic2-ZenIsland.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Sonic The Hedgehog 2 (Europe, Brazil) (En) (Rev 1) (Hack) (Sonic 2 Rebirth)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Sonic the Hedgehog 2/9997-Sonic2-RebirthHack.zip",
+      "format": "bps"
+    }
+  ],
+  "d6f2bfca": [
+    {
+      "name": "Sonic 2 - Sweet Relief (v1.1) (Ambil)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Sonic the Hedgehog 2/16058-Sonic2-SweetRelief.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Sonic 2 - Spin Dash in Sonic 2 SMS (SHC2024) (pixelcat)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Sonic the Hedgehog 2/37148-Sonic2-SpinDashinSonic2.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Frenzy (v1.1) (Yoshister)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Sonic the Hedgehog 2/37773-Sonic2-Frenzy.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Re Mastered (v1.0) (MrCat)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Sonic the Hedgehog 2/37774-Sonic2-ReMastered.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Zen Island (v1.1) (Yoshister)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Sonic the Hedgehog 2/37775-Sonic2-ZenIsland.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Sonic The Hedgehog 2 (Europe, Brazil) (En) (Rev 1) (Hack) (Sonic 2 Rebirth)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Sonic the Hedgehog 2/9997-Sonic2-RebirthHack.zip",
+      "format": "bps"
+    }
+  ],
+  "b519e833": [
+    {
+      "name": "Sonic - Boxguy Adventure 2 (v35) (PoyoPoyo1985)",
+      "type": "Hacks",
+      "path": "Master System/Hacks/Sonic the Hedgehog/37010-Sonic-BoxguyAdventure2.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Sonic the Hedgehog (USA, Europe, Brazil) (En) (FM Hack) (Valleybell) (1.02)",
+      "type": "Improvement",
+      "path": "Master System/Improvement/9962-Sonic-FMHack.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Sonic the Hedgehog (USA, Europe, Brazil) (Fr) (Final) (Terminus)",
+      "type": "Translation",
+      "path": "Master System/Translation/French/9962-Sonic-French.zip",
+      "format": "bps"
+    }
+  ],
+  "525f4f3d": [
+    {
+      "name": "The Dragon's Trap (USA, Europe) (SRAM and Pad Detect) (v1.2) (Ichigobankai)",
+      "type": "Improvement",
+      "path": "Master System/Improvement/10007-WB3-SRAM-PadDetect.zip",
+      "format": "bps"
+    },
+    {
+      "name": "The Dragon's Trap (USA, Europe) (Fr) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "Master System/Translation/French/10007-WonderBoyIII-French.zip",
+      "format": "bps"
+    },
+    {
+      "name": "The Dragon's Trap (USA, Europe, Korea) (Sv) (v0.7b) (Metalhead)",
+      "type": "Translation",
+      "path": "Master System/Translation/Swedish/10007-WonderBoyIII-Swedish.zip",
+      "format": "bps"
+    }
+  ],
+  "679e1676": [
+    {
+      "name": "The Dragon's Trap (USA, Europe) (SRAM and Pad Detect) (v1.2) (Ichigobankai)",
+      "type": "Improvement",
+      "path": "Master System/Improvement/10007-WB3-SRAM-PadDetect.zip",
+      "format": "bps"
+    },
+    {
+      "name": "The Dragon's Trap (USA, Europe) (Fr) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "Master System/Translation/French/10007-WonderBoyIII-French.zip",
+      "format": "bps"
+    },
+    {
+      "name": "The Dragon's Trap (USA, Europe, Korea) (Sv) (v0.7b) (Metalhead)",
+      "type": "Translation",
+      "path": "Master System/Translation/Swedish/10007-WonderBoyIII-Swedish.zip",
+      "format": "bps"
+    }
+  ],
+  "32759751": [
+    {
+      "name": "The Vanished Omens (USA, Europe) (FM Sound Restoration) (v1.2) (Hungdongs)",
+      "type": "Improvement",
+      "path": "Master System/Improvement/10717-YsFMRestoration.zip",
+      "format": "bps"
+    }
+  ],
+  "90d5f16b": [
+    {
+      "name": "Altered Beast (USA, Europe, Brazil) (Arcade Voices) (v1.2) (Maxim)",
+      "type": "Improvement",
+      "path": "Master System/Improvement/10748-AlteredBeast-ArcadeVoices.zip",
+      "format": "ips"
+    }
+  ],
+  "bba2fe98": [
+    {
+      "name": "Altered Beast (USA, Europe, Brazil) (Arcade Voices) (v1.2) (Maxim)",
+      "type": "Improvement",
+      "path": "Master System/Improvement/10748-AlteredBeast-ArcadeVoices.zip",
+      "format": "ips"
+    }
+  ],
+  "3ebb7457": [
+    {
+      "name": "Final Bubble Bobble (Japan) (En) (v1.0) (rainwarrior)",
+      "type": "Translation",
+      "path": "Master System/Translation/English/10758-FinalBubbleBobble-English.zip",
+      "format": "bps"
+    }
+  ],
+  "00bef1d7": [
+    {
+      "name": "Phantasy Star (USA, Europe) (Rev A) (En) (v1.02) (SMS Power)",
+      "type": "Translation",
+      "path": "Master System/Translation/English/9999-PhantasyStar-English.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Phantasy Star (USA, Europe) (Ru) (v1.02) (Chief-Net)",
+      "type": "Translation",
+      "path": "Master System/Translation/Russian/9999-PhantasyStar-Russian.zip",
+      "format": "bps"
+    }
+  ],
+  "07301f83": [
+    {
+      "name": "Phantasy Star (USA, Europe) (Rev A) (En) (v1.02) (SMS Power)",
+      "type": "Translation",
+      "path": "Master System/Translation/English/9999-PhantasyStar-English.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Phantasy Star (USA, Europe) (Ru) (v1.02) (Chief-Net)",
+      "type": "Translation",
+      "path": "Master System/Translation/Russian/9999-PhantasyStar-Russian.zip",
+      "format": "bps"
+    }
+  ],
+  "6605d36a": [
+    {
+      "name": "Phantasy Star (USA, Europe) (Rev A) (En) (v1.02) (SMS Power)",
+      "type": "Translation",
+      "path": "Master System/Translation/English/9999-PhantasyStar-English.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Phantasy Star (USA, Europe) (Ru) (v1.02) (Chief-Net)",
+      "type": "Translation",
+      "path": "Master System/Translation/Russian/9999-PhantasyStar-Russian.zip",
+      "format": "bps"
+    }
+  ],
+  "747e83b5": [
+    {
+      "name": "Phantasy Star (USA, Europe) (Rev A) (En) (v1.02) (SMS Power)",
+      "type": "Translation",
+      "path": "Master System/Translation/English/9999-PhantasyStar-English.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Phantasy Star (USA, Europe) (Ru) (v1.02) (Chief-Net)",
+      "type": "Translation",
+      "path": "Master System/Translation/Russian/9999-PhantasyStar-Russian.zip",
+      "format": "bps"
+    }
+  ],
+  "75971bef": [
+    {
+      "name": "Phantasy Star (USA, Europe) (Rev A) (En) (v1.02) (SMS Power)",
+      "type": "Translation",
+      "path": "Master System/Translation/English/9999-PhantasyStar-English.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Phantasy Star (USA, Europe) (Ru) (v1.02) (Chief-Net)",
+      "type": "Translation",
+      "path": "Master System/Translation/Russian/9999-PhantasyStar-Russian.zip",
+      "format": "bps"
+    }
+  ],
+  "a1e090b9": [
+    {
+      "name": "Phantasy Star (USA, Europe) (Rev A) (En) (v1.02) (SMS Power)",
+      "type": "Translation",
+      "path": "Master System/Translation/English/9999-PhantasyStar-English.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Phantasy Star (USA, Europe) (Ru) (v1.02) (Chief-Net)",
+      "type": "Translation",
+      "path": "Master System/Translation/Russian/9999-PhantasyStar-Russian.zip",
+      "format": "bps"
+    }
+  ],
+  "df96f194": [
+    {
+      "name": "Phantasy Star (USA, Europe) (Rev A) (En) (v1.02) (SMS Power)",
+      "type": "Translation",
+      "path": "Master System/Translation/English/9999-PhantasyStar-English.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Phantasy Star (USA, Europe) (Ru) (v1.02) (Chief-Net)",
+      "type": "Translation",
+      "path": "Master System/Translation/Russian/9999-PhantasyStar-Russian.zip",
+      "format": "bps"
+    }
+  ],
+  "e4a65e79": [
+    {
+      "name": "Phantasy Star (USA, Europe) (Rev A) (En) (v1.02) (SMS Power)",
+      "type": "Translation",
+      "path": "Master System/Translation/English/9999-PhantasyStar-English.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Phantasy Star (USA, Europe) (Ru) (v1.02) (Chief-Net)",
+      "type": "Translation",
+      "path": "Master System/Translation/Russian/9999-PhantasyStar-Russian.zip",
+      "format": "bps"
+    }
+  ],
+  "d2417ed7": [
+    {
+      "name": "Alex Kidd in Shinobi World (USA, Europe, Brazil) (Fr) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "Master System/Translation/French/10005-AKiSW-French.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Alex Kidd in Shinobi World (USA, Europe, Brazil) (Pt) (v1.0) (URBANO SLV)",
+      "type": "Translation",
+      "path": "Master System/Translation/Portuguese/10005-AKiSW-Portuguese.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Alex Kidd in Shinobi World (USA, Europe, Brazil) (Es) (v1.1) (Wave)",
+      "type": "Translation",
+      "path": "Master System/Translation/Spanish/10005-AKiSW-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "05ea5353": [
+    {
+      "name": "Kenseiden (USA, Europe, Brazil) (Fr) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "Master System/Translation/French/10011-Kenseiden-French.zip",
+      "format": "bps"
+    }
+  ],
+  "516ed32e": [
+    {
+      "name": "Kenseiden (USA, Europe, Brazil) (Fr) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "Master System/Translation/French/10011-Kenseiden-French.zip",
+      "format": "bps"
+    }
+  ],
+  "691211a1": [
+    {
+      "name": "Cyborg Hunter (USA, Europe, Brazil) (Fr) (v1.0) (Terminus)",
+      "type": "Translation",
+      "path": "Master System/Translation/French/10696-CyborgHunter-French.zip",
+      "format": "bps"
+    }
+  ],
+  "908e7524": [
+    {
+      "name": "Cyborg Hunter (USA, Europe, Brazil) (Fr) (v1.0) (Terminus)",
+      "type": "Translation",
+      "path": "Master System/Translation/French/10696-CyborgHunter-French.zip",
+      "format": "bps"
+    }
+  ],
+  "c8718d40": [
+    {
+      "name": "Aladdin (Europe, Brazil, Korea) (Pt) (v1.0) (Imp4444)",
+      "type": "Translation",
+      "path": "Master System/Translation/Portuguese/10016-Aladdin-Portuguese.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Aladdin (Europe, Brazil, Korea) (Ru) (v1.0) (ALLiGaToR,babulya)",
+      "type": "Translation",
+      "path": "Master System/Translation/Russian/10016-Aladdin-Russian.zip",
+      "format": "bps"
+    }
+  ],
+  "e890331d": [
+    {
+      "name": "Ayrton Senna's Super Monaco GP II (Europe, Brazil) (Pt) (v1.0) (Traducoes)",
+      "type": "Translation",
+      "path": "Master System/Translation/Portuguese/10039-SMGPII-Portuguese.zip",
+      "format": "bps"
+    }
+  ],
+  "0d0840d5": [
+    {
+      "name": "R-Type (World) (Pt) (v1.0) (Emuboarding)",
+      "type": "Translation",
+      "path": "Master System/Translation/Portuguese/10058-R-Type-Portuguese.zip",
+      "format": "bps"
+    }
+  ],
+  "bb54b6b0": [
+    {
+      "name": "R-Type (World) (Pt) (v1.0) (Emuboarding)",
+      "type": "Translation",
+      "path": "Master System/Translation/Portuguese/10058-R-Type-Portuguese.zip",
+      "format": "bps"
+    }
+  ],
+  "e532716f": [
+    {
+      "name": "R-Type (World) (Pt) (v1.0) (Emuboarding)",
+      "type": "Translation",
+      "path": "Master System/Translation/Portuguese/10058-R-Type-Portuguese.zip",
+      "format": "bps"
+    }
+  ],
+  "caea8002": [
+    {
+      "name": "Bonanza Bros. (Europe, Brazil) (Pt) (v1.1) (Patryck)",
+      "type": "Translation",
+      "path": "Master System/Translation/Portuguese/10205-BonanzaBros-Portuguese.zip",
+      "format": "bps"
+    }
+  ],
+  "ac6009a7": [
+    {
+      "name": "California Games (USA, Europe, Brazil) (Pt) (TMT)",
+      "type": "Translation",
+      "path": "Master System/Translation/Portuguese/10691-CaliGames-Portuguese.zip",
+      "format": "bps"
+    }
+  ],
+  "7f6d0df6": [
+    {
+      "name": "Lucky Dime Caper Starring Donald Duck, The (Europe, Brazil) (Pt) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "Master System/Translation/Portuguese/10714-LuckyDimeCaper-Portuguese.zip",
+      "format": "bps"
+    }
+  ],
+  "a1710f13": [
+    {
+      "name": "Lucky Dime Caper Starring Donald Duck, The (Europe, Brazil) (Pt) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "Master System/Translation/Portuguese/10714-LuckyDimeCaper-Portuguese.zip",
+      "format": "bps"
+    }
+  ],
+  "6687fab9": [
+    {
+      "name": "Ecco The Dolphin (Europe, Brazil) (Es) (v1.0) (Wave)",
+      "type": "Translation",
+      "path": "Master System/Translation/Spanish/13228-EccotheDolphin-Spanish.zip",
+      "format": "bps"
+    }
+  ]
+}
