@@ -276,6 +276,20 @@ def build(out_dir, only=None, workers=16, cache_path=None):
             f.write("\n")
         hacks = sum(len(v) for v in table.values())
         print(f"wrote {out_dir}/{short}.json: {len(table)} base ROMs, {hacks} hacks")
+        # Disc consoles: the disc ID each base dump starts with, so the app can find a likely
+        # match by reading a few bytes of a disc (even a compressed .rvz) instead of all of it.
+        # `<short>.ids.json` is { disc_id: [crc, ...] }; the exact CRC is checked when patching.
+        ids = {}
+        resolver = resolvers.get(short)
+        for crc in table:
+            disc = resolver.disc_id.get(crc) if resolver else None
+            if disc:
+                ids.setdefault(disc, []).append(crc)
+        if ids:
+            with open(os.path.join(out_dir, f"{short}.ids.json"), "w", encoding="utf-8") as f:
+                json.dump({k: sorted(v) for k, v in sorted(ids.items())}, f, indent=2)
+                f.write("\n")
+            print(f"wrote {out_dir}/{short}.ids.json: {len(ids)} disc IDs")
 
 
 def main():
