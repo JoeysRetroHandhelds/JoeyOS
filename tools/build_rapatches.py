@@ -31,6 +31,7 @@ import json
 import os
 import re
 import urllib.parse
+import time
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 
@@ -239,6 +240,61 @@ def base_crcs(resolver, title):
     return out
 
 
+class RaGames:
+    """RetroAchievements game ID -> the base game's title, for patches no name places.
+
+    A patch archive is named after an RA game: "6049-SMS-QoLEnhancement" is Super Mario Sunshine
+    itself (Improvement), "28560-SMS-Subset-Hoverless" a subset whose parent is that game. Asked
+    of RA's web API with RA_API_KEY (an Actions secret) and kept in a cache file next to the
+    formats cache, so each ID is asked once, ever. Without the key, nothing is looked up.
+    """
+
+    API = "https://retroachievements.org/API/API_GetGameExtended.php"
+    TAGS = re.compile(r"\s*\[(?:Subset|Bonus)[^\]]*\]|~[^~]*~\s*")
+
+    def __init__(self, cache_path):
+        self.key = os.environ.get("RA_API_KEY", "").strip()
+        self.path = cache_path
+        self.cache = {}
+        if cache_path and os.path.isfile(cache_path):
+            with open(cache_path, encoding="utf-8") as f:
+                self.cache = json.load(f)
+        self.asked = 0
+
+    def _game(self, gid):
+        if gid in self.cache:
+            return self.cache[gid]
+        if not self.key:
+            return None
+        try:
+            self.asked += 1
+            data = json.loads(_get(f"{self.API}?i={gid}&y={urllib.parse.quote(self.key)}"))
+            info = {"title": data.get("Title") or "", "parent": data.get("ParentGameID")}
+        except Exception as e:  # noqa: BLE001 - one bad lookup mustn't stop the build
+            print(f"  RA lookup failed for game {gid}: {e}")
+            return None
+        self.cache[gid] = info
+        time.sleep(0.25)  # gentle on RA's API
+        return info
+
+    def base_title(self, path):
+        """The base game's title for a patch archive named "<RA id>-...", or None."""
+        m = re.match(r"(\d+)-", path.rsplit("/", 1)[-1])
+        if not m:
+            return None
+        game = self._game(m.group(1))
+        if game and game.get("parent"):
+            game = self._game(str(game["parent"])) or game
+        title = game and self.TAGS.sub("", game.get("title", "")).strip()
+        return title or None
+
+    def save(self):
+        if self.path:
+            os.makedirs(os.path.dirname(self.path) or ".", exist_ok=True)
+            with open(self.path, "w", encoding="utf-8") as f:
+                json.dump(self.cache, f, separators=(",", ":"), sort_keys=True)
+
+
 def build(out_dir, only=None, workers=16, cache_path=None):
     """Writes the index to [out_dir].
 
@@ -288,6 +344,7 @@ def build(out_dir, only=None, workers=16, cache_path=None):
         with open(cache_path, "w", encoding="utf-8") as f:
             json.dump({k: list(v) for k, v in sorted(cache.items()) if k in live}, f, separators=(",", ":"))
 
+    ra_games = RaGames(os.path.join(os.path.dirname(cache_path), "ra-games.json") if cache_path else None)
     index = {}  # shortname -> {crc -> [hack]}
     for short, type_folder, path in jobs:
         patch_name, fmt = formats.get(path, (None, None))
@@ -299,6 +356,13 @@ def build(out_dir, only=None, workers=16, cache_path=None):
             if crcs:
                 title = candidate
                 break
+        if not crcs:
+            # Last resort: the RA game the archive is named after (its parent, for a subset).
+            ra_title = ra_games.base_title(path)
+            if ra_title:
+                crcs = base_crcs(resolvers[short], ra_title)
+                if crcs:
+                    title = ra_title
         title = title or base_title(path.split("/"), type_folder, patch_name)
         if not crcs:
             print(f"  unresolved base: {short} {title!r}  ({path})")
@@ -314,6 +378,8 @@ def build(out_dir, only=None, workers=16, cache_path=None):
         for crc in sorted(crcs):
             table.setdefault(crc, []).append(hack)
 
+    ra_games.save()
+    print(f"RA game lookups: {ra_games.asked} asked, {len(ra_games.cache)} known")
     if not index:
         raise SystemExit("No hacks resolved at all: refusing to publish an empty index.")
     os.makedirs(out_dir, exist_ok=True)
