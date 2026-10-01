@@ -107,6 +107,7 @@ class Resolver:
         self.name_of: dict[str, str] = {}  # folded title -> a display name, USA preferred
         self.by_name: dict[str, str] = {}  # exact dat name (lower, no ext) -> crc
         self.disc_id: dict[str, str] = {}  # crc -> 4-character disc ID (GameCube, Wii)
+        self.name_of_crc: dict[str, str] = {}  # crc -> the dump's full dat name
         for block in GAME.findall(text):
             name = NAME.search(block)
             crc = CRC.search(block)
@@ -114,6 +115,7 @@ class Resolver:
                 continue
             full = name.group(1)
             self.by_name[_no_ext(full).lower()] = crc.group(1).lower()
+            self.name_of_crc.setdefault(crc.group(1).lower(), _no_ext(full))
             disc = DISC_ID.search(block)
             if disc:
                 self.disc_id[crc.group(1).lower()] = disc.group(1)

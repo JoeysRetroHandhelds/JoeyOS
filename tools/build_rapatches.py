@@ -134,15 +134,14 @@ def inner_patch(path):
             return None, None
     except Exception:
         return None, None
-    best = None
-    for m in PATCH_IN_NAME.finditer(tail):
-        name = m.group(1).decode("latin-1")
-        # The newest revision when several ship together, so the CRC the site knows wins.
-        if best is None or name > best:
-            best = name
-    if not best:
+    # Every patch in the archive: some ship one per region and variant (Super Mario Sunshine's
+    # QoL Enhancement: USA/Europe/Japan/Korea, 30 and 60 FPS), each becoming its own entry.
+    names = sorted({m.group(1).decode("latin-1") for m in PATCH_IN_NAME.finditer(tail)})
+    if not names:
         return "", ""
-    return best, best.rsplit(".", 1)[1].lower()
+    # The newest revision first when several ship together, so the CRC the site knows wins.
+    best = max(names)
+    return "\n".join(names), best.rsplit(".", 1)[1].lower()
 
 
 def hack_name(patch_name, base, fallback):
@@ -161,6 +160,53 @@ def hack_name(patch_name, base, fallback):
     if stem.lower().startswith(prefix.lower()) and len(stem) > len(prefix):
         stem = stem[len(prefix):].strip()
     return stem or fallback
+
+
+REGION_WORDS = ("USA", "Europe", "Japan", "Korea", "World", "Australia", "Brazil", "China",
+                "France", "Germany", "Spain", "Italy", "Asia", "Taiwan", "Rev ")
+
+
+def _region_tags(name):
+    """The region and revision tags in a name: "(USA)", "(Rev 1)", "(En,Fr,De)" ..."""
+    return {t for t in re.findall(r"\([^)]*\)", name)
+            if any(w in t for w in REGION_WORDS) or re.fullmatch(r"\((?:[A-Z][a-z],?)+\)", t)}
+
+
+def _regions(name):
+    """The regions and revision a name says, word by word: "(USA, Canada)" -> {USA, Canada}."""
+    out = set()
+    for t in re.findall(r"\(([^)]*)\)", name):
+        for part in (p.strip() for p in t.split(",")):
+            if part.startswith("Rev ") or any(part == w.strip() for w in REGION_WORDS):
+                out.add(part)
+    return out
+
+
+def for_region(resolver, crcs, inner):
+    """The CRCs among [crcs] for the region (and revision) the patch [inner] names, so a USA
+    patch is only offered for a USA disc. All of [crcs] when it names none or nothing matches."""
+    want = _regions(inner.replace("\\", "/").rsplit("/", 1)[-1])
+    if not want:
+        return crcs
+    hit = {c for c in crcs if want <= _regions(resolver.name_of_crc.get(c, ""))}
+    # A patch naming no revision is for the first release, when that's among the matches.
+    if hit and not any(w.startswith("Rev ") for w in want):
+        first = {c for c in hit if not any(w.startswith("Rev ") for w in _regions(resolver.name_of_crc.get(c, "")))}
+        hit = first or hit
+    return hit or crcs
+
+
+def variant_name(inner, base, fallback):
+    """A readable name for one of several patches in an archive: "QoL Enhancement (60 FPS)"
+    from "USA/Super Mario Sunshine (USA) (QoL Enhancement) (60 FPS).xdelta"."""
+    stem = os.path.splitext(inner.replace("\\", "/").rsplit("/", 1)[-1])[0]
+    tags = [t for t in re.findall(r"\([^)]*\)", stem) if t not in _region_tags(stem)]
+    rest = re.sub(r"\([^)]*\)", "", stem).strip()
+    if rest.lower().startswith(base.lower()):
+        rest = rest[len(base):].strip(" -")
+    if not rest and tags:
+        rest, tags = tags[0][1:-1], tags[1:]
+    return " ".join([rest] + tags).strip() or hack_name(inner, base, fallback)
 
 
 def base_title(parts, type_folder, patch_name):
@@ -307,7 +353,10 @@ def build(out_dir, only=None, workers=16, cache_path=None):
     cache = {}
     if cache_path and os.path.isfile(cache_path):
         with open(cache_path, encoding="utf-8") as f:
-            cache = {k: tuple(v) for k, v in json.load(f).items()}
+            loaded = json.load(f)
+        # Version 2 lists every patch in an archive; older caches named one, so they're re-read.
+        if loaded.get("_v") == 2:
+            cache = {k: tuple(v) for k, v in loaded.items() if k != "_v"}
 
     # The archives worth reading: those on a console we have a pack and a dat for.
     jobs = []
@@ -342,14 +391,18 @@ def build(out_dir, only=None, workers=16, cache_path=None):
         live = set(shas.values())
         os.makedirs(os.path.dirname(cache_path) or ".", exist_ok=True)
         with open(cache_path, "w", encoding="utf-8") as f:
-            json.dump({k: list(v) for k, v in sorted(cache.items()) if k in live}, f, separators=(",", ":"))
+            out = {k: list(v) for k, v in sorted(cache.items()) if k in live}
+            out["_v"] = 2
+            json.dump(out, f, separators=(",", ":"))
 
     ra_games = RaGames(os.path.join(os.path.dirname(cache_path), "ra-games.json") if cache_path else None)
     index = {}  # shortname -> {crc -> [hack]}
     for short, type_folder, path in jobs:
-        patch_name, fmt = formats.get(path, (None, None))
-        if not patch_name:
+        patch_names, fmt = formats.get(path, (None, None))
+        if not patch_names:
             continue
+        names = patch_names.split("\n")
+        patch_name = max(names)
         crcs, title = set(), None
         for candidate in title_candidates(path.split("/"), type_folder, patch_name):
             crcs = base_crcs(resolvers[short], candidate)
@@ -368,15 +421,28 @@ def build(out_dir, only=None, workers=16, cache_path=None):
             print(f"  unresolved base: {short} {title!r}  ({path})")
             continue
         slug = os.path.splitext(os.path.basename(path))[0]
-        hack = {
-            "name": hack_name(patch_name, title, slug),
-            "type": type_folder,
-            "path": path,
-            "format": fmt,
-        }
         table = index.setdefault(short, {})
-        for crc in sorted(crcs):
-            table.setdefault(crc, []).append(hack)
+        if len(names) == 1:
+            hack = {
+                "name": hack_name(patch_name, title, slug),
+                "type": type_folder,
+                "path": path,
+                "format": fmt,
+            }
+            for crc in sorted(crcs):
+                table.setdefault(crc, []).append(hack)
+            continue
+        # Several patches in one archive: each its own entry, for its own region's dumps.
+        for inner in names:
+            hack = {
+                "name": variant_name(inner, title, slug),
+                "type": type_folder,
+                "path": path,
+                "format": inner.rsplit(".", 1)[1].lower(),
+                "inner": inner,
+            }
+            for crc in sorted(for_region(resolvers[short], crcs, inner)):
+                table.setdefault(crc, []).append(hack)
 
     ra_games.save()
     print(f"RA game lookups: {ra_games.asked} asked, {len(ra_games.cache)} known")
