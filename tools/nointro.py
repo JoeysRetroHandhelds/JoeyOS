@@ -35,6 +35,9 @@ CACHE = os.path.join(os.path.dirname(__file__), ".cache", "nointro")
 GAME = re.compile(r"game\s*\(\s*(.*?)\n\s*\)", re.S)
 NAME = re.compile(r'name\s+"([^"]+)"')
 CRC = re.compile(r"\bcrc\s+([0-9A-Fa-f]{8})\b")
+# Redump's GameCube and Wii serials carry the 4-character disc ID every disc starts with:
+# "DL-DOL-GM8E-USA" (GameCube), "RVL-RMGE-USA" (Wii).
+DISC_ID = re.compile(r'serial\s+"(?:[A-Z]+-)?(?:DOL|RVL)-([A-Z0-9]{4})\b')
 
 # The dat lives under different roots for cartridge vs disc systems; try the fullest first.
 ROOTS = ["metadat/no-intro/", "metadat/redump/", "dat/"]
@@ -103,6 +106,7 @@ class Resolver:
         self.by_title: dict[str, set[str]] = {}
         self.name_of: dict[str, str] = {}  # folded title -> a display name, USA preferred
         self.by_name: dict[str, str] = {}  # exact dat name (lower, no ext) -> crc
+        self.disc_id: dict[str, str] = {}  # crc -> 4-character disc ID (GameCube, Wii)
         for block in GAME.findall(text):
             name = NAME.search(block)
             crc = CRC.search(block)
@@ -110,6 +114,9 @@ class Resolver:
                 continue
             full = name.group(1)
             self.by_name[_no_ext(full).lower()] = crc.group(1).lower()
+            disc = DISC_ID.search(block)
+            if disc:
+                self.disc_id[crc.group(1).lower()] = disc.group(1)
             key = fold(full)
             if not key:
                 continue
