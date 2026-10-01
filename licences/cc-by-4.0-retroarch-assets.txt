@@ -1,0 +1,16 @@
+Dock system icons
+
+The system icons you can choose for dock tiles (App Drawer, Start on an app, Dock icon) come from
+RetroArch's menu themes: Systematic, Automatic, Monochrome, FlatUX, Retrosystem, Daite, FlatUI and
+Pixel.
+
+Source: https://github.com/libretro/retroarch-assets (the xmb folder)
+Authors: the libretro team and the contributors of each theme
+Licence: Creative Commons Attribution 4.0 International (CC BY 4.0)
+         https://creativecommons.org/licenses/by/4.0/
+
+JoeyOS doesn't include the icons. Each one is downloaded from that repository when you choose it,
+unchanged except for being resized to fit the tile, and kept on your device.
+
+Console and company names and designs belong to their owners; the icons depict the systems only so
+you can recognise them.
