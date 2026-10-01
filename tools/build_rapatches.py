@@ -176,6 +176,40 @@ def base_title(parts, type_folder, patch_name):
     return name.split(" - ", 1)[0].strip()
 
 
+def title_candidates(parts, type_folder, patch_name):
+    """Every name the base game might go by, best first.
+
+    The folder title (base_title) is usually right, but some patches sit loose under the type
+    folder, and some folders abbreviate ("SpongeBob SquarePants - BFBB"). The patch file inside
+    the archive often carries the full name, behind a subfolder ("USA/") and with tags after it
+    ("Super Mario Sunshine (USA) [Subset - Hoverless]"), so its cleaned forms are tried too.
+    """
+    out = [base_title(parts, type_folder, patch_name)]
+    inner = patch_name.replace("\\", "/").rsplit("/", 1)[-1].rsplit(".", 1)[0]
+    cut = inner.split(" [", 1)[0].split(" (", 1)[0].strip()
+    for name in (inner.split(" [", 1)[0].strip(), cut, cut.split(" - ", 1)[0].strip()):
+        if name and name not in out:
+            out.append(name)
+    return out
+
+
+# Short names RAPatches folders use for a game, folded -> the catalogue's name (also folded on use).
+ALIASES = {
+    "spongebob squarepants bfbb": "SpongeBob SquarePants - Battle for Bikini Bottom",
+    "spongebob squarepants the movie": "The SpongeBob SquarePants Movie",
+}
+
+# Publisher names the catalogues put in front of a title and patch folders leave off.
+PREFIXES = ("nickelodeon ", "nick ", "disneys ", "disney ", "marvel ", "tom clancys ")
+
+
+def _unprefixed(name):
+    for p in PREFIXES:
+        if name.startswith(p):
+            return name[len(p):]
+    return name
+
+
 def base_crcs(resolver, title):
     """The CRCs for a base title, tolerating the informal names patches use.
 
@@ -187,12 +221,20 @@ def base_crcs(resolver, title):
     key = nointro.fold(title)
     if not key:
         return set()
+    key = nointro.fold(ALIASES.get(key, title))
     exact = resolver.by_title.get(key)
     if exact:
         return exact
     out = set()
     for name, crcs in resolver.by_title.items():
         if name.startswith(key + " "):
+            out |= crcs
+    if out:
+        return out
+    # The catalogue's name may carry a publisher in front ("Nickelodeon SpongeBob ...").
+    for name, crcs in resolver.by_title.items():
+        bare = _unprefixed(name)
+        if bare != name and (bare == key or bare.startswith(key + " ")):
             out |= crcs
     return out
 
@@ -251,8 +293,13 @@ def build(out_dir, only=None, workers=16, cache_path=None):
         patch_name, fmt = formats.get(path, (None, None))
         if not patch_name:
             continue
-        title = base_title(path.split("/"), type_folder, patch_name)
-        crcs = base_crcs(resolvers[short], title)
+        crcs, title = set(), None
+        for candidate in title_candidates(path.split("/"), type_folder, patch_name):
+            crcs = base_crcs(resolvers[short], candidate)
+            if crcs:
+                title = candidate
+                break
+        title = title or base_title(path.split("/"), type_folder, patch_name)
         if not crcs:
             print(f"  unresolved base: {short} {title!r}  ({path})")
             continue
