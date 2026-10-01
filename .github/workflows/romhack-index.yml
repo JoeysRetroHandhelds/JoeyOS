@@ -73,11 +73,15 @@ jobs:
 
       - name: Build the index
         if: steps.source.outputs.build == 'true'
+        env:
+          RA_API_KEY: ${{ secrets.RA_API_KEY }}
         run: |
           mkdir -p out/cache
           if [ "${{ inputs.full }}" != "true" ] && [ -f current/cache/formats.json ]; then
             cp current/cache/formats.json out/cache/formats.json
           fi
+          # RetroAchievements game lookups are kept even on a full rebuild: an ID's game never changes.
+          if [ -f current/cache/ra-games.json ]; then cp current/cache/ra-games.json out/cache/ra-games.json; fi
           python3 tools/build_rapatches.py --out out/ra-patches --formats-cache out/cache/formats.json
           echo "${{ steps.source.outputs.head }}" > out/source-commit
 
