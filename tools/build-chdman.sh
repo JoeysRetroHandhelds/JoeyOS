@@ -8,7 +8,7 @@
 # against a newer MAME, then drop the result back into jniLibs.
 #
 # Provenance of the shipped binary:
-#   MAME commit : 5f4a88b1e1811e5e7794357389f68cc01e19ebd3 (2026-08-16)
+#   MAME commit : cfc4760a3be9c5a79846b19b6a573cb38459fa7e (2026-10-03)
 #   NDK         : 27.3.13750724 (clang 18, target aarch64-linux-android21)
 #   Result      : ELF64 AArch64 PIE, deps libc/libm/libdl only (libc++ static),
 #                 subcommands include createcd and createdvd.
@@ -36,7 +36,7 @@ else
 fi
 
 INC="-Isrc/lib/util -Isrc/lib -Isrc/osd -I3rdparty -I3rdparty/zlib -I3rdparty/lzma/C -I3rdparty/utf8proc -I3rdparty/zstd/lib -I3rdparty/flac/include -I3rdparty/flac/src/libFLAC/include"
-DEF="-DLSB_FIRST -DCRLF=2 -DFLAC__NO_DLL -DNDEBUG -DZSTD_DISABLE_ASM"
+DEF="-DLSB_FIRST -DCRLF=2 -DFLAC__NO_DLL -DNDEBUG -DZSTD_DISABLE_ASM -DZLIB_CONST"
 FLACDEF="-DFLAC__NO_DLL -DFLAC__HAS_OGG=0 -DFLAC__NO_ASM -DHAVE_STDINT_H -DHAVE_INTTYPES_H -DHAVE_STDBOOL_H -DHAVE_LROUND -DPACKAGE_VERSION=\"1.4.3\" -DFLAC__ALIGN_MALLOC_DATA"
 
 # Builds one ABI. $1 target triple, $2 extra cflags, $3 libFLAC intrinsics to drop, $4 out.
