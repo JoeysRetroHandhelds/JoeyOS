@@ -162,6 +162,9 @@ def hack_name(patch_name, base, fallback):
     return stem or fallback
 
 
+# Consoles matched by file name first in the app (see the .names.json files).
+NAMED = {"psx", "ps2", "psp", "nds", "saturn", "segacd"}
+
 REGION_WORDS = ("USA", "Europe", "Japan", "Korea", "World", "Australia", "Brazil", "China",
                 "France", "Germany", "Spain", "Italy", "Asia", "Taiwan", "Rev ")
 
@@ -464,6 +467,19 @@ def build(out_dir, only=None, workers=16, cache_path=None):
             disc = resolver.disc_id.get(crc) if resolver else None
             if disc:
                 ids.setdefault(disc, []).append(crc)
+        # Disc and large-ROM consoles: the catalogue name of each base dump, so the app can find a
+        # likely match from a file's name (libraries are named like the catalogue) without reading
+        # a whole CHD or ISO. `<short>.names.json` is { lowercase name: [crc, ...] }.
+        if short in NAMED and resolver:
+            names = {}
+            for crc in table:
+                name = resolver.name_of_crc.get(crc)
+                if name:
+                    names.setdefault(name.lower(), []).append(crc)
+            with open(os.path.join(out_dir, f"{short}.names.json"), "w", encoding="utf-8") as f:
+                json.dump({k: sorted(v) for k, v in sorted(names.items())}, f, indent=1)
+                f.write("\n")
+            print(f"wrote {out_dir}/{short}.names.json: {len(names)} names")
         if ids:
             with open(os.path.join(out_dir, f"{short}.ids.json"), "w", encoding="utf-8") as f:
                 json.dump({k: sorted(v) for k, v in sorted(ids.items())}, f, indent=2)
