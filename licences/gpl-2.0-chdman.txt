@@ -16,7 +16,7 @@ The chdman binary shipped with this build is compiled from the official MAME
 source tree, unmodified, carving out only chdman and its dependencies:
 
     Source : https://github.com/mamedev/mame
-    Commit : 5f4a88b1e1811e5e7794357389f68cc01e19ebd3
+    Commit : cfc4760a3be9c5a79846b19b6a573cb38459fa7e
 
 The exact build recipe used is tools/build-chdman.sh in the JoeyOS source
 (https://github.com/JoeysRetroHandhelds/JoeyOS), which is the complete corresponding
