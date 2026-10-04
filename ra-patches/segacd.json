@@ -1,0 +1,98 @@
+{
+  "0060ac74": [
+    {
+      "name": "SonicCD_PAL_to_NTSC_v1_BIN",
+      "type": "Fix",
+      "path": "Sega CD/Fix/10062-SonicCD-60Hz.zip",
+      "format": "xdelta",
+      "inner": "SonicCD_PAL_to_NTSC_v1_BIN.xdelta"
+    },
+    {
+      "name": "SonicCD_PAL_to_NTSC_v1_ISO",
+      "type": "Fix",
+      "path": "Sega CD/Fix/10062-SonicCD-60Hz.zip",
+      "format": "xdelta",
+      "inner": "SonicCD_PAL_to_NTSC_v1_ISO.xdelta"
+    }
+  ],
+  "0b16e68c": [
+    {
+      "name": "SonicCD_PAL_to_NTSC_v1_BIN",
+      "type": "Fix",
+      "path": "Sega CD/Fix/10062-SonicCD-60Hz.zip",
+      "format": "xdelta",
+      "inner": "SonicCD_PAL_to_NTSC_v1_BIN.xdelta"
+    },
+    {
+      "name": "SonicCD_PAL_to_NTSC_v1_ISO",
+      "type": "Fix",
+      "path": "Sega CD/Fix/10062-SonicCD-60Hz.zip",
+      "format": "xdelta",
+      "inner": "SonicCD_PAL_to_NTSC_v1_ISO.xdelta"
+    }
+  ],
+  "1ea52615": [
+    {
+      "name": "SonicCD_PAL_to_NTSC_v1_BIN",
+      "type": "Fix",
+      "path": "Sega CD/Fix/10062-SonicCD-60Hz.zip",
+      "format": "xdelta",
+      "inner": "SonicCD_PAL_to_NTSC_v1_BIN.xdelta"
+    },
+    {
+      "name": "SonicCD_PAL_to_NTSC_v1_ISO",
+      "type": "Fix",
+      "path": "Sega CD/Fix/10062-SonicCD-60Hz.zip",
+      "format": "xdelta",
+      "inner": "SonicCD_PAL_to_NTSC_v1_ISO.xdelta"
+    }
+  ],
+  "a6184e05": [
+    {
+      "name": "SonicCD_PAL_to_NTSC_v1_BIN",
+      "type": "Fix",
+      "path": "Sega CD/Fix/10062-SonicCD-60Hz.zip",
+      "format": "xdelta",
+      "inner": "SonicCD_PAL_to_NTSC_v1_BIN.xdelta"
+    },
+    {
+      "name": "SonicCD_PAL_to_NTSC_v1_ISO",
+      "type": "Fix",
+      "path": "Sega CD/Fix/10062-SonicCD-60Hz.zip",
+      "format": "xdelta",
+      "inner": "SonicCD_PAL_to_NTSC_v1_ISO.xdelta"
+    }
+  ],
+  "f17b5750": [
+    {
+      "name": "patch/Popful Mail (USA) - Un-Worked Design (v3.0) (Supper)",
+      "type": "Improvement",
+      "path": "Sega CD/Improvement/10084-PopfulMail-UnworkedDesign.zip",
+      "format": "xdelta"
+    }
+  ],
+  "13ad0387": [
+    {
+      "name": "Snatcher (USA) (Es) (v0.99) (3lm4dn0) (Track 01)",
+      "type": "Translation",
+      "path": "Sega CD/Translation/Spanish/10067-Snatcher-Spanish.zip",
+      "format": "xdelta"
+    }
+  ],
+  "9f041b59": [
+    {
+      "name": "Snatcher (USA) (Es) (v0.99) (3lm4dn0) (Track 01)",
+      "type": "Translation",
+      "path": "Sega CD/Translation/Spanish/10067-Snatcher-Spanish.zip",
+      "format": "xdelta"
+    }
+  ],
+  "b6f1932e": [
+    {
+      "name": "Snatcher (USA) (Es) (v0.99) (3lm4dn0) (Track 01)",
+      "type": "Translation",
+      "path": "Sega CD/Translation/Spanish/10067-Snatcher-Spanish.zip",
+      "format": "xdelta"
+    }
+  ]
+}

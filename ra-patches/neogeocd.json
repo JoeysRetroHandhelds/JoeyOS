@@ -1,0 +1,18 @@
+{
+  "61ee4822": [
+    {
+      "name": "Multi",
+      "type": "Subset",
+      "path": "Neo Geo CD/Subset/26990-MutationNation-Subset-Multi.zip",
+      "format": "bps"
+    }
+  ],
+  "6d0faaba": [
+    {
+      "name": "Bushidou Retsuden (Japan) (Track 01) (En) (v1.1) (Deuce)",
+      "type": "Translation",
+      "path": "Neo Geo CD/Translation/English/9101-ShinsetuSamuraiSpirits-English.zip",
+      "format": "xdelta"
+    }
+  ]
+}

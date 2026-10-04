@@ -1,0 +1,2726 @@
+{
+  "047624af": [
+    {
+      "name": "Evolution (USA) (Skip Gai and Syo Hours Requirement) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/24052-KoFEvolution-SkipGaiandSyoHoursRequirement.zip",
+      "format": "xdelta"
+    }
+  ],
+  "11524ba1": [
+    {
+      "name": "Evolution (USA) (Skip Gai and Syo Hours Requirement) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/24052-KoFEvolution-SkipGaiandSyoHoursRequirement.zip",
+      "format": "xdelta"
+    }
+  ],
+  "47ea4e9e": [
+    {
+      "name": "Evolution (USA) (Skip Gai and Syo Hours Requirement) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/24052-KoFEvolution-SkipGaiandSyoHoursRequirement.zip",
+      "format": "xdelta"
+    }
+  ],
+  "57d0f19d": [
+    {
+      "name": "Evolution (USA) (Skip Gai and Syo Hours Requirement) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/24052-KoFEvolution-SkipGaiandSyoHoursRequirement.zip",
+      "format": "xdelta"
+    }
+  ],
+  "9e9dec31": [
+    {
+      "name": "Evolution (USA) (Skip Gai and Syo Hours Requirement) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/24052-KoFEvolution-SkipGaiandSyoHoursRequirement.zip",
+      "format": "xdelta"
+    }
+  ],
+  "db40300f": [
+    {
+      "name": "Evolution (USA) (Skip Gai and Syo Hours Requirement) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/24052-KoFEvolution-SkipGaiandSyoHoursRequirement.zip",
+      "format": "xdelta"
+    }
+  ],
+  "e0d29fda": [
+    {
+      "name": "Evolution (USA) (Skip Gai and Syo Hours Requirement) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/24052-KoFEvolution-SkipGaiandSyoHoursRequirement.zip",
+      "format": "xdelta"
+    }
+  ],
+  "fe7077a9": [
+    {
+      "name": "Evolution (USA) (Skip Gai and Syo Hours Requirement) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/24052-KoFEvolution-SkipGaiandSyoHoursRequirement.zip",
+      "format": "xdelta"
+    }
+  ],
+  "50856cfb": [
+    {
+      "name": "Sonic Adventure 2 (Deadzone Fix)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3417-SonicAdventure2-DeadzoneFix.zip",
+      "format": "xdelta",
+      "inner": "Sonic Adventure 2 (Europe) (En,Ja,Fr,De,Es) (Deadzone Fix).xdelta"
+    },
+    {
+      "name": "Sonic Adventure 2 [Subset - Ring Attack & Animal Chase]",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/24940-SonicAdv2-Subset-RingAttackAnimalChase.zip",
+      "format": "xdelta"
+    }
+  ],
+  "7093d97b": [
+    {
+      "name": "Sonic Adventure 2 (Deadzone Fix)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3417-SonicAdventure2-DeadzoneFix.zip",
+      "format": "xdelta",
+      "inner": "Sonic Adventure 2 (Europe) (En,Ja,Fr,De,Es) (Deadzone Fix).xdelta"
+    },
+    {
+      "name": "Sonic Adventure 2 [Subset - Ring Attack & Animal Chase]",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/24940-SonicAdv2-Subset-RingAttackAnimalChase.zip",
+      "format": "xdelta"
+    }
+  ],
+  "bf6cc48f": [
+    {
+      "name": "Sonic Adventure 2 (Deadzone Fix)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3417-SonicAdventure2-DeadzoneFix.zip",
+      "format": "xdelta",
+      "inner": "Sonic Adventure 2 (USA) (En,Ja,Fr,De,Es) (Deadzone Fix).xdelta"
+    },
+    {
+      "name": "Sonic Adventure 2 [Subset - Ring Attack & Animal Chase]",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/24940-SonicAdv2-Subset-RingAttackAnimalChase.zip",
+      "format": "xdelta"
+    }
+  ],
+  "01ca4c1e": [
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    }
+  ],
+  "0843c0d9": [
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    }
+  ],
+  "38ec4989": [
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    }
+  ],
+  "397022a7": [
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    }
+  ],
+  "53837023": [
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    }
+  ],
+  "6051602b": [
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    }
+  ],
+  "70076b06": [
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    }
+  ],
+  "77ea4530": [
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    }
+  ],
+  "9dab542f": [
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Resident Evil 2    [Subset - Bonus] (Disc 1) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/25590-RE2-Subset-Bonus.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil 2 (USA) (Disc 1) (Track 3) [Subset - Bonus].xdelta"
+    },
+    {
+      "name": "Resident Evil 2    [Subset - Bonus] (Disc 2) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/25590-RE2-Subset-Bonus.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil 2 (USA) (Disc 2) (Track 3) [Subset - Bonus].xdelta"
+    }
+  ],
+  "9f09aaf5": [
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    }
+  ],
+  "a794f70e": [
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Nemesis [Subset - Nemesis Hunter]",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/24471-RE3-Subset-NemesisHunter.zip",
+      "format": "xdelta"
+    },
+    {
+      "name": "Nemesis [Subset - Bonus] (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/24629-RE3-Subset-Bonus.zip",
+      "format": "xdelta"
+    },
+    {
+      "name": "Nemesis [Subset - Speedrun Showcase] (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27233-RE3-Subset-SpeedrunShowcase.zip",
+      "format": "xdelta"
+    }
+  ],
+  "bbbc40b9": [
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Nemesis [Subset - Nemesis Hunter]",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/24471-RE3-Subset-NemesisHunter.zip",
+      "format": "xdelta"
+    },
+    {
+      "name": "Nemesis [Subset - Bonus] (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/24629-RE3-Subset-Bonus.zip",
+      "format": "xdelta"
+    },
+    {
+      "name": "Nemesis [Subset - Speedrun Showcase] (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27233-RE3-Subset-SpeedrunShowcase.zip",
+      "format": "xdelta"
+    }
+  ],
+  "c2782ad2": [
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    }
+  ],
+  "e623bbef": [
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Nemesis [Subset - Nemesis Hunter]",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/24471-RE3-Subset-NemesisHunter.zip",
+      "format": "xdelta"
+    },
+    {
+      "name": "Nemesis [Subset - Bonus] (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/24629-RE3-Subset-Bonus.zip",
+      "format": "xdelta"
+    },
+    {
+      "name": "Nemesis [Subset - Speedrun Showcase] (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27233-RE3-Subset-SpeedrunShowcase.zip",
+      "format": "xdelta"
+    }
+  ],
+  "f967056d": [
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Nemesis [Subset - Nemesis Hunter]",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/24471-RE3-Subset-NemesisHunter.zip",
+      "format": "xdelta"
+    },
+    {
+      "name": "Nemesis [Subset - Bonus] (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/24629-RE3-Subset-Bonus.zip",
+      "format": "xdelta"
+    },
+    {
+      "name": "Nemesis [Subset - Speedrun Showcase] (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27233-RE3-Subset-SpeedrunShowcase.zip",
+      "format": "xdelta"
+    }
+  ],
+  "f9cf147b": [
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    }
+  ],
+  "fa0d176e": [
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    }
+  ],
+  "fb319e10": [
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Biohazard - Code - Veronica Kanzenban (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Biohazard - Code - Veronica Kanzenban (Japan) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (En) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Clone GDEMU Fix) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person + Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person + Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (1st Person) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (1st Person) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Es) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 1) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Code - Veronica X (Final) (Widescreen) (Disc 2) (Track 3)",
+      "type": "Improvement",
+      "path": "Dreamcast/Improvement/3866-ResidentEvilCODEVeronica X-Improvements.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil - Code - Veronica X (Japan) (Fr) (Final) (Widescreen) (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Resident Evil 2    [Subset - Bonus] (Disc 1) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/25590-RE2-Subset-Bonus.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil 2 (USA) (Disc 1) (Track 3) [Subset - Bonus].xdelta"
+    },
+    {
+      "name": "Resident Evil 2    [Subset - Bonus] (Disc 2) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/25590-RE2-Subset-Bonus.zip",
+      "format": "xdelta",
+      "inner": "Resident Evil 2 (USA) (Disc 2) (Track 3) [Subset - Bonus].xdelta"
+    }
+  ],
+  "00c55860": [
+    {
+      "name": "Sonic Adventure [Subset - Chao Garden]",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/19185-SonicAdv-Subset-ChaoGarden.zip",
+      "format": "xdelta"
+    },
+    {
+      "name": "[Subset - Official DLC] (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/22863-SonicAdv-SubsetOfficialDLC.zip",
+      "format": "xdelta",
+      "inner": "Sonic Adventure (USA) (Rev A) [Subset - Official DLC] (Track 3).xdelta"
+    },
+    {
+      "name": "track03",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/22863-SonicAdv-SubsetOfficialDLC.zip",
+      "format": "xdelta",
+      "inner": "gross TOSEC (JP)/track03.xdelta"
+    }
+  ],
+  "21483b0c": [
+    {
+      "name": "Sonic Adventure [Subset - Chao Garden]",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/19185-SonicAdv-Subset-ChaoGarden.zip",
+      "format": "xdelta"
+    },
+    {
+      "name": "track03",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/22863-SonicAdv-SubsetOfficialDLC.zip",
+      "format": "xdelta",
+      "inner": "gross TOSEC (JP)/track03.xdelta"
+    }
+  ],
+  "4e7e341a": [
+    {
+      "name": "Sonic Adventure [Subset - Chao Garden]",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/19185-SonicAdv-Subset-ChaoGarden.zip",
+      "format": "xdelta"
+    },
+    {
+      "name": "[Subset - Official DLC] (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/22863-SonicAdv-SubsetOfficialDLC.zip",
+      "format": "xdelta",
+      "inner": "Sonic Adventure (Japan) [Subset - Official DLC] (Track 3).xdelta"
+    },
+    {
+      "name": "track03",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/22863-SonicAdv-SubsetOfficialDLC.zip",
+      "format": "xdelta",
+      "inner": "gross TOSEC (JP)/track03.xdelta"
+    }
+  ],
+  "cb447185": [
+    {
+      "name": "Sonic Adventure [Subset - Chao Garden]",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/19185-SonicAdv-Subset-ChaoGarden.zip",
+      "format": "xdelta"
+    },
+    {
+      "name": "[Subset - Official DLC] (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/22863-SonicAdv-SubsetOfficialDLC.zip",
+      "format": "xdelta",
+      "inner": "Sonic Adventure (Europe) [Subset - Official DLC] (Track 3).xdelta"
+    },
+    {
+      "name": "track03",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/22863-SonicAdv-SubsetOfficialDLC.zip",
+      "format": "xdelta",
+      "inner": "gross TOSEC (JP)/track03.xdelta"
+    }
+  ],
+  "04fbd0c1": [
+    {
+      "name": "Street Fighter III - 3rd Strike (Track 1)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/21900-SF3Subset-MSF.zip",
+      "format": "xdelta",
+      "inner": "21900-SF3Subset-MSF/Bin & Cue/Street Fighter III - 3rd Strike (USA) (Track 1).xdelta"
+    },
+    {
+      "name": "Street Fighter III - 3rd Strike (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/21900-SF3Subset-MSF.zip",
+      "format": "xdelta",
+      "inner": "21900-SF3Subset-MSF/Bin & Cue/Street Fighter III - 3rd Strike (USA) (Track 3).xdelta"
+    },
+    {
+      "name": "track01",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/21900-SF3Subset-MSF.zip",
+      "format": "xdelta",
+      "inner": "21900-SF3Subset-MSF/GDI/track01.xdelta"
+    },
+    {
+      "name": "track03",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/21900-SF3Subset-MSF.zip",
+      "format": "xdelta",
+      "inner": "21900-SF3Subset-MSF/GDI/track03.xdelta"
+    }
+  ],
+  "5c6e48f8": [
+    {
+      "name": "track01",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/21900-SF3Subset-MSF.zip",
+      "format": "xdelta",
+      "inner": "21900-SF3Subset-MSF/GDI/track01.xdelta"
+    },
+    {
+      "name": "track03",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/21900-SF3Subset-MSF.zip",
+      "format": "xdelta",
+      "inner": "21900-SF3Subset-MSF/GDI/track03.xdelta"
+    }
+  ],
+  "d70ba56f": [
+    {
+      "name": "Frame Gride [Subset - S Rank]",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/22034-FrameGride-Subset-S-Rank.zip",
+      "format": "ups"
+    }
+  ],
+  "219e0c9b": [
+    {
+      "name": "Power Stone 2 (Track 1)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/22698-PowerStone2-Subset.zip",
+      "format": "xdelta",
+      "inner": "Power Stone 2 (Europe) (Track 1).xdelta"
+    },
+    {
+      "name": "Power Stone 2 (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/22698-PowerStone2-Subset.zip",
+      "format": "xdelta",
+      "inner": "Power Stone 2 (Europe) (Track 3).xdelta"
+    }
+  ],
+  "126001f8": [
+    {
+      "name": "Sonic Adventure 2 [Subset - Ring Attack & Animal Chase]",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/24940-SonicAdv2-Subset-RingAttackAnimalChase.zip",
+      "format": "xdelta"
+    }
+  ],
+  "77747669": [
+    {
+      "name": "Sonic Adventure 2 [Subset - Ring Attack & Animal Chase]",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/24940-SonicAdv2-Subset-RingAttackAnimalChase.zip",
+      "format": "xdelta"
+    }
+  ],
+  "9810778b": [
+    {
+      "name": "Puyo Puyo Da! [Subset - Full Chain]",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/26982-PuyoPuyoDaSubsetFullChain.zip",
+      "format": "xdelta"
+    }
+  ],
+  "04ae123f": [
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 1) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 2) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 3) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 3) (Track 3).xdelta"
+    }
+  ],
+  "7bea9e67": [
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 1) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 2) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 3) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 3) (Track 3).xdelta"
+    }
+  ],
+  "82c5d172": [
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 1) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 2) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 3) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 3) (Track 3).xdelta"
+    }
+  ],
+  "a24ad9da": [
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 1) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 2) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 3) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 3) (Track 3).xdelta"
+    }
+  ],
+  "a90c4255": [
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 1) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 2) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 3) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 3) (Track 3).xdelta"
+    }
+  ],
+  "bd53e535": [
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 1) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 2) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 3) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 3) (Track 3).xdelta"
+    }
+  ],
+  "c197e804": [
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 1) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 2) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 3) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 3) (Track 3).xdelta"
+    }
+  ],
+  "e2f09ccf": [
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 1) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 2) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "[Subset - Notebook Challenge] (Disc 3) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/27585-Shenmue-Subset-NotebookChallenge.zip",
+      "format": "xdelta",
+      "inner": "Shenmue [Subset - Notebook Challenge] (Disc 3) (Track 3).xdelta"
+    }
+  ],
+  "2cc0842a": [
+    {
+      "name": "Skies of Arcadia   [Subset - Rare Drops] (Disc 1) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/31606-SkiesofArcadia-Subset-RareDrops.zip",
+      "format": "xdelta",
+      "inner": "Redump Base/Skies of Arcadia (Europe) (En,Fr,De,Es) [Subset - Rare Drops] (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Skies of Arcadia   [Subset - Rare Drops] (Disc 2) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/31606-SkiesofArcadia-Subset-RareDrops.zip",
+      "format": "xdelta",
+      "inner": "Redump Base/Skies of Arcadia (Europe) (En,Fr,De,Es) [Subset - Rare Drops] (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Skies of Arcadia    [Subset - Rare Drops] (Uncensored) (Disc 1) (Track 03)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/31606-SkiesofArcadia-Subset-RareDrops.zip",
+      "format": "xdelta",
+      "inner": "Uncensored Base/Skies of Arcadia (Europe) (En,Fr,De,Es) (Uncensored) [Subset - Rare Drops] (Disc 1) (Track 03).xdelta"
+    },
+    {
+      "name": "Skies of Arcadia    [Subset - Rare Drops] (Uncensored) (Disc 2) (Track 03)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/31606-SkiesofArcadia-Subset-RareDrops.zip",
+      "format": "xdelta",
+      "inner": "Uncensored Base/Skies of Arcadia (Europe) (En,Fr,De,Es) (Uncensored) [Subset - Rare Drops] (Disc 2) (Track 03).xdelta"
+    },
+    {
+      "name": "Skies of Arcadia (v6.0) (Vector) (Disc 1) (Track 3)",
+      "type": "Translation",
+      "path": "Dreamcast/Translation/Russian/3443-SkiesofArcadia-Russian.zip",
+      "format": "xdelta",
+      "inner": "Skies of Arcadia (Europe) (Ru) (v6.0) (Vector) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Skies of Arcadia (v6.0) (Vector) (Disc 2) (Track 3)",
+      "type": "Translation",
+      "path": "Dreamcast/Translation/Russian/3443-SkiesofArcadia-Russian.zip",
+      "format": "xdelta",
+      "inner": "Skies of Arcadia (Europe) (Ru) (v6.0) (Vector) (Disc 2) (Track 3).xdelta"
+    }
+  ],
+  "495f4a18": [
+    {
+      "name": "Skies of Arcadia   [Subset - Rare Drops] (Disc 1) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/31606-SkiesofArcadia-Subset-RareDrops.zip",
+      "format": "xdelta",
+      "inner": "Redump Base/Skies of Arcadia (Europe) (En,Fr,De,Es) [Subset - Rare Drops] (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Skies of Arcadia   [Subset - Rare Drops] (Disc 2) (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/31606-SkiesofArcadia-Subset-RareDrops.zip",
+      "format": "xdelta",
+      "inner": "Redump Base/Skies of Arcadia (Europe) (En,Fr,De,Es) [Subset - Rare Drops] (Disc 2) (Track 3).xdelta"
+    },
+    {
+      "name": "Skies of Arcadia    [Subset - Rare Drops] (Uncensored) (Disc 1) (Track 03)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/31606-SkiesofArcadia-Subset-RareDrops.zip",
+      "format": "xdelta",
+      "inner": "Uncensored Base/Skies of Arcadia (Europe) (En,Fr,De,Es) (Uncensored) [Subset - Rare Drops] (Disc 1) (Track 03).xdelta"
+    },
+    {
+      "name": "Skies of Arcadia    [Subset - Rare Drops] (Uncensored) (Disc 2) (Track 03)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/31606-SkiesofArcadia-Subset-RareDrops.zip",
+      "format": "xdelta",
+      "inner": "Uncensored Base/Skies of Arcadia (Europe) (En,Fr,De,Es) (Uncensored) [Subset - Rare Drops] (Disc 2) (Track 03).xdelta"
+    },
+    {
+      "name": "Skies of Arcadia (v6.0) (Vector) (Disc 1) (Track 3)",
+      "type": "Translation",
+      "path": "Dreamcast/Translation/Russian/3443-SkiesofArcadia-Russian.zip",
+      "format": "xdelta",
+      "inner": "Skies of Arcadia (Europe) (Ru) (v6.0) (Vector) (Disc 1) (Track 3).xdelta"
+    },
+    {
+      "name": "Skies of Arcadia (v6.0) (Vector) (Disc 2) (Track 3)",
+      "type": "Translation",
+      "path": "Dreamcast/Translation/Russian/3443-SkiesofArcadia-Russian.zip",
+      "format": "xdelta",
+      "inner": "Skies of Arcadia (Europe) (Ru) (v6.0) (Vector) (Disc 2) (Track 3).xdelta"
+    }
+  ],
+  "b250cc0b": [
+    {
+      "name": "Bomberman Online (USA) [Subset - Multi] (Track 3)",
+      "type": "Subset",
+      "path": "Dreamcast/Subset/34563-BombermanOnline-Subset-Multi.zip",
+      "format": "xdelta"
+    }
+  ],
+  "39a72365": [
+    {
+      "name": "Millionaire Fighting 2001 (Japan) (En) (v1.0) (Derek Pascarella) (Track 3)",
+      "type": "Translation",
+      "path": "Dreamcast/Translation/English/347-CapcomvsSNK2MillionaireFighting2001-English.zip",
+      "format": "xdelta"
+    }
+  ]
+}
