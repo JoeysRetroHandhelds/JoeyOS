@@ -100,11 +100,14 @@ Tabs:
 - **Guide** (while a game runs): see below
 - **Settings**: which tab shows while you're browsing JoeyOS (Apps or Achievements), whether a game opens on Now playing or the Guide, and hiding achievement spoilers, and dimming the screen after a set idle time while a game is running (off by choice)
 
+**Keyboard over the second screen**: if your handheld shows the keyboard on the bottom screen, typing in another app (a browser, say) would hide it under the second screen. Switch on **JoeyOS keyboard** in Android's Accessibility settings (JoeyOS offers to take you there on first launch, and it's in Settings › Appearance › Second screen) and the second screen steps aside whenever a keyboard opens. It only notices the keyboard opening and closing.
+
 The Achievements and Now playing tabs only appear when you're logged in to RetroAchievements. "Completed" is for games finished in casual (softcore) mode, "Mastered" for hardcore.
 
 ### Guides
 Nothing downloads until you choose it. Guides are saved in **Internal storage › JoeyOS › guides**, and JoeyOS remembers which guide you picked for each game and where you were in it.
 - **GameFAQs archive**: download the text walkthrough for the game and read it offline, with text size, wrap, reflow, light/dark/sepia, Find and Contents
+- **Which game?** Games started from Recently Played are known straight away. For a game started inside ARMSX3, Eden, Vita3K, XenDroid or GameHub, the Guide finds it from the emulator's own records; with RetroAchievements it uses what RetroAchievements reports; otherwise type the name or pick it from the emulator's recent games
 - **Search the web**: a built-in browser with ad blocking (DuckDuckGo). Save any page to read offline later
 - **YouTube**: opens a search in your YouTube app (including ReVanced)
 - The tabs always stay at the top. In Guide, the arrow at the end of the tab row hides or shows the guide's own bar (Options, Find, Contents, Change guide) for more room
