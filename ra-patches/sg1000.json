@@ -1,0 +1,66 @@
+{
+  "09a82af7": [
+    {
+      "name": "[Subset - Overtime Overload]",
+      "type": "Subset",
+      "path": "SG-1000/Subset/25998-RockNBoltSubsetOvertime.zip",
+      "format": "bps",
+      "inner": "Rock n' Bolt [Subset - Overtime Overload].bps"
+    },
+    {
+      "name": "[Subset - Overtime Overload]",
+      "type": "Subset",
+      "path": "SG-1000/Subset/25998-RockNBoltSubsetOvertime.zip",
+      "format": "ips",
+      "inner": "Rock n' Bolt [Subset - Overtime Overload].ips"
+    }
+  ],
+  "0ffdd03d": [
+    {
+      "name": "[Subset - Overtime Overload]",
+      "type": "Subset",
+      "path": "SG-1000/Subset/25998-RockNBoltSubsetOvertime.zip",
+      "format": "bps",
+      "inner": "Rock n' Bolt [Subset - Overtime Overload].bps"
+    },
+    {
+      "name": "[Subset - Overtime Overload]",
+      "type": "Subset",
+      "path": "SG-1000/Subset/25998-RockNBoltSubsetOvertime.zip",
+      "format": "ips",
+      "inner": "Rock n' Bolt [Subset - Overtime Overload].ips"
+    }
+  ],
+  "4eacb981": [
+    {
+      "name": "[Subset - Overtime Overload]",
+      "type": "Subset",
+      "path": "SG-1000/Subset/25998-RockNBoltSubsetOvertime.zip",
+      "format": "bps",
+      "inner": "Rock n' Bolt [Subset - Overtime Overload].bps"
+    },
+    {
+      "name": "[Subset - Overtime Overload]",
+      "type": "Subset",
+      "path": "SG-1000/Subset/25998-RockNBoltSubsetOvertime.zip",
+      "format": "ips",
+      "inner": "Rock n' Bolt [Subset - Overtime Overload].ips"
+    }
+  ],
+  "26ecd094": [
+    {
+      "name": "Black Onyx, The (En - Enhanced) (v1.0) (SSTranslations)",
+      "type": "Translation",
+      "path": "SG-1000/Translation/English/17798-BlackOnyx-English.zip",
+      "format": "bps",
+      "inner": "Black Onyx, The (Japan) (En - Enhanced) (v1.0) (SSTranslations).bps"
+    },
+    {
+      "name": "Black Onyx, The (v1.0) (SSTranslations)",
+      "type": "Translation",
+      "path": "SG-1000/Translation/English/17798-BlackOnyx-English.zip",
+      "format": "bps",
+      "inner": "Black Onyx, The (Japan) (En) (v1.0) (SSTranslations).bps"
+    }
+  ]
+}
