@@ -95,12 +95,14 @@ It's touch first, and it takes the controller only when your device sends it the
 
 Tabs:
 - **Apps**: every app on your device, to open on that screen
-- **Achievements** (when logged in to RetroAchievements): your points, what you're playing, recent awards, "Almost there", awards by year, and a search of every game on RetroAchievements. Tap any game for its achievements
-- **Now playing** (while a game runs): the achievements of the game RetroAchievements sees you playing, with its live status, session and play time, filters and sorts (the "To beat" filter shows the story steps, then the win condition in gold), an "Unlocked!" banner, and tips from each achievement's comments
+- **Achievements** (when logged in to RetroAchievements): your points, what you're playing, recent awards, "Almost there", awards by year, your Want to Play list, and a search of every game on RetroAchievements. Tap any game for its achievements, or a total (beaten this year, beaten all-time, completed) for its list
+- **Now playing** (while a game runs): the achievements of the game RetroAchievements sees you playing, with its live status, session and play time, filters and sorts (the "To beat" filter shows the story steps, then the win condition in gold), an "Unlocked!" banner, and tips from each achievement's comments. Under the live status are your last few status lines. **Leaderboards** shows your rank and score beside the top score. **Hunt this** on an achievement pins it to the top of the list with a tip (up to 3), and it unpins once you earn it
 - **Guide** (while a game runs): see below
-- **Settings**: which tab shows while you're browsing JoeyOS (Apps or Achievements), whether a game opens on Now playing or the Guide, and hiding achievement spoilers, and dimming the screen after a set idle time while a game is running (off by choice)
+- **Settings**: which tab shows while you're browsing JoeyOS (Apps or Achievements), whether a game opens on Now playing or the Guide, and hiding achievement spoilers, dimming the screen after a set idle time while a game is running (off by choice), and how long the session summary stays up after a game (Off, 10, 20 or 30 seconds)
 
 **Keyboard over the second screen**: if your handheld shows the keyboard on the bottom screen, typing in another app (a browser, say) would hide it under the second screen. Switch on **JoeyOS keyboard** in Android's Accessibility settings (JoeyOS offers to take you there on first launch, and it's in Settings › Appearance › Second screen) and the second screen steps aside whenever a keyboard opens. It only notices the keyboard opening and closing.
+
+**Session summary**: when you finish a game (after at least a minute), a card shows your time played, achievements and points earned, leaderboard scores, and whether you beat or mastered it. Tap it to close it sooner.
 
 The Achievements and Now playing tabs only appear when you're logged in to RetroAchievements. "Completed" is for games finished in casual (softcore) mode, "Mastered" for hardcore.
 
