@@ -26,6 +26,9 @@ This was created for my personal use, and while it may work for a lot of people'
 - For M64Plus FZ to work, you must have a folder called M64Plus exactly on your internal storage or SD card 
 - For ARMSX3 to work, you must have a folder called ARMSX3 exactly on your internal storage or SD card (with its recent_games.json inside), or your device must be able to access Android/data storage
 - For Flycast to work, you must have a folder called Flycast on your internal storage or SD card (or whichever home folder you picked in Flycast), or your device must be able to access Android/data storage
+- For DroidDeck to list its installed games, in DroidDeck go to Games > Frontend files > Sync all game files to folder and pick a folder (ROMs/steam is easiest). JoeyOS finds the folder on its own
+- For GameNative to list its installed games, in GameNative go to Settings > Interface > Frontend Sync and pick a folder for each store you use (Steam, Epic, GOG, Amazon, custom games). JoeyOS finds the folders on its own
+- DroidDeck and GameNative don't keep a play history JoeyOS can read, so their Recently Played shows the games you started from JoeyOS first, then the rest of your installed games
 - Bachata S4 (PS4) and XenDroid (Xbox 360) show on the dock and open the emulator, but don't have Recently Played yet
 - No other emulators outside of these have been configured to work
 
@@ -95,8 +98,8 @@ It's touch first, and it takes the controller only when your device sends it the
 
 Tabs:
 - **Apps**: every app on your device, to open on that screen
-- **Achievements** (when logged in to RetroAchievements): your points, what you're playing, recent awards, "Almost there", awards by year, your Want to Play list, and a search of every game on RetroAchievements. Tap any game for its achievements, or a total (beaten this year, beaten all-time, completed) for its list
-- **Now playing** (while a game runs): the achievements of the game RetroAchievements sees you playing, with its live status, session and play time, filters and sorts (the "To beat" filter shows the story steps, then the win condition in gold), an "Unlocked!" banner, and tips from each achievement's comments. Under the live status are your last few status lines. **Leaderboards** shows your rank and score beside the top score. **Hunt this** on an achievement pins it to the top of the list with a tip (up to 3), and it unpins once you earn it
+- **Achievements** (when logged in to RetroAchievements): your points, what you're playing, recent awards, "Almost there", awards by year, your Want to Play list, your fastest beats (your time to beat each game next to how long most players take), and a search of every game on RetroAchievements. Tap any game for its achievements, or a total (beaten this year, beaten all-time, completed) for its list
+- **Now playing** (while a game runs): the achievements of the game RetroAchievements sees you playing, with its live status, session and play time, how long most players take to beat it (and your own time once you have), a Show button (all, locked, earned, missable, to beat, leaderboards) and a Sort button (including Rarest), an "Unlocked!" banner, and tips from each achievement's comments. Under the live status are your last few status lines. **Leaderboards** shows your rank and score beside the top score. **Hunt this** on an achievement pins it to the top of the list with a tip (up to 3), and it unpins once you earn it. Each achievement shows how far into the game it's usually earned, and a RARE tag when fewer than 5% of players have it. Tap the game's icon for its box art, title screen and a screenshot, and how many players have beaten it
 - **Guide** (while a game runs): see below
 - **Settings**: which tab shows while you're browsing JoeyOS (Apps or Achievements), whether a game opens on Now playing or the Guide, and hiding achievement spoilers, dimming the screen after a set idle time while a game is running (off by choice), and how long the session summary stays up after a game (Off, 10, 20 or 30 seconds)
 
@@ -108,6 +111,7 @@ The Achievements and Now playing tabs only appear when you're logged in to Retro
 
 ### Guides
 Nothing downloads until you choose it. Guides are saved in **Internal storage › JoeyOS › guides**, and JoeyOS remembers which guide you picked for each game and where you were in it.
+- **RetroAchievements guide**: when the game has one, it's first in the list. Save it to read offline
 - **GameFAQs archive**: download the text walkthrough for the game and read it offline, with text size, wrap, reflow, light/dark/sepia, Find and Contents
 - **Which game?** Games started from Recently Played are known straight away. For a game started inside ARMSX3, Eden, Vita3K, XenDroid or GameHub, the Guide finds it from the emulator's own records; with RetroAchievements it uses what RetroAchievements reports; otherwise type the name or pick it from the emulator's recent games
 - **Search the web**: a built-in browser with ad blocking (DuckDuckGo). Save any page to read offline later
