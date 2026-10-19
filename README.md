@@ -10,6 +10,22 @@ It's a very simple launcher - no artwork scraping, no games lists, none of that.
 
 This was created for my personal use, and while it may work for a lot of people's setups, it likely will break or be broken. I don't really have plans to make this a whole thing, but if you want to use it as I update it, feel free!
 
+## Screenshots
+
+![The JoeyOS home screen: wallpaper, clock and the dock of emulators](https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/home.jpg)
+
+**Second screen** (on dual-screen handhelds like the AYN Thor):
+
+| Now playing | Guide |
+|---|---|
+| ![Now playing: the game's achievements, progress and time to beat](https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/now-playing.jpg) | ![Guide: a walkthrough beside the game](https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/guide.jpg) |
+| **Achievements** | **Apps** |
+| ![Achievements: your RetroAchievements stats and currently playing](https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/achievements.jpg) | ![Apps: your apps on the second screen](https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/second-screen-apps.jpg) |
+
+**Settings › Tools:**
+
+![Tools: BIOS check, ROM patching, playlists, compression and RetroAchievements romhacks](https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/tools.jpg)
+
 ## Things you really should know
 - This assumes you are using ES-DE (EmulationStations) ROM folders naming - folder named ROMs on your internal storage or SD card, with the ES-DE system folders inside (see here: https://github.com/JoeysRetroHandhelds/joeys-rom-folders)
 - For RetroArch to work, you must have a RetroArch folder on your internal storage, and saves/states inside
