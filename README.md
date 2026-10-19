@@ -18,11 +18,16 @@ The home screen with your own wallpaper and the dock along the bottom: your favo
 
 **Second screen** (on dual-screen handhelds like the AYN Thor):
 
-| Apps | Achievements |
-|---|---|
-| ![Apps: your apps on the second screen](https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/second-screen-apps.jpg) | ![Achievements: your RetroAchievements stats and currently playing](https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/achievements.jpg) |
-| **Now playing** | **Guide** |
-| ![Now playing: the game's achievements, progress and time to beat](https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/now-playing.jpg) | ![Guide: a walkthrough beside the game](https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/guide.jpg) |
+<table>
+<tr>
+<td width="50%" align="center"><b>Apps</b><br><img src="https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/second-screen-apps.jpg" width="100%" alt="Apps: your apps on the second screen"></td>
+<td width="50%" align="center"><b>Achievements</b><br><img src="https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/achievements.jpg" width="100%" alt="Achievements: your RetroAchievements stats and currently playing"></td>
+</tr>
+<tr>
+<td width="50%" align="center"><b>Now playing</b><br><img src="https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/now-playing.jpg" width="100%" alt="Now playing: the game's achievements, progress and time to beat"></td>
+<td width="50%" align="center"><b>Guide</b><br><img src="https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/guide.jpg" width="100%" alt="Guide: a walkthrough beside the game"></td>
+</tr>
+</table>
 
 **Settings › Tools:**
 
