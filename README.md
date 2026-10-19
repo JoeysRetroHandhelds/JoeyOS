@@ -90,6 +90,16 @@ The tools never change your original games, and only remove them if you choose t
 
 ---
 
+## Google backup and sync
+In **Settings › Tools › Google backup**, sign in with Google and JoeyOS keeps your whole setup in your own Google Drive, in a hidden area only JoeyOS can see (it can't see your other Drive files, and they can't see it).
+
+- **What's kept**: every setting and choice, your dock and emulator assignments, dock icons, custom wallpapers, second screen settings, downloaded guides and where you are in them, saved videos, hunted achievements, and your RetroAchievements login
+- **What isn't**: emulators' own settings, saves and games, caches that download again, and a few things that belong to one device (like which game is your favourite)
+- **Backups**: each device keeps its own. Changes go up within about a minute, and a copy of each day's settings is kept for a week. **Restore…** lists every device's backup, to restore onto this device or copy one device's setup to another; **Earlier days…** undoes a settings change
+- **Sync with my other devices**: devices with it on share one setup, and a change on one reaches the others within a minute or two. Devices with it off keep their own setup
+- Game paths on an SD card are matched to each device's own card, or to the same place in internal storage
+- **Delete my backups…** removes everything JoeyOS keeps in your Drive. Backup needs Google sign-in, which some handhelds don't have
+
 ## Second screen (dual-screen handhelds like the AYN Thor)
 
 On a device with two screens, JoeyOS puts its own app on the other screen. Turn it on or off in **Settings → Appearance → Second screen**, where you can also choose which screen games open on. Below that you can give it its own wallpaper: Plain (the default), any of the top screen's wallpapers, or your own image.
