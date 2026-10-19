@@ -18,11 +18,11 @@ The home screen with your own wallpaper and the dock along the bottom: your favo
 
 **Second screen** (on dual-screen handhelds like the AYN Thor):
 
-| Now playing | Guide |
+| Apps | Achievements |
 |---|---|
+| ![Apps: your apps on the second screen](https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/second-screen-apps.jpg) | ![Achievements: your RetroAchievements stats and currently playing](https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/achievements.jpg) |
+| **Now playing** | **Guide** |
 | ![Now playing: the game's achievements, progress and time to beat](https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/now-playing.jpg) | ![Guide: a walkthrough beside the game](https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/guide.jpg) |
-| **Achievements** | **Apps** |
-| ![Achievements: your RetroAchievements stats and currently playing](https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/achievements.jpg) | ![Apps: your apps on the second screen](https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/second-screen-apps.jpg) |
 
 **Settings › Tools:**
 
