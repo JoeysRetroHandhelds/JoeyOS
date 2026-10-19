@@ -14,6 +14,8 @@ This was created for my personal use, and while it may work for a lot of people'
 
 ![The JoeyOS home screen: wallpaper, clock and the dock of emulators](https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/home.jpg)
 
+The home screen with your own wallpaper and the dock along the bottom: your favourite game first, then Recently Played, then your emulators and apps. The game you last played is shown above the dock.
+
 **Second screen** (on dual-screen handhelds like the AYN Thor):
 
 | Now playing | Guide |
