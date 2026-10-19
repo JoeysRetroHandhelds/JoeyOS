@@ -111,11 +111,12 @@ The Achievements and Now playing tabs only appear when you're logged in to Retro
 
 ### Guides
 Nothing downloads until you choose it. Guides are saved in **Internal storage › JoeyOS › guides**, and JoeyOS remembers which guide you picked for each game and where you were in it.
+- **Your video**: while playing, open a video in YouTube, tap Share and choose JoeyOS. It becomes that game's guide, and the Guide opens on it (Watch, Change guide, Remove). Share another video to change it
 - **RetroAchievements guide**: when the game has one, it's first in the list. Save it to read offline
 - **GameFAQs archive**: download the text walkthrough for the game and read it offline, with text size, wrap, reflow, light/dark/sepia, Find and Contents
 - **Which game?** Games started from Recently Played are known straight away. For a game started inside ARMSX3, Eden, Vita3K, XenDroid or GameHub, the Guide finds it from the emulator's own records; with RetroAchievements it uses what RetroAchievements reports; otherwise type the name or pick it from the emulator's recent games
 - **Search the web**: a built-in browser with ad blocking (DuckDuckGo). Save any page to read offline later
-- **YouTube**: opens a search in your YouTube app (including ReVanced)
+- **YouTube**: opens your YouTube app (including ReVanced) on search results for the game's walkthrough
 - The tabs always stay at the top. In Guide, the arrow at the end of the tab row hides or shows the guide's own bar (Options, Find, Contents, Change guide) for more room
 
 ## Credits
