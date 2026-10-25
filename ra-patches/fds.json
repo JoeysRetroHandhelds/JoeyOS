@@ -1,0 +1,984 @@
+{
+  "bea8b9a2": [
+    {
+      "name": "Tonkachi Mario (I2-Aitsu)",
+      "type": "Hack",
+      "path": "Famicom Disk System/Hack/2109-TonkachiMario.zip",
+      "format": "bps"
+    }
+  ],
+  "4d5bfd77": [
+    {
+      "name": "Kaettekita Mario Bros. [Subset - Multiplayer]",
+      "type": "Subset",
+      "path": "Famicom Disk System/Subset/11948-KaettekitaMarioBros-Subset-Multiplayer.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Kaettekita Mario Bros. (Japan) (Disk Writer) (En) (v1.0) (FCandchill,Her-Saki)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/12851-KaettekitaMarioBros-English.zip",
+      "format": "bps"
+    }
+  ],
+  "e3109ec1": [
+    {
+      "name": "Kaettekita Mario Bros. [Subset - Multiplayer]",
+      "type": "Subset",
+      "path": "Famicom Disk System/Subset/11948-KaettekitaMarioBros-Subset-Multiplayer.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Kaettekita Mario Bros. (Japan) (Disk Writer) (En) (v1.0) (FCandchill,Her-Saki)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/12851-KaettekitaMarioBros-English.zip",
+      "format": "bps"
+    }
+  ],
+  "09f95cb9": [
+    {
+      "name": "Ai Ippai no Little Angel (Japan) (En) (v1.0) (Mute)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/10335-Silviana-English.zip",
+      "format": "bps"
+    }
+  ],
+  "9869f553": [
+    {
+      "name": "Ai Ippai no Little Angel (Japan) (En) (v1.0) (Mute)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/10335-Silviana-English.zip",
+      "format": "bps"
+    }
+  ],
+  "8b54d368": [
+    {
+      "name": "Meikyuu Jiin Dababa (Japan) (En) (v1.0) (FlashPV)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/12854-MeikyuuJiinDababa-English.zip",
+      "format": "bps"
+    }
+  ],
+  "fe9e4b33": [
+    {
+      "name": "Meikyuu Jiin Dababa (Japan) (En) (v1.0) (FlashPV)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/12854-MeikyuuJiinDababa-English.zip",
+      "format": "bps"
+    }
+  ],
+  "1967673e": [
+    {
+      "name": "Little Computer People (Japan) (En) (v1.0) (BlackPaladin)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/12856-AppleTownMonogatari-English.zip",
+      "format": "bps"
+    }
+  ],
+  "2df36e9b": [
+    {
+      "name": "Little Computer People (Japan) (En) (v1.0) (BlackPaladin)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/12856-AppleTownMonogatari-English.zip",
+      "format": "bps"
+    }
+  ],
+  "b24739c5": [
+    {
+      "name": "v1.0 (Star Crusaders)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14019-DeadZone-English.zip",
+      "format": "bps",
+      "inner": "Dead Zone (Japan) (En) (v1.0) (Star Crusaders).bps"
+    },
+    {
+      "name": "n) (v1.0) (Star Crusaders)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14019-DeadZone-English.zip",
+      "format": "bps",
+      "inner": "n) (v1.0) (Star Crusaders).bps"
+    }
+  ],
+  "de673254": [
+    {
+      "name": "v1.0 (Star Crusaders)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14019-DeadZone-English.zip",
+      "format": "bps",
+      "inner": "Dead Zone (Japan) (En) (v1.0) (Star Crusaders).bps"
+    },
+    {
+      "name": "n) (v1.0) (Star Crusaders)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14019-DeadZone-English.zip",
+      "format": "bps",
+      "inner": "n) (v1.0) (Star Crusaders).bps"
+    }
+  ],
+  "6b56808b": [
+    {
+      "name": "Suishou no Dragon (Japan) (En) (v1.0) (Mute)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14080-SuishouNoDragon-English.zip",
+      "format": "bps"
+    }
+  ],
+  "abd73438": [
+    {
+      "name": "Suishou no Dragon (Japan) (En) (v1.0) (Mute)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14080-SuishouNoDragon-English.zip",
+      "format": "bps"
+    }
+  ],
+  "10266cdd": [
+    {
+      "name": "Idol Hotline - Nakayama Miho no Tokimeki High School (v1.0) (FCandChill)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14086-IdolHotline-NakayamaMihonoTokimekiHighSchool-English.zip",
+      "format": "bps",
+      "inner": "Idol Hotline - Nakayama Miho no Tokimeki High School (Japan) (En) (v1.0) (FCandChill).bps"
+    },
+    {
+      "name": "Miho Nakayama's Tokimeki High School English Translation",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14086-IdolHotline-NakayamaMihonoTokimekiHighSchool-English.zip",
+      "format": "bps",
+      "inner": "Miho Nakayama's Tokimeki High School English Translation.bps"
+    }
+  ],
+  "254ffe3b": [
+    {
+      "name": "Idol Hotline - Nakayama Miho no Tokimeki High School (v1.0) (FCandChill)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14086-IdolHotline-NakayamaMihonoTokimekiHighSchool-English.zip",
+      "format": "bps",
+      "inner": "Idol Hotline - Nakayama Miho no Tokimeki High School (Japan) (En) (v1.0) (FCandChill).bps"
+    },
+    {
+      "name": "Miho Nakayama's Tokimeki High School English Translation",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14086-IdolHotline-NakayamaMihonoTokimekiHighSchool-English.zip",
+      "format": "bps",
+      "inner": "Miho Nakayama's Tokimeki High School English Translation.bps"
+    }
+  ],
+  "29f5b93e": [
+    {
+      "name": "Idol Hotline - Nakayama Miho no Tokimeki High School (v1.0) (FCandChill)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14086-IdolHotline-NakayamaMihonoTokimekiHighSchool-English.zip",
+      "format": "bps",
+      "inner": "Idol Hotline - Nakayama Miho no Tokimeki High School (Japan) (En) (v1.0) (FCandChill).bps"
+    },
+    {
+      "name": "Miho Nakayama's Tokimeki High School English Translation",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14086-IdolHotline-NakayamaMihonoTokimekiHighSchool-English.zip",
+      "format": "bps",
+      "inner": "Miho Nakayama's Tokimeki High School English Translation.bps"
+    }
+  ],
+  "316d7e72": [
+    {
+      "name": "Idol Hotline - Nakayama Miho no Tokimeki High School (v1.0) (FCandChill)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14086-IdolHotline-NakayamaMihonoTokimekiHighSchool-English.zip",
+      "format": "bps",
+      "inner": "Idol Hotline - Nakayama Miho no Tokimeki High School (Japan) (En) (v1.0) (FCandChill).bps"
+    },
+    {
+      "name": "Miho Nakayama's Tokimeki High School English Translation",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14086-IdolHotline-NakayamaMihonoTokimekiHighSchool-English.zip",
+      "format": "bps",
+      "inner": "Miho Nakayama's Tokimeki High School English Translation.bps"
+    }
+  ],
+  "525c5bb1": [
+    {
+      "name": "Idol Hotline - Nakayama Miho no Tokimeki High School (v1.0) (FCandChill)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14086-IdolHotline-NakayamaMihonoTokimekiHighSchool-English.zip",
+      "format": "bps",
+      "inner": "Idol Hotline - Nakayama Miho no Tokimeki High School (Japan) (En) (v1.0) (FCandChill).bps"
+    },
+    {
+      "name": "Miho Nakayama's Tokimeki High School English Translation",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14086-IdolHotline-NakayamaMihonoTokimekiHighSchool-English.zip",
+      "format": "bps",
+      "inner": "Miho Nakayama's Tokimeki High School English Translation.bps"
+    }
+  ],
+  "9c9616b8": [
+    {
+      "name": "Idol Hotline - Nakayama Miho no Tokimeki High School (v1.0) (FCandChill)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14086-IdolHotline-NakayamaMihonoTokimekiHighSchool-English.zip",
+      "format": "bps",
+      "inner": "Idol Hotline - Nakayama Miho no Tokimeki High School (Japan) (En) (v1.0) (FCandChill).bps"
+    },
+    {
+      "name": "Miho Nakayama's Tokimeki High School English Translation",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14086-IdolHotline-NakayamaMihonoTokimekiHighSchool-English.zip",
+      "format": "bps",
+      "inner": "Miho Nakayama's Tokimeki High School English Translation.bps"
+    }
+  ],
+  "abddec53": [
+    {
+      "name": "Idol Hotline - Nakayama Miho no Tokimeki High School (v1.0) (FCandChill)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14086-IdolHotline-NakayamaMihonoTokimekiHighSchool-English.zip",
+      "format": "bps",
+      "inner": "Idol Hotline - Nakayama Miho no Tokimeki High School (Japan) (En) (v1.0) (FCandChill).bps"
+    },
+    {
+      "name": "Miho Nakayama's Tokimeki High School English Translation",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14086-IdolHotline-NakayamaMihonoTokimekiHighSchool-English.zip",
+      "format": "bps",
+      "inner": "Miho Nakayama's Tokimeki High School English Translation.bps"
+    }
+  ],
+  "d53903ce": [
+    {
+      "name": "Idol Hotline - Nakayama Miho no Tokimeki High School (v1.0) (FCandChill)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14086-IdolHotline-NakayamaMihonoTokimekiHighSchool-English.zip",
+      "format": "bps",
+      "inner": "Idol Hotline - Nakayama Miho no Tokimeki High School (Japan) (En) (v1.0) (FCandChill).bps"
+    },
+    {
+      "name": "Miho Nakayama's Tokimeki High School English Translation",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14086-IdolHotline-NakayamaMihonoTokimekiHighSchool-English.zip",
+      "format": "bps",
+      "inner": "Miho Nakayama's Tokimeki High School English Translation.bps"
+    }
+  ],
+  "ed26ab9f": [
+    {
+      "name": "Idol Hotline - Nakayama Miho no Tokimeki High School (v1.0) (FCandChill)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14086-IdolHotline-NakayamaMihonoTokimekiHighSchool-English.zip",
+      "format": "bps",
+      "inner": "Idol Hotline - Nakayama Miho no Tokimeki High School (Japan) (En) (v1.0) (FCandChill).bps"
+    },
+    {
+      "name": "Miho Nakayama's Tokimeki High School English Translation",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14086-IdolHotline-NakayamaMihonoTokimekiHighSchool-English.zip",
+      "format": "bps",
+      "inner": "Miho Nakayama's Tokimeki High School English Translation.bps"
+    }
+  ],
+  "f106af85": [
+    {
+      "name": "Idol Hotline - Nakayama Miho no Tokimeki High School (v1.0) (FCandChill)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14086-IdolHotline-NakayamaMihonoTokimekiHighSchool-English.zip",
+      "format": "bps",
+      "inner": "Idol Hotline - Nakayama Miho no Tokimeki High School (Japan) (En) (v1.0) (FCandChill).bps"
+    },
+    {
+      "name": "Miho Nakayama's Tokimeki High School English Translation",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/14086-IdolHotline-NakayamaMihonoTokimekiHighSchool-English.zip",
+      "format": "bps",
+      "inner": "Miho Nakayama's Tokimeki High School English Translation.bps"
+    }
+  ],
+  "ec6d5de3": [
+    {
+      "name": "Armana no Kiseki (DvD Translations)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/1972-ArmananoKiseki-English.zip",
+      "format": "bps",
+      "inner": "Armana no Kiseki (Japan) (En) (DvD Translations).bps"
+    },
+    {
+      "name": "Armana no Kiseki (Overdump) (DvD Translations)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/1972-ArmananoKiseki-English.zip",
+      "format": "bps",
+      "inner": "Armana no Kiseki (Japan) (En) (Overdump) (DvD Translations).bps"
+    },
+    {
+      "name": "Armana no Kiseki (FDS Conversion) (Kaiser)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/1972-ArmananoKiseki-English.zip",
+      "format": "bps",
+      "inner": "Armana no Kiseki (Japan) (FDS Conversion) (Kaiser).bps"
+    }
+  ],
+  "fcc52c64": [
+    {
+      "name": "Armana no Kiseki (DvD Translations)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/1972-ArmananoKiseki-English.zip",
+      "format": "bps",
+      "inner": "Armana no Kiseki (Japan) (En) (DvD Translations).bps"
+    },
+    {
+      "name": "Armana no Kiseki (Overdump) (DvD Translations)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/1972-ArmananoKiseki-English.zip",
+      "format": "bps",
+      "inner": "Armana no Kiseki (Japan) (En) (Overdump) (DvD Translations).bps"
+    },
+    {
+      "name": "Armana no Kiseki (FDS Conversion) (Kaiser)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/1972-ArmananoKiseki-English.zip",
+      "format": "bps",
+      "inner": "Armana no Kiseki (Japan) (FDS Conversion) (Kaiser).bps"
+    }
+  ],
+  "1999addb": [
+    {
+      "name": "Majaou no Noroi (v1.0) (BlackPaladin)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/22889-Aspic-English.zip",
+      "format": "bps",
+      "inner": "Aspic - Majaou no Noroi (Japan) (En) (v1.0) (BlackPaladin).bps"
+    },
+    {
+      "name": "Majaou no Noroi (v1.0) (BlackPaladin)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/22889-Aspic-English.zip",
+      "format": "ips",
+      "inner": "Aspic - Majaou no Noroi (Japan) (En) (v1.0) (BlackPaladin).ips"
+    }
+  ],
+  "897cacdd": [
+    {
+      "name": "Majaou no Noroi (v1.0) (BlackPaladin)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/22889-Aspic-English.zip",
+      "format": "bps",
+      "inner": "Aspic - Majaou no Noroi (Japan) (En) (v1.0) (BlackPaladin).bps"
+    },
+    {
+      "name": "Majaou no Noroi (v1.0) (BlackPaladin)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/22889-Aspic-English.zip",
+      "format": "ips",
+      "inner": "Aspic - Majaou no Noroi (Japan) (En) (v1.0) (BlackPaladin).ips"
+    }
+  ],
+  "a115daf9": [
+    {
+      "name": "Zeuon no Fukkatsu (Japan) (En) (v1.0) (Stardust Crusaders)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/26334-Dandy-English.zip",
+      "format": "bps"
+    }
+  ],
+  "f027228e": [
+    {
+      "name": "Zeuon no Fukkatsu (Japan) (En) (v1.0) (Stardust Crusaders)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/26334-Dandy-English.zip",
+      "format": "bps"
+    }
+  ],
+  "6e59ec4f": [
+    {
+      "name": "Abakareshi Musumetachi (Japan) (Merged) (Unl) (En) (v1.0a) (DvD Translations)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/27580-BodyconquestI-English.zip",
+      "format": "bps"
+    }
+  ],
+  "dd80ea36": [
+    {
+      "name": "Abakareshi Musumetachi (Japan) (Merged) (Unl) (En) (v1.0a) (DvD Translations)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/27580-BodyconquestI-English.zip",
+      "format": "bps"
+    }
+  ],
+  "8be4a0bc": [
+    {
+      "name": "Samurai Sword (Japan) (En) (v1.0) (Mute)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/27833-SamuraiSword-English.zip",
+      "format": "bps"
+    }
+  ],
+  "da2d8561": [
+    {
+      "name": "Samurai Sword (Japan) (En) (v1.0) (Mute)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/27833-SamuraiSword-English.zip",
+      "format": "bps"
+    }
+  ],
+  "00f6fac1": [
+    {
+      "name": "Deep Dungeon (Japan) (En) (v1.0) (KingMike)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/32980-MadouSenkiDeepDungeon-English.zip",
+      "format": "bps"
+    }
+  ],
+  "05680f57": [
+    {
+      "name": "Deep Dungeon (Japan) (En) (v1.0) (KingMike)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/32980-MadouSenkiDeepDungeon-English.zip",
+      "format": "bps"
+    }
+  ],
+  "56f522d8": [
+    {
+      "name": "Deep Dungeon (Japan) (En) (v1.0) (KingMike)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/32980-MadouSenkiDeepDungeon-English.zip",
+      "format": "bps"
+    }
+  ],
+  "f70173fb": [
+    {
+      "name": "Deep Dungeon (Japan) (En) (v1.0) (KingMike)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/32980-MadouSenkiDeepDungeon-English.zip",
+      "format": "bps"
+    }
+  ],
+  "67758d91": [
+    {
+      "name": "Ao no Senritsu (Japan) (En) (v1.0) (BlackPaladin)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/36889-TitanicMystery-English.zip",
+      "format": "bps"
+    }
+  ],
+  "fb36075c": [
+    {
+      "name": "Ao no Senritsu (Japan) (En) (v1.0) (BlackPaladin)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/36889-TitanicMystery-English.zip",
+      "format": "bps"
+    }
+  ],
+  "6d9077a8": [
+    {
+      "name": "Akumajou Dracula (Japan) (Rev 2) (Disk Writer) (En) (v1.0a) (DvD Translations)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/36892-AkumajouDracula-English.zip",
+      "format": "bps"
+    }
+  ],
+  "7448fb40": [
+    {
+      "name": "Akumajou Dracula (Japan) (Rev 2) (Disk Writer) (En) (v1.0a) (DvD Translations)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/36892-AkumajouDracula-English.zip",
+      "format": "bps"
+    }
+  ],
+  "90e99457": [
+    {
+      "name": "Akumajou Dracula (Japan) (Rev 2) (Disk Writer) (En) (v1.0a) (DvD Translations)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/36892-AkumajouDracula-English.zip",
+      "format": "bps"
+    }
+  ],
+  "9661e6a4": [
+    {
+      "name": "Akumajou Dracula (Japan) (Rev 2) (Disk Writer) (En) (v1.0a) (DvD Translations)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/36892-AkumajouDracula-English.zip",
+      "format": "bps"
+    }
+  ],
+  "a489fa5e": [
+    {
+      "name": "Akumajou Dracula (Japan) (Rev 2) (Disk Writer) (En) (v1.0a) (DvD Translations)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/36892-AkumajouDracula-English.zip",
+      "format": "bps"
+    }
+  ],
+  "c15a04de": [
+    {
+      "name": "Akumajou Dracula (Japan) (Rev 2) (Disk Writer) (En) (v1.0a) (DvD Translations)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/36892-AkumajouDracula-English.zip",
+      "format": "bps"
+    }
+  ],
+  "d7793e58": [
+    {
+      "name": "Akumajou Dracula (Japan) (Rev 2) (Disk Writer) (En) (v1.0a) (DvD Translations)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/36892-AkumajouDracula-English.zip",
+      "format": "bps"
+    }
+  ],
+  "fc72b953": [
+    {
+      "name": "Akumajou Dracula (Japan) (Rev 2) (Disk Writer) (En) (v1.0a) (DvD Translations)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/36892-AkumajouDracula-English.zip",
+      "format": "bps"
+    }
+  ],
+  "3a0bb17b": [
+    {
+      "name": "Noroi no Fuuin (Japan) (En) (v1.0a) (BlackPaladin)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/38070-DraculaII-English.zip",
+      "format": "bps"
+    }
+  ],
+  "4678045d": [
+    {
+      "name": "Noroi no Fuuin (Japan) (En) (v1.0a) (BlackPaladin)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/38070-DraculaII-English.zip",
+      "format": "bps"
+    }
+  ],
+  "954b4107": [
+    {
+      "name": "Noroi no Fuuin (Japan) (En) (v1.0a) (BlackPaladin)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/38070-DraculaII-English.zip",
+      "format": "bps"
+    }
+  ],
+  "f451269f": [
+    {
+      "name": "Noroi no Fuuin (Japan) (En) (v1.0a) (BlackPaladin)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/38070-DraculaII-English.zip",
+      "format": "bps"
+    }
+  ],
+  "76217563": [
+    {
+      "name": "Palutena no Kagami (Japan) (En) (v1.0) (BlackPaladin)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/38246-HikariShinwaPalutenanoKagami-English.zip",
+      "format": "bps"
+    }
+  ],
+  "78a6a4ff": [
+    {
+      "name": "Palutena no Kagami (Japan) (En) (v1.0) (BlackPaladin)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/38246-HikariShinwaPalutenanoKagami-English.zip",
+      "format": "bps"
+    }
+  ],
+  "79a9eda3": [
+    {
+      "name": "Palutena no Kagami (Japan) (En) (v1.0) (BlackPaladin)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/38246-HikariShinwaPalutenanoKagami-English.zip",
+      "format": "bps"
+    }
+  ],
+  "b88d9bc2": [
+    {
+      "name": "Palutena no Kagami (Japan) (En) (v1.0) (BlackPaladin)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/38246-HikariShinwaPalutenanoKagami-English.zip",
+      "format": "bps"
+    }
+  ],
+  "c3199237": [
+    {
+      "name": "Palutena no Kagami (Japan) (En) (v1.0) (BlackPaladin)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/38246-HikariShinwaPalutenanoKagami-English.zip",
+      "format": "bps"
+    }
+  ],
+  "e7e6e77a": [
+    {
+      "name": "Palutena no Kagami (Japan) (En) (v1.0) (BlackPaladin)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/38246-HikariShinwaPalutenanoKagami-English.zip",
+      "format": "bps"
+    }
+  ],
+  "ac0a615a": [
+    {
+      "name": "Gun.Smoke (Japan) (En) (v1.0) (Voodoo)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/38444-Gun.Smoke-English.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gun.Smoke (Japan) (Uk) (v1.0) (Voodoo)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/Ukranian/38444-Gun.Smoke-Ukranian.zip",
+      "format": "bps"
+    }
+  ],
+  "c6d3968a": [
+    {
+      "name": "Gun.Smoke (Japan) (En) (v1.0) (Voodoo)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/38444-Gun.Smoke-English.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Gun.Smoke (Japan) (Uk) (v1.0) (Voodoo)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/Ukranian/38444-Gun.Smoke-Ukranian.zip",
+      "format": "bps"
+    }
+  ],
+  "8505ab8f": [
+    {
+      "name": "Lutter (Japan) (Disk Writer) (En) (v1.0) (Mute)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/38995-Lutter-English.zip",
+      "format": "bps"
+    }
+  ],
+  "89ef45dd": [
+    {
+      "name": "Lutter (Japan) (Disk Writer) (En) (v1.0) (Mute)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/38995-Lutter-English.zip",
+      "format": "bps"
+    }
+  ],
+  "47b3babd": [
+    {
+      "name": "19 (v1.0 - Regular NES Font) (MrRichard999)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/39007-Neunzehn19-English.zip",
+      "format": "bps",
+      "inner": "Neunzehn - 19 (Japan) (En) (v1.0 - Regular NES Font) (MrRichard999).bps"
+    },
+    {
+      "name": "19 (v1.0) (MrRichard999)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/39007-Neunzehn19-English.zip",
+      "format": "bps",
+      "inner": "Neunzehn - 19 (Japan) (En) (v1.0) (MrRichard999).bps"
+    }
+  ],
+  "ed49ad19": [
+    {
+      "name": "19 (v1.0 - Regular NES Font) (MrRichard999)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/39007-Neunzehn19-English.zip",
+      "format": "bps",
+      "inner": "Neunzehn - 19 (Japan) (En) (v1.0 - Regular NES Font) (MrRichard999).bps"
+    },
+    {
+      "name": "19 (v1.0) (MrRichard999)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/39007-Neunzehn19-English.zip",
+      "format": "bps",
+      "inner": "Neunzehn - 19 (Japan) (En) (v1.0) (MrRichard999).bps"
+    }
+  ],
+  "023ba98f": [
+    {
+      "name": "Gyruss (Japan) (En) (v1.01) (Cabal Translations)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/39038-Gyruss-English.zip",
+      "format": "bps"
+    }
+  ],
+  "bfc78f7d": [
+    {
+      "name": "Gyruss (Japan) (En) (v1.01) (Cabal Translations)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/39038-Gyruss-English.zip",
+      "format": "bps"
+    }
+  ],
+  "13b688b4": [
+    {
+      "name": "Emi-chan no Moero Yakyuuken! (Japan) (En) (v0.99) (Spinner8)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/43566-Emi-channoMoeroYakyuuken-English.zip",
+      "format": "bps"
+    }
+  ],
+  "4686aa5b": [
+    {
+      "name": "Project Eden (Japan) (En) (v1.01) (Stardust Crusaders)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/6292-DirtyPairProjectEden-English.zip",
+      "format": "bps"
+    }
+  ],
+  "5f0a149b": [
+    {
+      "name": "Project Eden (Japan) (En) (v1.01) (Stardust Crusaders)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/6292-DirtyPairProjectEden-English.zip",
+      "format": "bps"
+    }
+  ],
+  "700627b9": [
+    {
+      "name": "Project Eden (Japan) (En) (v1.01) (Stardust Crusaders)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/6292-DirtyPairProjectEden-English.zip",
+      "format": "bps"
+    }
+  ],
+  "f40c30f6": [
+    {
+      "name": "Project Eden (Japan) (En) (v1.01) (Stardust Crusaders)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/6292-DirtyPairProjectEden-English.zip",
+      "format": "bps"
+    }
+  ],
+  "08e60207": [
+    {
+      "name": "The Legend of Zelda 2 (Japan) (Rev 1) (En) (v2.33) (Columbo)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/6962-Zelda2-English.zip",
+      "format": "bps"
+    }
+  ],
+  "0c3ebc28": [
+    {
+      "name": "The Legend of Zelda 2 (Japan) (Rev 1) (En) (v2.33) (Columbo)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/6962-Zelda2-English.zip",
+      "format": "bps"
+    }
+  ],
+  "20bd1155": [
+    {
+      "name": "The Legend of Zelda 2 (Japan) (Rev 1) (En) (v2.33) (Columbo)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/6962-Zelda2-English.zip",
+      "format": "bps"
+    }
+  ],
+  "3024cad5": [
+    {
+      "name": "The Legend of Zelda 2 (Japan) (Rev 1) (En) (v2.33) (Columbo)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/6962-Zelda2-English.zip",
+      "format": "bps"
+    }
+  ],
+  "5f1d39cb": [
+    {
+      "name": "The Legend of Zelda 2 (Japan) (Rev 1) (En) (v2.33) (Columbo)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/6962-Zelda2-English.zip",
+      "format": "bps"
+    }
+  ],
+  "9ed8d40f": [
+    {
+      "name": "The Legend of Zelda 2 (Japan) (Rev 1) (En) (v2.33) (Columbo)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/6962-Zelda2-English.zip",
+      "format": "bps"
+    }
+  ],
+  "d9d60599": [
+    {
+      "name": "The Legend of Zelda 2 (Japan) (Rev 1) (En) (v2.33) (Columbo)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/6962-Zelda2-English.zip",
+      "format": "bps"
+    }
+  ],
+  "df122ed1": [
+    {
+      "name": "The Legend of Zelda 2 (Japan) (Rev 1) (En) (v2.33) (Columbo)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/6962-Zelda2-English.zip",
+      "format": "bps"
+    }
+  ],
+  "27c4e12b": [
+    {
+      "name": "Majou no Ookami Otoko (Japan) (En) (v1.0) (Psyklax)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/7052-KnightLore-English.zip",
+      "format": "bps"
+    }
+  ],
+  "70e55476": [
+    {
+      "name": "Majou no Ookami Otoko (Japan) (En) (v1.0) (Psyklax)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/7052-KnightLore-English.zip",
+      "format": "bps"
+    }
+  ],
+  "23a02531": [
+    {
+      "name": "Esper Dream (Japan) (Rev 1) (Disk Writer) (En) (v1.0a) (Mute)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/8737-EsperDream-English.zip",
+      "format": "bps"
+    }
+  ],
+  "3367b923": [
+    {
+      "name": "Esper Dream (Japan) (Rev 1) (Disk Writer) (En) (v1.0a) (Mute)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/8737-EsperDream-English.zip",
+      "format": "bps"
+    }
+  ],
+  "7aecf9d8": [
+    {
+      "name": "Esper Dream (Japan) (Rev 1) (Disk Writer) (En) (v1.0a) (Mute)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/8737-EsperDream-English.zip",
+      "format": "bps"
+    }
+  ],
+  "abaa904b": [
+    {
+      "name": "Esper Dream (Japan) (Rev 1) (Disk Writer) (En) (v1.0a) (Mute)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/8737-EsperDream-English.zip",
+      "format": "bps"
+    }
+  ],
+  "b954c11a": [
+    {
+      "name": "Esper Dream (Japan) (Rev 1) (Disk Writer) (En) (v1.0a) (Mute)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/8737-EsperDream-English.zip",
+      "format": "bps"
+    }
+  ],
+  "bfc505e0": [
+    {
+      "name": "Esper Dream (Japan) (Rev 1) (Disk Writer) (En) (v1.0a) (Mute)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/8737-EsperDream-English.zip",
+      "format": "bps"
+    }
+  ],
+  "e33c8305": [
+    {
+      "name": "Esper Dream (Japan) (Rev 1) (Disk Writer) (En) (v1.0a) (Mute)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/8737-EsperDream-English.zip",
+      "format": "bps"
+    }
+  ],
+  "edaf1a42": [
+    {
+      "name": "Esper Dream (Japan) (Rev 1) (Disk Writer) (En) (v1.0a) (Mute)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/8737-EsperDream-English.zip",
+      "format": "bps"
+    }
+  ],
+  "30a753be": [
+    {
+      "name": "Kalin no Tsurugi (Japan) (En) (v1.0) (KingMike,filler,satsu)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/8752-KalinnoTsurugi-English.zip",
+      "format": "bps"
+    }
+  ],
+  "fb02afda": [
+    {
+      "name": "Kalin no Tsurugi (Japan) (En) (v1.0) (KingMike,filler,satsu)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/8752-KalinnoTsurugi-English.zip",
+      "format": "bps"
+    }
+  ],
+  "0fb00a60": [
+    {
+      "name": "The Hyrule Fantasy (Japan) (Rev 1) (En) (v1.1) (Jordiway73)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/9181-ZeldanoDensetsu-English.zip",
+      "format": "bps"
+    }
+  ],
+  "1f22ccb1": [
+    {
+      "name": "The Hyrule Fantasy (Japan) (Rev 1) (En) (v1.1) (Jordiway73)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/9181-ZeldanoDensetsu-English.zip",
+      "format": "bps"
+    }
+  ],
+  "2e1d63d6": [
+    {
+      "name": "The Hyrule Fantasy (Japan) (Rev 1) (En) (v1.1) (Jordiway73)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/9181-ZeldanoDensetsu-English.zip",
+      "format": "bps"
+    }
+  ],
+  "3f9e421c": [
+    {
+      "name": "The Hyrule Fantasy (Japan) (Rev 1) (En) (v1.1) (Jordiway73)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/9181-ZeldanoDensetsu-English.zip",
+      "format": "bps"
+    }
+  ],
+  "6bd3385c": [
+    {
+      "name": "The Hyrule Fantasy (Japan) (Rev 1) (En) (v1.1) (Jordiway73)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/9181-ZeldanoDensetsu-English.zip",
+      "format": "bps"
+    }
+  ],
+  "7507b8a0": [
+    {
+      "name": "The Hyrule Fantasy (Japan) (Rev 1) (En) (v1.1) (Jordiway73)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/9181-ZeldanoDensetsu-English.zip",
+      "format": "bps"
+    }
+  ],
+  "8f2202bf": [
+    {
+      "name": "The Hyrule Fantasy (Japan) (Rev 1) (En) (v1.1) (Jordiway73)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/9181-ZeldanoDensetsu-English.zip",
+      "format": "bps"
+    }
+  ],
+  "b64b1456": [
+    {
+      "name": "The Hyrule Fantasy (Japan) (Rev 1) (En) (v1.1) (Jordiway73)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/9181-ZeldanoDensetsu-English.zip",
+      "format": "bps"
+    }
+  ],
+  "b9367eff": [
+    {
+      "name": "The Hyrule Fantasy (Japan) (Rev 1) (En) (v1.1) (Jordiway73)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/9181-ZeldanoDensetsu-English.zip",
+      "format": "bps"
+    }
+  ],
+  "c67710fd": [
+    {
+      "name": "The Hyrule Fantasy (Japan) (Rev 1) (En) (v1.1) (Jordiway73)",
+      "type": "Translation",
+      "path": "Famicom Disk System/Translation/English/9181-ZeldanoDensetsu-English.zip",
+      "format": "bps"
+    }
+  ]
+}

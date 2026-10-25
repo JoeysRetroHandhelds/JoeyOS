@@ -1,0 +1,65 @@
+{
+  "f0de2db4": [
+    {
+      "name": "patch/Ruruli Ra Rura (Japan) (En) (v1.0) (Nekozomb)",
+      "type": "Translation",
+      "path": "PC-FX/Translation/English/16456-RuruliRaRura-English.zip",
+      "format": "xdelta"
+    }
+  ],
+  "a494e37a": [
+    {
+      "name": "Team Innocent (English v0.9.1)",
+      "type": "Translation",
+      "path": "PC-FX/Translation/English/16465-TeamInnocent-English.zip",
+      "format": "xdelta",
+      "inner": "v0.9.1/xdelta/Team Innocent (English v0.9.1).xdelta"
+    },
+    {
+      "name": "Team Innocent (English v0.9)",
+      "type": "Translation",
+      "path": "PC-FX/Translation/English/16465-TeamInnocent-English.zip",
+      "format": "xdelta",
+      "inner": "v0.9/xdelta/Team Innocent (English v0.9).xdelta"
+    }
+  ],
+  "126e3b57": [
+    {
+      "name": "Farland Story FX (v2.0) (Djlpap)",
+      "type": "Translation",
+      "path": "PC-FX/Translation/English/8112-FarlandStoryFX-English.zip",
+      "format": "xdelta",
+      "inner": "Convert V1 to V2/Farland Story FX (Japan) (En) (v2.0) (Djlpap).xdelta"
+    },
+    {
+      "name": "Farland Story FX (v1.0) (Djlpap)",
+      "type": "Translation",
+      "path": "PC-FX/Translation/English/8112-FarlandStoryFX-English.zip",
+      "format": "xdelta",
+      "inner": "Convert V2 to V1/Farland Story FX (Japan) (En) (v1.0) (Djlpap).xdelta"
+    },
+    {
+      "name": "Farland Story FX (v2.0) (Djlpap)",
+      "type": "Translation",
+      "path": "PC-FX/Translation/English/8112-FarlandStoryFX-English.zip",
+      "format": "xdelta",
+      "inner": "Original RHDN Patch (V2)/Farland Story FX (Japan) (En) (v2.0) (Djlpap).xdelta"
+    }
+  ],
+  "37d0b393": [
+    {
+      "name": "9786-PiaCarrot-English",
+      "type": "Translation",
+      "path": "PC-FX/Translation/English/9786-PiaCarrot-English.7z",
+      "format": "bps"
+    }
+  ],
+  "e898cc2d": [
+    {
+      "name": "Choujin Heiki Zeroigar (Japan) (En) (v1.0.1) (SamIAm)",
+      "type": "Translation",
+      "path": "PC-FX/Translation/English/9940-Zeroigar-English.zip",
+      "format": "xdelta"
+    }
+  ]
+}
