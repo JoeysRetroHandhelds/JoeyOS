@@ -44,7 +44,7 @@ The home screen with your own wallpaper and the dock along the bottom: your favo
 - For CEMU to work, you must have a folder called CEMU exactly on your internal storage or SD card
 - For Eden to work, your device must be able to access Android/data storage
 - For Vita3K to work, you must have a folder called Vita3K exactly on your internal storage or SD card
-- For Duckstation to work, you must be using Duckstation-Patch (https://github.com/JoeysRetroHandhelds/duckstation-patch) and you must have a folder called DuckStation exactly on your internal storage
+- For DuckStation (the official app, including the new beta), your device must be able to access Android/data storage, where DuckStation keeps its play history. Recently Played shows every game you've played in it, saved or not. Duckstation-Patch (https://github.com/JoeysRetroHandhelds/duckstation-patch) also works, with a folder called DuckStation on your internal storage or SD card
 - For APS3E to work, your device must be able to access Android/data storage
 - For M64Plus FZ to work, you must have a folder called M64Plus exactly on your internal storage or SD card 
 - For ARMSX3 to work, you must have a folder called ARMSX3 exactly on your internal storage or SD card (with its recent_games.json inside), or your device must be able to access Android/data storage
