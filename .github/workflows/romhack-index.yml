@@ -50,6 +50,8 @@ jobs:
           auth="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)"
           remote="https://github.com/${GITHUB_REPOSITORY}.git"
           head=$(git ls-remote https://github.com/RetroAchievements/RAPatches.git refs/heads/main | cut -f1)
+          # An empty answer (network trouble) would otherwise look "changed" and be recorded.
+          [ -n "$head" ] || { echo "Couldn't read RAPatches' head commit."; exit 1; }
           echo "head=$head" >> "$GITHUB_OUTPUT"
           if git -c http.extraheader="$auth" ls-remote --exit-code --heads "$remote" data >/dev/null 2>&1; then
             git -c http.extraheader="$auth" clone --quiet --depth 1 --branch data "$remote" current

@@ -101,7 +101,8 @@ def _zip_names(url):
 
     The end-of-central-directory record in the tail says where the directory starts and how big
     it is; when the directory reaches back past the tail, just that range is fetched. Raises on a
-    failed read; returns None when the file isn't a zip we can parse.
+    failed read and on a directory it can't parse, so a garbled response is retried next run
+    rather than cached as an archive with no patch in it.
     """
     try:
         with _open(url, {"Range": "bytes=-16384"}) as r:
@@ -117,10 +118,10 @@ def _zip_names(url):
     total = int(span.rsplit("/", 1)[1]) if "/" in span and span.rsplit("/", 1)[1].isdigit() else len(tail)
     end = tail.rfind(b"PK\x05\x06")
     if end < 0 or end + 22 > len(tail):
-        return None
+        raise ValueError("no end-of-central-directory record")
     count, size, offset = struct.unpack("<HII", tail[end + 10 : end + 20])
     if offset == 0xFFFFFFFF or size == 0xFFFFFFFF:
-        return None  # zip64: not used for patch archives this size
+        raise ValueError("zip64 archive")  # not used for patch archives this size
     start = total - len(tail)
     if offset >= start:
         directory = tail[offset - start : offset - start + size]
@@ -133,7 +134,9 @@ def _zip_names(url):
         raw = directory[i + 46 : i + 46 + n]
         names.append(raw.decode("utf-8" if flags & 0x800 else "cp437", "replace"))
         i += 46 + n + x + c
-    return names if len(names) == count else None
+    if len(names) != count:
+        raise ValueError(f"central directory lists {len(names)} of {count} files")
+    return names
 
 
 def tree():
@@ -174,7 +177,7 @@ def inner_patch(path):
         return None, None
     # Every patch in the archive: some ship one per region and variant (Super Mario Sunshine's
     # QoL Enhancement: USA/Europe/Japan/Korea, 30 and 60 FPS), each becoming its own entry.
-    names = sorted({n for n in listing or [] if n.lower().endswith(PATCH_EXTS) and not n.endswith("/")})
+    names = sorted({n for n in listing if n.lower().endswith(PATCH_EXTS) and not n.endswith("/")})
     if not names:
         return "", ""
     # The newest revision first when several ship together, so the CRC the site knows wins.
@@ -402,7 +405,9 @@ def build(out_dir, only=None, workers=16, cache_path=None):
     # The archives worth reading: those on a console we have a pack and a dat for.
     jobs = []
     shas = {}
+    every_sha = set()  # the whole tree's, so a --system run doesn't prune other consoles' cache
     for system, type_folder, path, sha in tree():
+        every_sha.add(sha)
         if only and system != only:
             continue
         short = SYSTEMS.get(system)
@@ -432,7 +437,7 @@ def build(out_dir, only=None, workers=16, cache_path=None):
                 cache[shas[path]] = (patch_name, fmt)
 
     if cache_path:
-        live = set(shas.values())
+        live = every_sha
         os.makedirs(os.path.dirname(cache_path) or ".", exist_ok=True)
         with open(cache_path, "w", encoding="utf-8") as f:
             out = {k: list(v) for k, v in sorted(cache.items()) if k in live}
