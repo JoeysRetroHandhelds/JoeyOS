@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Build the ra-patches index: which romhacks apply to which ROM, per console.
 
-JoeyOS's copy of chameleon-data's builder (Chameleon is no longer maintained). The weekly
-"Romhack index" Action runs it and publishes the result to this repo's `data` branch, which the
+JoeyOS's copy of chameleon-data's builder (Chameleon is no longer maintained). The
+"Romhack index" Action runs it (every 15 minutes, when RAPatches has changed) and publishes the result to this repo's `data` branch, which the
 app reads from raw.githubusercontent.com. Only public sources are used (RAPatches and the
 libretro-database No-Intro dats) and only the Python standard library.
 
@@ -30,6 +30,8 @@ import argparse
 import json
 import os
 import re
+import struct
+import urllib.error
 import urllib.parse
 import time
 import urllib.request
@@ -77,17 +79,61 @@ SYSTEMS = {
     "Sega CD": "segacd", "Wii": "wii",
 }
 
-PATCH_IN_NAME = re.compile(rb"([\x20-\x7e]+?\.(?:bps|ips|xdelta|xdelta3|ups))", re.I)
+PATCH_EXTS = (".bps", ".ips", ".xdelta", ".xdelta3", ".ups")
 
 
-def _get(url, headers=None):
+def _open(url, headers=None):
     auth = {}
     # In Actions the API gets the job token: 1000 requests/hour instead of 60 anonymous.
     if url.startswith("https://api.github.com/") and os.environ.get("GITHUB_TOKEN"):
         auth = {"Authorization": "Bearer " + os.environ["GITHUB_TOKEN"]}
     req = urllib.request.Request(url, headers={**UA, **auth, **(headers or {})})
-    with urllib.request.urlopen(req, timeout=120) as r:
+    return urllib.request.urlopen(req, timeout=120)
+
+
+def _get(url, headers=None):
+    with _open(url, headers) as r:
         return r.read()
+
+
+def _zip_names(url):
+    """Every file name in the zip at [url], read from its central directory with range requests.
+
+    The end-of-central-directory record in the tail says where the directory starts and how big
+    it is; when the directory reaches back past the tail, just that range is fetched. Raises on a
+    failed read; returns None when the file isn't a zip we can parse.
+    """
+    try:
+        with _open(url, {"Range": "bytes=-16384"}) as r:
+            tail = r.read()
+            span = r.headers.get("Content-Range", "")
+    except urllib.error.HTTPError as e:
+        # GitHub answers 416 when the archive is smaller than the range asked for, rather than
+        # sending the whole file. Such an archive is under 16 KB, so just fetch all of it.
+        # (Found porting this from chameleon-data: every small patch was silently dropped.)
+        if e.code != 416:
+            raise
+        tail, span = _get(url), ""
+    total = int(span.rsplit("/", 1)[1]) if "/" in span and span.rsplit("/", 1)[1].isdigit() else len(tail)
+    end = tail.rfind(b"PK\x05\x06")
+    if end < 0 or end + 22 > len(tail):
+        return None
+    count, size, offset = struct.unpack("<HII", tail[end + 10 : end + 20])
+    if offset == 0xFFFFFFFF or size == 0xFFFFFFFF:
+        return None  # zip64: not used for patch archives this size
+    start = total - len(tail)
+    if offset >= start:
+        directory = tail[offset - start : offset - start + size]
+    else:
+        directory = _get(url, {"Range": f"bytes={offset}-{offset + size - 1}"})
+    names, i = [], 0
+    while i + 46 <= len(directory) and directory[i : i + 4] == b"PK\x01\x02":
+        flags = struct.unpack("<H", directory[i + 8 : i + 10])[0]
+        n, x, c = struct.unpack("<HHH", directory[i + 28 : i + 34])
+        raw = directory[i + 46 : i + 46 + n]
+        names.append(raw.decode("utf-8" if flags & 0x800 else "cp437", "replace"))
+        i += 46 + n + x + c
+    return names if len(names) == count else None
 
 
 def tree():
@@ -96,6 +142,9 @@ def tree():
     The blob sha is git's fingerprint of the file's contents, so it changes exactly when the
     archive does: it's the key the formats cache (see build) remembers each archive by."""
     data = json.loads(_get(TREE))
+    if data.get("truncated"):
+        # GitHub cuts long recursive listings short; publishing from one would drop hacks.
+        raise SystemExit("RAPatches tree listing was truncated: refusing to build from it.")
     for node in data["tree"]:
         if node["type"] != "blob":
             continue
@@ -113,30 +162,19 @@ def inner_patch(path):
     read but holds no patch we recognise (cached, so it isn't re-read every run); (None, None)
     when the read itself failed (not cached, so the next run tries again).
 
-    The central directory sits at the end of a zip, so the last few KB name the files inside;
-    a range request reads them without the whole archive. 7z is not laid out the same way, so
+    The central directory sits at the end of a zip, so range requests read the names inside
+    without the whole archive. 7z is not laid out the same way, so
     those fall back to the archive's own extension and a bps assumption.
     """
     if path.lower().endswith(".7z"):
         return os.path.basename(path), "bps"
-    url = RAW + urllib.parse.quote(path)
     try:
-        tail = _get(url, {"Range": "bytes=-16384"})
-    except urllib.error.HTTPError as e:
-        # GitHub answers 416 when the archive is smaller than the range asked for, rather than
-        # sending the whole file. Such an archive is under 16 KB, so just fetch all of it.
-        # (Found porting this from chameleon-data: every small patch was silently dropped.)
-        if e.code != 416:
-            return None, None
-        try:
-            tail = _get(url)
-        except Exception:
-            return None, None
+        listing = _zip_names(RAW + urllib.parse.quote(path))
     except Exception:
         return None, None
     # Every patch in the archive: some ship one per region and variant (Super Mario Sunshine's
     # QoL Enhancement: USA/Europe/Japan/Korea, 30 and 60 FPS), each becoming its own entry.
-    names = sorted({m.group(1).decode("latin-1") for m in PATCH_IN_NAME.finditer(tail)})
+    names = sorted({n for n in listing or [] if n.lower().endswith(PATCH_EXTS) and not n.endswith("/")})
     if not names:
         return "", ""
     # The newest revision first when several ship together, so the CRC the site knows wins.
@@ -357,8 +395,8 @@ def build(out_dir, only=None, workers=16, cache_path=None):
     if cache_path and os.path.isfile(cache_path):
         with open(cache_path, encoding="utf-8") as f:
             loaded = json.load(f)
-        # Version 2 lists every patch in an archive; older caches named one, so they're re-read.
-        if loaded.get("_v") == 2:
+        # Version 3 reads names from the zip directory; older caches came from a byte scan, so are re-read.
+        if loaded.get("_v") == 3:
             cache = {k: tuple(v) for k, v in loaded.items() if k != "_v"}
 
     # The archives worth reading: those on a console we have a pack and a dat for.
@@ -372,9 +410,12 @@ def build(out_dir, only=None, workers=16, cache_path=None):
             continue
         if short not in resolvers:
             resolvers[short] = nointro.resolver_for(LIBRETRO[short])
-        if resolvers[short]:
-            jobs.append((short, type_folder, path))
-            shas[path] = sha
+            if not resolvers[short]:
+                # Going on would publish the index without this console (and prune its cache),
+                # so fail the run instead and leave the last good index in place.
+                raise SystemExit(f"No-Intro dat for {short} ({LIBRETRO[short]}) unavailable.")
+        jobs.append((short, type_folder, path))
+        shas[path] = sha
 
     # The format needs a peek inside each archive; those reads are all network, so run them
     # in parallel - a few thousand tiny range requests one at a time would take an age.
@@ -395,7 +436,7 @@ def build(out_dir, only=None, workers=16, cache_path=None):
         os.makedirs(os.path.dirname(cache_path) or ".", exist_ok=True)
         with open(cache_path, "w", encoding="utf-8") as f:
             out = {k: list(v) for k, v in sorted(cache.items()) if k in live}
-            out["_v"] = 2
+            out["_v"] = 3
             json.dump(out, f, separators=(",", ":"))
 
     ra_games = RaGames(os.path.join(os.path.dirname(cache_path), "ra-games.json") if cache_path else None)

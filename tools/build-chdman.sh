@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Builds chdman for Android arm64, clean-room from official MAME.
+# Builds chdman for Android (arm64 and armv7), clean-room from official MAME.
 #
 # This is how app/src/main/jniLibs/arm64-v8a/libchdman.so was produced. It is not a fork
 # of anyone's project: it carves chdman and only its dependencies out of the official
@@ -9,8 +9,9 @@
 #
 # Provenance of the shipped binary:
 #   MAME commit : cfc4760a3be9c5a79846b19b6a573cb38459fa7e (2026-10-03)
-#   NDK         : 27.3.13750724 (clang 18, target aarch64-linux-android21)
-#   Result      : ELF64 AArch64 PIE, deps libc/libm/libdl only (libc++ static),
+#   NDK         : 27.3.13750724 (clang 18, targets aarch64-linux-android21 and
+#                 armv7a-linux-androideabi21)
+#   Result      : ELF64 AArch64 / ELF32 ARM PIEs, deps libc/libm/libdl only (libc++ static),
 #                 subcommands include createcd and createdvd.
 #
 # chdman is GPL-2.0; see licences/gpl-2.0-chdman.txt.
@@ -21,19 +22,20 @@ set -euo pipefail
 NDK="${NDK:-/c/Users/Joey/AppData/Local/Android/Sdk/ndk/27.3.13750724}"
 BIN="$NDK/toolchains/llvm/prebuilt/windows-x86_64/bin"
 CC="$BIN/clang.exe"; CXX="$BIN/clang++.exe"
-T="--target=aarch64-linux-android21"
+# The commit the shipped binary was built from; override to build another.
+MAME_COMMIT="${MAME_COMMIT:-cfc4760a3be9c5a79846b19b6a573cb38459fa7e}"
 
 # 1. Sparse, shallow checkout of only the parts chdman needs.
 if [ ! -d mame ]; then
-  git clone --no-checkout --depth 1 --filter=blob:none https://github.com/mamedev/mame.git
-  cd mame
-  git sparse-checkout init --cone
-  git sparse-checkout set src/tools src/lib/util src/osd \
+  git init --quiet mame
+  git -C mame remote add origin https://github.com/mamedev/mame.git
+  git -C mame sparse-checkout init --cone
+  git -C mame sparse-checkout set src/tools src/lib/util src/osd \
     3rdparty/zlib 3rdparty/flac 3rdparty/lzma 3rdparty/utf8proc 3rdparty/zstd
-  git checkout
-else
-  cd mame
 fi
+cd mame
+git fetch --depth 1 --filter=blob:none origin "$MAME_COMMIT"
+git checkout --quiet --force FETCH_HEAD
 
 INC="-Isrc/lib/util -Isrc/lib -Isrc/osd -I3rdparty -I3rdparty/zlib -I3rdparty/lzma/C -I3rdparty/utf8proc -I3rdparty/zstd/lib -I3rdparty/flac/include -I3rdparty/flac/src/libFLAC/include"
 DEF="-DLSB_FIRST -DCRLF=2 -DFLAC__NO_DLL -DNDEBUG -DZSTD_DISABLE_ASM -DZLIB_CONST"
@@ -73,7 +75,7 @@ build_abi() {
   cat > "$OBJ/stubs.cpp" <<'EOF'
 #include <cstdlib>
 extern const char build_version[];
-const char build_version[] = "mame-chdman (Chameleon build)";
+const char build_version[] = "mame-chdman (JoeyOS build)";
 const char *osd_getenv(const char *name) { return std::getenv(name); }
 EOF
   cxx "$OBJ/stubs.cpp"

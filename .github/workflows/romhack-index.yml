@@ -22,6 +22,7 @@ on:
     paths:
       - "tools/build_rapatches.py"
       - "tools/nointro.py"
+      - ".github/workflows/romhack-index.yml"
 
 permissions:
   contents: write
@@ -38,15 +39,20 @@ jobs:
       GITHUB_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false  # each git call below passes its own header
 
       - name: Has RAPatches changed?
         id: source
         run: |
-          remote="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          # The token goes in a header rather than the remote URL, so it never lands in git's
+          # config or output.
+          auth="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)"
+          remote="https://github.com/${GITHUB_REPOSITORY}.git"
           head=$(git ls-remote https://github.com/RetroAchievements/RAPatches.git refs/heads/main | cut -f1)
           echo "head=$head" >> "$GITHUB_OUTPUT"
-          if git ls-remote --exit-code --heads "$remote" data >/dev/null 2>&1; then
-            git clone --quiet --depth 1 --branch data "$remote" current
+          if git -c http.extraheader="$auth" ls-remote --exit-code --heads "$remote" data >/dev/null 2>&1; then
+            git -c http.extraheader="$auth" clone --quiet --depth 1 --branch data "$remote" current
           fi
           built=$(cat current/source-commit 2>/dev/null || true)
           # A push to the builder, a manual run or a new RAPatches commit rebuilds; otherwise stop.
@@ -67,9 +73,11 @@ jobs:
         uses: actions/cache@v4
         with:
           path: tools/.cache
-          # One key per week: the dats are fetched fresh once a week and reused by every run in
-          # between. They change rarely; a week-old one only misses brand-new dumps.
-          key: nointro-${{ steps.week.outputs.week }}
+          # Fetched fresh once a week and reused by every run in between: they change rarely, and
+          # a week-old one only misses brand-new dumps. Each run saves under its own key, restoring
+          # the week's latest, so a dat one run failed to fetch is kept once a later run gets it.
+          key: nointro-${{ steps.week.outputs.week }}-${{ github.run_id }}
+          restore-keys: nointro-${{ steps.week.outputs.week }}-
 
       - name: Build the index
         if: steps.source.outputs.build == 'true'
@@ -88,7 +96,8 @@ jobs:
       - name: Publish to the data branch
         if: steps.source.outputs.build == 'true'
         run: |
-          remote="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          auth="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)"
+          remote="https://github.com/${GITHUB_REPOSITORY}.git"
           if [ -d current ] && diff -r out/ra-patches current/ra-patches >/dev/null 2>&1; then
             # Same index: still record the source commit so the next run can stop early.
             if [ "$(cat current/source-commit 2>/dev/null)" = "$(cat out/source-commit)" ]; then
@@ -111,5 +120,5 @@ jobs:
           git -c user.name="github-actions[bot]" \
               -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
               commit --quiet -m "Romhack index from RAPatches ${{ steps.source.outputs.head }}"
-          git push --force --quiet "$remote" data
+          git -c http.extraheader="$auth" push --force --quiet "$remote" data
           echo "Published $(ls ra-patches | wc -l) consoles to the data branch."

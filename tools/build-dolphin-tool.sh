@@ -27,12 +27,17 @@ set -euo pipefail
 : "${CMAKE_BIN:?set CMAKE_BIN to an Android cmake >= 3.25 bin dir (e.g. .../cmake/4.1.2/bin)}"
 export PATH="$CMAKE_BIN:$PATH"
 
-# 1. Clone official Dolphin with submodules (shallow).
+# The commit the shipped binary was built from; override to build another.
+DOLPHIN_COMMIT="${DOLPHIN_COMMIT:-fa61f77fedb1f804851414a231509c55b8d8ed6c}"
+
+# 1. Fetch official Dolphin at that commit, with submodules (shallow).
 if [ ! -d dolphin ]; then
-  git clone --depth 1 --recurse-submodules --shallow-submodules \
-    https://github.com/dolphin-emu/dolphin.git dolphin
+  git init --quiet dolphin
+  git -C dolphin remote add origin https://github.com/dolphin-emu/dolphin.git
 fi
 cd dolphin
+git fetch --depth 1 origin "$DOLPHIN_COMMIT"
+git checkout --quiet --force FETCH_HEAD
 git submodule update --init --recursive --force --depth 1
 
 # 2. Two upstream include fixes needed to cross-compile current Dolphin for Android.
