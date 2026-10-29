@@ -4,7 +4,8 @@
 JoeyOS's copy of chameleon-data's builder (Chameleon is no longer maintained). The
 "Romhack index" Action runs it (every 15 minutes, when RAPatches has changed) and publishes the result to this repo's `data` branch, which the
 app reads from raw.githubusercontent.com. Only public sources are used (RAPatches and the
-libretro-database No-Intro dats) and only the Python standard library.
+libretro-database No-Intro dats) and only the Python standard library, plus py7zr to list
+the few archives RAPatches ships as .7z.
 
 
 The app's romhack tool (and the club's Romhack of the Month) look up a base ROM's CRC and
@@ -27,6 +28,7 @@ never published. Run from the repo root:
     python tools/build_rapatches.py --system GBA --out x   # one, for a quick check
 """
 import argparse
+import io
 import json
 import os
 import re
@@ -139,6 +141,16 @@ def _zip_names(url):
     return names
 
 
+def _7z_names(url):
+    """Every file name in the 7z at [url]. A 7z's directory is compressed, so unlike a zip it
+    can't be read from a range: the whole archive is fetched (once ever, thanks to the formats
+    cache) and listed. Raises on a failed read or an archive py7zr can't open."""
+    import py7zr  # only needed here, so a zip-only run works without it
+
+    with py7zr.SevenZipFile(io.BytesIO(_get(url))) as archive:
+        return [f.filename for f in archive.list() if not f.is_directory]
+
+
 def tree():
     """Every patch archive in the repo, as (system, type, path, blob sha).
 
@@ -166,13 +178,11 @@ def inner_patch(path):
     when the read itself failed (not cached, so the next run tries again).
 
     The central directory sits at the end of a zip, so range requests read the names inside
-    without the whole archive. 7z is not laid out the same way, so
-    those fall back to the archive's own extension and a bps assumption.
+    without the whole archive. A 7z is fetched whole and listed instead (see _7z_names).
     """
-    if path.lower().endswith(".7z"):
-        return os.path.basename(path), "bps"
+    url = RAW + urllib.parse.quote(path)
     try:
-        listing = _zip_names(RAW + urllib.parse.quote(path))
+        listing = _7z_names(url) if path.lower().endswith(".7z") else _zip_names(url)
     except Exception:
         return None, None
     # Every patch in the archive: some ship one per region and variant (Super Mario Sunshine's
@@ -192,7 +202,7 @@ def hack_name(patch_name, base, fallback):
     its filename carries the real title the archive's own slug ("695-dkl3-dinkydixiehack")
     does not. We drop the extension and, when the name leads with the base game the app
     already shows as the row's heading, that redundant prefix too, leaving "Dinky & Dixie
-    Hack (v2.0)". A 7z, whose inner name we cannot read cheaply, keeps the slug fallback.
+    Hack (v2.0)". An archive with no readable patch name keeps the slug fallback.
     """
     stem = os.path.splitext(patch_name)[0].strip()
     if not stem:
