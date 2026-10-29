@@ -68,7 +68,8 @@ def fold(title: str) -> str:
     which is what lets a hand-typed title meet a dat's formal name.
     """
     base = TAGS.sub("", title)
-    base = base.rsplit(".", 1)[0] if "." in base[-5:] else base  # drop a file extension
+    # Drop a real file extension only: "Super Mario Bros. 3" must not lose its " 3".
+    base = _no_ext(base.strip())
     base = re.sub(r"[^a-z0-9]+", " ", base.lower())
     # "The Legend of Zelda" / "Legend of Zelda, The" both lose the article either way.
     base = re.sub(r"\bthe\b", " ", base)
