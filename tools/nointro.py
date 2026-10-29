@@ -95,8 +95,11 @@ def _load(system: str) -> str | None:
             return f.read()
     text = _fetch(system)
     if text is not None:
-        with open(cached, "w", encoding="utf-8") as f:
+        # Written aside and renamed, so an interrupted run never leaves a cut-short dat that the
+        # Actions cache would then serve for the rest of the week.
+        with open(cached + ".part", "w", encoding="utf-8") as f:
             f.write(text)
+        os.replace(cached + ".part", cached)
     return text
 
 

@@ -311,13 +311,14 @@ def _unprefixed(name):
     return name
 
 
-def base_crcs(resolver, title):
+def base_crcs(resolver, title, loose=True):
     """The CRCs for a base title, tolerating the informal names patches use.
 
-    Tries an exact fold first; failing that, treats the title as the start of a catalogue name,
-    so "Pokemon Emerald" reaches "Pokemon Emerald Version". Being a shade over-inclusive is safe:
-    a BPS patch carries its source checksum and the app refuses to apply it to the wrong ROM, so
-    a hack listed under a near neighbour simply never takes there.
+    Tries an exact fold first; failing that, when [loose], treats the title as the start of a
+    catalogue name, so "Pokemon Emerald" reaches "Pokemon Emerald Version". Being a shade
+    over-inclusive is safe only for BPS: it carries its source checksum and the app refuses to
+    apply it to the wrong ROM. IPS and xdelta patches carry no such check and would apply to a
+    near neighbour and produce a broken ROM, so callers pass loose=False for them.
     """
     key = nointro.fold(title)
     if not key:
@@ -328,14 +329,14 @@ def base_crcs(resolver, title):
         return exact
     out = set()
     for name, crcs in resolver.by_title.items():
-        if name.startswith(key + " "):
+        if loose and name.startswith(key + " "):
             out |= crcs
     if out:
         return out
     # The catalogue's name may carry a publisher in front ("Nickelodeon SpongeBob ...").
     for name, crcs in resolver.by_title.items():
         bare = _unprefixed(name)
-        if bare != name and (bare == key or bare.startswith(key + " ")):
+        if bare != name and (bare == key or (loose and bare.startswith(key + " "))):
             out |= crcs
     return out
 
@@ -463,8 +464,10 @@ def build(out_dir, only=None, workers=16, cache_path=None):
         names = patch_names.split("\n")
         patch_name = max(names)
         crcs, title = set(), None
+        # Prefix matching only when every patch checks its source ROM (see base_crcs).
+        loose = all(n.lower().endswith(".bps") for n in names)
         for candidate in title_candidates(path.split("/"), type_folder, patch_name):
-            crcs = base_crcs(resolvers[short], candidate)
+            crcs = base_crcs(resolvers[short], candidate, loose)
             if crcs:
                 title = candidate
                 break
@@ -472,7 +475,7 @@ def build(out_dir, only=None, workers=16, cache_path=None):
             # Last resort: the RA game the archive is named after (its parent, for a subset).
             ra_title = ra_games.base_title(path)
             if ra_title:
-                crcs = base_crcs(resolvers[short], ra_title)
+                crcs = base_crcs(resolvers[short], ra_title, loose)
                 if crcs:
                     title = ra_title
         title = title or base_title(path.split("/"), type_folder, patch_name)
