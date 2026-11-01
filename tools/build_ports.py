@@ -45,33 +45,35 @@ def apk_of(release):
     return next((a for a in apks if "arm64" in a[0].lower()), apks[0] if apks else (None, None))
 
 
+def releases_url(source):
+    repository, provider = source.get("repository"), source.get("provider")
+    if not repository:
+        return None
+    if provider == "gitlab":
+        return f"https://gitlab.com/{repository}/-/releases"
+    return f"https://github.com/{repository}/releases/latest"
+
+
 def main():
     out = sys.argv[1] if len(sys.argv) > 1 else os.path.join("build", "ports", "android.json")
     repos = {r["slug"]: r for r in pages("/release-status?limit=100")}
     # The diff: an app's releases are only asked for when its version moved since the last list.
-    known, no_apk = {}, {}
+    known = {}
     if os.path.isfile(out):
         with open(out, encoding="utf-8") as f:
             last = json.load(f)
         known = {p["slug"]: p for p in last.get("ports", [])}
-        no_apk = last.get("noApk", {})
-    ports, skipped, asked = [], {}, 0
+    ports, asked = [], 0
     for app in pages("/apps?limit=100&os=android"):
         if "android" not in [str(s).lower() for s in app.get("supportedOS") or []]:
             continue
         slug, version = app["slug"], app.get("lastReleaseVersion")
-        if slug in no_apk and no_apk[slug] == version:
-            skipped[slug] = version
-            continue
         if slug in known and known[slug].get("version") == version:
-            name, url = known[slug]["apkName"], known[slug]["apkUrl"]
+            name, url = known[slug].get("apkName"), known[slug].get("apkUrl")
         else:
             asked += 1
             releases = get(f"/apps/{urllib.parse.quote(slug)}/releases?limit=1")["items"]
             name, url = apk_of(releases[0]) if releases else (None, None)
-        if not url:
-            skipped[slug] = version  # nothing installable yet: asked again at its next version
-            continue
         source = repos.get(app["slug"], {})
         ports.append({
             "slug": app["slug"],
@@ -84,6 +86,8 @@ def main():
             "released": app.get("lastReleaseAt"),
             "repository": source.get("repository"),
             "provider": source.get("provider"),
+            # No APK: the app opens the project's releases page instead of installing.
+            "releasesUrl": releases_url(source),
             "apkName": name,
             "apkUrl": url,
             "verified": bool(app.get("verified")),
@@ -96,7 +100,7 @@ def main():
     ports.sort(key=lambda p: p["name"].lower())
     os.makedirs(os.path.dirname(out) or ".", exist_ok=True)
     with open(out, "w", encoding="utf-8") as f:
-        json.dump({"source": "quiverlauncher.com", "ports": ports, "noApk": skipped}, f, indent=1)
+        json.dump({"source": "quiverlauncher.com", "ports": ports}, f, indent=1)
     print(f"wrote {out}: {len(ports)} ports, {asked} apps asked about")
 
 
