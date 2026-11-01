@@ -121,7 +121,10 @@ jobs:
             "  rebuild only reads new archives." \
             "- \`source-commit\`: the RAPatches commit this was built from." > README.md
           git init --quiet -b data
+          # The daily ports list shares this branch: carry it over.
+          if [ -d ../current/ports ]; then cp -r ../current/ports ports; fi
           git add ra-patches cache source-commit README.md
+          if [ -d ports ]; then git add ports; fi
           git -c user.name="github-actions[bot]" \
               -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
               commit --quiet -m "Romhack index from RAPatches ${{ steps.source.outputs.head }}"
