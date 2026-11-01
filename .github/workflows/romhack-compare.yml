@@ -101,6 +101,7 @@ jobs:
                   for crc, es in d.items():
                       if not isinstance(es, list): continue
                       for e in es:
+                          if not isinstance(e, dict): continue
                           out[(c, crc, e["path"])] = e
               return out
           old, new = load("current"), {}
