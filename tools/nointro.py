@@ -150,6 +150,5 @@ def resolver_for(system: str) -> Resolver | None:
     """A [Resolver] for a libretro system name (the dat's filename), or None when unreachable."""
     # "A|B" joins several dats into one console (MSX and MSX2).
     texts = [_load(name) for name in system.split("|")]
-    text = None if None in texts else "
-".join(texts)
+    text = None if None in texts else chr(10).join(texts)
     return Resolver(text) if text else None
