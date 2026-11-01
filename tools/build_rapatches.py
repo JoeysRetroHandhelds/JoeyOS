@@ -63,7 +63,7 @@ LIBRETRO = {
     "psp": "Sony - PlayStation Portable", "psx": "Sony - PlayStation", "saturn": "Sega - Saturn",
     "sega32x": "Sega - 32X", "segacd": "Sega - Mega-CD - Sega CD", "sg1000": "Sega - SG-1000",
     "snes": "Nintendo - Super Nintendo Entertainment System",
-    "tg16": "NEC - PC Engine - TurboGrafx 16", "wii": "Nintendo - Wii",
+    "tg16": "NEC - PC Engine - TurboGrafx 16|NEC - PC Engine CD - TurboGrafx-CD", "wii": "Nintendo - Wii",
 }
 
 # RAPatches' top-level console folder -> the pack shortname the app matches on. Folders with
@@ -342,6 +342,18 @@ ALIASES = {
 
 # Nicknames tried last, only for an archive nothing else placed, so no existing match can move.
 LAST_RESORT_ALIASES = {
+    "fire emblem mystery of emblem": "Fire Emblem - Monshou no Nazo",
+    "pokemon red blue": "Pokemon Red Version",
+    "valis": "Mugen Senshi Valis",
+    "ushio tora": "Ushio to Tora - Shinen no Taiyou",
+    "hino tori": "Hi no Tori - Houou Hen - Gaou no Bouken",
+    "wily and light no rockboard": "Wily & Right no RockBoard - That's Paradise",
+    "pyokotan no dai meiro": "Pyokotan no Daimeiro",
+    "earthbound": "Mother",
+    "tomb raider anniversary": "Lara Croft Tomb Raider - Anniversary",
+    "ys iv": "Ys IV - The Dawn of Ys",
+    "far east of eden": "Far East of Eden - Tengai Makyou Ziria",
+    "madou monogatari i": "Madou Monogatari I - Honoo no Sotsuenji",
     "loz ocarina of time": "The Legend of Zelda - Ocarina of Time",
     "loz majora s mask": "The Legend of Zelda - Majora's Mask",
     "sonic 3 knuckles": "Sonic & Knuckles + Sonic The Hedgehog 3",
