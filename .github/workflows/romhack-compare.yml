@@ -123,3 +123,4 @@ jobs:
           name: romhack-compare
           path: compare.tsv
           retention-days: 3
+# rerun 2: matching rules restored
