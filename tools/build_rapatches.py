@@ -37,6 +37,7 @@ import urllib.error
 import urllib.parse
 import time
 import urllib.request
+import zipfile
 from concurrent.futures import ThreadPoolExecutor
 
 import sys
@@ -56,7 +57,7 @@ LIBRETRO = {
     "gb": "Nintendo - Game Boy", "gba": "Nintendo - Game Boy Advance",
     "gbc": "Nintendo - Game Boy Color", "gc": "Nintendo - GameCube",
     "genesis": "Sega - Mega Drive - Genesis", "master": "Sega - Master System - Mark III",
-    "msx": "Microsoft - MSX|Microsoft - MSX2", "n64": "Nintendo - Nintendo 64", "nds": "Nintendo - Nintendo DS",
+    "msx": "Microsoft - MSX|Microsoft - MSX2|mame-msx1_flop|mame-msx2_flop|mame-msx2p_flop|mame-msxr_flop", "n64": "Nintendo - Nintendo 64", "nds": "Nintendo - Nintendo DS",
     "neogeocd": "SNK - Neo Geo CD", "nes": "Nintendo - Nintendo Entertainment System",
     "ngp": "SNK - Neo Geo Pocket", "pcfx": "NEC - PC-FX", "ps2": "Sony - PlayStation 2",
     "psp": "Sony - PlayStation Portable", "psx": "Sony - PlayStation", "saturn": "Sega - Saturn",
@@ -148,6 +149,37 @@ def _7z_names(url):
 
     with py7zr.SevenZipFile(io.BytesIO(_get(url))) as archive:
         return [f.filename for f in archive.list() if not f.is_directory]
+
+
+def bps_sources(path):
+    """{patch name: the CRC of the exact file it applies to}, read from each BPS in the archive.
+
+    A BPS ends with its source file's CRC, so this needs no title at all: it is what places a
+    hack whose name matches nothing, and each disk's patch on its own disk. The app applies a
+    7z's first patch, so a 7z gives only that one. Raises on a failed read.
+    """
+    data = _get(RAW + urllib.parse.quote(path))
+    if path.lower().endswith(".7z"):
+        import py7zr
+        import tempfile
+
+        out, first = {}, None
+        with tempfile.TemporaryDirectory() as folder:
+            with py7zr.SevenZipFile(io.BytesIO(data)) as archive:
+                listed = [f.filename for f in archive.list() if not f.is_directory]
+                archive.extractall(folder)
+            first = next((n for n in listed if n.lower().endswith(PATCH_EXTS)), None)
+            if first and first.lower().endswith(".bps"):
+                with open(os.path.join(folder, first), "rb") as f:
+                    out[first] = f.read()
+    else:
+        with zipfile.ZipFile(io.BytesIO(data)) as archive:
+            out = {n: archive.read(n) for n in archive.namelist() if n.lower().endswith(".bps")}
+    return {
+        n: f"{struct.unpack('<I', b[-12:-8])[0]:08x}"
+        for n, b in out.items()
+        if b[:4] == b"BPS1" and len(b) >= 16
+    }
 
 
 def tree():
@@ -489,6 +521,12 @@ def build(out_dir, only=None, workers=16, cache_path=None):
             json.dump(out, f, separators=(",", ":"))
 
     ra_games = RaGames(os.path.join(os.path.dirname(cache_path), "ra-games.json") if cache_path else None)
+    # Archive blob sha -> {patch: source CRC}, kept beside the formats cache: each is downloaded once.
+    sources_path = os.path.join(os.path.dirname(cache_path), "bps-sources.json") if cache_path else None
+    sources = {}
+    if sources_path and os.path.isfile(sources_path):
+        with open(sources_path, encoding="utf-8") as f:
+            sources = json.load(f)
     index = {}  # shortname -> {crc -> [hack]}
     for short, type_folder, path in jobs:
         patch_names, fmt = formats.get(path, (None, None))
@@ -529,6 +567,29 @@ def build(out_dir, only=None, workers=16, cache_path=None):
                     title = alias
                     break
         title = title or base_title(path.split("/"), type_folder, patch_name)
+        # Unplaced by name, or MSX disks (each disk's patch belongs on that disk): ask the patches.
+        sha = shas[path]
+        if (not crcs or short == "msx") and all(n.lower().endswith(".bps") for n in names):
+            if sha not in sources:
+                try:
+                    sources[sha] = bps_sources(path)
+                except Exception as e:
+                    print(f"  couldn't read patches in {path}: {e}")
+            exact = sources.get(sha)
+            if exact:
+                slug = os.path.splitext(os.path.basename(path))[0]
+                table = index.setdefault(short, {})
+                for inner, crc in exact.items():
+                    hack = {
+                        "name": hack_name(inner, title, slug) if len(exact) == 1 else variant_name(inner, title, slug),
+                        "type": type_folder,
+                        "path": path,
+                        "format": "bps",
+                    }
+                    if len(exact) > 1:
+                        hack["inner"] = inner
+                    table.setdefault(crc, []).append(hack)
+                continue
         if not crcs:
             print(f"  unresolved base: {short} {title!r}  ({path})")
             continue
@@ -557,6 +618,9 @@ def build(out_dir, only=None, workers=16, cache_path=None):
                 table.setdefault(crc, []).append(hack)
 
     ra_games.save()
+    if sources_path:
+        with open(sources_path, "w", encoding="utf-8") as f:
+            json.dump({k: v for k, v in sorted(sources.items()) if k in every_sha}, f, separators=(",", ":"))
     print(f"RA game lookups: {ra_games.asked} asked, {len(ra_games.cache)} known")
     if not index:
         raise SystemExit("No hacks resolved at all: refusing to publish an empty index.")
