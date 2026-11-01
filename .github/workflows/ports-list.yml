@@ -1,0 +1,47 @@
+# Keeps the app's Android ports list current (tools/build_ports.py), publishing it to this repo's
+# `data` branch. Players' apps read that copy, so only this job talks to Quiver. Only apps whose
+# version changed since the last list are asked about.
+name: Ports list
+
+on:
+  schedule:
+    - cron: "37 6 * * *"
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - "tools/build_ports.py"
+      - ".github/workflows/ports-list.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: romhack-index  # both publish to the data branch
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Build and publish
+        run: |
+          auth="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)"
+          remote="https://github.com/${GITHUB_REPOSITORY}.git"
+          git -c http.extraheader="$auth" clone --quiet --depth 1 --branch data "$remote" current
+          python3 tools/build_ports.py current/ports/android.json
+          cd current
+          git add ports
+          if git diff --cached --quiet; then
+            echo "Ports list unchanged."
+            exit 0
+          fi
+          git -c user.name="github-actions[bot]" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit --quiet -m "Ports list"
+          git -c http.extraheader="$auth" push --quiet origin data
