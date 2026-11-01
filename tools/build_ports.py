@@ -41,8 +41,9 @@ def apk_of(release):
     apks = []
     for asset in release.get("assets") or []:
         if asset.get("os") == "android" and asset.get("format") == "apk" and asset.get("url"):
-            apks.append((asset.get("filename", ""), asset["url"]))
-    return next((a for a in apks if "arm64" in a[0].lower()), apks[0] if apks else (None, None))
+            sha = asset.get("checksum") or ""
+            apks.append((asset.get("filename", ""), asset["url"], sha.removeprefix("sha256:") if sha.startswith("sha256:") else None))
+    return next((a for a in apks if "arm64" in a[0].lower()), apks[0] if apks else (None, None, None))
 
 
 def releases_url(source):
@@ -68,12 +69,12 @@ def main():
         if "android" not in [str(s).lower() for s in app.get("supportedOS") or []]:
             continue
         slug, version = app["slug"], app.get("lastReleaseVersion")
-        if slug in known and known[slug].get("version") == version:
-            name, url = known[slug].get("apkName"), known[slug].get("apkUrl")
+        if slug in known and known[slug].get("version") == version and "sha256" in known[slug]:
+            name, url, sha = known[slug].get("apkName"), known[slug].get("apkUrl"), known[slug]["sha256"]
         else:
             asked += 1
             releases = get(f"/apps/{urllib.parse.quote(slug)}/releases?limit=1")["items"]
-            name, url = apk_of(releases[0]) if releases else (None, None)
+            name, url, sha = apk_of(releases[0]) if releases else (None, None, None)
         source = repos.get(app["slug"], {})
         ports.append({
             "slug": app["slug"],
@@ -91,6 +92,7 @@ def main():
             "releasesUrl": releases_url(source),
             "apkName": name,
             "apkUrl": url,
+            "sha256": sha,
             "verified": bool(app.get("verified")),
             "recommended": app.get("recommended", 0),
             "issues": app.get("reportIssues", 0),
