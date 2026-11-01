@@ -56,7 +56,7 @@ LIBRETRO = {
     "gb": "Nintendo - Game Boy", "gba": "Nintendo - Game Boy Advance",
     "gbc": "Nintendo - Game Boy Color", "gc": "Nintendo - GameCube",
     "genesis": "Sega - Mega Drive - Genesis", "master": "Sega - Master System - Mark III",
-    "msx": "Microsoft - MSX", "n64": "Nintendo - Nintendo 64", "nds": "Nintendo - Nintendo DS",
+    "msx": "Microsoft - MSX|Microsoft - MSX2", "n64": "Nintendo - Nintendo 64", "nds": "Nintendo - Nintendo DS",
     "neogeocd": "SNK - Neo Geo CD", "nes": "Nintendo - Nintendo Entertainment System",
     "ngp": "SNK - Neo Geo Pocket", "pcfx": "NEC - PC-FX", "ps2": "Sony - PlayStation 2",
     "psp": "Sony - PlayStation Portable", "psx": "Sony - PlayStation", "saturn": "Sega - Saturn",
