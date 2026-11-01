@@ -306,6 +306,10 @@ def title_candidates(parts, type_folder, patch_name):
 ALIASES = {
     "spongebob squarepants bfbb": "SpongeBob SquarePants - Battle for Bikini Bottom",
     "spongebob squarepants the movie": "The SpongeBob SquarePants Movie",
+}
+
+# Nicknames tried last, only for an archive nothing else placed, so no existing match can move.
+LAST_RESORT_ALIASES = {
     "loz ocarina of time": "The Legend of Zelda - Ocarina of Time",
     "loz majora s mask": "The Legend of Zelda - Majora's Mask",
     "sonic 3 knuckles": "Sonic & Knuckles + Sonic The Hedgehog 3",
@@ -509,12 +513,20 @@ def build(out_dir, only=None, workers=16, cache_path=None):
                 crcs = base_crcs(resolvers[short], ra_title)
                 if crcs:
                     title = ra_title
-        if not crcs and is_7z:
-            # Only for an archive nothing else placed: the name of the patch inside it.
-            for candidate in title_candidates(path.split("/"), type_folder, display_name):
+        if not crcs:
+            names_tried = [patch_name, display_name] if is_7z else [patch_name]
+            tried = [c for n in names_tried for c in title_candidates(path.split("/"), type_folder, n)]
+            # The patch's own name inside a 7z, then the nicknames.
+            for candidate in tried if is_7z else []:
                 crcs = base_crcs(resolvers[short], candidate)
                 if crcs:
                     title = candidate
+                    break
+            for candidate in tried if not crcs else []:
+                alias = LAST_RESORT_ALIASES.get(nointro.fold(candidate))
+                crcs = base_crcs(resolvers[short], alias) if alias else set()
+                if crcs:
+                    title = alias
                     break
         title = title or base_title(path.split("/"), type_folder, patch_name)
         if not crcs:
