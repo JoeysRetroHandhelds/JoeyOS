@@ -75,7 +75,7 @@ def fold(title: str) -> str:
     return " ".join(base.split()).strip()
 
 
-MAME_HASH = "https://raw.githubusercontent.com/mamedev/mame/master/hash/"
+MAME_HASH = "https://raw.githubusercontent.com/mamedev/mame/a48afb957ac8d0fb902d2449c83a25a1795ee6c7/hash/"
 
 
 def _fetch_mame(listname: str) -> str | None:
