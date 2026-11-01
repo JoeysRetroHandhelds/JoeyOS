@@ -375,6 +375,18 @@ LAST_RESORT_ALIASES = {
     "pokemon white 2": "Pokemon White Version 2",
 }
 
+# Archives whose names say nothing a title can use: part of the path -> the catalogue name.
+LAST_RESORT_PATHS = {
+    "31817-IdolmasterSP-PerfectSun": "Idolmaster SP - Perfect Sun",
+    "31818-IdolmasterSP-MissingMoon": "Idolmaster SP - Missing Moon",
+    "31819-IdolmasterSP-WanderingStar": "Idolmaster SP - Wandering Star",
+    "PokemonHeartGold-MoemonHG": "Pokemon HeartGold Version",
+    "PokemonSoulSilver-MoemonSS": "Pokemon SoulSilver Version",
+    "19337-PhantasyStarGeneration-1": "Sega Ages 2500 Series Vol. 1 - Phantasy Star Generation-1",
+    "19347-PhantasyStarGeneration2": "Sega Ages 2500 Series Vol. 17 - Phantasy Star Generation-2",
+    "20248-OgreBattle": "Densetsu no Ogre Battle",
+}
+
 # Publisher names the catalogues put in front of a title and patch folders leave off.
 PREFIXES = ("nickelodeon ", "nick ", "disneys ", "disney ", "marvel ", "tom clancys ")
 
@@ -572,6 +584,10 @@ def build(out_dir, only=None, workers=16, cache_path=None):
                 if crcs:
                     title = candidate
                     break
+            for part, name in LAST_RESORT_PATHS.items():
+                if not crcs and part in path:
+                    crcs = base_crcs(resolvers[short], name)
+                    title = name if crcs else title
             for candidate in tried if not crcs else []:
                 alias = LAST_RESORT_ALIASES.get(nointro.fold(candidate))
                 crcs = base_crcs(resolvers[short], alias) if alias else set()
