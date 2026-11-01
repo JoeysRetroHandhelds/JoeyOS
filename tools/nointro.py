@@ -75,7 +75,31 @@ def fold(title: str) -> str:
     return " ".join(base.split()).strip()
 
 
+MAME_HASH = "https://raw.githubusercontent.com/mamedev/mame/master/hash/"
+
+
+def _fetch_mame(listname: str) -> str | None:
+    """A MAME software list as dat text, one game per disk: No-Intro has no MSX disks."""
+    import html
+    try:
+        with urllib.request.urlopen(MAME_HASH + listname + ".xml", timeout=120) as response:
+            xml = response.read().decode("utf-8", "replace")
+    except Exception:
+        return None
+    games = []
+    for block in re.findall(r"<software .*?</software>", xml, re.S):
+        title = re.search(r"<description>(.*?)</description>", block)
+        if not title:
+            continue
+        for number, crc in enumerate(re.findall(r'<rom [^>]*crc="([0-9a-fA-F]{8})"', block), 1):
+            name = html.unescape(title.group(1)).replace('"', "'") + f" (Disk {number})"
+            games.append(chr(10).join(['game (', f'	name "{name}"', f'	rom ( name "{name}.dsk" crc {crc} )', ')']))
+    return chr(10).join(games) or None
+
+
 def _fetch(system: str) -> str | None:
+    if system.startswith("mame-"):
+        return _fetch_mame(system[5:])
     for root in ROOTS:
         url = BASE + urllib.parse.quote(f"{root}{system}.dat")
         try:
