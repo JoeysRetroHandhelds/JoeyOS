@@ -4,7 +4,8 @@
 JoeyOS's copy of chameleon-data's builder (Chameleon is no longer maintained). The
 "Romhack index" Action runs it (every 15 minutes, when RAPatches has changed) and publishes the result to this repo's `data` branch, which the
 app reads from raw.githubusercontent.com. Only public sources are used (RAPatches and the
-libretro-database No-Intro dats) and only the Python standard library.
+libretro-database No-Intro dats) and only the Python standard library, plus py7zr to list
+the few archives RAPatches ships as .7z.
 
 
 The app's romhack tool (and the club's Romhack of the Month) look up a base ROM's CRC and
@@ -27,6 +28,7 @@ never published. Run from the repo root:
     python tools/build_rapatches.py --system GBA --out x   # one, for a quick check
 """
 import argparse
+import io
 import json
 import os
 import re
@@ -139,6 +141,15 @@ def _zip_names(url):
     return names
 
 
+def _7z_names(url):
+    """Every file name in the 7z at [url], in archive order. A 7z's directory is compressed, so
+    the whole archive is fetched (once ever, thanks to the formats cache) and listed."""
+    import py7zr  # only needed here, so a zip-only run works without it
+
+    with py7zr.SevenZipFile(io.BytesIO(_get(url))) as archive:
+        return [f.filename for f in archive.list() if not f.is_directory]
+
+
 def tree():
     """Every patch archive in the repo, as (system, type, path, blob sha).
 
@@ -166,12 +177,18 @@ def inner_patch(path):
     when the read itself failed (not cached, so the next run tries again).
 
     The central directory sits at the end of a zip, so range requests read the names inside
-    without the whole archive. 7z is not laid out the same way, so those fall back to the
-    archive's own extension and a bps assumption.
+    without the whole archive. A 7z is fetched whole and listed. The app applies a 7z's first
+    patch, so only that one is named, and (name, "?") marks a 7z holding no patch we recognise.
     """
-    if path.lower().endswith(".7z"):
-        return os.path.basename(path), "bps"
     url = RAW + urllib.parse.quote(path)
+    if path.lower().endswith(".7z"):
+        try:
+            found = [n for n in _7z_names(url) if n.lower().endswith(PATCH_EXTS)]
+        except Exception:
+            return None, None
+        if not found:
+            return os.path.basename(path), "?"
+        return found[0], found[0].rsplit(".", 1)[1].lower()
     try:
         listing = _zip_names(url)
     except Exception:
@@ -426,13 +443,16 @@ def build(out_dir, only=None, workers=16, cache_path=None):
     # The format needs a peek inside each archive; those reads are all network, so run them
     # in parallel - a few thousand tiny range requests one at a time would take an age.
     formats = {path: cache[shas[path]] for _, _, path in jobs if shas[path] in cache}
-    to_read = [j for j in jobs if j[2] not in formats]
+    # A 7z cached by its own name with a bps guess has not been listed yet.
+    unlisted = lambda p: p.lower().endswith('.7z') and formats.get(p, ('', ''))[1] == 'bps' and formats[p][0].lower().endswith('.7z')
+    to_read = [j for j in jobs if j[2] not in formats or unlisted(j[2])]
     print(f"{len(jobs)} archives, {len(formats)} known from the cache, reading {len(to_read)}...")
     with ThreadPoolExecutor(max_workers=workers) as pool:
         for path, (patch_name, fmt) in zip(
             [j[2] for j in to_read], pool.map(lambda j: inner_patch(j[2]), to_read)
         ):
-            formats[path] = (patch_name, fmt)
+            # A 7z that can't be read stays listed as before, and is tried again next run.
+            formats[path] = (patch_name, fmt) if patch_name is not None or not path.lower().endswith(".7z") else (os.path.basename(path), "bps")
             # A failed read (None) is left out of the cache, so the next run tries it again.
             if patch_name is not None:
                 cache[shas[path]] = (patch_name, fmt)
@@ -453,6 +473,10 @@ def build(out_dir, only=None, workers=16, cache_path=None):
             continue
         names = patch_names.split("\n")
         patch_name = max(names)
+        display_name, is_7z = patch_name, path.lower().endswith('.7z')
+        if is_7z:
+            # Matched by the archive's own name: its inner name only corrects the label.
+            patch_name, fmt = os.path.basename(path), 'bps' if fmt == '?' else fmt
         crcs, title = set(), None
         for candidate in title_candidates(path.split("/"), type_folder, patch_name):
             crcs = base_crcs(resolvers[short], candidate)
@@ -474,7 +498,7 @@ def build(out_dir, only=None, workers=16, cache_path=None):
         table = index.setdefault(short, {})
         if len(names) == 1:
             hack = {
-                "name": hack_name(patch_name, title, slug),
+                "name": hack_name(display_name if is_7z else patch_name, title, slug),
                 "type": type_folder,
                 "path": path,
                 "format": fmt,
