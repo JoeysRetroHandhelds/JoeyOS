@@ -80,6 +80,7 @@ def main():
             "name": app["name"],
             "type": app.get("projectType"),
             "consoles": app.get("consoles") or [],
+            "games": [g.get("title") for g in app.get("games") or [] if g.get("title")],
             "description": app.get("description") or "",
             "artwork": app.get("artwork"),
             "version": app.get("lastReleaseVersion"),
