@@ -111,8 +111,7 @@ jobs:
               for tag, keys, src in (("LOST", lost, old), ("ADDED", added, new)):
                   for k in keys:
                       e = src[k]
-                      o.write("	".join([tag, k[0], k[1], e.get("format", ""), e.get("name", ""), k[2]]) + "
-")
+                      o.write(chr(9).join([tag, k[0], k[1], e.get("format", ""), e.get("name", ""), k[2]]) + chr(10))
           PY
           python3 compare.py
           head -c 60000 compare.tsv
