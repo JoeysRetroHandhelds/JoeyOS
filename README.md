@@ -53,6 +53,7 @@ The home screen with your own wallpaper and the dock along the bottom: your favo
 - For GameNative to list its installed games, in GameNative go to Settings > Interface > Frontend Sync and pick a folder for each store you use (Steam, Epic, GOG, Amazon, custom games). JoeyOS finds the folders on its own
 - DroidDeck and GameNative don't keep a play history JoeyOS can read, so their Recently Played shows the games you started from JoeyOS first, then the rest of your installed games
 - Bachata S4 (PS4) shows on the dock and opens the emulator, but doesn't have Recently Played yet
+- HakuX (original Xbox) shows on the dock and opens the emulator. It keeps its play history private, so it doesn't have Recently Played. Put your games in ROMs/xbox
 - No other emulators outside of these have been configured to work
 
 ---
@@ -107,7 +108,7 @@ The tools never change your original games, and only remove them if you choose t
 - **Check BIOS files**: shows which consoles have the BIOS they need and which are missing one
 - **Patch a ROM**: applies a romhack or translation patch (IPS, UPS, BPS, PPF, APS, xdelta). You name the new file and choose to save it next to the original or in Downloads. Tick **Save compressed** to get a zip (or CHD/RVZ/ZCCI) instead of the raw file
 - **Generate .m3u playlists**: turns multi-disc games into one playlist each, so each game shows once. Can be undone
-- **Compress ROMs**: zips cartridge games and converts discs to CHD, GameCube/Wii to RVZ and 3DS to ZCCI. Can be undone
+- **Compress ROMs**: zips cartridge games and converts discs to CHD, GameCube/Wii to RVZ, 3DS to ZCCI and full Xbox disc images to XISO (games already in XISO are left alone). Can be undone
 - **RetroAchievements romhacks**: finds hacks and translations with achievements for the games you own, and creates the patched game for you. For a game with a patch per disk, **Patch all disks** does them in one go
 - **Android ports**: finds Android ports of games, with Search and a Games I own filter. Installs one in a click, or opens its release page if it has no APK. List based on the Quiver Launcher catalog
 - **Check for updates** and **Share log** (send this to me if something goes wrong). The log is also saved in **Internal storage › JoeyOS**
