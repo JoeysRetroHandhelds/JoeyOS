@@ -5,6 +5,7 @@ on:
 
 jobs:
   notify:
+    if: ${{ !github.event.release.prerelease }}
     runs-on: ubuntu-latest
     steps:
       - name: Post release to Discord
