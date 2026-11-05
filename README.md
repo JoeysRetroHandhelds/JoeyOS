@@ -91,17 +91,18 @@ JoeyOS checks GitHub for a new version when it starts and every 15 minutes after
 - Set a dock background
 - Set the dock title size
 - Choose a default wallpaper or upload your own
+- **Panel over games** (single-screen handhelds): see below
 
 ### Settings → Emulators
 - For RetroArch, choose which cores you have installed
 - Default cores are pre-selected based on recommendation, but games won't load unless the chosen core is actually installed
 
 ### Settings → Achievements
-- Log in with your RetroAchievements account (Account): enter your username and API key, then press **Connect**
-- Overview: games beaten this year and all-time, what you're currently playing, and beaten/mastered per year
-- Games: your beaten and mastered games by year and month, plus "Almost there" (the games you're closest to beating), with filters
-- Stats: totals, points, hours played and charts
-- Press A on any game for its details
+- Log in with your RetroAchievements account: enter your username and API key, then press **Connect**
+- Once you're in, it's the same Achievements page as the second screen's (see below): your points, what you're playing, recent awards, "Almost there", awards by year, your fastest beats and a search of every game. Press A on any game for its achievements
+- **Account** (top right): **Count achievements** (Both, Hardcore or Casual), **Hide achievement spoilers**, refresh and log out
+- **Count achievements** decides which unlocks count everywhere: on both screens, in the panel, in Currently playing, awards, points and each game's list. With Hardcore, casual unlocks show as locked (you can still earn them in hardcore), and the other way round with Casual. Changing it in one place changes it everywhere
+- If you're offline, you still see your achievements from last time
 
 ### Settings → Tools
 The tools never change your original games, and only remove them if you choose to when compressing.
@@ -125,6 +126,16 @@ In **Settings › Tools › Google backup**, sign in with Google and JoeyOS keep
 - Game paths on an SD card are matched to each device's own card, or to the same place in internal storage
 - **Delete my backups…** removes everything JoeyOS keeps in your Drive. Backup needs Google sign-in, which some handhelds don't have
 
+## Panel over games (single-screen handhelds)
+
+On a handheld with one screen, JoeyOS can show the second screen's pages over the game you're playing: your achievements, the game's guide and its info, without leaving the game. During a game started from JoeyOS, swipe in from the left edge to open it, and press B (or tap beside it) to close it. Your controller works in it, and in a guide the D-pad, L2 / R2 and the sticks scroll.
+
+It's off until you choose it. JoeyOS offers it during first-time setup (or once on the home screen if you already had JoeyOS), and it's in **Settings → Appearance → Panel over games**. It needs **JoeyOS screens** switched on in Android's Accessibility settings: JoeyOS takes you there. Android will warn that it can see and control the screen. JoeyOS uses it only to draw the panel and notice a keyboard opening: it reads nothing on screen, types nothing and never sees your buttons.
+
+**Android says "App was denied access"?** On Android 13 and newer, an app installed from a downloaded APK has to be allowed first. Open JoeyOS's App info (JoeyOS offers a button), tap **⋮** in the top right, then **Allow restricted settings**, and switch on JoeyOS screens again.
+
+The panel only works in games started from JoeyOS, so other apps keep their left edge. If you leave a game with Home and go back to it from Recents, start it from JoeyOS again to get the panel back.
+
 ## Second screen (dual-screen handhelds like the AYN Thor)
 
 On a device with two screens, JoeyOS puts its own app on the other screen. Turn it on or off in **Settings → Appearance → Second screen**, where you can also choose which screen games open on. Below that you can give it its own wallpaper: Plain (the default), any of the top screen's wallpapers, or your own image.
@@ -136,9 +147,9 @@ Tabs:
 - **Achievements** (when logged in to RetroAchievements): your points, what you're playing, recent awards, "Almost there", awards by year, your Want to Play list, your fastest beats (your time to beat each game next to how long most players take), and a search of every game on RetroAchievements. Tap any game for its achievements, or a total (beaten this year, beaten all-time, completed) for its list
 - **Now playing** (while a game runs): the achievements of the game RetroAchievements sees you playing, with its live status, session and play time, how long most players take to beat it (and your own time once you have), a Show button (all, locked, earned, missable, to beat, leaderboards) and a Sort button (including Rarest), an "Unlocked!" banner, and tips from each achievement's comments. Under the live status are your last few status lines. **Leaderboards** shows your rank and score beside the top score. **Hunt this** on an achievement pins it to the top of the list with a tip (up to 3), and it unpins once you earn it. Each achievement shows how far into the game it's usually earned, and a RARE tag when fewer than 5% of players have it. Tap the game's icon for its box art, title screen and a screenshot, and how many players have beaten it
 - **Guide** (while a game runs): see below
-- **Settings**: which tab shows while you're browsing JoeyOS (Apps or Achievements), whether a game opens on Now playing or the Guide, and hiding achievement spoilers, dimming the screen after a set idle time while a game is running (off by choice), and how long the session summary stays up after a game (Off, 10, 20 or 30 seconds)
+- **Settings**: which tab shows while you're browsing JoeyOS (Apps or Achievements), whether a game opens on Now playing or the Guide, Count achievements and hiding achievement spoilers (both shared with the main screen), dimming the screen after a set idle time while a game is running (off by choice), and how long the session summary stays up after a game (Off, 10, 20 or 30 seconds)
 
-**Keyboard over the second screen**: if your handheld shows the keyboard on the bottom screen, typing in another app (a browser, say) would hide it under the second screen. Switch on **JoeyOS keyboard** in Android's Accessibility settings (JoeyOS offers to take you there on first launch, and it's in Settings › Appearance › Second screen) and the second screen steps aside whenever a keyboard opens. It only notices the keyboard opening and closing.
+**Keyboard over the second screen**: if your handheld shows the keyboard on the bottom screen, typing in another app (a browser, say) would hide it under the second screen. Switch on **JoeyOS screens** in Android's Accessibility settings (JoeyOS offers to take you there on first launch, and it's in Settings › Appearance › Second screen) and the second screen steps aside whenever a keyboard opens. It only notices the keyboard opening and closing.
 
 **Session summary**: when you finish a game (after at least a minute), a card shows your time played, achievements and points earned, leaderboard scores, and whether you beat or mastered it. Tap it to close it sooner.
 
@@ -152,6 +163,7 @@ Nothing downloads until you choose it. Guides are saved in **Internal storage �
 - **Which game?** Games started from Recently Played are known straight away. For a game started inside ARMSX3, Eden, Vita3K, XenDroid or GameHub, the Guide finds it from the emulator's own records; with RetroAchievements it uses what RetroAchievements reports; otherwise type the name or pick it from the emulator's recent games
 - **Search the web**: a built-in browser with ad blocking (DuckDuckGo). Save any page to read offline later
 - **YouTube**: opens your YouTube app (including ReVanced) on search results for the game's walkthrough
+- With a controller: the D-pad scrolls when there's nothing to move to, L2 / R2 go a page and the sticks scroll smoothly
 - The tabs always stay at the top. In Guide, the arrow at the end of the tab row hides or shows the guide's own bar (Options, Find, Contents, Change guide) for more room
 
 ## Credits
