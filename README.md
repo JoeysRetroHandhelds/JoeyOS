@@ -111,6 +111,7 @@ The tools never change your original games, and only remove them if you choose t
 - **Generate .m3u playlists**: turns multi-disc games into one playlist each, so each game shows once. Can be undone
 - **Compress ROMs**: zips cartridge games and converts discs to CHD, GameCube/Wii to RVZ, 3DS to ZCCI and full Xbox disc images to XISO (games already in XISO are left alone). Can be undone
 - **RetroAchievements romhacks**: finds hacks and translations with achievements for the games you own, and creates the patched game for you. For a game with a patch per disk, **Patch all disks** does them in one go
+- **ScreenScraper account** (optional): game manuals download from ScreenScraper without an account. Sign in with your own (free at screenscraper.fr) for a higher daily limit, and for when ScreenScraper is only open to its members. It's checked with ScreenScraper before it's saved, kept encrypted, and never backed up
 - **Android ports**: finds Android ports of games, with Search and a Games I own filter. Installs one in a click, or opens its release page if it has no APK. List based on the Quiver Launcher catalog
 - **Check for updates** and **Share log** (send this to me if something goes wrong). The log is also saved in **Internal storage › JoeyOS**
 
@@ -156,15 +157,17 @@ Tabs:
 The Achievements and Now playing tabs only appear when you're logged in to RetroAchievements. "Completed" is for games finished in casual (softcore) mode, "Mastered" for hardcore.
 
 ### Guides
-Nothing downloads until you choose it. Guides are saved in **Internal storage › JoeyOS › guides**, and JoeyOS remembers which guide you picked for each game and where you were in it.
+Nothing downloads until you choose it. Guides are saved in **Internal storage › JoeyOS › guides**, manuals in **Internal storage › JoeyOS › manuals**, and JoeyOS remembers which guide you picked for each game and where you were in it.
 - **Your video**: while playing, open a video in YouTube, tap Share and choose JoeyOS. It becomes that game's guide, and the Guide opens on it (Watch, Change guide, Remove). Share another video to change it. Switch on **Open the game's video straight away** in the second screen's Settings to have the Guide open the video in YouTube directly
 - **RetroAchievements guide**: when the game has one, it's first in the list. Save it to read offline
 - **GameFAQs archive**: download the text walkthrough for the game and read it offline, with text size, wrap, reflow, light/dark/sepia, Find and Contents
 - **Which game?** Games started from Recently Played are known straight away. For a game started inside ARMSX3, Eden, Vita3K, XenDroid or GameHub, the Guide finds it from the emulator's own records; with RetroAchievements it uses what RetroAchievements reports; otherwise type the name or pick it from the emulator's recent games
+- **Manual**: the game's printed manual, scanned, as a PDF. **Download the manual** gets it from ScreenScraper (no account needed). Manuals ES-DE has already downloaded, and a PDF next to the ROM, show up on their own. **Search the web** finds one anywhere else: tap its PDF to keep it. In a manual: pinch or double-tap to zoom, or use − / +, and tap **Page X of N** to jump to a page. With a controller, L3 / R3 zoom out and in, and the sticks' left / right move across a zoomed page
 - **Search the web**: a built-in browser with ad blocking (DuckDuckGo). Save any page to read offline later
 - **YouTube**: opens your YouTube app (including ReVanced) on search results for the game's walkthrough
 - With a controller: the D-pad scrolls when there's nothing to move to, L2 / R2 go a page and the sticks scroll smoothly
 - The tabs always stay at the top. In Guide, the arrow at the end of the tab row hides or shows the guide's own bar (Options, Find, Contents, Change guide) for more room
 
 ## Credits
+- Game manuals: [ScreenScraper](https://www.screenscraper.fr)
 - Dock system icons: RetroArch's menu themes ([libretro/retroarch-assets](https://github.com/libretro/retroarch-assets)), CC BY 4.0
