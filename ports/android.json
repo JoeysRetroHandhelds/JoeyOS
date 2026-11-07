@@ -1,0 +1,4597 @@
+{
+ "source": "quiverlauncher.com",
+ "ports": [
+  {
+   "slug": "2-ship-2-harkinian-2-ship-2-harkinian-android",
+   "name": "2 Ship 2 Harkinian",
+   "type": "port",
+   "consoles": [
+    "n64"
+   ],
+   "games": [
+    "The Legend of Zelda: Majora's Mask"
+   ],
+   "description": "2 Ship 2 Harkinian Android is an Android port of 2 Ship 2 Harkinian for The Legend of Zelda: Majora's Mask, allowing the data folder to be moved to an SD card, touch controls to be toggled, and menu sizes to be scaled.",
+   "artwork": "https://raw.githubusercontent.com/linkzenic/2ship2harkinian-Android/f3b83e517d44c60d0aa4955348bb5d6154856030/mm/linux/2s2hIcon.png",
+   "version": "v5.0.1-android.3",
+   "released": 1792726416000,
+   "repository": "linkzenic/2ship2harkinian-Android",
+   "provider": "github",
+   "releasesUrl": "https://github.com/linkzenic/2ship2harkinian-Android/releases/latest",
+   "apkName": "2Ship-Android-v5.0.1-android.3.apk",
+   "apkUrl": "https://github.com/linkzenic/2ship2harkinian-Android/releases/download/v5.0.1-android.3/2Ship-Android-v5.0.1-android.3.apk",
+   "sha256": "23121c8645e6baf1f27c2f55518aa2a77e69ef108c2538317ef3fc46a26da98d",
+   "verified": true,
+   "recommended": 4,
+   "issues": 0,
+   "broken": 1
+  },
+  {
+   "slug": "3ds-azahar",
+   "name": "3ds",
+   "type": "emulator",
+   "consoles": [
+    "3ds"
+   ],
+   "games": [],
+   "description": "Azahar is a Nintendo 3DS emulator for Windows, Linux, macOS, and Android that offers improvements over original hardware like higher resolutions and save states.",
+   "artwork": "https://raw.githubusercontent.com/azahar-emu/azahar/9c38437daad90a2f05f55a047d04d4073a476456/dist/qt_themes/default/icons_light/256x256/azahar.png",
+   "version": "2127.0-alpha4",
+   "released": 1793560092000,
+   "repository": "azahar-emu/azahar",
+   "provider": "github",
+   "releasesUrl": "https://github.com/azahar-emu/azahar/releases/latest",
+   "apkName": "azahar-android-vanilla-2127.0-alpha4.apk",
+   "apkUrl": "https://github.com/azahar-emu/azahar/releases/download/2127.0-alpha4/azahar-android-vanilla-2127.0-alpha4.apk",
+   "sha256": "89edd733f475595eec3e0ce5fb127d44e3f2d176378dfb0f4d91e80a4755666b",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "aerogauge-aerogaugerecompiled",
+   "name": "AeroGauge",
+   "type": "port",
+   "consoles": [
+    "n64"
+   ],
+   "games": [
+    "AeroGauge"
+   ],
+   "description": "AeroGauge: Recompiled brings AeroGauge to PC.",
+   "artwork": "https://github.com/alondero/aerogauge-recomp/raw/main/docs/aerogauge-fan-art.png",
+   "version": "v0.7.0",
+   "released": 1793052371000,
+   "repository": "alondero/aerogauge-recomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/alondero/aerogauge-recomp/releases/latest",
+   "apkName": "aerogauge-recomp-android-arm64.apk",
+   "apkUrl": "https://github.com/alondero/aerogauge-recomp/releases/download/v0.7.0/aerogauge-recomp-android-arm64.apk",
+   "sha256": "e0e42b9d391ca692f9a3f75c24b3413e9056a590eaba8e894bd58664569d58dc",
+   "verified": true,
+   "recommended": 2,
+   "issues": 0,
+   "broken": 1
+  },
+  {
+   "slug": "ambermoon-ambermoon-net",
+   "name": "Ambermoon",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Ambermoon"
+   ],
+   "description": "Ambermoon.net is a full C# rewrite of Ambermoon and will run at least on Windows, Linux and Mac.",
+   "artwork": "https://raw.githubusercontent.com/Pyrdacor/Ambermoon.net/0c4ce99b2ec4f27907e601bbafaa6b01d7da7a63/Ambermoon.net/Resources/AppIcon.png",
+   "version": "v1.15.1",
+   "released": 1793726743000,
+   "repository": "Pyrdacor/Ambermoon.net",
+   "provider": "github",
+   "releasesUrl": "https://github.com/Pyrdacor/Ambermoon.net/releases/latest",
+   "apkName": "com.pyrdacor.AmbermoonAndroid-Signed.apk",
+   "apkUrl": "https://github.com/Pyrdacor/Ambermoon.net/releases/download/v1.14.2/com.pyrdacor.AmbermoonAndroid-Signed.apk",
+   "sha256": "e63ea5ffe8315ea6e70864952dd73e1f40bceb009a03cc5b03e90e3a8f974849",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "animalcrossing-animalcrossingpcport",
+   "name": "Animal Crossing",
+   "type": "port",
+   "consoles": [
+    "gcn"
+   ],
+   "games": [
+    "Animal Crossing"
+   ],
+   "description": "Animal Crossing PC Port brings Animal Crossing to PC.",
+   "artwork": "https://cdn2.steamgriddb.com/thumb/e7e0ee2ddc3636ac14f9ca563f15010e.jpg",
+   "version": "v1.0.0",
+   "released": 1793647877000,
+   "repository": "flyngmt/Nookery",
+   "provider": "github",
+   "releasesUrl": "https://github.com/flyngmt/Nookery/releases/latest",
+   "apkName": "Nookery-v1.0.0-android-arm64.apk",
+   "apkUrl": "https://github.com/flyngmt/Nookery/releases/download/v1.0.0/Nookery-v1.0.0-android-arm64.apk",
+   "sha256": "a6433e7a01f50fd099953208d9c6b175469066d5ab0a1516a3e2677364d213cc",
+   "verified": true,
+   "recommended": 1,
+   "issues": 3,
+   "broken": 0
+  },
+  {
+   "slug": "animal-crossing-new-horizons-recomp",
+   "name": "Animal Crossing: New Horizons",
+   "type": "port",
+   "consoles": [
+    "switch"
+   ],
+   "games": [
+    "Animal Crossing: New Horizons"
+   ],
+   "description": "ACNHRecomp is a native PC port of Animal Crossing: New Horizons that translates the game's code to C++ and its graphics to Vulkan, offering in-game settings and controller support.",
+   "artwork": "https://raw.githubusercontent.com/Nycolazs/ACNHRecomp/b0c357c13b22cc6419c6ae6ca9711de55c6d08fe/assets/acnhrecomp.png",
+   "version": "v0.8.0",
+   "released": 1793883194000,
+   "repository": "Nycolazs/ACNHRecomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/Nycolazs/ACNHRecomp/releases/latest",
+   "apkName": "ACNHRecomp-v0.7.0-android.apk",
+   "apkUrl": "https://github.com/Nycolazs/ACNHRecomp/releases/download/v0.7.0/ACNHRecomp-v0.7.0-android.apk",
+   "sha256": "7f534b8791f344378b6982e15efab1dc952afd54e479b9a290652f8abeb58029",
+   "verified": true,
+   "recommended": 3,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "automobililamborghini-automobililamborghinirecompiled",
+   "name": "Automobili Lamborghini",
+   "type": "port",
+   "consoles": [
+    "n64"
+   ],
+   "games": [
+    "Automobili Lamborghini"
+   ],
+   "description": "Automobili Lamborghini: Recompiled is a native port of the Nintendo 64 game Automobili Lamborghini, bringing it to Windows, Linux, and Android.",
+   "artwork": "https://cdn2.steamgriddb.com/thumb/a8308eb391711fe05ae54e2bbcc12d8a.jpg",
+   "version": "v0.10.3",
+   "released": 1793330777000,
+   "repository": "alondero/automobililamborghini-recomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/alondero/automobililamborghini-recomp/releases/latest",
+   "apkName": "lamborghini-recomp-android-arm64.apk",
+   "apkUrl": "https://github.com/alondero/automobililamborghini-recomp/releases/download/v0.10.3/lamborghini-recomp-android-arm64.apk",
+   "sha256": "95b30a24fabd42f34ddb82a15cee506b677ee8a8a5f68db2231515aaee279ad0",
+   "verified": true,
+   "recommended": 1,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "banjo-kazooie-banjo-recompiled",
+   "name": "Banjo-Kazooie",
+   "type": "port",
+   "consoles": [
+    "n64",
+    "mobile"
+   ],
+   "games": [
+    "Banjo-Kazooie"
+   ],
+   "description": "An Android port of the Banjo: Recompiled project",
+   "artwork": "https://raw.githubusercontent.com/AurelioB/BanjoRecomp-Android/2966e05b808afdf7fb82cb3f07397aa9383b02f1/icons/appb.ico",
+   "version": "android-v0.1.2",
+   "released": 1783979742000,
+   "repository": "AurelioB/BanjoRecomp-Android",
+   "provider": "github",
+   "releasesUrl": "https://github.com/AurelioB/BanjoRecomp-Android/releases/latest",
+   "apkName": "BanjoRecompiled-v0.1.2-Android-ARM64.apk",
+   "apkUrl": "https://github.com/AurelioB/BanjoRecomp-Android/releases/download/android-v0.1.2/BanjoRecompiled-v0.1.2-Android-ARM64.apk",
+   "sha256": "4c2a5e57c41119bb6149ffcfb6b012d44466460b29ca54ae81008afc5d13f5ac",
+   "verified": true,
+   "recommended": 0,
+   "issues": 1,
+   "broken": 1
+  },
+  {
+   "slug": "banjo-kazooie-lighthouse-android",
+   "name": "Banjo-Kazooie",
+   "type": "port",
+   "consoles": [
+    "n64"
+   ],
+   "games": [
+    "Banjo-Kazooie"
+   ],
+   "description": "An Android port of Harbour Masters' Lighthouse, a Banjo-Kazooie port.",
+   "artwork": "https://raw.githubusercontent.com/izzy2lost/Lighthouse/b0acff83a19913213de439aa9b4f7138c68cbad9/logo.png",
+   "version": "1.0.2",
+   "released": 1786062678000,
+   "repository": "izzy2lost/Lighthouse",
+   "provider": "github",
+   "releasesUrl": "https://github.com/izzy2lost/Lighthouse/releases/latest",
+   "apkName": "app-release.apk",
+   "apkUrl": "https://github.com/izzy2lost/Lighthouse/releases/download/1.0.2/app-release.apk",
+   "sha256": "e30da13b4b5d1803403ae09c34ff19dfd39fa7a0b6166b4b8ba93d9bc0294f8e",
+   "verified": true,
+   "recommended": 2,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "big-red-racing-big-red-report",
+   "name": "Big Red Racing",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Big Red Racing"
+   ],
+   "description": "Big Red Report is a fan-made port of Big Red Racing for modern computers with modern graphics, split-screen, LAN and online multiplayer.",
+   "artwork": "https://raw.githubusercontent.com/BigRedReport/bigredreport/0318d38bbcf3f66a1406fa81d3de73f684253539/escritorio/icon.ico",
+   "version": "v0.116.0",
+   "released": 1793914407000,
+   "repository": "BigRedReport/bigredreport",
+   "provider": "github",
+   "releasesUrl": "https://github.com/BigRedReport/bigredreport/releases/latest",
+   "apkName": "BigRedReport-Android.apk",
+   "apkUrl": "https://github.com/BigRedReport/bigredreport/releases/download/v0.114.0/BigRedReport-Android.apk",
+   "sha256": "70f32098d0309d2754a95b7adc80d1d4e6aac6ea99b5850d16ea67998be9706d",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "buffy-the-vampire-slayer-chaos-bleeds-buffy-chaos-bleeds-pc",
+   "name": "Buffy the Vampire Slayer: Chaos Bleeds",
+   "type": "port",
+   "consoles": [
+    "og xbox"
+   ],
+   "games": [
+    "Buffy the Vampire Slayer: Chaos Bleeds"
+   ],
+   "description": "Buffy Chaos Bleeds PC is a native Windows port of Buffy the Vampire Slayer Chaos Bleeds for Xbox, featuring sharp resolutions, high frame rates, and a launcher.",
+   "artwork": "https://raw.githubusercontent.com/KaikoClanworth1/buffy-chaos-bleeds-pc/34166525b72447515339edad3e46cd62ff7e1a86/port/android/res/mipmap-xxhdpi/ic_launcher_foreground.png",
+   "version": "v1.0.2",
+   "released": 1790918102000,
+   "repository": "KaikoClanworth1/buffy-chaos-bleeds-pc",
+   "provider": "github",
+   "releasesUrl": "https://github.com/KaikoClanworth1/buffy-chaos-bleeds-pc/releases/latest",
+   "apkName": "Buffy-Chaos-Bleeds-Android-v1.0.2.apk",
+   "apkUrl": "https://github.com/KaikoClanworth1/buffy-chaos-bleeds-pc/releases/download/v1.0.2/Buffy-Chaos-Bleeds-Android-v1.0.2.apk",
+   "sha256": "eb6e626a30d11cfd1dc3ee6910281a76e0ec451eec0b23a569bdfd812e81dd1f",
+   "verified": true,
+   "recommended": 0,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "burnout-3-takedown-takedawn",
+   "name": "Burnout 3: Takedown",
+   "type": "port",
+   "consoles": [
+    "og xbox"
+   ],
+   "games": [
+    "Burnout 3: Takedown"
+   ],
+   "description": "Takedawn is a native port of Burnout 3 Takedown for Windows, Linux, macOS, and Android that offers higher resolutions, widescreen support, and custom soundtracks.",
+   "artwork": "https://cdn2.steamgriddb.com/grid/cc3f8e5a60e2d263490d057b67ac1e8a.png",
+   "version": "v0.3.1",
+   "released": 1793945819000,
+   "repository": "xenophobentx/takedawn",
+   "provider": "github",
+   "releasesUrl": "https://github.com/xenophobentx/takedawn/releases/latest",
+   "apkName": "Takedawn-0.2.1-android-arm64.apk",
+   "apkUrl": "https://github.com/xenophobentx/takedawn/releases/download/v0.2.1/Takedawn-0.2.1-android-arm64.apk",
+   "sha256": "d919562db6cc3108effac3f7dc1a9fa71de3ea3f9f08a10488ee574dad80099c",
+   "verified": true,
+   "recommended": 35,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "burnout-revenge-xerenge",
+   "name": "Burnout Revenge",
+   "type": "port",
+   "consoles": [
+    "x360"
+   ],
+   "games": [
+    "Burnout Revenge"
+   ],
+   "description": "Xerenge is a native PC port of Burnout Revenge for Windows, Linux, macOS, and Android that recompiles the game's PowerPC code to C++.",
+   "artwork": "https://raw.githubusercontent.com/shipa-2/Xerenge/1e968d06fc6feeaab838091cd1b45cf43038f6cc/rexglue/installer/icons/xerenge-rounded.png",
+   "version": "v0.4.10",
+   "released": 1793544959000,
+   "repository": "shipa-2/Xerenge",
+   "provider": "github",
+   "releasesUrl": "https://github.com/shipa-2/Xerenge/releases/latest",
+   "apkName": "Burnout_Revenge-android-arm64.apk",
+   "apkUrl": "https://github.com/shipa-2/Xerenge/releases/download/v0.4.9/Burnout_Revenge-android-arm64.apk",
+   "sha256": "33829f93edbd14114d1fcf52353beb1aace1bc07a79df3e65d8b36d9d8dedc8f",
+   "verified": true,
+   "recommended": 5,
+   "issues": 4,
+   "broken": 1
+  },
+  {
+   "slug": "caesariii-augustus",
+   "name": "Caesar III",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Caesar III"
+   ],
+   "description": "Augustus brings Caesar III to PC.",
+   "artwork": "https://raw.githubusercontent.com/Keriew/augustus/refs/heads/master/res/augustus.ico",
+   "version": "v4.0.0",
+   "released": 1703769490000,
+   "repository": "Keriew/augustus",
+   "provider": "github",
+   "releasesUrl": "https://github.com/Keriew/augustus/releases/latest",
+   "apkName": "augustus-4.0.0-android.apk",
+   "apkUrl": "https://github.com/Keriew/augustus/releases/download/v4.0.0/augustus-4.0.0-android.apk",
+   "sha256": null,
+   "verified": true,
+   "recommended": 2,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "caesariii-julius",
+   "name": "Caesar III",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Caesar III"
+   ],
+   "description": "Julius brings Caesar III to PC.",
+   "artwork": "https://raw.githubusercontent.com/bvschaik/julius/refs/heads/master/res/julius.ico",
+   "version": "v1.8.0",
+   "released": 1753984017000,
+   "repository": "bvschaik/julius",
+   "provider": "github",
+   "releasesUrl": "https://github.com/bvschaik/julius/releases/latest",
+   "apkName": "julius-1.8.0-android.apk",
+   "apkUrl": "https://github.com/bvschaik/julius/releases/download/v1.8.0/julius-1.8.0-android.apk",
+   "sha256": "f5a0226e458da9f75efa4f704c0e654ed3ea764c468079b90c39cdf5d4856adb",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "castlevania-symphony-of-the-night-nocturnerecomp",
+   "name": "Castlevania: Symphony of the Night",
+   "type": "port",
+   "consoles": [
+    "x360"
+   ],
+   "games": [
+    "Castlevania: Symphony of the Night"
+   ],
+   "description": "NocturneRecomp is a native PC port of Castlevania Symphony of the Night for Windows and Linux that converts the Xbox Live Arcade version to x86_64 code.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/78571f3ed2cc64e2a81e964ce63615d6.png",
+   "version": "v1.5.2",
+   "released": 1793900319000,
+   "repository": "birabittoh/NocturneRecomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/birabittoh/NocturneRecomp/releases/latest",
+   "apkName": "nocturnerecomp-v1.5.1-android-arm64.apk",
+   "apkUrl": "https://github.com/birabittoh/NocturneRecomp/releases/download/v1.5.1/nocturnerecomp-v1.5.1-android-arm64.apk",
+   "sha256": "72cdf6b59143504e31d7134252e21d131b299262caf7b96d1dec08fc14174d3a",
+   "verified": true,
+   "recommended": 4,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "cataclysm-bright-nights",
+   "name": "Cataclysm: Bright Nights",
+   "type": "game",
+   "consoles": [
+    "pc"
+   ],
+   "games": [],
+   "description": "Cataclysm: Bright Nights is a roguelike game with sci-fi elements set in a post-apocalyptic world where players struggle to survive.",
+   "artwork": "https://raw.githubusercontent.com/cataclysmbn/Cataclysm-BN/b4a6341b169b1e45f479134fe7f92d1986201b3c/data/cataicon.ico",
+   "version": "2026-11-06",
+   "released": 1793938924000,
+   "repository": "cataclysmbn/Cataclysm-BN",
+   "provider": "github",
+   "releasesUrl": "https://github.com/cataclysmbn/Cataclysm-BN/releases/latest",
+   "apkName": "cbn-android-x64-2026-10-30.apk",
+   "apkUrl": "https://github.com/cataclysmbn/Cataclysm-BN/releases/download/2026-10-30/cbn-android-x64-2026-10-30.apk",
+   "sha256": "fa6a1d9385ee6f1bacdc6306b0db00668b13cc5714d09941a47c4e16f6ad3fc2",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "cataclysm-dark-days-ahead",
+   "name": "Cataclysm: Dark Days Ahead",
+   "type": "game",
+   "consoles": [
+    "pc"
+   ],
+   "games": [],
+   "description": "Cataclysm: Dark Days Ahead is a turn-based survival game set in a post-apocalyptic world where players struggle to survive by scavenging and fighting monsters.",
+   "artwork": "https://raw.githubusercontent.com/CleverRaven/Cataclysm-DDA/b3f0e1223b803ff09a8242a3224f28f5fafe7827/build-data/osx/AppIcon.iconset/icon_128x128%402x.png",
+   "version": "cdda-experimental-2026-11-06-1016",
+   "released": 1793960223000,
+   "repository": "CleverRaven/Cataclysm-DDA",
+   "provider": "github",
+   "releasesUrl": "https://github.com/CleverRaven/Cataclysm-DDA/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "cataclysm-the-last-generation",
+   "name": "Cataclysm: The Last Generation",
+   "type": "game",
+   "consoles": [
+    "pc"
+   ],
+   "games": [],
+   "description": "Cataclysm: The Last Generation is a postapocalyptic survival game based on Cataclysm: Dark Days Ahead with refined progression and immersive life simulation.",
+   "artwork": "https://raw.githubusercontent.com/Cataclysm-TLG/Cataclysm-TLG/8b4418d94fa870eaff61541109f4e16210de46fb/build-data/osx/AppIcon.iconset/icon_128x128%402x.png",
+   "version": "cataclysm-tlg-1.0-2026-11-06-0707",
+   "released": 1793948846000,
+   "repository": "Cataclysm-TLG/Cataclysm-TLG",
+   "provider": "github",
+   "releasesUrl": "https://github.com/Cataclysm-TLG/Cataclysm-TLG/releases/latest",
+   "apkName": "ctlg-android-x32-2026-11-03-0841.apk",
+   "apkUrl": "https://github.com/Cataclysm-TLG/Cataclysm-TLG/releases/download/cataclysm-tlg-1.0-2026-11-03-0841/ctlg-android-x32-2026-11-03-0841.apk",
+   "sha256": "9acdd2953c20309b41ea65b54497683cadaece713e584ce8066019c88a5f549f",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "cave-story-doukutsu-rs",
+   "name": "Cave Story",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Cave Story"
+   ],
+   "description": "A reimplementation of the Cave Story engine with many quality-of-life improvements. The project supports the original freeware, Cave Story+ (GOG and Original Steam Version, no support for the 2026 Steam version yet) and Nintendo Switch data files.",
+   "artwork": "https://raw.githubusercontent.com/doukutsu-rs/doukutsu-rs/7e6870e55f072e3f056dc1eef3974a1af26c7aae/res/crabsue-icon.ico",
+   "version": "1.0.0",
+   "released": 1780523282000,
+   "repository": "doukutsu-rs/doukutsu-rs",
+   "provider": "github",
+   "releasesUrl": "https://github.com/doukutsu-rs/doukutsu-rs/releases/latest",
+   "apkName": "doukutsu-rs_android_1.0.0.universal.apk",
+   "apkUrl": "https://github.com/doukutsu-rs/doukutsu-rs/releases/download/1.0.0/doukutsu-rs_android_1.0.0.universal.apk",
+   "sha256": "fae4e1629c81a911a01677d2979ed53e03b86cad18b08b0ce4d7287f9affe275",
+   "verified": true,
+   "recommended": 4,
+   "issues": 0,
+   "broken": 1
+  },
+  {
+   "slug": "colin-mcrae-rally-2-0-opencmr2",
+   "name": "Colin McRae Rally 2.0",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Colin McRae Rally 2.0"
+   ],
+   "description": "OpenCMR2 is a native port of Colin McRae Rally 2.0 to modern platforms, offering widescreen resolutions and high frame rates.",
+   "artwork": "https://raw.githubusercontent.com/pablocpas/OpenCMR2/236eda1083df18c90374c1c0bdee907073062ea6/res/opencmr2.ico",
+   "version": "v1.8.5",
+   "released": 1793909110000,
+   "repository": "pablocpas/OpenCMR2",
+   "provider": "github",
+   "releasesUrl": "https://github.com/pablocpas/OpenCMR2/releases/latest",
+   "apkName": "OpenCMR2-Android.apk",
+   "apkUrl": "https://github.com/pablocpas/OpenCMR2/releases/download/v1.8.4/OpenCMR2-Android.apk",
+   "sha256": "2d73d5a725022dc5d0b9884df362fb5bffe50ffb8a501ac3b00029ac6c60e841",
+   "verified": true,
+   "recommended": 11,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "crashbandicoot-crashbandicootlauncher",
+   "name": "Crash Bandicoot",
+   "type": "port",
+   "consoles": [
+    "ps1"
+   ],
+   "games": [
+    "Crash Bandicoot"
+   ],
+   "description": "Crash Bandicoot Launcher brings Crash Bandicoot to PC.",
+   "artwork": "https://raw.githubusercontent.com/Matteo842/CrashBandicoot-Launcher/refs/heads/main/icon.png",
+   "version": "2.4",
+   "released": 1793394648000,
+   "repository": "Matteo842/CrashBandicoot-Launcher",
+   "provider": "github",
+   "releasesUrl": "https://github.com/Matteo842/CrashBandicoot-Launcher/releases/latest",
+   "apkName": "CrashBandicoot-2.3.1.apk",
+   "apkUrl": "https://github.com/Matteo842/CrashBandicoot-Launcher/releases/download/2.3.1/CrashBandicoot-2.3.1.apk",
+   "sha256": "1e4604d2476df88ee043ed38a4c9a510c5dab8ce22d5f149b9bcef952b61db6f",
+   "verified": true,
+   "recommended": 3,
+   "issues": 4,
+   "broken": 0
+  },
+  {
+   "slug": "crash-of-the-titans-crashrecomp-crash-of-the-titans-definitive-edition-pc",
+   "name": "Crash of the Titans",
+   "type": "port",
+   "consoles": [
+    "x360"
+   ],
+   "games": [
+    "Crash of the Titans"
+   ],
+   "description": "Crash of the Titans statically recompiled for Windows: DLSS/FSR, PC controls, PT-BR subtitles and mod support.",
+   "artwork": "https://raw.githubusercontent.com/VitoMiguelF/crashott-pc/8ee8b4e7bdea715d72281296288b5dffd427e6b3/launcher/crashrecomp.ico",
+   "version": "v1.10.1",
+   "released": 1793479066000,
+   "repository": "VitoMiguelF/crashott-pc",
+   "provider": "github",
+   "releasesUrl": "https://github.com/VitoMiguelF/crashott-pc/releases/latest",
+   "apkName": "CrashOTTDE-v1.10.1.apk",
+   "apkUrl": "https://github.com/VitoMiguelF/crashott-pc/releases/download/v1.10.1/CrashOTTDE-v1.10.1.apk",
+   "sha256": "de3522af775513276cd2f30b57ab87e435a1b309f830d1050b3cdfee86cc15ad",
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "crashteamracing-ctrnativeandroid",
+   "name": "Crash Team Racing",
+   "type": "port",
+   "consoles": [
+    "ps1"
+   ],
+   "games": [
+    "Crash Team Racing"
+   ],
+   "description": "CTR Native Android brings Crash Team Racing to PC.",
+   "artwork": "https://cdn2.steamgriddb.com/thumb/0340a3b7dd7a146d0d9a41fa92ce05fa.jpg",
+   "version": "Android-Build4",
+   "released": 1785079386000,
+   "repository": "Simon358/ctr-native-android",
+   "provider": "github",
+   "releasesUrl": "https://github.com/Simon358/ctr-native-android/releases/latest",
+   "apkName": "CTR-native-android.26.07.2026.apk",
+   "apkUrl": "https://github.com/Simon358/ctr-native-android/releases/download/Android-Build4/CTR-native-android.26.07.2026.apk",
+   "sha256": "a14cb6fc5d39bedeff2c1c5479a50aeba6ade022428d5ac9196dcd50cc79ca38",
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "daytona-usa-daytona-usa-static-recomp",
+   "name": "Daytona USA",
+   "type": "port",
+   "consoles": [
+    "arcade"
+   ],
+   "games": [
+    "Daytona USA"
+   ],
+   "description": "Daytona USA Static Recomp is a native code port of Daytona USA for Android, Windows, macOS, Linux, PS Vita, and iOS.",
+   "artwork": "https://cdn2.steamgriddb.com/grid/8b065cc5471524a7d00380b249394f93.png",
+   "version": "Releases",
+   "released": 1793305456000,
+   "repository": "baliebox4916/daytona-arcade-recomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/baliebox4916/daytona-arcade-recomp/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 1
+  },
+  {
+   "slug": "diablo-devilutionx",
+   "name": "Diablo",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Diablo"
+   ],
+   "description": "DevilutionX is a port of Diablo and Hellfire that provides engine improvements, bug fixes, and optional quality of life features.",
+   "artwork": "https://raw.githubusercontent.com/diasurgical/DevilutionX/0706e014d6a12ec8178a81fba549a68bd559f247/Packaging/windows/icon.ico",
+   "version": "1.5.5",
+   "released": 1761843617000,
+   "repository": "diasurgical/DevilutionX",
+   "provider": "github",
+   "releasesUrl": "https://github.com/diasurgical/DevilutionX/releases/latest",
+   "apkName": "devilutionx-android.apk",
+   "apkUrl": "https://github.com/diasurgical/DevilutionX/releases/download/1.5.5/devilutionx-android.apk",
+   "sha256": "c5a53ff35223e367eba75ef8ed2caa31ea8e78792d8aff00f2cee51a0566b28f",
+   "verified": true,
+   "recommended": 5,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "diddykongracing-dkrr",
+   "name": "Diddy Kong Racing",
+   "type": "port",
+   "consoles": [
+    "n64"
+   ],
+   "games": [
+    "Diddy Kong Racing"
+   ],
+   "description": "DKR-R brings Diddy Kong Racing to PC.",
+   "artwork": "https://raw.githubusercontent.com/ThatGuyMcd/DKR-R/refs/heads/main/assets/ui/Icons/diddy_kong_racing_recompiled_ico_by_pooterman.png",
+   "version": "Version1.0.14",
+   "released": 1793814746000,
+   "repository": "ThatGuyMcd/DKR-R",
+   "provider": "github",
+   "releasesUrl": "https://github.com/ThatGuyMcd/DKR-R/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 5,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "discord-times-razdor",
+   "name": "Discord Times",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Discord Times"
+   ],
+   "description": "Razdor is a Rust port of Discord Times for Windows, macOS, and Android that features turn-based tactical combat and kingdom exploration.",
+   "artwork": "https://raw.githubusercontent.com/indicozy/razdor/08fec3509cf7df6a7ccf83ed2ffe5122dd6b6071/data/icon/razdor.ico",
+   "version": "v1.3.12",
+   "released": 1793919163000,
+   "repository": "indicozy/razdor",
+   "provider": "github",
+   "releasesUrl": "https://github.com/indicozy/razdor/releases/latest",
+   "apkName": "razdor.apk",
+   "apkUrl": "https://github.com/indicozy/razdor/releases/download/v1.2.2/razdor.apk",
+   "sha256": "cd8e47982e8fae365f1b70051c07c1a60dba095cbe6cb51a5fb2c2cda9ae00b0",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "doom-rpg-com-mobilerpgpack-phone",
+   "name": "Doom RPG",
+   "type": "port",
+   "consoles": [
+    "mobile"
+   ],
+   "games": [
+    "Doom RPG"
+   ],
+   "description": "Android port of UZDoom, with second screen support. Tested and built specifically for the Ayn Thor.",
+   "artwork": "https://raw.githubusercontent.com/andreyvelsk/com.mobilerpgpack.phone/b426c93675418ab6876f1ce8137cbb084cef0738/fastlane/metadata/android/en-US/images/icon.png",
+   "version": "2.9.1-ds.1.0.2",
+   "released": 1781079013000,
+   "repository": "andreyvelsk/com.mobilerpgpack.phone",
+   "provider": "github",
+   "releasesUrl": "https://github.com/andreyvelsk/com.mobilerpgpack.phone/releases/latest",
+   "apkName": "Classic.Core.Dualscreen_fdroid_release_v2.9.1-ds.1.0.2_b67_2026_06_10_10_20.apk",
+   "apkUrl": "https://github.com/andreyvelsk/com.mobilerpgpack.phone/releases/download/2.9.1-ds.1.0.2/Classic.Core.Dualscreen_fdroid_release_v2.9.1-ds.1.0.2_b67_2026_06_10_10_20.apk",
+   "sha256": "adb06abf15cffe3aab113ad7a8813b060704e1b9af1532f3ac4f750e47a731d1",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "doraemon-3-nobita-no-machi-sos-dora3-64",
+   "name": "Doraemon 3: Nobita no Machi SOS!",
+   "type": "port",
+   "consoles": [
+    "n64"
+   ],
+   "games": [
+    "Doraemon 3: Nobita no Machi SOS!"
+   ],
+   "description": "Dora3-64 is a native port of Doraemon 3: Nobita no Machi SOS! for Windows, Linux and Android with widescreen support and a modern camera.",
+   "artwork": "https://raw.githubusercontent.com/citrongames/Dora64-3/bea71eec9846ed0b13f203f644af6732c0bec553/assets/icons/dora64-3.ico",
+   "version": "v1.0.0",
+   "released": 1791916744000,
+   "repository": "citrongames/Dora64-3",
+   "provider": "github",
+   "releasesUrl": "https://github.com/citrongames/Dora64-3/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "doraemon-nobita-to-mittsu-no-seireiseki-dora64",
+   "name": "Doraemon: Nobita to Mittsu no Seireiseki",
+   "type": "port",
+   "consoles": [
+    "n64"
+   ],
+   "games": [
+    "Doraemon: Nobita to Mittsu no Seireiseki"
+   ],
+   "description": "A native desktop and Android recompilation of Doraemon: Nobita to Mittsu no Seireiseki for Nintendo 64.",
+   "artwork": "https://raw.githubusercontent.com/citrongames/Dora64/680d81feb4c57309ba80536300d73725ea9dffaa/assets/icons/dora64_icon_linux_512.png",
+   "version": "v1.0.4",
+   "released": 1790354569000,
+   "repository": "citrongames/Dora64",
+   "provider": "github",
+   "releasesUrl": "https://github.com/citrongames/Dora64/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "downhill-domination-downhill-revived",
+   "name": "Downhill Domination",
+   "type": "port",
+   "consoles": [
+    "ps2"
+   ],
+   "games": [
+    "Downhill Domination"
+   ],
+   "description": "Downhill Revived is a PC port of Downhill Domination for PlayStation 2 with online races and a native renderer.",
+   "artwork": "https://raw.githubusercontent.com/skuza-oss/downhill-revived/7cd9543f3144bd03beb27f20bbd4e0739c453128/port/res/icon.png",
+   "version": "v0.7.11",
+   "released": 1793917736000,
+   "repository": "skuza-oss/downhill-revived",
+   "provider": "github",
+   "releasesUrl": "https://github.com/skuza-oss/downhill-revived/releases/latest",
+   "apkName": "DownhillRevived-0.7.9-android-experimental.apk",
+   "apkUrl": "https://github.com/skuza-oss/downhill-revived/releases/download/v0.7.9/DownhillRevived-0.7.9-android-experimental.apk",
+   "sha256": "620db7758a22af1f5cb8e77667006caeb1691aab3e8bcd3a5bd4aea31ded80ae",
+   "verified": true,
+   "recommended": 3,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "eternalsonata-eternalsonatareprise",
+   "name": "Eternal Sonata",
+   "type": "port",
+   "consoles": [
+    "x360"
+   ],
+   "games": [
+    "Eternal Sonata"
+   ],
+   "description": "EternalSonataReprise brings Eternal Sonata to PC.",
+   "artwork": "https://cdn2.steamgriddb.com/thumb/ff8c46249e595208862a91ed5bb6e372.jpg",
+   "version": "v1.3.8",
+   "released": 1793746250000,
+   "repository": "birabittoh/EternalSonataReprise",
+   "provider": "github",
+   "releasesUrl": "https://github.com/birabittoh/EternalSonataReprise/releases/latest",
+   "apkName": "eternalsonata-v1.3.7-android-arm64.apk",
+   "apkUrl": "https://github.com/birabittoh/EternalSonataReprise/releases/download/v1.3.7/eternalsonata-v1.3.7-android-arm64.apk",
+   "sha256": "53b48006cd8813c2f5449b876bfcf91196447de088487f2dddcb46acd24a0c91",
+   "verified": true,
+   "recommended": 0,
+   "issues": 4,
+   "broken": 0
+  },
+  {
+   "slug": "extreme-tux-racer",
+   "name": "Extreme Tux Racer",
+   "type": "game",
+   "consoles": [
+    "mobile"
+   ],
+   "games": [],
+   "description": "Extreme Tux Racer is a port of the Extreme Tux Racer game for Android.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/74ab171bf4452a0f3ef007a38df8be7e.png",
+   "version": "0.8.107",
+   "released": 1643424477000,
+   "repository": "drodin/extremetuxracer",
+   "provider": "github",
+   "releasesUrl": "https://github.com/drodin/extremetuxracer/releases/latest",
+   "apkName": "extremetuxracer-0.8.107.apk",
+   "apkUrl": "https://github.com/drodin/extremetuxracer/releases/download/0.8.107/extremetuxracer-0.8.107.apk",
+   "sha256": null,
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "final-fantasy-tactics-advance-ffta-recomp",
+   "name": "Final Fantasy Tactics Advance",
+   "type": "port",
+   "consoles": [
+    "gba"
+   ],
+   "games": [
+    "Final Fantasy Tactics Advance"
+   ],
+   "description": "FFTA Recomp is a port of Final Fantasy Tactics Advance for Windows, Linux and Android with a validated widescreen view.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/9656cd3c998c60faf64c6f0ad06c1e52.png",
+   "version": "v2.1",
+   "released": 1792715515000,
+   "repository": "james2doyle/ffta-recomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/james2doyle/ffta-recomp/releases/latest",
+   "apkName": "FFTARecomp-v2.1-android-arm64-v8a.apk",
+   "apkUrl": "https://github.com/james2doyle/ffta-recomp/releases/download/v2.1/FFTARecomp-v2.1-android-arm64-v8a.apk",
+   "sha256": "064db79e6b7b90a32bc71271d85b3e659f61babd08434dbbbd28b7d69a8f9bd5",
+   "verified": true,
+   "recommended": 1,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "final-fantasy-tactics-advance-fftarecomp",
+   "name": "Final Fantasy Tactics Advance",
+   "type": "port",
+   "consoles": [
+    "gba"
+   ],
+   "games": [
+    "Final Fantasy Tactics Advance"
+   ],
+   "description": "FFTARecomp is a native port of Final Fantasy Tactics Advance for Windows, Linux, and Android with widescreen support and editable text bubbles.",
+   "artwork": "https://raw.githubusercontent.com/Jorge262007/FFTARecomp/fcc38cc46084793f29136419a8a15e6914a570ce/Image/logo.png",
+   "version": "3.1",
+   "released": 1793558215000,
+   "repository": "Jorge262007/FFTARecomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/Jorge262007/FFTARecomp/releases/latest",
+   "apkName": "FFTARecomp-android-arm64.apk",
+   "apkUrl": "https://github.com/Jorge262007/FFTARecomp/releases/download/v3.0/FFTARecomp-android-arm64.apk",
+   "sha256": "82cc573470bea60d5d5d30a4794e6a6f9e859e29f7db818bef0229f7665158a6",
+   "verified": true,
+   "recommended": 0,
+   "issues": 3,
+   "broken": 0
+  },
+  {
+   "slug": "flare-empyrean-campaign",
+   "name": "Flare: Empyrean Campaign",
+   "type": "game",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Flare: Empyrean Campaign"
+   ],
+   "description": "Flare: Empyrean Campaign is a 2D action RPG built on the FLARE engine with a dark fantasy style and easily modifiable game data.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/81b1b300e54447e821ad2a2c690e296e/32/128x128.png",
+   "version": "v1.15",
+   "released": 1778263701000,
+   "repository": "flareteam/flare-game",
+   "provider": "github",
+   "releasesUrl": "https://github.com/flareteam/flare-game/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "flycast-flycast",
+   "name": "Flycast",
+   "type": "emulator",
+   "consoles": [
+    "dreamcast"
+   ],
+   "games": [],
+   "description": "Flycast is a Sega Dreamcast, Naomi, Naomi 2, and Atomiswave emulator for Android, macOS, Windows, and Linux.",
+   "artwork": "https://raw.githubusercontent.com/flyinghead/flycast/7adbf3caef251b153e348df3f469a0f35878339d/shell/windows/flycast.ico",
+   "version": "v2.7",
+   "released": 1787140029000,
+   "repository": "flyinghead/flycast",
+   "provider": "github",
+   "releasesUrl": "https://github.com/flyinghead/flycast/releases/latest",
+   "apkName": "flycast-2.7.apk",
+   "apkUrl": "https://github.com/flyinghead/flycast/releases/download/v2.7/flycast-2.7.apk",
+   "sha256": "1ac54d77b8283f6d58d077396d0916ec12c15b7e4ada9d957836a64590756c00",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "gears-of-war-2-gears-of-war-2-pc-port",
+   "name": "Gears of War 2",
+   "type": "port",
+   "consoles": [
+    "x360"
+   ],
+   "games": [
+    "Gears of War 2"
+   ],
+   "description": "Gears of War 2 PC port is a native PC port of Gears of War 2 for Windows and Android with high resolution rendering and texture pack support.",
+   "artwork": "https://raw.githubusercontent.com/santiquiroz/gears-of-war-2-pc-port/f0efbb0e7e2605605e14874cd97f52e62fab3b07/assets/icon/gow2.ico",
+   "version": "v0.3.13",
+   "released": 1793796191000,
+   "repository": "santiquiroz/gears-of-war-2-pc-port",
+   "provider": "github",
+   "releasesUrl": "https://github.com/santiquiroz/gears-of-war-2-pc-port/releases/latest",
+   "apkName": "gow2-recomp-0.3.12-android-arm64.apk",
+   "apkUrl": "https://github.com/santiquiroz/gears-of-war-2-pc-port/releases/download/v0.3.12/gow2-recomp-0.3.12-android-arm64.apk",
+   "sha256": "3798e1564019ae4a9aff58fcdec6ec6e8f92033cd59fe644836cc03aeca044bc",
+   "verified": true,
+   "recommended": 0,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "glider-pro-aerofoil",
+   "name": "Glider PRO",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Glider PRO"
+   ],
+   "description": "Aerofoil is a PC port of Glider PRO that features a 90s-style GUI, gamepad support, and a full port of the level editor.",
+   "artwork": "https://raw.githubusercontent.com/elasota/Aerofoil/ba2a3628d28128da6c63b9af75274f3ca9dad182/AerofoilMac/AerofoilMac/Assets.xcassets/AppIcon.appiconset/1024.png",
+   "version": "1.1.7",
+   "released": 1793003065000,
+   "repository": "elasota/Aerofoil",
+   "provider": "github",
+   "releasesUrl": "https://github.com/elasota/Aerofoil/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 2,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "godot-engine",
+   "name": "Godot Engine",
+   "type": "tool",
+   "consoles": [
+    "pc"
+   ],
+   "games": [],
+   "description": "Godot Engine is a cross-platform tool for creating 2D and 3D games with a unified interface.",
+   "artwork": "https://raw.githubusercontent.com/godotengine/godot/cafc17a192acf67903910a68aeb3c076c0907a4b/misc/logo/icon.png",
+   "version": "3.6.3-stable",
+   "released": 1787407519000,
+   "repository": "godotengine/godot",
+   "provider": "github",
+   "releasesUrl": "https://github.com/godotengine/godot/releases/latest",
+   "apkName": "Godot_v3.6.3-stable_android_editor.apk",
+   "apkUrl": "https://github.com/godotengine/godot/releases/download/3.6.3-stable/Godot_v3.6.3-stable_android_editor.apk",
+   "sha256": "41f9ddab0185aa0943ba50141b4200adbb95f9d33b7949c5754e18d9814f521a",
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "gran-turismo-3-a-spec-gt3-revisited",
+   "name": "Gran Turismo 3 A-Spec",
+   "type": "port",
+   "consoles": [
+    "ps2"
+   ],
+   "games": [
+    "Gran Turismo 3 A-Spec"
+   ],
+   "description": "GT3 Revisited is a native PC port of Gran Turismo 3 A-Spec for Windows, macOS, Linux, and Android, featuring online multiplayer and VR support.",
+   "artwork": "https://raw.githubusercontent.com/matt-pulsipher/GT3-revisited/d13058a4a386c3f945d309b73004d3f857b1a441/packaging/icon.ico",
+   "version": "v0.6.1",
+   "released": 1793764507000,
+   "repository": "matt-pulsipher/GT3-revisited",
+   "provider": "github",
+   "releasesUrl": "https://github.com/matt-pulsipher/GT3-revisited/releases/latest",
+   "apkName": "gt3r-android.apk",
+   "apkUrl": "https://github.com/matt-pulsipher/GT3-revisited/releases/download/v0.6.0/gt3r-android.apk",
+   "sha256": "5492e5e9e10512f369d198cbb0f82b836254a39fa87b8b8aec1b521b61a4fa83",
+   "verified": true,
+   "recommended": 5,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "guitar-hero-guitar-dream-engine",
+   "name": "Guitar Hero",
+   "type": "port",
+   "consoles": [
+    "ps2",
+    "x360"
+   ],
+   "games": [
+    "Guitar Hero"
+   ],
+   "description": "A reimplementation of all major Guitar Hero and Rock Band engines.",
+   "artwork": "https://raw.githubusercontent.com/mbracali/prj-gd-engine/a66559e87c920d5a0e5e26eadad5ee6a24238e2b/gd-engine-launcher/res/gdul_icon_512.png",
+   "version": "gdul/v1.1.12",
+   "released": 1793941811000,
+   "repository": "mbracali/prj-gd-engine",
+   "provider": "github",
+   "releasesUrl": "https://github.com/mbracali/prj-gd-engine/releases/latest",
+   "apkName": "gdul-0.1.11-android-arm64.apk",
+   "apkUrl": "https://github.com/mbracali/prj-gd-engine/releases/download/gdul/v0.1.11/gdul-0.1.11-android-arm64.apk",
+   "sha256": "e0f2aa11c6b9d3d5900a007ad22d1ca4c46b95d56119f1c5464f4a6af4b3f736",
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "half-life-xash3d-fwgs",
+   "name": "Half-Life",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Half-Life",
+    "Half-Life: Opposing Force",
+    "Half-Life: Blue Shift",
+    "Half-Life: Decay PC Port",
+    "Gunman Chronicles",
+    "Underworld: Bloodline",
+    "Ricochet",
+    "Deathmatch Classic"
+   ],
+   "description": "Xash3D FWGS is a port of the Half-Life game engine for Windows, Linux, Android and iOS with improved multiplayer and multiple renderer support.",
+   "artwork": "https://raw.githubusercontent.com/FWGS/xash3d-fwgs/d6b54aaf6c1d8518e08404a842f3f6ee02cef3cc/game_launch/icon-xash-material.ico",
+   "version": "continuous-new_vgui_support_api",
+   "released": 1792262240000,
+   "repository": "FWGS/xash3d-fwgs",
+   "provider": "github",
+   "releasesUrl": "https://github.com/FWGS/xash3d-fwgs/releases/latest",
+   "apkName": "xash3d-fwgs-android.apk",
+   "apkUrl": "https://github.com/FWGS/xash3d-fwgs/releases/download/continuous-new_vgui_support_api/xash3d-fwgs-android.apk",
+   "sha256": "c8652329158df751b36be1cb17d0e7ad94e135e83809f9b39be6f592173d1a0b",
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "halo-combat-evolved-opence",
+   "name": "Halo: Combat Evolved",
+   "type": "port",
+   "consoles": [
+    "og xbox"
+   ],
+   "games": [
+    "Halo: Combat Evolved"
+   ],
+   "description": "OpenCE is a port of Halo: Combat Evolved to Windows, Linux and Android that supports multiplayer across all platforms.",
+   "artwork": "https://cdn2.steamgriddb.com/grid/44ffb6f94b5ec5366ba0f896f7f0f680.png",
+   "version": "build-343",
+   "released": 1793962064000,
+   "repository": "OpenCommunityEdition/OpenCE",
+   "provider": "github",
+   "releasesUrl": "https://github.com/OpenCommunityEdition/OpenCE/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 3,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "heroes-of-might-and-magic-ii-fheroes2",
+   "name": "Heroes of Might and Magic II",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Heroes of Might and Magic II"
+   ],
+   "description": "fHeroes2 is a recreation of the Heroes of Might and Magic II game engine with support for high-resolution graphics and improved AI.",
+   "artwork": "https://raw.githubusercontent.com/ihhub/fheroes2/4ec9886825b198b6d0ec7ffc15c6b11ee76e9165/src/resources/fheroes2.ico",
+   "version": "1.1.17",
+   "released": 1782830034000,
+   "repository": "ihhub/fheroes2",
+   "provider": "github",
+   "releasesUrl": "https://github.com/ihhub/fheroes2/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "heroesofmightandmagiciii-vcmi",
+   "name": "Heroes of Might and Magic III",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Heroes of Might and Magic III"
+   ],
+   "description": "VCMI brings Heroes of Might and Magic III to PC.",
+   "artwork": "https://raw.githubusercontent.com/vcmi/vcmi/refs/heads/develop/clientapp/icons/vcmi.ico",
+   "version": "1.7.5",
+   "released": 1786795364000,
+   "repository": "vcmi/vcmi",
+   "provider": "github",
+   "releasesUrl": "https://github.com/vcmi/vcmi/releases/latest",
+   "apkName": "VCMI-Android-arm64-v8a.apk",
+   "apkUrl": "https://github.com/vcmi/vcmi/releases/download/1.7.5/VCMI-Android-arm64-v8a.apk",
+   "sha256": "81738076e58c18b050d9b5f46b3dc1455e40afc112292ee439681572f633cbec",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "heroes-of-might-and-magic-v-heroes-of-might-and-magic-v-android-port",
+   "name": "Heroes of Might and Magic V",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Heroes of Might and Magic V"
+   ],
+   "description": "Heroes of Might and Magic V (Android Port) is a port of Heroes of Might and Magic V to Android with native touch controls and a Direct3D 9 to OpenGL ES bridge.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/53c6de78244e9f528eb3e1cda69699bb/32/256x256.png",
+   "version": "v0.3.2-dev",
+   "released": 1793469934000,
+   "repository": "phys-winner/pc_decomp_homm5",
+   "provider": "github",
+   "releasesUrl": "https://github.com/phys-winner/pc_decomp_homm5/releases/latest",
+   "apkName": "heroes-v-0.3.2-dev-486da98a.apk",
+   "apkUrl": "https://github.com/phys-winner/pc_decomp_homm5/releases/download/v0.3.2-dev/heroes-v-0.3.2-dev-486da98a.apk",
+   "sha256": "486da98a5fa8af4200daa1fd8a85fa9123d00282a64a15da1b5072016e3a48bc",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "hollow-knight-hk-dual-souls",
+   "name": "Hollow Knight",
+   "type": "port",
+   "consoles": [
+    "mobile"
+   ],
+   "games": [
+    "Hollow Knight"
+   ],
+   "description": "A native Android port of Hollow Knight (GOG/Steam, v1.5.12620 \"Voidheart\") for the AYN Thor dual-screen handheld.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/91b6679df5308b64e7f6177400cc8c03.png",
+   "version": "1.0.3",
+   "released": 1787500016000,
+   "repository": "igawa6/dualsouls",
+   "provider": "github",
+   "releasesUrl": "https://github.com/igawa6/dualsouls/releases/latest",
+   "apkName": "dualsouls-v1.0.3-thor-arm64.apk",
+   "apkUrl": "https://github.com/igawa6/dualsouls/releases/download/1.0.3/dualsouls-v1.0.3-thor-arm64.apk",
+   "sha256": "dfa57c1087f81bb2f8672be84e63bd517be7d2d72eef56982c9d05c859d8536c",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "hollow-knight-silksong-silksong-android",
+   "name": "Hollow Knight: Silksong",
+   "type": "port",
+   "consoles": [
+    "mobile"
+   ],
+   "games": [
+    "Hollow Knight: Silksong"
+   ],
+   "description": "Hollow Knight: Silksong is an Android port with dual-screen capabilites and optional Steam integration for game files and cloud saves.",
+   "artwork": "https://raw.githubusercontent.com/jakobkhansen/SilksongAndroid/4fcde8e856808bdbde67e19333d0770b440beddb/docs/icon.png",
+   "version": "v2.0.0",
+   "released": 1790364228000,
+   "repository": "jakobkhansen/SilksongAndroid",
+   "provider": "github",
+   "releasesUrl": "https://github.com/jakobkhansen/SilksongAndroid/releases/latest",
+   "apkName": "SilksongAndroid-2.0.0.apk",
+   "apkUrl": "https://github.com/jakobkhansen/SilksongAndroid/releases/download/v2.0.0/SilksongAndroid-2.0.0.apk",
+   "sha256": "159ff7ba759dcac612d5085981286125419c79971643154475327738906c8568",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "hot-shots-tennis-opentennis",
+   "name": "Hot Shots Tennis",
+   "type": "port",
+   "consoles": [
+    "ps2"
+   ],
+   "games": [
+    "Hot Shots Tennis"
+   ],
+   "description": "OpenTennis is a from-scratch rewrite of the PlayStation 2 game Hot Shots Tennis in Rust with the Bevy engine, offering better rendering and modding support.",
+   "artwork": "https://raw.githubusercontent.com/FIZL0/opentennis/7f3a526428387af510c7b47898f6cf960a3bdc6a/crates/hst/icon/hst.png",
+   "version": "v1.6.2",
+   "released": 1793933915000,
+   "repository": "FIZL0/opentennis",
+   "provider": "github",
+   "releasesUrl": "https://github.com/FIZL0/opentennis/releases/latest",
+   "apkName": "opentennis-android.apk",
+   "apkUrl": "https://github.com/FIZL0/opentennis/releases/download/v1.6.1/opentennis-android.apk",
+   "sha256": "0cc16a8ebfb8be09963f5a9c6c97071e57f750b99b6af3f467e7ca6b888e5dcf",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "hybrid-heaven-hybridheaven-recomp",
+   "name": "Hybrid Heaven",
+   "type": "port",
+   "consoles": [
+    "n64"
+   ],
+   "games": [
+    "Hybrid Heaven"
+   ],
+   "description": "HybridHeaven-Recomp is a native port of Hybrid Heaven to Windows, Linux and Android that runs the game natively without an emulator.",
+   "artwork": "https://raw.githubusercontent.com/ogdanimal/HybridHeaven-Recomp/faef6b4da84a720555d1cd809487b332cad9329f/assets/icon.png",
+   "version": "v1.0.1",
+   "released": 1791157997000,
+   "repository": "ogdanimal/HybridHeaven-Recomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/ogdanimal/HybridHeaven-Recomp/releases/latest",
+   "apkName": "HybridHeaven-1.0.1-android-arm64-v8a.apk",
+   "apkUrl": "https://github.com/ogdanimal/HybridHeaven-Recomp/releases/download/v1.0.1/HybridHeaven-1.0.1-android-arm64-v8a.apk",
+   "sha256": "90b792846840991586f63403fa750cab517ad22d7f2dd7c885001e0754c307ae",
+   "verified": true,
+   "recommended": 0,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "ico-ico-pc",
+   "name": "ICO",
+   "type": "port",
+   "consoles": [
+    "ps2"
+   ],
+   "games": [
+    "ICO"
+   ],
+   "description": "ico-pc is a native PC port of ICO for Windows, Linux and Android that offers a sharper picture, widescreen and smoother motion.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/371bce7dc83817b7893bcdeed13799b5.png",
+   "version": "v0.10.4",
+   "released": 1793936087000,
+   "repository": "nathanialf/ico-pc",
+   "provider": "github",
+   "releasesUrl": "https://github.com/nathanialf/ico-pc/releases/latest",
+   "apkName": "ico-pc-v0.10.0-android.apk",
+   "apkUrl": "https://github.com/nathanialf/ico-pc/releases/download/v0.10.0/ico-pc-v0.10.0-android.apk",
+   "sha256": "08339d0ddd2dff659f2655238f853f3b81175b6a7e2e6f09c4b237eac2c03944",
+   "verified": true,
+   "recommended": 14,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "illusion-of-gaia-babel-recomp",
+   "name": "Illusion of Gaia",
+   "type": "port",
+   "consoles": [
+    "snes"
+   ],
+   "games": [
+    "Illusion of Gaia"
+   ],
+   "description": "A native PC and console port of Illusion of Gaia built on a static-recompilation framework, with languages, an MSU-1 soundtrack, HD scaling, New Game+, RetroAchievements and more.",
+   "artwork": "https://raw.githubusercontent.com/mrOt4/babel-recomp/2fa71604222e34ee10d925cc14ebbcfe13a49ad1/res/icon.ico",
+   "version": "v1.0",
+   "released": 1792179843000,
+   "repository": "mrOt4/babel-recomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/mrOt4/babel-recomp/releases/latest",
+   "apkName": "babel-recomp-1.0-android-arm64.apk",
+   "apkUrl": "https://github.com/mrOt4/babel-recomp/releases/download/v1.0/babel-recomp-1.0-android-arm64.apk",
+   "sha256": "5e96786c3201dd042e3ff658f0c0aae2d84556ecab726522bbd523f66bdd09b7",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "international-superstar-soccer-deluxe-issd-native",
+   "name": "International Superstar Soccer Deluxe",
+   "type": "port",
+   "consoles": [
+    "snes"
+   ],
+   "games": [
+    "International Superstar Soccer Deluxe"
+   ],
+   "description": "AI-driven native recompilation project for ISS Deluxe on SNES.",
+   "artwork": "https://cdn2.steamgriddb.com/grid/735d65e1bb89eadcd2fac5e5bf7fed34.jpg",
+   "version": "v0.6.0-beta.1",
+   "released": 1792642577000,
+   "repository": "sergiomanzur/issd-native",
+   "provider": "github",
+   "releasesUrl": "https://github.com/sergiomanzur/issd-native/releases/latest",
+   "apkName": "ISSDNative-v0.6.0-beta.1-android.apk",
+   "apkUrl": "https://github.com/sergiomanzur/issd-native/releases/download/v0.6.0-beta.1/ISSDNative-v0.6.0-beta.1-android.apk",
+   "sha256": "0976c048f9384b776de03d43355806c9708ed2266da078cec3059936d45d8d33",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "jade-cocoon-story-of-the-tamamayu-jade-cocoon-on-bevy",
+   "name": "Jade Cocoon: Story of the Tamamayu",
+   "type": "port",
+   "consoles": [
+    "ps1"
+   ],
+   "games": [
+    "Jade Cocoon: Story of the Tamamayu"
+   ],
+   "description": "Jade Cocoon on Bevy is a fan-made engine reimplementation of Jade Cocoon: Story of the Tamamayu for PlayStation, supporting battles, creature capture and merging, menus, movies, music, voices, and local save/load.",
+   "artwork": "https://cdn2.steamgriddb.com/grid/449b846d5de45ab1114cdfc062f25fdc.png",
+   "version": "v1.0.1",
+   "released": 1792337905000,
+   "repository": "ufodriverr/jade-cocoon-bevy-public-v1",
+   "provider": "github",
+   "releasesUrl": "https://github.com/ufodriverr/jade-cocoon-bevy-public-v1/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "james-pond-2-codename-robocod-james-pond-2-codename-robocod-recompiled",
+   "name": "James Pond 2: Codename RoboCod",
+   "type": "port",
+   "consoles": [
+    "ami",
+    "gen"
+   ],
+   "games": [
+    "James Pond 2: Codename RoboCod"
+   ],
+   "description": "James Pond 2: Codename RoboCod - Recompiled is a native PC port of James Pond 2: Codename RoboCod for Windows, macOS, Linux, and Android with widescreen, smooth motion, and a pause menu.",
+   "artwork": "https://cdn2.steamgriddb.com/grid/1a56bac5a0479ffc6071f562b8e59960.jpg",
+   "version": "v1.0.4",
+   "released": 1793201358000,
+   "repository": "griches/JamesPond2RobocodRecomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/griches/JamesPond2RobocodRecomp/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "jazz-jackrabbit-openjazz",
+   "name": "Jazz Jackrabbit",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Jazz Jackrabbit"
+   ],
+   "description": "",
+   "artwork": "https://cdn2.steamgriddb.com/icon/dab2b6380c281b836509eea62dabd8dd.png",
+   "version": "continuous",
+   "released": 1788259487000,
+   "repository": "AlisterT/openjazz",
+   "provider": "github",
+   "releasesUrl": "https://github.com/AlisterT/openjazz/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 2,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "jet-set-radio-future-jet-set-radio-future-unleashed",
+   "name": "Jet Set Radio Future",
+   "type": "port",
+   "consoles": [
+    "og xbox"
+   ],
+   "games": [
+    "Jet Set Radio Future"
+   ],
+   "description": "Jet Set Radio Future Unleashed is a native port of Jet Set Radio Future to Windows, Linux, macOS, Android, iOS, and iPadOS, allowing higher resolutions and widescreen support.",
+   "artwork": "https://raw.githubusercontent.com/JuMatt/JetSetRadioFuture-Unleashed/3e9d394242583289eb078488226bd32240eb9669/launcher/icon/AppIcon.iconset/icon_128x128%402x.png",
+   "version": "v0.6.8",
+   "released": 1793874456000,
+   "repository": "JuMatt/JetSetRadioFuture-Unleashed",
+   "provider": "github",
+   "releasesUrl": "https://github.com/JuMatt/JetSetRadioFuture-Unleashed/releases/latest",
+   "apkName": "JSRF-Unleashed-android-arm64.apk",
+   "apkUrl": "https://github.com/JuMatt/JetSetRadioFuture-Unleashed/releases/download/v0.6.6/JSRF-Unleashed-android-arm64.apk",
+   "sha256": "29622aadb33c1ea32090e298a3c9ec5e63dc7c459fc07ee40752182678cbdf2c",
+   "verified": true,
+   "recommended": 5,
+   "issues": 9,
+   "broken": 4
+  },
+  {
+   "slug": "jill-of-the-jungle-jillandroid",
+   "name": "Jill of the Jungle",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Jill of the Jungle"
+   ],
+   "description": "JillAndroid is an Android port of Jill of the Jungle that features auto show/hide on-screen touch controls and remappable controls.",
+   "artwork": "https://raw.githubusercontent.com/wootbeer/jillandroid/83d56890c447aa6991cfbe48a936b0685326ed7b/jillandroid/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.webp",
+   "version": "0.1",
+   "released": 1790366763000,
+   "repository": "wootbeer/jillandroid",
+   "provider": "github",
+   "releasesUrl": "https://github.com/wootbeer/jillandroid/releases/latest",
+   "apkName": "jillandroid-release.apk",
+   "apkUrl": "https://github.com/wootbeer/jillandroid/releases/download/0.1/jillandroid-release.apk",
+   "sha256": "e62afb1187b0b37e4299762ba0a6034c44bd2052b295496f115a1d8c0fc83b4c",
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "katawa-shoujo-katawa-shoujo-re-engineered",
+   "name": "Katawa Shoujo",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Katawa Shoujo"
+   ],
+   "description": "Katawa Shoujo: Re-Engineered is a port of Katawa Shoujo with multiple new accessibility options and a modding framework.",
+   "artwork": "https://raw.githubusercontent.com/fleetingheart/ksre/cb98e1170c918efe834b24473e3e4aca6c9d05e3/icon.ico",
+   "version": "v2.0.5",
+   "released": 1790446794000,
+   "repository": "fleetingheart/ksre",
+   "provider": "github",
+   "releasesUrl": "https://github.com/fleetingheart/ksre/releases/latest",
+   "apkName": "sh.fhs.ksre-release.apk",
+   "apkUrl": "https://github.com/fleetingheart/ksre/releases/download/v2.0.5/sh.fhs.ksre-release.apk",
+   "sha256": "a095860d39316fa1e4cc44f5d29a913503184b7d4d995111c40b0465be8df2e3",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "keen-dreams-reflectionhle",
+   "name": "Keen Dreams",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Keen Dreams"
+   ],
+   "description": "ReflectionHLE is a source port of Keen Dreams for PC and other platforms.",
+   "artwork": "https://github.com/ReflectionHLE/ReflectionHLE/blob/master/rsrc/reflectionhle-128x128.png?raw=true",
+   "version": "release-20260606",
+   "released": 1780775384000,
+   "repository": "ReflectionHLE/ReflectionHLE",
+   "provider": "github",
+   "releasesUrl": "https://github.com/ReflectionHLE/ReflectionHLE/releases/latest",
+   "apkName": "reflectionhle-android-20260606.apk",
+   "apkUrl": "https://github.com/ReflectionHLE/ReflectionHLE/releases/download/release-20260606/reflectionhle-android-20260606.apk",
+   "sha256": "183b8b6a45b9e2306a4ad5297eb65a6580727a950a0e563e77ebf1a1813a1439",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "kingdom-hearts-chain-of-memories-rekhcom",
+   "name": "Kingdom Hearts: Chain of Memories",
+   "type": "port",
+   "consoles": [
+    "gba"
+   ],
+   "games": [
+    "Kingdom Hearts: Chain of Memories"
+   ],
+   "description": "ReKHCoM is a Windows port of Kingdom Hearts: Chain of Memories for Game Boy Advance with widescreen support and optional HD text.",
+   "artwork": "https://raw.githubusercontent.com/MatyMeatBoy/ReKHCom/a33b658702faf9167f8fde98373b578cce888b91/port/decompui/assets/rekhcom.ico",
+   "version": "v2.8",
+   "released": 1793806943000,
+   "repository": "MatyMeatBoy/ReKHCom",
+   "provider": "github",
+   "releasesUrl": "https://github.com/MatyMeatBoy/ReKHCom/releases/latest",
+   "apkName": "ReKHCoM-v2.7-android-beta.apk",
+   "apkUrl": "https://github.com/MatyMeatBoy/ReKHCoM/releases/download/v2.7/ReKHCoM-v2.7-android-beta.apk",
+   "sha256": "5e53f03b326a37612a803d57294aa0daa1f7fe7530378bd103a59f4d2f5341fd",
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "knuckles-chaotix-chaotix-recompiled",
+   "name": "Knuckles' Chaotix",
+   "type": "port",
+   "consoles": [
+    "32x"
+   ],
+   "games": [
+    "Knuckles' Chaotix"
+   ],
+   "description": "Chaotix Recompiled is a native C++ recompilation of the Sega 32X game Knuckles' Chaotix with true widescreen support.",
+   "artwork": "https://cdn2.steamgriddb.com/grid/4cadd9b32b971829d4059c48c75d739d.jpg",
+   "version": "v0.15.19",
+   "released": 1793851423000,
+   "repository": "YuutaTsubasa/ChaotixRecompiled",
+   "provider": "github",
+   "releasesUrl": "https://github.com/YuutaTsubasa/ChaotixRecompiled/releases/latest",
+   "apkName": "ChaotixRecompiled-0.15.18-android.apk",
+   "apkUrl": "https://github.com/YuutaTsubasa/ChaotixRecompiled/releases/download/v0.15.18/ChaotixRecompiled-0.15.18-android.apk",
+   "sha256": "f43c23fdc03b9031f6bd64ee2a183e53bd02b746d9b877fbdefc46a2ab47d17a",
+   "verified": true,
+   "recommended": 2,
+   "issues": 2,
+   "broken": 0
+  },
+  {
+   "slug": "knytt-stories-yknytt",
+   "name": "Knytt Stories",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Knytt Stories"
+   ],
+   "description": "YKnytt is an open source implementation of Knytt Stories for Windows, Linux, macOS and Android.",
+   "artwork": "https://raw.githubusercontent.com/youkaicountry/yknytt/85161f7f36051f04d3a1777f10d88e4486301ccb/knytt/icons/icon432.png",
+   "version": "0.7.3",
+   "released": 1783531235000,
+   "repository": "youkaicountry/yknytt",
+   "provider": "github",
+   "releasesUrl": "https://github.com/youkaicountry/yknytt/releases/latest",
+   "apkName": "YKnytt_v0.7.3.apk",
+   "apkUrl": "https://github.com/youkaicountry/yknytt/releases/download/0.7.3/YKnytt_v0.7.3.apk",
+   "sha256": "fbe261d4bd015724b36fa058fb3625d53e40198b6815d5e57ab5e9f6ad797d89",
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "legend-of-sword-and-fairy-sdlpal",
+   "name": "Legend of Sword and Fairy",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Legend of Sword and Fairy"
+   ],
+   "description": "SDLPal is a port of the classic Chinese RPG Legend of Sword and Fairy to multiple platforms including Windows, Linux, macOS, and mobile devices.",
+   "artwork": "https://raw.githubusercontent.com/sdlpal/sdlpal/f6236a0d0839b1cc8918e2abc54017e223938f1d/sdlpal.ico",
+   "version": "v3.0.2025.0616",
+   "released": 1750018576000,
+   "repository": "sdlpal/sdlpal",
+   "provider": "github",
+   "releasesUrl": "https://github.com/sdlpal/sdlpal/releases/latest",
+   "apkName": "sdlpal.apk",
+   "apkUrl": "https://github.com/sdlpal/sdlpal/releases/download/v3.0.2025.0616/sdlpal.apk",
+   "sha256": "e231033c3de51c07e33c98c4cd15825a912487879f9a414857651afc3f1ec8b4",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "lego-island-isle-portable",
+   "name": "LEGO Island",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "LEGO Island"
+   ],
+   "description": "isle-portable is a port of LEGO Island to Windows, Linux, macOS, Android, and iOS that supports light modding.",
+   "artwork": "https://raw.githubusercontent.com/isledecomp/isle-portable/377e64799035a0910cc00b179e9bb1033ebab939/packaging/ios/isle/Assets.xcassets/AppIcon.appiconset/AppIcon.png",
+   "version": "continuous",
+   "released": 1793766632000,
+   "repository": "isledecomp/isle-portable",
+   "provider": "github",
+   "releasesUrl": "https://github.com/isledecomp/isle-portable/releases/latest",
+   "apkName": "app-release.apk",
+   "apkUrl": "https://github.com/isledecomp/isle-portable/releases/download/continuous/app-release.apk",
+   "sha256": "6dcb289e51e150dd5739e7199ba2a8c0a286dbe89e3bc6680512cc1cc5491da8",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "legoland",
+   "name": "Legoland",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Legoland"
+   ],
+   "description": "Legoland is a native PC port of the 1999 game Legoland for Windows, Linux, and Android.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/726a4e050db88e408d3bdab665222123.png",
+   "version": "2026-10-23-3c099240",
+   "released": 1792774628000,
+   "repository": "facundosterzerforino/legoland-port",
+   "provider": "github",
+   "releasesUrl": "https://github.com/facundosterzerforino/legoland-port/releases/latest",
+   "apkName": "LEGOLAND-port-android-2026-10-23-3c099240.apk",
+   "apkUrl": "https://github.com/facundosterzerforino/legoland-port/releases/download/2026-10-23-3c099240/LEGOLAND-port-android-2026-10-23-3c099240.apk",
+   "sha256": "9cacd5092dba7319f48be1241b1532a9bd0bf85d6954d5233ed6558bea7c3139",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 1
+  },
+  {
+   "slug": "lemuroid",
+   "name": "Lemuroid",
+   "type": "emulator",
+   "consoles": [
+    "mobile"
+   ],
+   "games": [],
+   "description": "Lemuroid is an open-source emulation project for Android based on Libretro. Its main goal is ease of use, good Android integration and a great user experience.",
+   "artwork": "https://raw.githubusercontent.com/Swordfish90/Lemuroid/3625bc121d5d79fd4b80ce930fb0f3236c9334e8/lemuroid-app/icon/lemuroid_full.svg",
+   "version": "1.17.0",
+   "released": 1776761525000,
+   "repository": "Swordfish90/Lemuroid",
+   "provider": "github",
+   "releasesUrl": "https://github.com/Swordfish90/Lemuroid/releases/latest",
+   "apkName": "lemuroid-app-free-dynamic-release.apk",
+   "apkUrl": "https://github.com/Swordfish90/Lemuroid/releases/download/1.17.0/lemuroid-app-free-dynamic-release.apk",
+   "sha256": "d44cfa0cdc3e43fd91df97f625938366ccef9793b06a80b9e6fad97a6cd88e51",
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "lostodyssey-lostodysseyrecompiled",
+   "name": "Lost Odyssey",
+   "type": "port",
+   "consoles": [
+    "x360"
+   ],
+   "games": [
+    "Lost Odyssey"
+   ],
+   "description": "Lost Odyssey Recompiled brings Lost Odyssey to PC.",
+   "artwork": "https://cdn2.steamgriddb.com/thumb/d9a9b1c43c045c597832a10e0a64f64e.jpg",
+   "version": "v1.1.0",
+   "released": 1792977172000,
+   "repository": "freefrank/LostOdysseyRecomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/freefrank/LostOdysseyRecomp/releases/latest",
+   "apkName": "LostOdysseyRecomp-android-arm64-v1.1.0.apk",
+   "apkUrl": "https://github.com/freefrank/LostOdysseyRecomp/releases/download/v1.1.0/LostOdysseyRecomp-android-arm64-v1.1.0.apk",
+   "sha256": "41ec5d557cc78fdc72feb00754a48e7b2851730c27344eaa1619f6478850877a",
+   "verified": true,
+   "recommended": 15,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "luanti",
+   "name": "Luanti",
+   "type": "game",
+   "consoles": [
+    "pc"
+   ],
+   "games": [],
+   "description": "Luanti (formerly known as Minetest) is a community-driven, free and open-source voxel game engine, available on Windows, MacOS and Android.",
+   "artwork": "https://cdn2.steamgriddb.com/icon_thumb/fbff3e430b33ac364ed26e294730583f.png",
+   "version": "5.18.0",
+   "released": 1793304542000,
+   "repository": "luanti-org/luanti",
+   "provider": "github",
+   "releasesUrl": "https://github.com/luanti-org/luanti/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "magic-the-gathering-shandalargodot",
+   "name": "Magic: The Gathering",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Magic: The Gathering"
+   ],
+   "description": "ShandalarGodot is a from-scratch remake of Magic: The Gathering duels and Shandalar adventure for PC and mobile with modern rules and LAN play.",
+   "artwork": "https://github.com/b0realis/ShandalarGodot/raw/main/branding/logo-360.png",
+   "version": "v0.60.16",
+   "released": 1793784246000,
+   "repository": "b0realis/ShandalarGodot",
+   "provider": "github",
+   "releasesUrl": "https://github.com/b0realis/ShandalarGodot/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "mario-kart-64-spaghettikart-android",
+   "name": "Mario Kart 64",
+   "type": "port",
+   "consoles": [
+    "n64"
+   ],
+   "games": [
+    "Mario Kart 64"
+   ],
+   "description": "SpaghettiKart [Android Port] is an unofficial Android port of Harbour Masters' Mario Kart 64.",
+   "artwork": "https://raw.githubusercontent.com/izzy2lost/SpaghettiKart/9253aad869c96a8e660f707a74fe57c5d4ebdd2a/cmake/macos/SpaghettiKartIcon.icon/Assets/ship-kart-layer.png",
+   "version": "2.0.0",
+   "released": 1785722201000,
+   "repository": "izzy2lost/SpaghettiKart",
+   "provider": "github",
+   "releasesUrl": "https://github.com/izzy2lost/SpaghettiKart/releases/latest",
+   "apkName": "app-release.apk",
+   "apkUrl": "https://github.com/izzy2lost/SpaghettiKart/releases/download/2.0.0/app-release.apk",
+   "sha256": "530beca60c7d55a901e621ddfcbaf8ba32d87b88a718b6d7793fb9ee03f9d4e2",
+   "verified": true,
+   "recommended": 1,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "mario-kart-wii-driftdroid",
+   "name": "Mario Kart Wii",
+   "type": "port",
+   "consoles": [
+    "wii",
+    "mobile"
+   ],
+   "games": [
+    "Mario Kart Wii"
+   ],
+   "description": "DriftDroid is a native Android port of Mario Kart Wii that runs as ARM64 code with touch controls and motion steering.",
+   "artwork": "https://raw.githubusercontent.com/dorPXP/driftdroid/4cba039b70b9a27c5df6b5ea299be4a335494124/tools/pc-builder/DriftDroidBuilder/Assets/icon.ico",
+   "version": "v1.4.0-test3-mangmi-airx",
+   "released": 1793754137000,
+   "repository": "dorPXP/driftdroid",
+   "provider": "github",
+   "releasesUrl": "https://github.com/dorPXP/driftdroid/releases/latest",
+   "apkName": "DriftDroid-v1.4.0.apk",
+   "apkUrl": "https://github.com/dorPXP/driftdroid/releases/download/v1.4.0/DriftDroid-v1.4.0.apk",
+   "sha256": "fc94c57b2de8c6ec798e60496ddd95969b7867465aa2f9ef5e629995f67a8946",
+   "verified": true,
+   "recommended": 1,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "mariokartwii-kartpad",
+   "name": "Mario Kart Wii",
+   "type": "port",
+   "consoles": [
+    "wii"
+   ],
+   "games": [
+    "Mario Kart Wii"
+   ],
+   "description": "KartPad brings Mario Kart Wii to PC.",
+   "artwork": "https://raw.githubusercontent.com/chrissotraidis/kartpad/refs/heads/main/branding/exports/KartPadIcon-1024.png",
+   "version": "v0.8.7",
+   "released": 1793498500000,
+   "repository": "chrissotraidis/kartpad",
+   "provider": "github",
+   "releasesUrl": "https://github.com/chrissotraidis/kartpad/releases/latest",
+   "apkName": "KartPad-v0.8.6-android.apk",
+   "apkUrl": "https://github.com/chrissotraidis/kartpad/releases/download/v0.8.6/KartPad-v0.8.6-android.apk",
+   "sha256": "80f69c6ace673c3c941a4a7e7a74cb4282bb6e38135a3069864eeabb92862398",
+   "verified": true,
+   "recommended": 2,
+   "issues": 2,
+   "broken": 1
+  },
+  {
+   "slug": "mario-party-4-party-board",
+   "name": "Mario Party 4",
+   "type": "port",
+   "consoles": [
+    "gcn"
+   ],
+   "games": [
+    "Mario Party 4"
+   ],
+   "description": "Party Board is a work-in-progress port of Mario Party 4 for Windows, Linux, macOS, and Android.",
+   "artwork": "https://raw.githubusercontent.com/mariopartyrd/partyboard/98ac07fd1e8f7ab938bbb6fe75789fad99419010/res/icon.png",
+   "version": "partyboard_0.2.0",
+   "released": 1778260617000,
+   "repository": "mariopartyrd/partyboard",
+   "provider": "github",
+   "releasesUrl": "https://github.com/mariopartyrd/partyboard/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 0,
+   "issues": 2,
+   "broken": 0
+  },
+  {
+   "slug": "mario-party-4-party-board-zeranemesis",
+   "name": "Mario Party 4",
+   "type": "port",
+   "consoles": [
+    "gcn"
+   ],
+   "games": [
+    "Mario Party 4"
+   ],
+   "description": "Partyboard is a Windows port of Mario Party 4 that allows online play with synchronized input and automatic updates.",
+   "artwork": "https://raw.githubusercontent.com/zeranemesis/Marioparty4/28b159984b039fba5d65e61b34a05d5e4d710b04/platforms/android/app/src/main/res/mipmap/icon.png",
+   "version": "v0.21.0",
+   "released": 1793372654000,
+   "repository": "zeranemesis/Marioparty4",
+   "provider": "github",
+   "releasesUrl": "https://github.com/zeranemesis/Marioparty4/releases/latest",
+   "apkName": "PartyBoard-v0.21.0-phone-arm64-v8a.apk",
+   "apkUrl": "https://github.com/zeranemesis/Marioparty4/releases/download/v0.21.0/PartyBoard-v0.21.0-phone-arm64-v8a.apk",
+   "sha256": "a1b8ca1c19939afd281189d3dec895972e05af2cbd42b4ffd5c90d9266237f39",
+   "verified": true,
+   "recommended": 1,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "mario-party-6-mario-party-6-native-port",
+   "name": "Mario Party 6",
+   "type": "port",
+   "consoles": [
+    "gcn"
+   ],
+   "games": [
+    "Mario Party 6"
+   ],
+   "description": "Mario Party 6 Native Port is a native Windows and Android port of Mario Party 6 that runs menus, audio, and board gameplay natively with VSync off and unlocked FPS.",
+   "artwork": "https://cdn2.steamgriddb.com/grid/ce6d29b3db24d2a891d055374b673135.jpg",
+   "version": "v0.5.0",
+   "released": 1792767691000,
+   "repository": "iirg4x/mp6-native-port",
+   "provider": "github",
+   "releasesUrl": "https://github.com/iirg4x/mp6-native-port/releases/latest",
+   "apkName": "starlit-party-v0.5.0-61a99d3-android-arm64.apk",
+   "apkUrl": "https://github.com/iirg4x/mp6-native-port/releases/download/v0.5.0/starlit-party-v0.5.0-61a99d3-android-arm64.apk",
+   "sha256": "96308819b11c55ace1ace202cf358b99ec412e0a7a464aab7659c86d1035af7e",
+   "verified": true,
+   "recommended": 2,
+   "issues": 1,
+   "broken": 3
+  },
+  {
+   "slug": "mdk-mdk-sdl",
+   "name": "MDK",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "MDK"
+   ],
+   "description": "mdk-sdl is a PC port of MDK for Windows, Linux, macOS, and Android that supports stereo 3D and optional HD textures.",
+   "artwork": "https://raw.githubusercontent.com/nautilusbits/mdk-sdl/12489379b090660233dd0f6e4e6660a99245727a/assets/icon.ico",
+   "version": "v1.2.5",
+   "released": 1793550818000,
+   "repository": "nautilusbits/mdk-sdl",
+   "provider": "github",
+   "releasesUrl": "https://github.com/nautilusbits/mdk-sdl/releases/latest",
+   "apkName": "mdk-android.apk",
+   "apkUrl": "https://github.com/nautilusbits/mdk-sdl/releases/download/v1.2.4/mdk-android.apk",
+   "sha256": "12ef1f49a76520eea280b9e46a2c804b38d39f76ad7ea917d46d147884919f08",
+   "verified": true,
+   "recommended": 3,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "mega-man-64-mega-man-64-recompiled-mobile",
+   "name": "Mega Man 64",
+   "type": "port",
+   "consoles": [
+    "n64",
+    "mobile"
+   ],
+   "games": [
+    "Mega Man 64"
+   ],
+   "description": "Mega Man 64 Recompiled Mobile is an Android and iOS port of Mega Man 64 with editable touch layouts and controller support.",
+   "artwork": "https://raw.githubusercontent.com/DevZer0D4Y/MegaMan64Recompiled-Mobile/57bef1686cdc12191c7aa3f4a69bb822d47421b1/icons/icon.png",
+   "version": "v0.9.1-mobile.1",
+   "released": 1791913533000,
+   "repository": "DevZer0D4Y/MegaMan64Recompiled-Mobile",
+   "provider": "github",
+   "releasesUrl": "https://github.com/DevZer0D4Y/MegaMan64Recompiled-Mobile/releases/latest",
+   "apkName": "MegaMan64-Android-v0.9.1-mobile.1.apk",
+   "apkUrl": "https://github.com/DevZer0D4Y/MegaMan64Recompiled-Mobile/releases/download/v0.9.1-mobile.1/MegaMan64-Android-v0.9.1-mobile.1.apk",
+   "sha256": "8a2c2f64e88c9d6b6e935ec70614c87b4a52d848120e9b268c96131580602ce0",
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "metal-gear-solid-mobile-metal-gear-solid-mobile-native-port",
+   "name": "Metal Gear Solid Mobile",
+   "type": "port",
+   "consoles": [
+    "mobile"
+   ],
+   "games": [
+    "Metal Gear Solid Mobile"
+   ],
+   "description": "Metal Gear Solid Mobile Native Port is a port of Metal Gear Solid Mobile to Windows, Linux, and Android with widescreen support and 60 fps.\n\n*Quiver Moderator Note: This game utilizes Unicorn's ARM CPU emulator as its backbone, and is not a true native port of the game as the project's name implies.",
+   "artwork": "https://raw.githubusercontent.com/LeithSilver/mgsm/4e6d91ceadfb898322f535f82f24a394197d892b/icon.png",
+   "version": "v0.1",
+   "released": 1792279994000,
+   "repository": "LeithSilver/mgsm",
+   "provider": "github",
+   "releasesUrl": "https://github.com/LeithSilver/mgsm/releases/latest",
+   "apkName": "MGS_Mobile_0.1_Android_arm64.apk",
+   "apkUrl": "https://github.com/LeithSilver/mgsm/releases/download/v0.1/MGS_Mobile_0.1_Android_arm64.apk",
+   "sha256": "525e5c2666944ede5dc798b2991f634d2db43cbf3b11d70a3937a372cb2e18ed",
+   "verified": true,
+   "recommended": 3,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "metroid-prime-metroidprimeport",
+   "name": "Metroid Prime",
+   "type": "port",
+   "consoles": [
+    "gcn"
+   ],
+   "games": [
+    "Metroid Prime"
+   ],
+   "description": "MetroidPrimePort is a native port of Metroid Prime for Windows, Linux, and Android that offers widescreen rendering and an uncapped presentation rate.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/38254ebb6c4e4fffa81aa35b8e84d03d.png",
+   "version": "v0.41.0",
+   "released": 1793824475000,
+   "repository": "Odrannnn/MetroidPrimePort",
+   "provider": "github",
+   "releasesUrl": "https://github.com/Odrannnn/MetroidPrimePort/releases/latest",
+   "apkName": "metroid-prime-port-0.38.0-android-arm64.apk",
+   "apkUrl": "https://github.com/Odrannnn/MetroidPrimePort/releases/download/v0.38.0/metroid-prime-port-0.38.0-android-arm64.apk",
+   "sha256": "eb90ec274bb57dbe5a8f5c119ea13bbd144c6b3580cd684fed8a0710916ea1d8",
+   "verified": true,
+   "recommended": 21,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "metroid-prime-2-echoes-unbound",
+   "name": "Metroid Prime 2: Echoes",
+   "type": "port",
+   "consoles": [
+    "gcn",
+    "wii"
+   ],
+   "games": [
+    "Metroid Prime 2: Echoes"
+   ],
+   "description": "Echoes Unbound is a native PC port of Metroid Prime 2: Echoes for Windows, Linux, macOS, iOS and Android with features like cutscene skip and widescreen support.",
+   "artwork": "https://cdn2.steamgriddb.com/grid/9902a484faaf54b4fa1ffaf3a5642113.png",
+   "version": "v0.11.0",
+   "released": 1793824270000,
+   "repository": "Odrannnn/MetroidPrime2Port",
+   "provider": "github",
+   "releasesUrl": "https://github.com/Odrannnn/MetroidPrime2Port/releases/latest",
+   "apkName": "metroid-prime2-port-0.8.1-android-arm64.apk",
+   "apkUrl": "https://github.com/Odrannnn/MetroidPrime2Port/releases/download/v0.8.1/metroid-prime2-port-0.8.1-android-arm64.apk",
+   "sha256": "1d3d27851e66bda634e069a86bf0e30b9697a863aea9d05026164ad1da105566",
+   "verified": true,
+   "recommended": 6,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "metroid-prime-hunters-second-hunt",
+   "name": "Metroid Prime Hunters",
+   "type": "port",
+   "consoles": [
+    "nds"
+   ],
+   "games": [
+    "Metroid Prime Hunters"
+   ],
+   "description": "Second Hunt is a native PC port and Android port of Metroid Prime Hunters for Windows and Android, featuring dual-stick controls and a one-screen HUD.",
+   "artwork": "https://raw.githubusercontent.com/BountyHunterKanden/SecondHunt/45c44ea5085f9f728b52c8b4a1543e97b4fe95a4/src/SecondHunt.Desktop/appicon.ico",
+   "version": "v0.4.5-beta",
+   "released": 1793646816000,
+   "repository": "BountyHunterKanden/SecondHunt",
+   "provider": "github",
+   "releasesUrl": "https://github.com/BountyHunterKanden/SecondHunt/releases/latest",
+   "apkName": "SecondHunt-0.3.8-beta.apk",
+   "apkUrl": "https://github.com/BountyHunterKanden/SecondHunt/releases/download/v0.3.8-beta/SecondHunt-0.3.8-beta.apk",
+   "sha256": "d05c1b522a2d89b2da140a8e2e2b25754ec21be147cb038b40a1ee9365507060",
+   "verified": true,
+   "recommended": 4,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "mickey-donald-collection",
+   "name": "Mickey & Donald Collection",
+   "type": "port",
+   "consoles": [
+    "gen"
+   ],
+   "games": [
+    "Mickey & Donald Collection"
+   ],
+   "description": "Mickey & Donald Collection is a Windows port of three Sega Genesis classics with widescreen support, save states, and achievements.",
+   "artwork": "https://raw.githubusercontent.com/Darhkfox/MickeyAndDonaldCollection/eda2145181ab971cda4bf1f62e619e4da5773d11/res/app_icon_preview.png",
+   "version": "v1.2",
+   "released": 1793878399000,
+   "repository": "Darhkfox/MickeyAndDonaldCollection",
+   "provider": "github",
+   "releasesUrl": "https://github.com/Darhkfox/MickeyAndDonaldCollection/releases/latest",
+   "apkName": "Mickey-and-Donald-Collection-Android-v1.1.apk",
+   "apkUrl": "https://github.com/Darhkfox/MickeyAndDonaldCollection/releases/download/v1.1/Mickey-and-Donald-Collection-Android-v1.1.apk",
+   "sha256": "068d812836167723fb2fa0e0965df07fc2bd1204385b182295921cee72781cf0",
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "monster-hunter-4-ultimate-mh4ultimatedc",
+   "name": "Monster Hunter 4 Ultimate",
+   "type": "port",
+   "consoles": [
+    "3ds"
+   ],
+   "games": [
+    "Monster Hunter 4 Ultimate"
+   ],
+   "description": "MH4UltimateDC is a work-in-progress decompilation of Monster Hunter 4 Ultimate for Nintendo 3DS with the goal of a native PC port.",
+   "artwork": "https://raw.githubusercontent.com/CompaLarios18/MH4UltimateDC/68251476c441ef0c716967b8345f1b89988dc3c8/port/app/icon/mh4u.ico",
+   "version": "v0.1.7",
+   "released": 1793693132000,
+   "repository": "CompaLarios18/MH4UltimateDC",
+   "provider": "github",
+   "releasesUrl": "https://github.com/CompaLarios18/MH4UltimateDC/releases/latest",
+   "apkName": "mh4u-port-android.apk",
+   "apkUrl": "https://github.com/CompaLarios18/MH4UltimateDC/releases/download/v0.1.7/mh4u-port-android.apk",
+   "sha256": "92cc8444fca3541e6c39d569977eeb6e5db97cd99b20828a72c885dea2de2edf",
+   "verified": true,
+   "recommended": 1,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "monster-hunter-generations-ultimate-mhgurecomp",
+   "name": "Monster Hunter Generations Ultimate",
+   "type": "port",
+   "consoles": [
+    "switch"
+   ],
+   "games": [
+    "Monster Hunter Generations Ultimate"
+   ],
+   "description": "MHGURecomp is a native PC port of Monster Hunter Generations Ultimate for Windows and Linux that supports higher resolutions and frame rates.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/7244e80f78fd5664f0f38f37815be3fa.png",
+   "version": "0.15.0",
+   "released": 1793922427000,
+   "repository": "morerokk/MHGURecomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/morerokk/MHGURecomp/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 4,
+   "issues": 1,
+   "broken": 2
+  },
+  {
+   "slug": "monsterhunterportable3rdhdver-yakumo",
+   "name": "Monster Hunter Portable 3rd HD Ver.",
+   "type": "port",
+   "consoles": [
+    "psp"
+   ],
+   "games": [
+    "Monster Hunter Portable 3rd HD Ver."
+   ],
+   "description": "Yakumo brings Monster Hunter Portable 3rd HD Ver. to PC.",
+   "artwork": "https://raw.githubusercontent.com/TeamGDB/Yakumo/refs/heads/main/profiles/mhp3rd/packaging/windows/emblem.ico",
+   "version": "v0.7.5",
+   "released": 1791861819000,
+   "repository": "TeamGDB/Yakumo",
+   "provider": "github",
+   "releasesUrl": "https://github.com/TeamGDB/Yakumo/releases/latest",
+   "apkName": "yakumo-0.6.0-alpha.4-android-arm64.apk",
+   "apkUrl": "https://github.com/TeamGDB/Yakumo/releases/download/v0.6.0-alpha.4/yakumo-0.6.0-alpha.4-android-arm64.apk",
+   "sha256": "75be7bcba3a406266df2984885a5c7fc1fc143a25c2ccd1ccbb318f4933de2e7",
+   "verified": true,
+   "recommended": 10,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "monster-hunter-tri-oceantrirecomp-android",
+   "name": "Monster Hunter Tri",
+   "type": "port",
+   "consoles": [
+    "wii",
+    "mobile"
+   ],
+   "games": [
+    "Monster Hunter Tri"
+   ],
+   "description": "OceanTriRecomp Android is a native Android port of Monster Hunter Tri using static code recompilation, offering native performance on ARM64 hardware.",
+   "artwork": "https://raw.githubusercontent.com/Kiridor123/OceanTriRecomp-Android/93b886f2ba5c3d253ef84844ba5fc8dd60e4a41b/runtime/resources/mh3.ico",
+   "version": "v1.5.5",
+   "released": 1793582537000,
+   "repository": "Kiridor123/OceanTriRecomp-Android",
+   "provider": "github",
+   "releasesUrl": "https://github.com/Kiridor123/OceanTriRecomp-Android/releases/latest",
+   "apkName": "OceanTriRecomp-Android-v1.5-arm64.apk",
+   "apkUrl": "https://github.com/Kiridor123/OceanTriRecomp-Android/releases/download/v1.5/OceanTriRecomp-Android-v1.5-arm64.apk",
+   "sha256": "c6b020be92f17c3807aed98d3874b9db9e6e4e8a0256d122ba726dc3f6cef8e4",
+   "verified": true,
+   "recommended": 1,
+   "issues": 1,
+   "broken": 2
+  },
+  {
+   "slug": "mother-3-mother-3-native-port-recompilation",
+   "name": "MOTHER 3",
+   "type": "port",
+   "consoles": [
+    "gba"
+   ],
+   "games": [
+    "MOTHER 3"
+   ],
+   "description": "MOTHER 3 Recomp is a native port of MOTHER 3 for Windows, Linux, and Android with high-quality 16-bit sound and clean fullscreen mode.",
+   "artwork": "https://raw.githubusercontent.com/josiahg2502-glitch/Mother3Recomp/20e5b79a459d2ccbd66067c397184202164e98fe/assets/img/icon.png",
+   "version": "v1.0.8",
+   "released": 1793212779000,
+   "repository": "josiahg2502-glitch/Mother3Recomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/josiahg2502-glitch/Mother3Recomp/releases/latest",
+   "apkName": "Mother3Recomp-v1.0.8-android.apk",
+   "apkUrl": "https://github.com/josiahg2502-glitch/Mother3Recomp/releases/download/v1.0.8/Mother3Recomp-v1.0.8-android.apk",
+   "sha256": "6fa9f8d738919c5053e46308779ee959e686a7438a433cd4bf309f1a6713c9b1",
+   "verified": true,
+   "recommended": 0,
+   "issues": 5,
+   "broken": 0
+  },
+  {
+   "slug": "motorstorm-arctic-edge-psprecomp-msae",
+   "name": "MotorStorm: Arctic Edge",
+   "type": "port",
+   "consoles": [
+    "psp"
+   ],
+   "games": [
+    "MotorStorm: Arctic Edge"
+   ],
+   "description": "PSPRecomp is a static recompilation framework for PSP software that runs translated code natively, with profiles for MotorStorm: Arctic Edge and GTA: Vice City Stories.",
+   "artwork": "https://raw.githubusercontent.com/coole42-pixel/PSPRecomp-MSAE/beb4ee30df4f89420df5956e819df484bf7b2ea3/profiles/motorstorm/android/branding/applogo.png",
+   "version": "v0.2.0",
+   "released": 1791507053000,
+   "repository": "coole42-pixel/PSPRecomp-MSAE",
+   "provider": "github",
+   "releasesUrl": "https://github.com/coole42-pixel/PSPRecomp-MSAE/releases/latest",
+   "apkName": "MotorStorm-0.2.0-android-arm64-release.apk",
+   "apkUrl": "https://github.com/coole42-pixel/PSPRecomp-MSAE/releases/download/v0.2.0/MotorStorm-0.2.0-android-arm64-release.apk",
+   "sha256": "0aa0a546158860cee06e6a1453d746bda0a157ed87e068f82f4482c3fc0c3364",
+   "verified": true,
+   "recommended": 0,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "mystical-ninja-starring-goemon-goemon64recomp-android",
+   "name": "Mystical Ninja Starring Goemon",
+   "type": "port",
+   "consoles": [
+    "n64"
+   ],
+   "games": [
+    "Mystical Ninja Starring Goemon"
+   ],
+   "description": "Goemon64Recomp-Android is a native Android port of Mystical Ninja Starring Goemon that includes on-screen controls.",
+   "artwork": "https://raw.githubusercontent.com/ogdanimal/Goemon64Recomp-Android/7c6a59848d2b217a2f6dde404e8dbd8534686a71/icons/512.png",
+   "version": "v1.0.8",
+   "released": 1791135290000,
+   "repository": "ogdanimal/Goemon64Recomp-Android",
+   "provider": "github",
+   "releasesUrl": "https://github.com/ogdanimal/Goemon64Recomp-Android/releases/latest",
+   "apkName": "Goemon64Recomp-1.0.8-arm64-v8a.apk",
+   "apkUrl": "https://github.com/ogdanimal/Goemon64Recomp-Android/releases/download/v1.0.8/Goemon64Recomp-1.0.8-arm64-v8a.apk",
+   "sha256": "0c7a6490e0c9d22cd51aac217461bd8aee6e6bd23540a052430e325d34d3e559",
+   "verified": true,
+   "recommended": 3,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "need-for-speed-ii-special-edition-nfsiise",
+   "name": "Need for Speed II: Special Edition",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Need for Speed II: Special Edition"
+   ],
+   "description": "NFSIISE is a PC port of Need for Speed II: Special Edition with 3D acceleration and TCP protocol support.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/746ac26956df2d6be2b2c66c26b62fda/32/256x256.png",
+   "version": "v1.4.0",
+   "released": 1710629762000,
+   "repository": "zaps166/NFSIISE",
+   "provider": "github",
+   "releasesUrl": "https://github.com/zaps166/NFSIISE/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 3,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "new-super-mario-bros-wii-nsmb-wii-multiplayer-decompilation",
+   "name": "New Super Mario Bros. Wii",
+   "type": "port",
+   "consoles": [
+    "wii"
+   ],
+   "games": [
+    "New Super Mario Bros. Wii"
+   ],
+   "description": "NSMB Wii Multiplayer Decompilation is a native port of New Super Mario Bros. Wii for Android and Windows that supports LAN and Tailscale multiplayer.\n\nConfusingly, it has \"decompilation\" in the title but describes itself as a static recompilation.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/ca4487f26fea261558c56c0b1943392b.png",
+   "version": "v0.3.1",
+   "released": 1793258504000,
+   "repository": "WitherBlitz/NSMB-Wii-Multiplayer-Recompilation",
+   "provider": "github",
+   "releasesUrl": "https://github.com/WitherBlitz/NSMB-Wii-Multiplayer-Recompilation/releases/latest",
+   "apkName": "NSMBW-0.3.1-android-arm64.apk",
+   "apkUrl": "https://github.com/WitherBlitz/NSMB-Wii-Multiplayer-Recompilation/releases/download/v0.3.1/NSMBW-0.3.1-android-arm64.apk",
+   "sha256": "d1dbb658d41868712873e4ef48e7b1bb17576167f8d8fde1b56fab5d9ed43df3",
+   "verified": true,
+   "recommended": 2,
+   "issues": 6,
+   "broken": 2
+  },
+  {
+   "slug": "obentou",
+   "name": "Obentou",
+   "type": "emulator",
+   "consoles": [
+    "gb",
+    "gbc",
+    "nes",
+    "gba",
+    "sms",
+    "gg"
+   ],
+   "games": [],
+   "description": "Obentou is a multi system emulator for Bytepusher, GBC, NES, PCE, PV1000, TMS80, WATARA, CHIP-8, PACMAN, Space Invaders, SPECCY, JACE, GBA, and GAMATE with turbo mode, rewind, and save states.",
+   "artwork": "https://raw.githubusercontent.com/yughias/Obentou/2fae859e9a0d4630386e729d6926da502f58f772/logo.ico",
+   "version": "v0.2.2",
+   "released": 1789831954000,
+   "repository": "yughias/Obentou",
+   "provider": "github",
+   "releasesUrl": "https://github.com/yughias/Obentou/releases/latest",
+   "apkName": "obentou.apk",
+   "apkUrl": "https://github.com/yughias/Obentou/releases/download/v0.2.2/obentou.apk",
+   "sha256": "7326c01505ba653cef0c02029b8c3ba985bc22fb8f3b198b7b45d11cc21d3d98",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "perfect-dark-perfect-dark-android",
+   "name": "Perfect Dark",
+   "type": "port",
+   "consoles": [
+    "n64",
+    "mobile"
+   ],
+   "games": [
+    "Perfect Dark"
+   ],
+   "description": "Perfect Dark (Android) is a port of Perfect Dark to Android with mouselook, dual analog support, and widescreen resolution.",
+   "artwork": "https://raw.githubusercontent.com/izzy2lost/perfect_dark/0bc2e28d142bdfbf9b4aa7b19014ccb0e5202c80/android/app/src/main/play_store_512.png",
+   "version": "2.0.0",
+   "released": 1787850919000,
+   "repository": "izzy2lost/perfect_dark",
+   "provider": "github",
+   "releasesUrl": "https://github.com/izzy2lost/perfect_dark/releases/latest",
+   "apkName": "app-release.apk",
+   "apkUrl": "https://github.com/izzy2lost/perfect_dark/releases/download/2.0.0/app-release.apk",
+   "sha256": "7b782d785d4f3fd012da94157aec61379cbb295e525777adb27128c6235d19cb",
+   "verified": true,
+   "recommended": 2,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "pikmin-opennectar",
+   "name": "Pikmin",
+   "type": "port",
+   "consoles": [
+    "gcn"
+   ],
+   "games": [
+    "Pikmin",
+    "Pikmin 2"
+   ],
+   "description": "Open Nectar brings Pikmin to PC.",
+   "artwork": "https://cdn2.steamgriddb.com/thumb/ed02e8478720e5c7c77f780ddd471ab2.jpg",
+   "version": "1.1.1",
+   "released": 1793287616000,
+   "repository": "SSunnKing/Open-Nectar---Pikmin-Native-PC-Mobile-Port",
+   "provider": "github",
+   "releasesUrl": "https://github.com/SSunnKing/Open-Nectar---Pikmin-Native-PC-Mobile-Port/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 8,
+   "issues": 0,
+   "broken": 1
+  },
+  {
+   "slug": "pilotwings-64-birdman64",
+   "name": "Pilotwings 64",
+   "type": "port",
+   "consoles": [
+    "n64"
+   ],
+   "games": [
+    "Pilotwings 64"
+   ],
+   "description": "Birdman64 is a native PC port of Pilotwings 64 for Windows and Linux that supports widescreen, high refresh rates, and modern gamepads.",
+   "artwork": "https://raw.githubusercontent.com/NoahVl/Birdman64/f7ef4cb6d5f880755927eec6a52da7f8b7fe8065/assets/icon/birdman64.ico",
+   "version": "v1.5.2-pre1",
+   "released": 1792834850000,
+   "repository": "NoahVl/Birdman64",
+   "provider": "github",
+   "releasesUrl": "https://github.com/NoahVl/Birdman64/releases/latest",
+   "apkName": "Birdman64-android-arm64.apk",
+   "apkUrl": "https://github.com/NoahVl/Birdman64/releases/download/v1.5.1/Birdman64-android-arm64.apk",
+   "sha256": "cae65a36ddae4372fb51b75b20490a2fe2eb8c75fe86c64703d55c5540268942",
+   "verified": true,
+   "recommended": 5,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "pokemon-black-eidos",
+   "name": "Pokemon Black / Pokemon White",
+   "type": "port",
+   "consoles": [
+    "nds"
+   ],
+   "games": [
+    "Pokemon Black",
+    "Pokemon White"
+   ],
+   "description": "EIdos is a native PC port of Pokemon Black & White built on the aletheia decompilation, featuring a widescreen display and remastered battles.",
+   "artwork": "https://raw.githubusercontent.com/Project-Holon/eidos/refs/heads/main/assets/icon.png",
+   "version": "v0.2.2",
+   "released": 1793917774000,
+   "repository": "Project-Holon/eidos",
+   "provider": "github",
+   "releasesUrl": "https://github.com/Project-Holon/eidos/releases/latest",
+   "apkName": "eidos-0.2.1-android.apk",
+   "apkUrl": "https://github.com/Project-Holon/eidos/releases/download/v0.2.1/eidos-0.2.1-android.apk",
+   "sha256": "4bcce5016be98139f3d422a3f280f868080341af805dd722201fd693dd271414",
+   "verified": true,
+   "recommended": 1,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "pokemonemerald-emeraldrecomp",
+   "name": "Pokemon Emerald",
+   "type": "port",
+   "consoles": [
+    "gba"
+   ],
+   "games": [
+    "Pokemon Emerald"
+   ],
+   "description": "EmeraldRecomp brings Pokemon Emerald to PC.",
+   "artwork": "https://cdn2.steamgriddb.com/thumb/19fa7de7038497527f6a88cf1629251d.jpg",
+   "version": "v0.1.5",
+   "released": 1793504242000,
+   "repository": "mstan/EmeraldRecomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/mstan/EmeraldRecomp/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "pokemonredblueyellowgoldsilvercrystal-gen1recompproject",
+   "name": "Pokemon RBY / GSC / FRLF / RSE",
+   "type": "port",
+   "consoles": [
+    "gb",
+    "gbc",
+    "gba"
+   ],
+   "games": [
+    "Pokemon Red",
+    "Pokemon Blue",
+    "Pokemon Yellow",
+    "Pokemon Gold",
+    "Pokemon Silver",
+    "Pokemon Crystal",
+    "Pokemon FireRed",
+    "Pokemon LeafGreen",
+    "Pokemon Ruby",
+    "Pokemon Sapphire",
+    "Pokemon Emerald"
+   ],
+   "description": "G1R Deluxe brings Pokemon RBY / GSC / FRLG / RSE to PC. Formerly known as Gen1Recomp.",
+   "artwork": "https://raw.githubusercontent.com/bryanthaboi/pokemon-gen1-recomp-project/refs/heads/main/assets/logo/gen1recomp_cover.png",
+   "version": "v0.4.0",
+   "released": 1793649659000,
+   "repository": "bryanthaboi/gen1recomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/bryanthaboi/gen1recomp/releases/latest",
+   "apkName": "gen1recomp-0.3.99-android.apk",
+   "apkUrl": "https://github.com/bryanthaboi/gen1recomp/releases/download/v0.3.99/gen1recomp-0.3.99-android.apk",
+   "sha256": "7758e5513ad24f9aa2d6876a97403acabdcc546386bc76ceba099d9ea678349a",
+   "verified": true,
+   "recommended": 4,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "pokemonsnap-snap64recomp",
+   "name": "Pokemon Snap",
+   "type": "port",
+   "consoles": [
+    "n64"
+   ],
+   "games": [
+    "Pokemon Snap"
+   ],
+   "description": "Snap64 Recomp brings Pokemon Snap to PC.",
+   "artwork": "https://raw.githubusercontent.com/JackandBeans/Snap64Recomp/refs/heads/main/src/snap64.ico",
+   "version": "v1.1.6",
+   "released": 1792784115000,
+   "repository": "JackandBeans/Snap64Recomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/JackandBeans/Snap64Recomp/releases/latest",
+   "apkName": "Snap64Recomp-1.1.6-android.apk",
+   "apkUrl": "https://github.com/JackandBeans/Snap64Recomp/releases/download/v1.1.6/Snap64Recomp-1.1.6-android.apk",
+   "sha256": "9732b471bba76e3c284e7d7f02f837eb3ddf55e239caca356f204fac1126ceca",
+   "verified": true,
+   "recommended": 4,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "pokerogueoffline",
+   "name": "PokeRogueOffline",
+   "type": "game",
+   "consoles": [
+    "pc"
+   ],
+   "games": [],
+   "description": "PokeRogueOffline is an offline wrapper for the game PokeRogue that allows local saves and importing from the official site.",
+   "artwork": "https://raw.githubusercontent.com/PokeRogue-Offline/pokerogue-offline/f2376a7130bf49e2ec8f1cd05690db089adb3aa2/docs/appIcon-adaptive.png",
+   "version": "v1.12.2.4-364",
+   "released": 1793838839000,
+   "repository": "PokeRogue-Offline/pokerogue-offline",
+   "provider": "github",
+   "releasesUrl": "https://github.com/PokeRogue-Offline/pokerogue-offline/releases/latest",
+   "apkName": "PokeRogueOffline.apk",
+   "apkUrl": "https://github.com/PokeRogue-Offline/pokerogue-offline/releases/download/v1.12.2.3-357/PokeRogueOffline.apk",
+   "sha256": "459592f4310966e7ada1b82b384805da95fcd18e388ccc6c486313998465cfc2",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "pokemon-dualscreendex",
+   "name": "Pok\u00e9mon",
+   "type": "tool",
+   "consoles": [
+    "mobile"
+   ],
+   "games": [],
+   "description": "DualScreenDex is a companion Pok\u00e9dex for dual-screen Android handhelds that uses live OCR to detect the Pok\u00e9mon on screen and instantly display their stats, weaknesses, and resistances.",
+   "artwork": "https://raw.githubusercontent.com/enrique-paulino/DualScreenDex/b412dd29de455b2fa2769dcccd832059e2e7830e/app/src/main/assets/icon-lower.png",
+   "version": "v2.0.1",
+   "released": 1771195449000,
+   "repository": "enrique-paulino/DualScreenDex",
+   "provider": "github",
+   "releasesUrl": "https://github.com/enrique-paulino/DualScreenDex/releases/latest",
+   "apkName": "DualScreenDex_v2.0.1.apk",
+   "apkUrl": "https://github.com/enrique-paulino/DualScreenDex/releases/download/v2.0.1/DualScreenDex_v2.0.1.apk",
+   "sha256": "79375f8eebdd174a3c031556ee7bff3e0c7f2dc898e195aee0bc3326fcf74f3d",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "pokemon-trading-card-game-2-the-invasion-of-team-gr-pokemon-tcg-2-native-port",
+   "name": "Pok\u00e9mon Trading Card Game 2: The Invasion of Team GR!",
+   "type": "port",
+   "consoles": [
+    "gbc"
+   ],
+   "games": [
+    "Pokemon Trading Card Game 2"
+   ],
+   "description": "Pok\u00e9mon TCG 2 Native Port is a native port of Pok\u00e9mon Trading Card Game 2 for Windows, Linux, macOS and Android with American English translation.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/004cbc35eed8995456a63ec720fe63c7/32/1024x1024.png",
+   "version": "v0.1.3",
+   "released": 1793574571000,
+   "repository": "brianblakely/pokemon-card-game-2-native-port",
+   "provider": "github",
+   "releasesUrl": "https://github.com/brianblakely/pokemon-card-game-2-native-port/releases/latest",
+   "apkName": "pokemon-tcg2-v0.1.3-android.apk",
+   "apkUrl": "https://github.com/brianblakely/pokemon-card-game-2-native-port/releases/download/v0.1.3/pokemon-tcg2-v0.1.3-android.apk",
+   "sha256": "f560ca753c2956d4f1123c53469ce2d8e74ee203af8b32a83a9eb1fb96bb4147",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "prince-of-persia-sdlpop-android",
+   "name": "Prince of Persia",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Prince of Persia"
+   ],
+   "description": "SDLPoP Android is a port of the Prince of Persia recompilation to Android with touch controls.",
+   "artwork": "https://cdn2.steamgriddb.com/icon_thumb/3d96a03e368563d9a18aa0073f7f5c8b.png",
+   "version": "v1.0.0",
+   "released": 1777694617000,
+   "repository": "mgrz18/sdlpop-android",
+   "provider": "github",
+   "releasesUrl": "https://github.com/mgrz18/sdlpop-android/releases/latest",
+   "apkName": "sdlpop-android-v1.0.0-debug.apk",
+   "apkUrl": "https://github.com/mgrz18/sdlpop-android/releases/download/v1.0.0/sdlpop-android-v1.0.0-debug.apk",
+   "sha256": "d48b6f22f52c0f7081a035877aabe0495cb7d1b338dcab15c5dfa793f3c03e14",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "prince-of-persia-the-sands-of-time-resot",
+   "name": "Prince of Persia: The Sands of Time",
+   "type": "port",
+   "consoles": [
+    "og xbox"
+   ],
+   "games": [
+    "Prince of Persia: The Sands of Time"
+   ],
+   "description": "Static recompilation project bringing the original Xbox Prince of Persia trilogy natively to PC and Android with modern enhancements and unlocked performance.",
+   "artwork": "https://raw.githubusercontent.com/FulGerNet/rePOP/d8190090c15186dd55d419ee3a20f6231bac4189/port/windows/res/resot.ico",
+   "version": "reSOTv0.5.0",
+   "released": 1793702726000,
+   "repository": "FulGerNet/rePOP",
+   "provider": "github",
+   "releasesUrl": "https://github.com/FulGerNet/rePOP/releases/latest",
+   "apkName": "reSOT-android.apk",
+   "apkUrl": "https://github.com/FulGerNet/rePOP/releases/download/reSOTv0.4.2/reSOT-android.apk",
+   "sha256": "163bcb4f510250a918cd75392995f808487baafca8c12f2c64a9b04c44bc96ea",
+   "verified": true,
+   "recommended": 0,
+   "issues": 4,
+   "broken": 0
+  },
+  {
+   "slug": "rampage-total-destruction-rampagere",
+   "name": "Rampage: Total Destruction",
+   "type": "port",
+   "consoles": [
+    "ps2"
+   ],
+   "games": [
+    "Rampage: Total Destruction"
+   ],
+   "description": "RampageRE is a native PC port of Rampage: Total Destruction for Windows, Linux, and Android.",
+   "artwork": "https://raw.githubusercontent.com/jjmhalew/RampageRE/1740663b62e5303bdc0257631be3bbf2ad2bc10e/res/switch_icon.jpg",
+   "version": "v1.2.4",
+   "released": 1793952350000,
+   "repository": "jjmhalew/RampageRE",
+   "provider": "github",
+   "releasesUrl": "https://github.com/jjmhalew/RampageRE/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "raptor-call-of-the-shadows-raptor",
+   "name": "Raptor: Call of the Shadows",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Raptor: Call of the Shadows"
+   ],
+   "description": "Raptor is a PC port of Raptor: Call of the Shadows for Windows, macOS, and Android.",
+   "artwork": "https://raw.githubusercontent.com/skynettx/raptor/746c35a256bfa2afc6732c7923be9e2e777d6bf0/pkg/osx/raptorlauncher/Assets.xcassets/AppIcon.appiconset/raptor%201.png",
+   "version": "v0.8.2",
+   "released": 1790622960000,
+   "repository": "skynettx/raptor",
+   "provider": "github",
+   "releasesUrl": "https://github.com/skynettx/raptor/releases/latest",
+   "apkName": "raptor-0.8.2-android.apk",
+   "apkUrl": "https://github.com/skynettx/raptor/releases/download/v0.8.2/raptor-0.8.2-android.apk",
+   "sha256": "ee9965da56eb3a8e69c71bbebbc56a35ab1e087a6076b686eee76f913531114f",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "ratchet-clank-openrac",
+   "name": "Ratchet & Clank",
+   "type": "port",
+   "consoles": [
+    "ps2"
+   ],
+   "games": [
+    "Ratchet & Clank"
+   ],
+   "description": "OpenRAC is a PC port of Ratchet & Clank that decompiles the game into C and rebuilds it for Windows, macOS, and Linux.",
+   "artwork": "https://raw.githubusercontent.com/OpenRAC/OpenRAC/07c23356bfe6da8cc7b24377d3b7c61f39517fd0/launcher/src-tauri/icons/icon.ico",
+   "version": "launcher-dev-feat-windows-rac2-part",
+   "released": 1793899114000,
+   "repository": "OpenRAC/OpenRAC",
+   "provider": "github",
+   "releasesUrl": "https://github.com/OpenRAC/OpenRAC/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "residentevilgaiden-regaidenrecomp",
+   "name": "Resident Evil Gaiden",
+   "type": "port",
+   "consoles": [
+    "gbc"
+   ],
+   "games": [
+    "Resident Evil Gaiden"
+   ],
+   "description": "Resident Evil Gaiden: Recompiled brings Resident Evil Gaiden to PC.",
+   "artwork": "https://raw.githubusercontent.com/sergiomanzur/regaiden-recomp/refs/heads/master/src/recompiled/icon.ico",
+   "version": "v0.4.1",
+   "released": 1789580750000,
+   "repository": "sergiomanzur/regaiden-recomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/sergiomanzur/regaiden-recomp/releases/latest",
+   "apkName": "Resident_Evil_Gaiden_Recomp_v0.4.1_Android.apk",
+   "apkUrl": "https://github.com/sergiomanzur/regaiden-recomp/releases/download/v0.4.1/Resident_Evil_Gaiden_Recomp_v0.4.1_Android.apk",
+   "sha256": "d548911a14505b5dad4369d64b6abb4baa833a44841101efde572efde2a708d6",
+   "verified": true,
+   "recommended": 0,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "rocket-robot-on-wheels-rocket-r",
+   "name": "Rocket: Robot on Wheels",
+   "type": "port",
+   "consoles": [
+    "n64"
+   ],
+   "games": [
+    "Rocket: Robot on Wheels"
+   ],
+   "description": "Rocket-R brings Rocket: Robot on Wheels to Windows, Linux and Android. You can play at higher resolutions, use smoother frame rates and set up the controls how you like.",
+   "artwork": "https://raw.githubusercontent.com/ThatGuyMcd/Rocket-R/133070e264350f17257a520ae0de4da98ce445b0/packaging/android/app/src/main/res/drawable/rocket_r_icon.png",
+   "version": "v.1.0.1",
+   "released": 1790549312000,
+   "repository": "ThatGuyMcd/Rocket-R",
+   "provider": "github",
+   "releasesUrl": "https://github.com/ThatGuyMcd/Rocket-R/releases/latest",
+   "apkName": "Rocket-R-1.0.1-Android-arm64-v8a.apk",
+   "apkUrl": "https://github.com/ThatGuyMcd/Rocket-R/releases/download/v.1.0.1/Rocket-R-1.0.1-Android-arm64-v8a.apk",
+   "sha256": "b722905b73e40238ac46d9e227a0052beec7f633374ee85c85cb86facca7af87",
+   "verified": true,
+   "recommended": 4,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "rollercoaster-tycoon-2-openrct2",
+   "name": "RollerCoaster Tycoon 2",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "RollerCoaster Tycoon 2"
+   ],
+   "description": "",
+   "artwork": "https://raw.githubusercontent.com/OpenRCT2/OpenRCT2/5f823fa85d00494b596aa7020c46844166efae08/resources/logo/icon.ico",
+   "version": "v0.5.7",
+   "released": 1793530669000,
+   "repository": "OpenRCT2/OpenRCT2",
+   "provider": "github",
+   "releasesUrl": "https://github.com/OpenRCT2/OpenRCT2/releases/latest",
+   "apkName": "OpenRCT2-v0.5.6-android.apk",
+   "apkUrl": "https://github.com/OpenRCT2/OpenRCT2/releases/download/v0.5.6/OpenRCT2-v0.5.6-android.apk",
+   "sha256": "49705d0c3f89fd729254edeece0e43c620396ee0ddbfd50eb59a4ae4ea6df5db",
+   "verified": true,
+   "recommended": 3,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "saru-get-you-saru-saru-daisakusen-ape-escape-mind-over-monkey",
+   "name": "Saru Get You: Saru Saru Daisakusen",
+   "type": "port",
+   "consoles": [
+    "psp"
+   ],
+   "games": [
+    "Saru Get You: Saru Saru Daisakusen"
+   ],
+   "description": "Ape Escape Mind Over Monkey is a recompilation of Saru Get You Saru Saru Daisakusen for Windows, macOS, Linux, and Android with improved performance and configurability.",
+   "artwork": "https://raw.githubusercontent.com/jackgllghr/bigmission-recomp/1f055ae78bbc2be39084e2a4f2a3504d6cdec4bc/include/image/logo.png",
+   "version": "v0.2.1",
+   "released": 1792958691000,
+   "repository": "jackgllghr/bigmission-recomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/jackgllghr/bigmission-recomp/releases/latest",
+   "apkName": "SaruSaruRecomp-v0.2.0-android-arm64.apk",
+   "apkUrl": "https://github.com/jackgllghr/bigmission-recomp/releases/download/v0.2.0/SaruSaruRecomp-v0.2.0-android-arm64.apk",
+   "sha256": "9932925191088fd8fc63af7fcb1f199b34358125823613959911b9a813a776ed",
+   "verified": true,
+   "recommended": 1,
+   "issues": 2,
+   "broken": 0
+  },
+  {
+   "slug": "sid-meier-s-simgolf-opensgolf",
+   "name": "Sid Meier's SimGolf",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Sid Meier's SimGolf"
+   ],
+   "description": "OpenSGolf is a reimplementation of Sid Meier's SimGolf for Windows, macOS, Linux, and Android that runs on modern systems and offers optional extras like enhanced graphics and bigger courses.",
+   "artwork": "https://raw.githubusercontent.com/crspytopgn/opensgolf/99399da5cfcdf34bdfe3285a69a031bca224501b/packaging/linux/icons/256x256/io.github.crspytopgn.OpenSGolf.png",
+   "version": "v0.6.10",
+   "released": 1793797832000,
+   "repository": "crspytopgn/opensgolf",
+   "provider": "github",
+   "releasesUrl": "https://github.com/crspytopgn/opensgolf/releases/latest",
+   "apkName": "opensgolf-android.apk",
+   "apkUrl": "https://github.com/crspytopgn/opensgolf/releases/download/v0.6.9/opensgolf-android.apk",
+   "sha256": "d088a701e5623b6820ff3e2441a98df912d098cd91d36053b16406503c024417",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "silenthill-silenthillnativepcport",
+   "name": "Silent Hill",
+   "type": "port",
+   "consoles": [
+    "ps1"
+   ],
+   "games": [
+    "Silent Hill"
+   ],
+   "description": "SilentHillNativePCPort brings Silent Hill to PC.",
+   "artwork": "https://raw.githubusercontent.com/SlickAmogus/silent-hill-decomp/refs/heads/pc-port/pc_port/res/app_icon.ico",
+   "version": "xbox360-alpha-1",
+   "released": 1793314679000,
+   "repository": "SlickAmogus/silent-hill-decomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/SlickAmogus/silent-hill-decomp/releases/latest",
+   "apkName": "SHAndroid_100926_OLD.apk",
+   "apkUrl": "https://github.com/SlickAmogus/silent-hill-decomp/releases/download/crossplatform-beta/SHAndroid_100926_OLD.apk",
+   "sha256": "11cc462b001b0a1236a89020d3cb7380d28fc6b6c9b0de347f77264ec34bc0ef",
+   "verified": true,
+   "recommended": 5,
+   "issues": 2,
+   "broken": 1
+  },
+  {
+   "slug": "simcity-urbanrecomp-enhanced",
+   "name": "SimCity",
+   "type": "port",
+   "consoles": [
+    "snes"
+   ],
+   "games": [
+    "SimCity"
+   ],
+   "description": "UrbanRecomp Enhanced is a Super Nintendo SimCity recompilation for Android, iOS, Linux, macOS, and Windows with enhanced features like adjustable development speeds and larger maps.",
+   "artwork": "https://raw.githubusercontent.com/kandowontu2/UrbanRecomp/f1ac9045c13ca89c255c47e8545479755ecea241/assets/urbanrecomp.ico",
+   "version": "enhanced-v1.0.4",
+   "released": 1791855415000,
+   "repository": "kandowontu2/UrbanRecomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/kandowontu2/UrbanRecomp/releases/latest",
+   "apkName": "UrbanRecomp-enhanced-v1.0.4-android-universal.apk",
+   "apkUrl": "https://github.com/kandowontu2/UrbanRecomp/releases/download/enhanced-v1.0.4/UrbanRecomp-enhanced-v1.0.4-android-universal.apk",
+   "sha256": "773d17b3f78db8a65bb5c1ca93982a2b1217fcdefca395e36ea070735b616f8f",
+   "verified": true,
+   "recommended": 4,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "sin-and-punishment-snprecomp",
+   "name": "Sin and Punishment",
+   "type": "port",
+   "consoles": [
+    "n64"
+   ],
+   "games": [
+    "Sin and Punishment"
+   ],
+   "description": "SnPRecomp is a native PC port of Sin and Punishment for Windows and Linux that offers widescreen, high resolutions, and mouse aiming.",
+   "artwork": "https://raw.githubusercontent.com/wootbeer/snprecomp/ce916f1feff2d39fe30e276a89d41ba84d859bea/icons/app.ico",
+   "version": "0.2.10",
+   "released": 1793640096000,
+   "repository": "wootbeer/snprecomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/wootbeer/snprecomp/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 4,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "skies-of-arcadia-legends-skies-of-arcadia-legends-recompiled",
+   "name": "Skies of Arcadia Legends",
+   "type": "port",
+   "consoles": [
+    "gcn"
+   ],
+   "games": [
+    "Skies of Arcadia Legends"
+   ],
+   "description": "Skies of Arcadia Legends Recompiled is a native port of Skies of Arcadia Legends to Windows, Linux and Android that adds widescreen, 60 fps and camera control.",
+   "artwork": "https://raw.githubusercontent.com/ogdanimal/SkiesOfArcadiaLegends-Recomp/4eebf7f28f4a6d4ae84da59c14973e07c3a548b7/release/android-icon/mipmap-xxhdpi/skies_launcher_foreground.png",
+   "version": "v0.83.0-beta",
+   "released": 1792715937000,
+   "repository": "ogdanimal/SkiesOfArcadiaLegends-Recomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/ogdanimal/SkiesOfArcadiaLegends-Recomp/releases/latest",
+   "apkName": "SkiesOfArcadiaLegends-v0.83.0-beta-android.apk",
+   "apkUrl": "https://github.com/ogdanimal/SkiesOfArcadiaLegends-Recomp/releases/download/v0.83.0-beta/SkiesOfArcadiaLegends-v0.83.0-beta-android.apk",
+   "sha256": "717e3680667433ef6ec7ee03f7ad02a76bdc6116e6dce51411904d902362ab29",
+   "verified": true,
+   "recommended": 5,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "sonic3knuckles-sonic3air",
+   "name": "Sonic 3 & Knuckles",
+   "type": "port",
+   "consoles": [
+    "gen"
+   ],
+   "games": [
+    "Sonic 3 & Knuckles"
+   ],
+   "description": "Sonic 3 A.I.R. brings Sonic 3 & Knuckles to PC.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/a70dab11c90d06b809d0be230731762a/32/256x256.png",
+   "version": "v26.08.15.0-test",
+   "released": 1786801834000,
+   "repository": "Eukaryot/sonic3air",
+   "provider": "github",
+   "releasesUrl": "https://github.com/Eukaryot/sonic3air/releases/latest",
+   "apkName": "sonic3air_game.apk",
+   "apkUrl": "https://github.com/Eukaryot/sonic3air/releases/download/v26.03.28.0-stable/sonic3air_game.apk",
+   "sha256": "915fbf525efadfff06ed27923f8aead490ff29723b87445fbf172e1a4b476838",
+   "verified": true,
+   "recommended": 3,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "soniccd-rsdkv3decompilation",
+   "name": "Sonic CD (2011)",
+   "type": "port",
+   "consoles": [
+    "mobile"
+   ],
+   "games": [
+    "Sonic CD (2011)"
+   ],
+   "description": "RSDKv3 Decompilation brings Sonic CD (2011) to PC.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/b8b8c345f81f0479515a0da0add9a159.png",
+   "version": "1.3.3",
+   "released": 1762042329000,
+   "repository": "RSDKModding/RSDKv3-Decompilation",
+   "provider": "github",
+   "releasesUrl": "https://github.com/RSDKModding/RSDKv3-Decompilation/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 4,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "sonic-free-riders-free-riders-recompiled",
+   "name": "Sonic Free Riders",
+   "type": "port",
+   "consoles": [
+    "x360"
+   ],
+   "games": [
+    "Sonic Free Riders"
+   ],
+   "description": "Free Riders Recompiled is an unofficial port of the Xbox 360 version of Sonic Free Riders for Windows, Linux and Android, built through static recompilation. Play with a controller or keyboard, use Kinect / Kinect v2 or webcam motion controls on Windows, and bring your own VRM model to the in-game AVATAR rider. Kinect v2 support is experimental and still needs hardware validation.",
+   "artwork": "https://cdn2.steamgriddb.com/grid/9225fcf7648e0bc72c9fbc499e09938b.png",
+   "version": "v0.10.49",
+   "released": 1793926524000,
+   "repository": "YuutaTsubasa/Free-Riders-Recompiled",
+   "provider": "github",
+   "releasesUrl": "https://github.com/YuutaTsubasa/Free-Riders-Recompiled/releases/latest",
+   "apkName": "FreeRidersRecompiled-0.10.43-android-arm64.apk",
+   "apkUrl": "https://github.com/YuutaTsubasa/Free-Riders-Recompiled/releases/download/v0.10.43/FreeRidersRecompiled-0.10.43-android-arm64.apk",
+   "sha256": "d9a0eeaa764d36e6ea0fa326f432ab6fce3c04e3d7c17ea59c6fe787b5871766",
+   "verified": true,
+   "recommended": 0,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "sonic-r-sonic-r-android",
+   "name": "Sonic R",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Sonic R"
+   ],
+   "description": "Sonic R Android is an Android port of Sonic R featuring an OpenGL ES 2.0 rendering backend and customizable touch controls.",
+   "artwork": "https://raw.githubusercontent.com/ZinexDa/sonic-r-android/694739f47364f47c8123b6882f62db4910e4639a/AppIcon.png",
+   "version": "v1.3.1",
+   "released": 1792585833000,
+   "repository": "ZinexDa/sonic-r-android",
+   "provider": "github",
+   "releasesUrl": "https://github.com/ZinexDa/sonic-r-android/releases/latest",
+   "apkName": "SonicR-release.apk",
+   "apkUrl": "https://github.com/ZinexDa/sonic-r-android/releases/download/v1.3.1/SonicR-release.apk",
+   "sha256": "4f3aa1564ddb132f518bcddf9c2b36bdd2e6f2cee64a126b1a19f318a2fe631a",
+   "verified": true,
+   "recommended": 2,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "sonicthehedgehog2013-sonic1forever",
+   "name": "Sonic the Hedgehog (2013)",
+   "type": "port",
+   "consoles": [
+    "mobile",
+    "gen"
+   ],
+   "games": [
+    "Sonic the Hedgehog (2013)"
+   ],
+   "description": "Sonic 1 Forever brings Sonic the Hedgehog (2013) to PC.",
+   "artwork": "https://cdn2.steamgriddb.com/icon_thumb/7884a9652e94555c70f96b6be63be216.png",
+   "version": "1.5.1",
+   "released": 1729089532000,
+   "repository": "ElspethThePict/S1Forever",
+   "provider": "github",
+   "releasesUrl": "https://github.com/ElspethThePict/S1Forever/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 3,
+   "issues": 0,
+   "broken": 1
+  },
+  {
+   "slug": "spelunky-classic-spelunky-classic-hd",
+   "name": "Spelunky Classic",
+   "type": "port",
+   "consoles": [
+    "pc",
+    "mobile"
+   ],
+   "games": [
+    "Spelunky Classic"
+   ],
+   "description": "Spelunky Classic HD is a modified port of Spelunky Classic for Windows, Linux, and Android with support for different aspect ratios and touch input.",
+   "artwork": "https://raw.githubusercontent.com/yancharkin/SpelunkyClassicHD/b4a399950b74fd940aeb2d66e2f98c8ac7f15892/options/android/icons_adaptive/xxxhdpi.png",
+   "version": "1.2.2",
+   "released": 1756913823000,
+   "repository": "yancharkin/SpelunkyClassicHD",
+   "provider": "github",
+   "releasesUrl": "https://github.com/yancharkin/SpelunkyClassicHD/releases/latest",
+   "apkName": "spelunky_classic_hd-android-universal.apk",
+   "apkUrl": "https://github.com/yancharkin/SpelunkyClassicHD/releases/download/1.2.2/spelunky_classic_hd-android-universal.apk",
+   "sha256": "d83ea688cef6d1b15b9a9e095223c4cbe00611a6f3cac55dab9ac14850d24c8f",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "spider-man-2-sm2-enhanced",
+   "name": "Spider-Man 2",
+   "type": "emulator",
+   "consoles": [
+    "gcn"
+   ],
+   "games": [
+    "Spider-Man 2"
+   ],
+   "description": "A 100% free and open source fan-made launcher and mod for Spider-Man 2, played on the Dolphin emulator.",
+   "artwork": "https://raw.githubusercontent.com/JohnSwingMods/sm2-enhanced/5f71af44bbf5a80b77a74a67d7f0d25347ccc892/spidey_app.ico",
+   "version": "v1.2.2",
+   "released": 1793640751000,
+   "repository": "JohnSwingMods/sm2-enhanced",
+   "provider": "github",
+   "releasesUrl": "https://github.com/JohnSwingMods/sm2-enhanced/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 2,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "star-fox-64-starship-android",
+   "name": "Star Fox 64",
+   "type": "port",
+   "consoles": [
+    "n64"
+   ],
+   "games": [
+    "Star Fox 64"
+   ],
+   "description": "Starship is a native PC port of Star Fox 64 that allows for custom asset replacement and supports multiple graphics backends.",
+   "artwork": "https://raw.githubusercontent.com/izzy2lost/Starship/f2794c26dd0bab87a5f5d755150fb8f025c77379/starship.ico",
+   "version": "v2.0.0",
+   "released": 1785815312000,
+   "repository": "izzy2lost/Starship",
+   "provider": "github",
+   "releasesUrl": "https://github.com/izzy2lost/Starship/releases/latest",
+   "apkName": "starship-v2.0.0.apk",
+   "apkUrl": "https://github.com/izzy2lost/Starship/releases/download/v2.0.0/starship-v2.0.0.apk",
+   "sha256": "092818cc7f3a6bef4207f1403db601b6ebd875a6e775b0f6a657df364fc985df",
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "starfox-starfoxenhanced",
+   "name": "Star Fox [Enhanced]",
+   "type": "port",
+   "consoles": [
+    "snes"
+   ],
+   "games": [
+    "Star Fox"
+   ],
+   "description": "Star Fox Enhanced brings Star Fox [Enhanced] to PC.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/6c19e0a6da12dc02239312f151072ddd.png",
+   "version": "v0.0.8.8.3",
+   "released": 1793559956000,
+   "repository": "kandowontu2/starfox-enhanced",
+   "provider": "github",
+   "releasesUrl": "https://github.com/kandowontu2/starfox-enhanced/releases/latest",
+   "apkName": "StarFoxEnhanced-0.0.8.8.1-android-arm64.apk",
+   "apkUrl": "https://github.com/kandowontu2/starfox-enhanced/releases/download/v0.0.8.8.1/StarFoxEnhanced-0.0.8.8.1-android-arm64.apk",
+   "sha256": "e839bf2c4733f262b6a1d36f2ccbb4e8a51751220868eaa6ca6be28037c1c8d9",
+   "verified": true,
+   "recommended": 4,
+   "issues": 2,
+   "broken": 0
+  },
+  {
+   "slug": "star-wars-jedi-knight-dark-forces-ii-openjkdf2",
+   "name": "Star Wars Jedi Knight: Dark Forces II",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Star Wars Jedi Knight: Dark Forces II"
+   ],
+   "description": "OpenJKDF2 is a C reimplementation and port of Star Wars Jedi Knight Dark Forces II for Windows, macOS, Linux, and Android.",
+   "artwork": "https://raw.githubusercontent.com/shinyquagsire23/OpenJKDF2/798f930402525a23b94671d85b97b00390342fa0/packaging/openjkdf2.ico",
+   "version": "v0.9.9",
+   "released": 1783285349000,
+   "repository": "shinyquagsire23/OpenJKDF2",
+   "provider": "github",
+   "releasesUrl": "https://github.com/shinyquagsire23/OpenJKDF2/releases/latest",
+   "apkName": "android-OpenJKDF2-arm64-v8a.apk",
+   "apkUrl": "https://github.com/shinyquagsire23/OpenJKDF2/releases/download/v0.9.9/android-OpenJKDF2-arm64-v8a.apk",
+   "sha256": "103c7138a648e1f50d3d87d3221101bc3871d02157ef22933fbf134573a73527",
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "street-fighter-alpha-2-cps-2-recomp",
+   "name": "Street Fighter Alpha 2",
+   "type": "port",
+   "consoles": [
+    "arcade"
+   ],
+   "games": [
+    "Street Fighter Alpha 2",
+    "Street Fighter Alpha 3"
+   ],
+   "description": "CPS-2 Recomp provides native PC ports of CPS-2 arcade games like Street Fighter Alpha 2, featuring a training mode and widescreen support.",
+   "artwork": "https://cdn2.steamgriddb.com/grid/be844109b265805796c506a9701aff34.png",
+   "version": "v1.3.0",
+   "released": 1793672819000,
+   "repository": "tmcleroy/cps2recomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/tmcleroy/cps2recomp/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 2,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "supermario64-ghostship",
+   "name": "Super Mario 64",
+   "type": "port",
+   "consoles": [
+    "n64"
+   ],
+   "games": [
+    "Super Mario 64"
+   ],
+   "description": "Ghostship brings Super Mario 64 to PC.",
+   "artwork": "https://raw.githubusercontent.com/HarbourMasters/Ghostship/refs/heads/develop/logo.png",
+   "version": "3.0.0",
+   "released": 1788757037000,
+   "repository": "harbourmasters/ghostship",
+   "provider": "github",
+   "releasesUrl": "https://github.com/harbourmasters/ghostship/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 11,
+   "issues": 4,
+   "broken": 0
+  },
+  {
+   "slug": "super-mario-64-sm64coopdx",
+   "name": "Super Mario 64",
+   "type": "port",
+   "consoles": [
+    "n64"
+   ],
+   "games": [
+    "Super Mario 64"
+   ],
+   "description": "sm64coopdx is an online multiplayer project for the Super Mario 64 PC port that synchronizes all entities and levels for multiple players and allows modding via Lua.",
+   "artwork": "https://raw.githubusercontent.com/ManIsCat2/sm64coopdx/99c8d21abe4d24649b508d0f216c4359ed5d2a7a/res/icon.ico",
+   "version": "Av1.5.1",
+   "released": 1780312440000,
+   "repository": "ManIsCat2/sm64coopdx",
+   "provider": "github",
+   "releasesUrl": "https://github.com/ManIsCat2/sm64coopdx/releases/latest",
+   "apkName": "sm64coopdx.apk",
+   "apkUrl": "https://github.com/ManIsCat2/sm64coopdx/releases/download/Av1.5.1/sm64coopdx.apk",
+   "sha256": "5ab94f400893657588d45a9941666a7ede869f538123f719ebb6d640de3f36d8",
+   "verified": true,
+   "recommended": 2,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "super-mario-all-stars-supermarioallstarsrecomp",
+   "name": "Super Mario All-Stars",
+   "type": "port",
+   "consoles": [
+    "snes"
+   ],
+   "games": [
+    "Super Mario All-Stars"
+   ],
+   "description": "SuperMarioAllStarsRecomp is a native PC port of Super Mario All-Stars for Windows, Linux, macOS and Android with crisp pixels at any size, a proper launcher, controller support, and cheats.",
+   "artwork": "https://raw.githubusercontent.com/TanookiStudios/SuperMarioAllStarsRecomp/25d73ed4db7033b9177ec116f99f4185e7397a6f/assets/icon/icon-1024.png",
+   "version": "v0.2.0",
+   "released": 1792586199000,
+   "repository": "TanookiStudios/SuperMarioAllStarsRecomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/TanookiStudios/SuperMarioAllStarsRecomp/releases/latest",
+   "apkName": "SuperMarioAllStars-Android.apk",
+   "apkUrl": "https://github.com/TanookiStudios/SuperMarioAllStarsRecomp/releases/download/v0.2.0/SuperMarioAllStars-Android.apk",
+   "sha256": "a552d39e3df40792b87f85a934570af990ad1d57f5f71cb9978322ff1a2d23cf",
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 1
+  },
+  {
+   "slug": "super-mario-galaxy-galaxy-android",
+   "name": "Super Mario Galaxy",
+   "type": "port",
+   "consoles": [
+    "wii"
+   ],
+   "games": [
+    "Super Mario Galaxy"
+   ],
+   "description": "Galaxy Android is a native Android ARM64 port of Super Mario Galaxy that runs using Vulkan 1.0 or OpenGL ES 3.2 and features motion aiming and quick save.",
+   "artwork": "https://raw.githubusercontent.com/OpenPort-Labs/Galaxy-Android/c489fbebd6f59117b3ddd673dabd752484b356af/docs/images/logo.png",
+   "version": "v0.0.4b",
+   "released": 1793109108000,
+   "repository": "OpenPort-Labs/Galaxy-Android",
+   "provider": "github",
+   "releasesUrl": "https://github.com/OpenPort-Labs/Galaxy-Android/releases/latest",
+   "apkName": "GalaxyAndroid-v0.0.4-gamma.apk",
+   "apkUrl": "https://github.com/OpenPort-Labs/Galaxy-Android/releases/download/v0.0.4-gamma/GalaxyAndroid-v0.0.4-gamma.apk",
+   "sha256": "eb13387f69905f3aab0ebd27850b7e42a24b89215324b6c42083b191ed35fbaa",
+   "verified": true,
+   "recommended": 2,
+   "issues": 1,
+   "broken": 1
+  },
+  {
+   "slug": "super-mario-strikers-strikers-android",
+   "name": "Super Mario Strikers",
+   "type": "port",
+   "consoles": [
+    "gcn",
+    "mobile"
+   ],
+   "games": [
+    "Super Mario Strikers"
+   ],
+   "description": "Strikers \u2014 Android is a native Android port of Super Mario Strikers that features on-screen controls, adjustable settings, and a performance panel.",
+   "artwork": "https://raw.githubusercontent.com/luisxl15/Strikers-Android-Port/0d56b2e363c5268e549ea13d8464cd542d9d0324/smstrikers-port/assets/icon/strikers.ico",
+   "version": "v1.2.0",
+   "released": 1789848194000,
+   "repository": "luisxl15/Strikers-Android-Port",
+   "provider": "github",
+   "releasesUrl": "https://github.com/luisxl15/Strikers-Android-Port/releases/latest",
+   "apkName": "strikers-android-1.2.0-arm64.apk",
+   "apkUrl": "https://github.com/luisxl15/Strikers-Android-Port/releases/download/v1.2.0/strikers-android-1.2.0-arm64.apk",
+   "sha256": "9dcce34d83025023877e1cbbfdd1473d6cc8175e8ebb19cc433a3686dc2aea7e",
+   "verified": true,
+   "recommended": 2,
+   "issues": 2,
+   "broken": 0
+  },
+  {
+   "slug": "super-mario-sunshine-mareshine",
+   "name": "Super Mario Sunshine",
+   "type": "port",
+   "consoles": [
+    "gcn"
+   ],
+   "games": [
+    "Super Mario Sunshine"
+   ],
+   "description": "Mareshine is an Android port of Super Mario Sunshine that includes a modern UI, customizable touch controls, and support for HD texture packs.",
+   "artwork": "https://raw.githubusercontent.com/TheM3dium/mareshine/a1f7cc61c0137142500a8a8794bfc3511539e914/android/app/src/main/assets/mods/example/icon.png",
+   "version": "v2.1.0",
+   "released": 1793929172000,
+   "repository": "TheM3dium/mareshine",
+   "provider": "github",
+   "releasesUrl": "https://github.com/TheM3dium/mareshine/releases/latest",
+   "apkName": "Mareshine-2.1.0-beta.2.apk",
+   "apkUrl": "https://github.com/TheM3dium/mareshine/releases/download/v2.1.0-beta.2/Mareshine-2.1.0-beta.2.apk",
+   "sha256": "8002b5296c0777cf360bc6cddb988c45e5cbf375d187203f8803b30918b3b2e2",
+   "verified": true,
+   "recommended": 2,
+   "issues": 0,
+   "broken": 1
+  },
+  {
+   "slug": "super-mario-sunshine-sms-launcher-for-android",
+   "name": "Super Mario Sunshine",
+   "type": "port",
+   "consoles": [
+    "gcn"
+   ],
+   "games": [
+    "Super Mario Sunshine"
+   ],
+   "description": "SMS Launcher for Android is a native Android port of Super Mario Sunshine that supports touch controls and HD textures.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/0615ad39a9939b5e54b7c362e69d7a34.png",
+   "version": "v1.2.1-preview.1",
+   "released": 1792587834000,
+   "repository": "chasem-dev/sms-android",
+   "provider": "github",
+   "releasesUrl": "https://github.com/chasem-dev/sms-android/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": false,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "super-mario-world-super-mario-world-remastered-plus",
+   "name": "Super Mario World",
+   "type": "port",
+   "consoles": [
+    "snes"
+   ],
+   "games": [
+    "Super Mario World"
+   ],
+   "description": "Super Mario World Remastered Plus is a port of Super Mario World for Windows, Linux, and Android that adds a lives system, faster swimming and climbing, and cutscene skipping.",
+   "artwork": "https://raw.githubusercontent.com/BTFighter/Super-Mario-World-Remastered-Plus/91b704d088d81cbef96b9ebbd0f859fcd73e1a56/icon.ico",
+   "version": "v1.1",
+   "released": 1768560229000,
+   "repository": "BTFighter/Super-Mario-World-Remastered-Plus",
+   "provider": "github",
+   "releasesUrl": "https://github.com/BTFighter/Super-Mario-World-Remastered-Plus/releases/latest",
+   "apkName": "SuperMarioWorldRemasteredPlus.apk",
+   "apkUrl": "https://github.com/BTFighter/Super-Mario-World-Remastered-Plus/releases/download/v1.1/SuperMarioWorldRemasteredPlus.apk",
+   "sha256": "28bff0311878487cecfbe0915b37757459fadd17ce9b69cdd97aef6138732bb3",
+   "verified": true,
+   "recommended": 12,
+   "issues": 2,
+   "broken": 1
+  },
+  {
+   "slug": "super-nonogram",
+   "name": "Super Nonogram",
+   "type": "game",
+   "consoles": [
+    "pc"
+   ],
+   "games": [],
+   "description": "This is a Flutter reimplementation of the old Nonogram web app from the same creator.",
+   "artwork": "https://raw.githubusercontent.com/adil192/super_nonogram/d07b87594f94d0edf71f9b9d3d8136530bc8f338/windows/runner/resources/app_icon.ico",
+   "version": "v0.13.0",
+   "released": 1793496590000,
+   "repository": "adil192/super_nonogram",
+   "provider": "github",
+   "releasesUrl": "https://github.com/adil192/super_nonogram/releases/latest",
+   "apkName": "Super_Nonogram_v0.13.0.apk",
+   "apkUrl": "https://github.com/adil192/super_nonogram/releases/download/v0.13.0/Super_Nonogram_v0.13.0.apk",
+   "sha256": "2cf7051349bc9f2dc4f405c191035de544461870a3af40893ca73e0b175606c8",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "super-robot-taisen-64-marchwind-64",
+   "name": "Super Robot Taisen 64",
+   "type": "port",
+   "consoles": [
+    "n64"
+   ],
+   "games": [
+    "Super Robot Taisen 64"
+   ],
+   "description": "Marchwind 64 is a native recompilation of Super Robot Taisen 64 for Windows, macOS, Linux, and Android with English and Chinese translations and widescreen support.",
+   "artwork": "https://raw.githubusercontent.com/dyzz/srw64-recomp/7755b33160e91aadab3985c2695b7c71d367e400/tools/release/linux/steam-art/icon.png",
+   "version": "v0.5.3.1",
+   "released": 1793799605000,
+   "repository": "dyzz/srw64-recomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/dyzz/srw64-recomp/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 2,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "supersmashbros-battleship",
+   "name": "Super Smash Bros.",
+   "type": "port",
+   "consoles": [
+    "n64"
+   ],
+   "games": [
+    "Super Smash Bros."
+   ],
+   "description": "BattleShip brings Super Smash Bros. to PC.",
+   "artwork": "https://raw.githubusercontent.com/JRickey/BattleShip/refs/heads/main/assets/icon.ico",
+   "version": "v1.6",
+   "released": 1786504773000,
+   "repository": "JRickey/BattleShip",
+   "provider": "github",
+   "releasesUrl": "https://github.com/JRickey/BattleShip/releases/latest",
+   "apkName": "BattleShip-android-armeabi-v7a.apk",
+   "apkUrl": "https://github.com/JRickey/BattleShip/releases/download/v1.6/BattleShip-android-armeabi-v7a.apk",
+   "sha256": "21d9965ed694af5142edade56e094dc8e125f6819a60b2913b09646d4099ebe1",
+   "verified": true,
+   "recommended": 3,
+   "issues": 2,
+   "broken": 1
+  },
+  {
+   "slug": "supersmashbrosmelee-meleepc",
+   "name": "Super Smash Bros. Melee",
+   "type": "port",
+   "consoles": [
+    "gcn"
+   ],
+   "games": [
+    "Super Smash Bros. Melee"
+   ],
+   "description": "melee-pc brings Super Smash Bros. Melee to PC.",
+   "artwork": "https://cdn2.steamgriddb.com/thumb/0aa21e9e51bfb74793881e5780d29ae8.jpg",
+   "version": "v0.4.2",
+   "released": 1792541331000,
+   "repository": "999sian/melee-pc",
+   "provider": "github",
+   "releasesUrl": "https://github.com/999sian/melee-pc/releases/latest",
+   "apkName": "Melee-Android-arm64.apk",
+   "apkUrl": "https://github.com/999sian/melee-pc/releases/download/v0.4.2/Melee-Android-arm64.apk",
+   "sha256": "b7908f6ed433aabdd97542b3f152679fde943cb9f3712a00dcaa6defb270b9f2",
+   "verified": true,
+   "recommended": 2,
+   "issues": 3,
+   "broken": 0
+  },
+  {
+   "slug": "supertux",
+   "name": "SuperTux",
+   "type": "game",
+   "consoles": [
+    "pc"
+   ],
+   "games": [],
+   "description": "SuperTux is a jump'n'run game inspired by Super Mario Bros. that features Tux the penguin on a quest to save Penny.",
+   "artwork": "https://raw.githubusercontent.com/SuperTux/supertux/c7cceeb5cfb3f3ce06af32faf97804ca564cce93/data/images/engine/icons/supertux-nightly.ico",
+   "version": "v0.7.0_STEAM",
+   "released": 1784146980000,
+   "repository": "SuperTux/supertux",
+   "provider": "github",
+   "releasesUrl": "https://github.com/SuperTux/supertux/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "supertuxkart-supertuxkart",
+   "name": "SuperTuxKart",
+   "type": "game",
+   "consoles": [
+    "pc",
+    "switch",
+    "mobile"
+   ],
+   "games": [
+    "SuperTuxKart"
+   ],
+   "description": "SuperTuxKart is a free kart racing game focused on fun, available on PC, Nintendo Switch, and Mobile platforms.",
+   "artwork": "https://raw.githubusercontent.com/supertuxkart/stk-code/b2a9f223326422aa2dd4eea28319b0c5115fde03/tools/windows_installer/icon.ico",
+   "version": "1.5",
+   "released": 1760978881000,
+   "repository": "supertuxkart/stk-code",
+   "provider": "github",
+   "releasesUrl": "https://github.com/supertuxkart/stk-code/releases/latest",
+   "apkName": "SuperTuxKart-1.5.apk",
+   "apkUrl": "https://github.com/supertuxkart/stk-code/releases/download/1.5/SuperTuxKart-1.5.apk",
+   "sha256": "e1f2f49152abfb8f3ed0ced47981e84096758bff9758563aa3b917111a2a3cbd",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "tails-adventure-tails-adventure-remake",
+   "name": "Tails Adventure",
+   "type": "port",
+   "consoles": [
+    "gg"
+   ],
+   "games": [
+    "Tails Adventure"
+   ],
+   "description": "Tails Adventure Remake is a port of Tails Adventure for Android, Linux, and Windows that features rebalanced gameplay, responsive controls, and support for any resolution and refresh rate.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/438be6a47658f47479deb34f558eba4e.png",
+   "version": "v0.3.2-1",
+   "released": 1776867734000,
+   "repository": "mechakotik/tails-adventure",
+   "provider": "github",
+   "releasesUrl": "https://github.com/mechakotik/tails-adventure/releases/latest",
+   "apkName": "tails-adventure-v0.3.2-1-android.apk",
+   "apkUrl": "https://github.com/mechakotik/tails-adventure/releases/download/v0.3.2-1/tails-adventure-v0.3.2-1-android.apk",
+   "sha256": "6ad893f1adc6ebc50b786529d763c3c91665fb02b53f7bedba12f1169b8a6893",
+   "verified": true,
+   "recommended": 2,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "the-binding-of-isaac-isaacrecomp",
+   "name": "The Binding of Isaac",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "The Binding of Isaac"
+   ],
+   "description": "IsaacRecomp is a native PC port of The Binding of Isaac that runs at 60 fps and in high resolution.",
+   "artwork": "https://raw.githubusercontent.com/whylurking/IsaacRecomp/aecb84272b558a7b5decb48d6e106f00e803c585/switch/icon.jpg",
+   "version": "v1.5.0",
+   "released": 1793383075000,
+   "repository": "whylurking/IsaacRecomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/whylurking/IsaacRecomp/releases/latest",
+   "apkName": "IsaacRecomp_Android.apk",
+   "apkUrl": "https://github.com/whylurking/IsaacRecomp/releases/download/v1.4.0/IsaacRecomp_Android.apk",
+   "sha256": "d78338b54b73a6391ef996a12a2b0261f8f233f235d787251782c7eea45710ee",
+   "verified": true,
+   "recommended": 2,
+   "issues": 1,
+   "broken": 1
+  },
+  {
+   "slug": "the-elder-scrolls-v-skyrim-skyrim-for-android",
+   "name": "The Elder Scrolls V: Skyrim",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "The Elder Scrolls V: Skyrim"
+   ],
+   "description": "Skyrim for Android is a native PC port of The Elder Scrolls V: Skyrim for Android devices, featuring multi-core support and a Vulkan-based graphics backend.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/7572df401df53c49f3f8d7bd4863e9a7.png",
+   "version": "0.30.6",
+   "released": 1793858150000,
+   "repository": "ttom795/Skyrim_Android",
+   "provider": "github",
+   "releasesUrl": "https://github.com/ttom795/Skyrim_Android/releases/latest",
+   "apkName": "Skyrim-0.27.6.apk",
+   "apkUrl": "https://github.com/ttom795/Skyrim_Android/releases/download/0.27.6/Skyrim-0.27.6.apk",
+   "sha256": "c20a5c83346a358864ef1071fffd1c2cc54a12189a51f88f908cb262dc562172",
+   "verified": true,
+   "recommended": 4,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "the-legend-of-zelda-a-link-to-the-past-relic-of-the-past",
+   "name": "The Legend of Zelda: A Link to the Past",
+   "type": "port",
+   "consoles": [
+    "snes"
+   ],
+   "games": [
+    "The Legend of Zelda: A Link to the Past"
+   ],
+   "description": "Relic of the Past is a desktop launcher for the A Link to the Past PC port with controller support, save profiles, and MSU-1 audio.",
+   "artwork": "https://raw.githubusercontent.com/drizztdourden08/relic-of-the-past/d0c05c299397ae2cb11bdfee754e6cae31f9f79d/apps/web/public/logos/logo-256.png",
+   "version": "v0.21.2",
+   "released": 1793214759000,
+   "repository": "drizztdourden08/relic-of-the-past",
+   "provider": "github",
+   "releasesUrl": "https://github.com/drizztdourden08/relic-of-the-past/releases/latest",
+   "apkName": "rotp-android.apk",
+   "apkUrl": "https://github.com/drizztdourden08/relic-of-the-past/releases/download/v0.21.2/rotp-android.apk",
+   "sha256": "73e1554e43e0235a0147efa660a17c321874c6c0b764e7161bf850ad74e6ffd6",
+   "verified": true,
+   "recommended": 2,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "the-legend-of-zelda-echoes-of-wisdom-eowrecomp",
+   "name": "The Legend of Zelda: Echoes of Wisdom",
+   "type": "port",
+   "consoles": [
+    "switch"
+   ],
+   "games": [
+    "The Legend of Zelda: Echoes of Wisdom"
+   ],
+   "description": "EoWRecomp is a recomp of The Legend of Zelda: Echoes of Wisdom for Android, macOS, Linux, and Windows that recompiles the game's ARM64 machine code to C.",
+   "artwork": "https://raw.githubusercontent.com/Nycolazs/EoWRecomp/dd9c79d6c01d9eaddafc1fc5a07b6658bfc56505/docs/icon/icon_1024.png",
+   "version": "alpha_1",
+   "released": 1792576878000,
+   "repository": "Nycolazs/EoWRecomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/Nycolazs/EoWRecomp/releases/latest",
+   "apkName": "EoWRecomp-alpha_1-Android-arm64.apk",
+   "apkUrl": "https://github.com/Nycolazs/EoWRecomp/releases/download/alpha_1/EoWRecomp-alpha_1-Android-arm64.apk",
+   "sha256": "8d7a0d38f710fbd6d294eacd5f0e67d7925a7332c365aa04a81945989dafba0a",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "the-legend-of-zelda-link-s-awakening-lasrecompandroid",
+   "name": "The Legend of Zelda: Link's Awakening",
+   "type": "port",
+   "consoles": [
+    "mobile"
+   ],
+   "games": [
+    "The Legend of Zelda: Link's Awakening"
+   ],
+   "description": "LASRecompAndroid is a native ARM64 port of The Legend of Zelda: Link's Awakening for Android that translates Switch graphics to Vulkan.",
+   "artwork": "https://raw.githubusercontent.com/mamcjr/LASRecompAndroid/4dff09abc0a34f9785b68c074a6378a95e2ebf60/docs/icon/icon.ico",
+   "version": "v0.5.10",
+   "released": 1793536887000,
+   "repository": "mamcjr/LASRecompAndroid",
+   "provider": "github",
+   "releasesUrl": "https://github.com/mamcjr/LASRecompAndroid/releases/latest",
+   "apkName": "LASRecomp-Android-0.5.8.apk",
+   "apkUrl": "https://github.com/mamcjr/LASRecompAndroid/releases/download/v0.5.8/LASRecomp-Android-0.5.8.apk",
+   "sha256": "4f318b9ef31e59dd809c22e6bc23199da10c3961f5f1d36cbce23c2527554e24",
+   "verified": true,
+   "recommended": 0,
+   "issues": 1,
+   "broken": 2
+  },
+  {
+   "slug": "the-legend-of-zelda-majora-s-mask-zelda64-recompiled-android",
+   "name": "The Legend of Zelda: Majora's Mask",
+   "type": "port",
+   "consoles": [
+    "n64",
+    "mobile"
+   ],
+   "games": [
+    "The Legend of Zelda: Majora's Mask"
+   ],
+   "description": "Zelda64 Recompiled Android is a port of The Legend of Zelda Majora's Mask to Android with touch controls and motion controls.",
+   "artwork": "https://raw.githubusercontent.com/linkzenic/Zelda64Recomp-Android/41b2bb73443b8fe94ce22ac16416b408466d3bde/icons/256.ico",
+   "version": "0.6.10",
+   "released": 1785343093000,
+   "repository": "linkzenic/Zelda64Recomp-Android",
+   "provider": "github",
+   "releasesUrl": "https://github.com/linkzenic/Zelda64Recomp-Android/releases/latest",
+   "apkName": "Zelda64-Recompiled-Android-App-0.6.10.apk",
+   "apkUrl": "https://github.com/linkzenic/Zelda64Recomp-Android/releases/download/0.6.10/Zelda64-Recompiled-Android-App-0.6.10.apk",
+   "sha256": "ba7c8f838eb7d2e598db2241fc2c0cf5361a8fe1de3e275dbd623541d1d8c57b",
+   "verified": true,
+   "recommended": 3,
+   "issues": 1,
+   "broken": 1
+  },
+  {
+   "slug": "the-legend-of-zelda-majora-s-mask-3d-majora-remasked",
+   "name": "The Legend of Zelda: Majora's Mask 3D",
+   "type": "port",
+   "consoles": [
+    "3ds"
+   ],
+   "games": [
+    "The Legend of Zelda: Majora's Mask 3D"
+   ],
+   "description": "Majora ReMasked is a port of The Legend of Zelda: Majora's Mask 3D for Android, Linux, macOS, and Windows that supports high resolution and 60 FPS.",
+   "artwork": "https://raw.githubusercontent.com/OTPR26/DekUI-Fork/c0e42dee4e545d3bc82f0014866b7acfafa59c3d/resources/mm3d/launcher-icons/icon-0.png",
+   "version": "v0.4.3",
+   "released": 1792770691000,
+   "repository": "OTPR26/DekUI-Fork",
+   "provider": "github",
+   "releasesUrl": "https://github.com/OTPR26/DekUI-Fork/releases/latest",
+   "apkName": "Majora-ReMasked-0.4.3-Android-arm64.apk",
+   "apkUrl": "https://github.com/OTPR26/DekUI-Fork/releases/download/v0.4.3/Majora-ReMasked-0.4.3-Android-arm64.apk",
+   "sha256": "b939a2b1a9e0199e9462845e7187ee3477ce235710c0aadf87447f753247278a",
+   "verified": true,
+   "recommended": 0,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "the-legend-of-zelda-ocarina-of-time-ship-of-harkinian-android",
+   "name": "The Legend of Zelda: Ocarina of Time",
+   "type": "port",
+   "consoles": [
+    "n64",
+    "mobile"
+   ],
+   "games": [
+    "The Legend of Zelda: Ocarina of Time"
+   ],
+   "description": "Ship of Harkinian Android is a port of The Legend of Zelda: Ocarina of Time for Android that supports mods and custom content.",
+   "artwork": "https://raw.githubusercontent.com/linkzenic/Shipwright-Android/94e8d7af3fb3a2e21fb5bf1d250cd0a63a5dd09d/soh/icon.jpg",
+   "version": "v9.3.1-ports.2",
+   "released": 1793330010000,
+   "repository": "linkzenic/Shipwright-Ports",
+   "provider": "github",
+   "releasesUrl": "https://github.com/linkzenic/Shipwright-Ports/releases/latest",
+   "apkName": "soh_release_v9.3.1-android.4.apk",
+   "apkUrl": "https://github.com/linkzenic/Shipwright-Ports/releases/download/v9.3.1-ports.2/soh_release_v9.3.1-android.4.apk",
+   "sha256": "99f215007984b06adf0758256d044599f2079825af5e142b1c967215bd6bd267",
+   "verified": true,
+   "recommended": 2,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "the-legend-of-zelda-ocarina-of-time-3d-ocarina-retuned",
+   "name": "The Legend of Zelda: Ocarina of Time 3D",
+   "type": "port",
+   "consoles": [
+    "3ds"
+   ],
+   "games": [
+    "The Legend of Zelda: Ocarina of Time 3D"
+   ],
+   "description": "Ocarina ReTuned is a native port of The Legend of Zelda: Ocarina of Time 3D for Windows, Mac, Linux, Android, and iOS with adjustable resolution and frame rate interpolation.",
+   "artwork": "https://raw.githubusercontent.com/OTPR26/Ocarina-ReTuned/6f556fc0ecd638132f0fae123063082959bfff9f/resources/artwork/ocarina-icon.png",
+   "version": "v0.6.1",
+   "released": 1793439148000,
+   "repository": "OTPR26/Ocarina-ReTuned",
+   "provider": "github",
+   "releasesUrl": "https://github.com/OTPR26/Ocarina-ReTuned/releases/latest",
+   "apkName": "Ocarina-ReTuned-0.5.8-Android-arm64.apk",
+   "apkUrl": "https://github.com/OTPR26/Ocarina-ReTuned/releases/download/v0.5.8/Ocarina-ReTuned-0.5.8-Android-arm64.apk",
+   "sha256": "8340df8dff6a77144cbc645793e413d0942350646ffdf29aea289a82a919714d",
+   "verified": true,
+   "recommended": 0,
+   "issues": 3,
+   "broken": 0
+  },
+  {
+   "slug": "the-legend-of-zelda-oracle-of-ages-oracle-of-seasons-oracles-decomp",
+   "name": "The Legend of Zelda: Oracle of Ages / Oracle of Seasons",
+   "type": "port",
+   "consoles": [
+    "gbc"
+   ],
+   "games": [
+    "The Legend of Zelda: Oracle of Ages",
+    "The Legend of Zelda: Oracle of Seasons"
+   ],
+   "description": "Oracles Decomp is a native port of The Legend of Zelda: Oracle of Ages and Oracle of Seasons to Windows, Linux, macOS, and Android.",
+   "artwork": "https://raw.githubusercontent.com/kirby-letsgo/oracles-decomp/8ad09fa6823ec9358a4601c94b861d69e6412cb8/icon/oracles-256.png",
+   "version": "v1.0.6",
+   "released": 1793651080000,
+   "repository": "kirby-letsgo/oracles-decomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/kirby-letsgo/oracles-decomp/releases/latest",
+   "apkName": "Oracles-android.apk",
+   "apkUrl": "https://github.com/kirby-letsgo/oracles-decomp/releases/download/v1.0.5/Oracles-android.apk",
+   "sha256": "0cfc5ab94ba6494cd4c6f2ee219cb04a639df23b6017c0de19cb0d04eeba956b",
+   "verified": true,
+   "recommended": 2,
+   "issues": 2,
+   "broken": 0
+  },
+  {
+   "slug": "the-legend-of-zelda-oracle-of-seasons-oracle-of-ages-the-oracles-project",
+   "name": "The Legend of Zelda: Oracle of Seasons / Oracle of Ages",
+   "type": "port",
+   "consoles": [
+    "gbc"
+   ],
+   "games": [
+    "The Legend of Zelda: Oracle of Ages",
+    "The Legend of Zelda: Oracle of Seasons"
+   ],
+   "description": "The Oracles Project is a moddable port of The Legend of Zelda Oracle of Seasons and Oracle of Ages for PC and Android with gameplay options and Lua mod support.",
+   "artwork": "https://raw.githubusercontent.com/thibautbus/top/9a5c6ac711b5cf451b087ffa27db56c5aaf1d37b/launcher/icon/the-oracles-project-512.png",
+   "version": "v1.4.0",
+   "released": 1793885130000,
+   "repository": "thibautbus/top",
+   "provider": "github",
+   "releasesUrl": "https://github.com/thibautbus/top/releases/latest",
+   "apkName": "the-oracles-project-1.3.0-android.apk",
+   "apkUrl": "https://github.com/thibautbus/top/releases/download/v1.3.0/the-oracles-project-1.3.0-android.apk",
+   "sha256": "e504076a48a0ad168e8df9874221b1c3d86ff79f581015fb77aae5c5cc8f840c",
+   "verified": true,
+   "recommended": 4,
+   "issues": 2,
+   "broken": 0
+  },
+  {
+   "slug": "thelegendofzeldatheminishcap-projectpicori",
+   "name": "The Legend of Zelda: The Minish Cap",
+   "type": "port",
+   "consoles": [
+    "gba"
+   ],
+   "games": [
+    "The Legend of Zelda: The Minish Cap"
+   ],
+   "description": "Project Picori brings The Legend of Zelda: The Minish Cap to PC.",
+   "artwork": "https://raw.githubusercontent.com/999sian/tmc/refs/heads/master/docs/picori-logo.png",
+   "version": "v0.9.6",
+   "released": 1792456745000,
+   "repository": "999sian/tmc",
+   "provider": "github",
+   "releasesUrl": "https://github.com/999sian/tmc/releases/latest",
+   "apkName": "tmc-multi-android-v0.9.6.apk",
+   "apkUrl": "https://github.com/999sian/tmc/releases/download/v0.9.6/tmc-multi-android-v0.9.6.apk",
+   "sha256": "aa709a3ecee34321a57ff83b20abcdf3b22a381e9b2b1e87ed9a9f1ea1acd2ea",
+   "verified": true,
+   "recommended": 4,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "the-legend-of-zelda-the-wind-waker-hd-tloz-tww-hd-recompiled-android",
+   "name": "The Legend of Zelda: The Wind Waker HD",
+   "type": "port",
+   "consoles": [
+    "wiiu"
+   ],
+   "games": [
+    "The Legend of Zelda: The Wind Waker HD"
+   ],
+   "description": "TLoZ:TWW HD Recompiled \u2014 Android is a native Android port of The Legend of Zelda: The Wind Waker HD that recompiles the game's code to run directly on Vulkan.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/0a988fc2992add2d3233e19c7aadfdea.png",
+   "version": "v0.9.9b",
+   "released": 1793905473000,
+   "repository": "GreenNaugahyde/ZeldaWWHDRecompAndroid",
+   "provider": "github",
+   "releasesUrl": "https://github.com/GreenNaugahyde/ZeldaWWHDRecompAndroid/releases/latest",
+   "apkName": "tloz_tww_hd_recomp-0.9.8.apk",
+   "apkUrl": "https://github.com/GreenNaugahyde/ZeldaWWHDRecompAndroid/releases/download/v0.9.8/tloz_tww_hd_recomp-0.9.8.apk",
+   "sha256": "7a7e710fcb529315b394fe9b6193964ecb2a124edcab5b553f4f86dc22a60cd6",
+   "verified": true,
+   "recommended": 3,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "the-legend-of-zelda-the-wind-waker-hd-windwakerhd-android-plus",
+   "name": "The Legend of Zelda: The Wind Waker HD",
+   "type": "port",
+   "consoles": [
+    "wiiu"
+   ],
+   "games": [
+    "The Legend of Zelda: The Wind Waker HD"
+   ],
+   "description": "WindWakerHD-Android-Plus is a native Android port of The Legend of Zelda: The Wind Waker HD with a HUD layout editor and Brazilian Portuguese translation.",
+   "artwork": "https://raw.githubusercontent.com/Nycolazs/WindWakerHD-Android-Plus/4595260492d6a649a864a504fe549ff97c1b0c5c/docs/touch-icons-v2-preview/a_board_boat.png",
+   "version": "v1.14",
+   "released": 1792752215000,
+   "repository": "Nycolazs/WindWakerHD-Android-Plus",
+   "provider": "github",
+   "releasesUrl": "https://github.com/Nycolazs/WindWakerHD-Android-Plus/releases/latest",
+   "apkName": "WindWakerHD-Android-Plus-v1.14.apk",
+   "apkUrl": "https://github.com/Nycolazs/WindWakerHD-Android-Plus/releases/download/v1.14/WindWakerHD-Android-Plus-v1.14.apk",
+   "sha256": "d4207cf6ae91b4e7cece05456decf957f44ae9d9c93924a50384516f25b6781b",
+   "verified": true,
+   "recommended": 3,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "the-legend-of-zelda-the-wind-waker-hd-wind-waker-hd-recompiled-android-enhanced",
+   "name": "The Legend of Zelda: The Wind Waker HD",
+   "type": "port",
+   "consoles": [
+    "wiiu"
+   ],
+   "games": [
+    "The Legend of Zelda: The Wind Waker HD"
+   ],
+   "description": "Wind Waker HD Recompiled Android Enhanced is a native Android port of The Legend of Zelda The Wind Waker HD with improved touch controls and graphics.",
+   "artwork": "https://raw.githubusercontent.com/SSunnKing/ZeldaWWHDRecompAndroid---ENHANCED/refs/heads/enhanced/docs/touch-icons-v2-preview/item_wind_waker.png",
+   "version": "1.7",
+   "released": 1792441566000,
+   "repository": "SSunnKing/ZeldaWWHDRecompAndroid---ENHANCED",
+   "provider": "github",
+   "releasesUrl": "https://github.com/SSunnKing/ZeldaWWHDRecompAndroid---ENHANCED/releases/latest",
+   "apkName": "ZeldaWWHD-Enhanced-v1.7.apk",
+   "apkUrl": "https://github.com/SSunnKing/ZeldaWWHDRecompAndroid---ENHANCED/releases/download/1.7/ZeldaWWHD-Enhanced-v1.7.apk",
+   "sha256": "4af9d888781c6bb7a6c96a7b7feb8cd49b5966cc615a29408ff42898580fd633",
+   "verified": true,
+   "recommended": 0,
+   "issues": 2,
+   "broken": 0
+  },
+  {
+   "slug": "the-legend-of-zelda-the-wind-waker-hd-zeldawwhdrecomp",
+   "name": "The Legend of Zelda: The Wind Waker HD",
+   "type": "port",
+   "consoles": [
+    "wiiu"
+   ],
+   "games": [
+    "The Legend of Zelda: The Wind Waker HD"
+   ],
+   "description": "ZeldaWWHDRecomp is a native PC port of The Legend of Zelda: The Wind Waker HD for Windows, Linux, and macOS with features like save states and an in-game settings overlay.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/0a988fc2992add2d3233e19c7aadfdea.png",
+   "version": "v0.5.0",
+   "released": 1793285473000,
+   "repository": "ZeldaWWHDRecomp/ZeldaWWHDRecomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/ZeldaWWHDRecomp/ZeldaWWHDRecomp/releases/latest",
+   "apkName": "WindWakerHD-v0.5.0-android-arm64.apk",
+   "apkUrl": "https://github.com/ZeldaWWHDRecomp/ZeldaWWHDRecomp/releases/download/v0.5.0/WindWakerHD-v0.5.0-android-arm64.apk",
+   "sha256": "6af660aac1c67e5d99bbc653b1c2b9f0e429a8513e0e9ca0c497b0c37177f791",
+   "verified": true,
+   "recommended": 20,
+   "issues": 3,
+   "broken": 1
+  },
+  {
+   "slug": "thelegendofzeldatwilightprincess-dusklight",
+   "name": "The Legend of Zelda: Twilight Princess",
+   "type": "port",
+   "consoles": [
+    "gcn"
+   ],
+   "games": [
+    "The Legend of Zelda: Twilight Princess"
+   ],
+   "description": "Dusklight brings The Legend of Zelda: Twilight Princess to PC.",
+   "artwork": "https://raw.githubusercontent.com/TwilitRealm/dusklight/refs/heads/main/res/icon.png",
+   "version": "v2.0.3",
+   "released": 1790752004000,
+   "repository": "TwilitRealm/dusklight",
+   "provider": "github",
+   "releasesUrl": "https://github.com/TwilitRealm/dusklight/releases/latest",
+   "apkName": "Dusklight-v2.0.3-android-arm64.apk",
+   "apkUrl": "https://github.com/TwilitRealm/dusklight/releases/download/v2.0.3/Dusklight-v2.0.3-android-arm64.apk",
+   "sha256": "44aa6ed4717fb0fc6094b62c45e4ddcc8b26ce6ecd9bbca11e97d837cf56fad6",
+   "verified": true,
+   "recommended": 50,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "the-settlers-freeserf-net",
+   "name": "The Settlers",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "The Settlers"
+   ],
+   "description": "Settlers 1 clone written in C#",
+   "artwork": "https://raw.githubusercontent.com/Pyrdacor/freeserf.net/25e3a90b4d2e2940ba54a35644d0bbe0ea5d0fcb/FreeserfNet/icon_mac.png",
+   "version": "v2.2.11",
+   "released": 1792512163000,
+   "repository": "Pyrdacor/freeserf.net",
+   "provider": "github",
+   "releasesUrl": "https://github.com/Pyrdacor/freeserf.net/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "the-settlers-3-jsettlers",
+   "name": "The Settlers 3",
+   "type": "port",
+   "consoles": [
+    "pc",
+    "mobile"
+   ],
+   "games": [
+    "The Settlers 3"
+   ],
+   "description": "JSettlers is a Java remake of the strategy game The Settlers 3 for PC and Android.",
+   "artwork": "https://cdn2.steamgriddb.com/icon_thumb/eeb3a3d865ba93ef6b08cfb3bf356e6c.png",
+   "version": "v0.7.0.3",
+   "released": 1793864474000,
+   "repository": "dos-ise/settlers-remake",
+   "provider": "github",
+   "releasesUrl": "https://github.com/dos-ise/settlers-remake/releases/latest",
+   "apkName": "JSettlers-Android.apk",
+   "apkUrl": "https://github.com/dos-ise/settlers-remake/releases/download/v0.7.0.2/JSettlers-Android.apk",
+   "sha256": "f08a7acbf892979d98ec50deba4c1cc8f20a52a3bb03ed34dcd72427c656ec1a",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "the-simpsons-hit-run-the-simpsons-hit-run-android",
+   "name": "The Simpsons: Hit & Run",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "The Simpsons: Hit & Run"
+   ],
+   "description": "The Simpsons: Hit & Run Android is a port of The Simpsons: Hit & Run to Android with native touch controls and controller support.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/cab070d53bd0d200746fb852a922064a/32/256x256.png",
+   "version": "v0.93",
+   "released": 1784895543000,
+   "repository": "Carlox33/The-Simpsons-Hit-and-Run-Android",
+   "provider": "github",
+   "releasesUrl": "https://github.com/Carlox33/The-Simpsons-Hit-and-Run-Android/releases/latest",
+   "apkName": "SimpsonsNTSC.apk",
+   "apkUrl": "https://github.com/Carlox33/The-Simpsons-Hit-and-Run-Android/releases/download/v0.93/SimpsonsNTSC.apk",
+   "sha256": "f2092cb2cacd7cbf95588bef01e418193137e825f01bfa984610f5f805beaaf5",
+   "verified": true,
+   "recommended": 2,
+   "issues": 0,
+   "broken": 1
+  },
+  {
+   "slug": "the-x-tech",
+   "name": "The X Tech",
+   "type": "game",
+   "consoles": [
+    "pc"
+   ],
+   "games": [],
+   "description": "This is a direct continuation of the SMBX 1.3 engine.",
+   "artwork": "https://github.com/TheXTech/TheXTech/raw/refs/heads/main/resources/thextech.ico",
+   "version": "v1.7.4.1",
+   "released": 1792344369000,
+   "repository": "TheXTech/TheXTech",
+   "provider": "github",
+   "releasesUrl": "https://github.com/TheXTech/TheXTech/releases/latest",
+   "apkName": "thextech-android-v1.7.4.1.apk",
+   "apkUrl": "https://github.com/TheXTech/TheXTech/releases/download/v1.7.4.1/thextech-android-v1.7.4.1.apk",
+   "sha256": "ef7add3f32de450a5ca1115f9adb4e9eae7fd2d4a821a2f6659c5b0f1a02a064",
+   "verified": true,
+   "recommended": 2,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "tiny-toon-adventures-buster-busts-loose-buster-busts-loose-pc-port",
+   "name": "Tiny Toon Adventures: Buster Busts Loose!",
+   "type": "port",
+   "consoles": [
+    "snes"
+   ],
+   "games": [
+    "Tiny Toon Adventures: Buster Busts Loose!"
+   ],
+   "description": "Buster Busts Loose! (PC port) is a Windows port of Tiny Toon Adventures: Buster Busts Loose! for SNES with widescreen, gamepad support, cheats, level select, and a music player.",
+   "artwork": "https://raw.githubusercontent.com/Darhkfox/BusterBustsLoose/10aa80dea7fbdae31f0c38f51199c136ed0172d2/res/icon.ico",
+   "version": "android-v1.0",
+   "released": 1791375662000,
+   "repository": "Darhkfox/BusterBustsLoose",
+   "provider": "github",
+   "releasesUrl": "https://github.com/Darhkfox/BusterBustsLoose/releases/latest",
+   "apkName": "BusterBustsLoose-Android-V1.0.apk",
+   "apkUrl": "https://github.com/Darhkfox/BusterBustsLoose/releases/download/android-v1.0/BusterBustsLoose-Android-V1.0.apk",
+   "sha256": "9add70f8d1ed0450879353b5584d802ea21753e42c380f29fdd686a3a421d796",
+   "verified": true,
+   "recommended": 2,
+   "issues": 2,
+   "broken": 0
+  },
+  {
+   "slug": "tyrian-2000-opentyrian2000",
+   "name": "Tyrian 2000",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Tyrian 2000"
+   ],
+   "description": "OpenTyrian2000 is a port of the DOS game Tyrian 2000, a vertical scrolling shooter with story and multiplayer modes.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/8fdd149fcaa7058caccc9c4ad5b0d89a.png",
+   "version": "3.0.0-SDL3",
+   "released": 1738101177000,
+   "repository": "andyvand/opentyrian2000",
+   "provider": "github",
+   "releasesUrl": "https://github.com/andyvand/opentyrian2000/releases/latest",
+   "apkName": null,
+   "apkUrl": null,
+   "sha256": null,
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "ultima-iii-exodus",
+   "name": "Ultima III: Exodus",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Ultima III: Exodus"
+   ],
+   "description": "Ultima III: Exodus is a modernized port of the original game for PC and mobile with historic and modern play options.",
+   "artwork": "https://raw.githubusercontent.com/synthwave-pixel/ultima3/88f57f2db6b41c95b2fdc8c9b66f717e5a264dc5/desktop/build/icon.png",
+   "version": "v1.0.82",
+   "released": 1793912325000,
+   "repository": "synthwave-pixel/ultima3",
+   "provider": "github",
+   "releasesUrl": "https://github.com/synthwave-pixel/ultima3/releases/latest",
+   "apkName": "Ultima-III-1.0.77-android.apk",
+   "apkUrl": "https://github.com/synthwave-pixel/ultima3/releases/download/v1.0.77/Ultima-III-1.0.77-android.apk",
+   "sha256": "06003018527dbe9d72cd28a22d5f9a1cec039ff9abb91f240c00486978f3213f",
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "ultima-v-warriors-of-destiny-ultima-v",
+   "name": "Ultima V: Warriors of Destiny",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Ultima V: Warriors of Destiny"
+   ],
+   "description": "Ultima V is a TypeScript engine for the 1988 MS-DOS game Ultima V: Warriors of Destiny, playable in the browser and on desktop and mobile platforms.",
+   "artwork": "https://raw.githubusercontent.com/synthwave-pixel/ultima5/d30896f8f09abec4f0d7063febba1427aa0cf3de/desktop/build/icon.png",
+   "version": "v1.1.194",
+   "released": 1793956203000,
+   "repository": "synthwave-pixel/ultima5",
+   "provider": "github",
+   "releasesUrl": "https://github.com/synthwave-pixel/ultima5/releases/latest",
+   "apkName": "Ultima-V-1.1.189-android.apk",
+   "apkUrl": "https://github.com/synthwave-pixel/ultima5/releases/download/v1.1.189/Ultima-V-1.1.189-android.apk",
+   "sha256": "81ad38b3397798a391158ed9179e5ba9c23768df058021ce9c996979e8495de9",
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "ultima-vii-the-black-gate-exult",
+   "name": "Ultima VII: The Black Gate",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Ultima VII: The Black Gate"
+   ],
+   "description": "Exult is a PC port of Ultima VII: The Black Gate and Serpent Isle that runs on modern operating systems using game data files.",
+   "artwork": "https://raw.githubusercontent.com/exult/exult/3948583646e4d38b36060df50e9a1a9f3915df36/win32/exult.ico",
+   "version": "snapshot-v1.13.1.20261105",
+   "released": 1793867780000,
+   "repository": "exult/exult",
+   "provider": "github",
+   "releasesUrl": "https://github.com/exult/exult/releases/latest",
+   "apkName": "exult-snapshot-signed.apk",
+   "apkUrl": "https://github.com/exult/exult/releases/download/snapshot-v1.13.1.20261030/exult-snapshot-signed.apk",
+   "sha256": "069462160cee8166b5406624d70a9daea604f55e3fe583dd23096f657696c096",
+   "verified": true,
+   "recommended": 1,
+   "issues": 1,
+   "broken": 0
+  },
+  {
+   "slug": "uncharted-the-nathan-drake-collection-uncharted-android",
+   "name": "Uncharted: The Nathan Drake Collection",
+   "type": "port",
+   "consoles": [
+    "ps4",
+    "mobile"
+   ],
+   "games": [
+    "Uncharted: The Nathan Drake Collection"
+   ],
+   "description": "uncharted-android is a native Android port of Uncharted The Nathan Drake Collection for Snapdragon handhelds with a launcher and support for higher resolutions.",
+   "artwork": "https://raw.githubusercontent.com/revvv991/uncharted-android/230a9814aeb782faa12c1476c73914116aac081f/launcher/uncharted.ico",
+   "version": "v0.2.14",
+   "released": 1793749463000,
+   "repository": "revvv991/uncharted-android",
+   "provider": "github",
+   "releasesUrl": "https://github.com/revvv991/uncharted-android/releases/latest",
+   "apkName": "uncharted-android-0.2.12.apk",
+   "apkUrl": "https://github.com/revvv991/uncharted-android/releases/download/v0.2.12/uncharted-android-0.2.12.apk",
+   "sha256": "2e051627129925abf8f3eaaf5dfd282458e37e70af4036862d355a9cf278cf34",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "uncharted-the-nathan-drake-collection-uncharted-arm",
+   "name": "Uncharted: The Nathan Drake Collection",
+   "type": "port",
+   "consoles": [
+    "mobile"
+   ],
+   "games": [
+    "Uncharted: The Nathan Drake Collection"
+   ],
+   "description": "Uncharted-ARM is a port of Uncharted: The Nathan Drake Collection to Linux and Android for ARM devices, allowing gameplay on Snapdragon GPUs.",
+   "artwork": "https://raw.githubusercontent.com/RedVorteX-TV/Uncharted-arm/68c9ea70b05d6afff82f038310aa1c21f0eba7a5/launcher/uncharted.ico",
+   "version": "v0.1.7",
+   "released": 1793326942000,
+   "repository": "RedVorteX-TV/Uncharted-arm",
+   "provider": "github",
+   "releasesUrl": "https://github.com/RedVorteX-TV/Uncharted-arm/releases/latest",
+   "apkName": "Uncharted-android-0.1.7.apk",
+   "apkUrl": "https://github.com/RedVorteX-TV/Uncharted-arm/releases/download/v0.1.7/Uncharted-android-0.1.7.apk",
+   "sha256": "34a19cbc5235961e05ffa412245ef0b3fcccc44b55d6304a19aaea0bd7e23199",
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "wario-land-super-mario-land-3-bigodao",
+   "name": "Wario Land: Super Mario Land 3",
+   "type": "port",
+   "consoles": [
+    "gb",
+    "gbc"
+   ],
+   "games": [
+    "Wario Land: Super Mario Land 3"
+   ],
+   "description": "Bigod\u00e3o is a native PC port of Wario Land: Super Mario Land 3 for Windows and Linux with native widescreen support.",
+   "artwork": "https://cdn2.steamgriddb.com/grid/3047b62f0d85a7caed28b6b42f48897a.png",
+   "version": "1.8.0",
+   "released": 1793769927000,
+   "repository": "GABRIELNNK/Bigodao",
+   "provider": "github",
+   "releasesUrl": "https://github.com/GABRIELNNK/Bigodao/releases/latest",
+   "apkName": "bigodao_1.7_arm64.apk",
+   "apkUrl": "https://github.com/GABRIELNNK/Bigodao/releases/download/1.7.0/bigodao_1.7_arm64.apk",
+   "sha256": "1c2a47bc860a69da9d603347d2cc618108a0a98d139ee2754e2e5170c0ffc4c0",
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "warioware-twisted-warioware-twisted-recomp",
+   "name": "WarioWare: Twisted!",
+   "type": "port",
+   "consoles": [
+    "gba"
+   ],
+   "games": [
+    "WarioWare: Twisted!"
+   ],
+   "description": "WarioWare: Twisted! Recomp is a native port of WarioWare: Twisted! for Windows and Android with native motion controls.",
+   "artwork": "https://cdn2.steamgriddb.com/grid/c9a66e75ab62be12be640258491d5fbc.png",
+   "version": "android-v0.0.5",
+   "released": 1792355328000,
+   "repository": "mstan/WarioWareTwistedRecomp",
+   "provider": "github",
+   "releasesUrl": "https://github.com/mstan/WarioWareTwistedRecomp/releases/latest",
+   "apkName": "WarioWareTwistedRecomp-android-arm64-v0.0.5-experimental.apk",
+   "apkUrl": "https://github.com/mstan/WarioWareTwistedRecomp/releases/download/android-v0.0.5/WarioWareTwistedRecomp-android-arm64-v0.0.5-experimental.apk",
+   "sha256": "23797a4a437736e1f46125e87418ec8beb40b2703a3c74287ba1139988c8a8cc",
+   "verified": true,
+   "recommended": 2,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "whiplash-roller",
+   "name": "Whiplash",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Whiplash"
+   ],
+   "description": "ROLLER is a PC port of Whiplash that runs on modern computers and can be played in a browser.",
+   "artwork": "https://raw.githubusercontent.com/FatalDecomp/ROLLER/d5b122129a25ea9d186e03506a84416c68f25f38/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png",
+   "version": "v0.1.1-dev.20261106",
+   "released": 1793956187000,
+   "repository": "FatalDecomp/ROLLER",
+   "provider": "github",
+   "releasesUrl": "https://github.com/FatalDecomp/ROLLER/releases/latest",
+   "apkName": "roller-android-release-0.1.1-dev.20261027.apk",
+   "apkUrl": "https://github.com/FatalDecomp/ROLLER/releases/download/v0.1.1-dev.20261027/roller-android-release-0.1.1-dev.20261027.apk",
+   "sha256": "697fb83b2db84f711d78956f876c88835fba3f64cc5860ce7148dbf442f45381",
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "woody-woodpecker-escape-from-buzz-buzzard-park-woodyre",
+   "name": "Woody Woodpecker: Escape from Buzz Buzzard Park",
+   "type": "port",
+   "consoles": [
+    "pc"
+   ],
+   "games": [
+    "Woody Woodpecker: Escape from Buzz Buzzard Park"
+   ],
+   "description": "WoodyRE is a PC port of Woody Woodpecker: Escape from Buzz Buzzard Park that runs the original game data from your own CD.",
+   "artwork": "https://raw.githubusercontent.com/jjmhalew/WoodyRE/c9313997a35c7c9b35ed42127da02a19964bd39a/res/woodyre.ico",
+   "version": "v1.0.12",
+   "released": 1793910857000,
+   "repository": "jjmhalew/WoodyRE",
+   "provider": "github",
+   "releasesUrl": "https://github.com/jjmhalew/WoodyRE/releases/latest",
+   "apkName": "WoodyRE-v1.0.11.apk",
+   "apkUrl": "https://github.com/jjmhalew/WoodyRE/releases/download/v1.0.11/WoodyRE-v1.0.11.apk",
+   "sha256": "a749e381b05ac3d825b36f5d46ed03bfde50446af8bba0857f916e7c0471aa33",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "wwe-smackdown-vs-raw-2011-wwe-svr2011-pc",
+   "name": "WWE SmackDown vs. Raw 2011",
+   "type": "port",
+   "consoles": [
+    "x360"
+   ],
+   "games": [
+    "WWE SmackDown vs. Raw 2011"
+   ],
+   "description": "WWE SmackDown vs. Raw 2011 - PC Port is a Windows port of WWE SmackDown vs. Raw 2011 for Xbox 360 that adds sharp resolutions, ultrawide support, and custom entrance music.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/5696d345cfeb0f36ee140f62594524fd.png",
+   "version": "v2.2.0",
+   "released": 1793945812000,
+   "repository": "KaikoClanworth1/wwe-svr2011-pc",
+   "provider": "github",
+   "releasesUrl": "https://github.com/KaikoClanworth1/wwe-svr2011-pc/releases/latest",
+   "apkName": "SvR2011-Android-v2.1.9.apk",
+   "apkUrl": "https://github.com/KaikoClanworth1/wwe-svr2011-pc/releases/download/v2.1.9/SvR2011-Android-v2.1.9.apk",
+   "sha256": "d5ead0d328728fb9f56a76454ca260ab4d05c3c4213865ade3e83dbdd0f3070d",
+   "verified": true,
+   "recommended": 4,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "xenogears-xenogears-ex-machina",
+   "name": "Xenogears",
+   "type": "port",
+   "consoles": [
+    "ps1"
+   ],
+   "games": [
+    "Xenogears"
+   ],
+   "description": "Xenogears: Ex Machina is a decompilation and port of Xenogears for modern platforms with HD visuals, VR support, and convenience features.",
+   "artwork": "https://cdn2.steamgriddb.com/grid/832fc715fbf9d7d5dd4cdb862f39655b.png",
+   "version": "v1.0.6",
+   "released": 1793764663000,
+   "repository": "brianblakely/xenogears-ex-machina",
+   "provider": "github",
+   "releasesUrl": "https://github.com/brianblakely/xenogears-ex-machina/releases/latest",
+   "apkName": "xenogears-ex-machina-v1.0.5-android-horizon.apk",
+   "apkUrl": "https://github.com/brianblakely/xenogears-ex-machina/releases/download/v1.0.5/xenogears-ex-machina-v1.0.5-android-horizon.apk",
+   "sha256": "dc018e45f26c3c77abf4b941af2ea36e0ab6bbc3583d7470aa9e7aec01543b87",
+   "verified": true,
+   "recommended": 3,
+   "issues": 0,
+   "broken": 1
+  },
+  {
+   "slug": "yoshi-s-island-super-mario-advance-3-sma3-recomp-android",
+   "name": "Yoshi's Island: Super Mario Advance 3",
+   "type": "port",
+   "consoles": [
+    "gba"
+   ],
+   "games": [
+    "Yoshi's Island: Super Mario Advance 3"
+   ],
+   "description": "SMA3 Recomp Android is a recompilation of Yoshi's Island: Super Mario Advance 3 for Android with features like adjustable button layouts and 120Hz display support.",
+   "artwork": "https://cdn2.steamgriddb.com/grid/cc8a6c2b9637c769222f93671ca8acf7.jpg",
+   "version": null,
+   "released": null,
+   "repository": "Edwin2929/sma3-recomp-android.",
+   "provider": "github",
+   "releasesUrl": "https://github.com/Edwin2929/sma3-recomp-android./releases/latest",
+   "apkName": "sma3-recomp-0.10.13-beta-arm64.apk",
+   "apkUrl": "https://github.com/Edwin2929/sma3-recomp-android./releases/download/Descarga/sma3-recomp-0.10.13-beta-arm64.apk",
+   "sha256": "37f46ea4b1826639dec53081b9dd198cc057539501f18ed2b0bc43ef7c51e6da",
+   "verified": true,
+   "recommended": 0,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "yu-gi-oh-forbidden-memories-yu-gi-oh-forbidden-memories-recompiled",
+   "name": "Yu-Gi-Oh! Forbidden Memories",
+   "type": "port",
+   "consoles": [
+    "ps1"
+   ],
+   "games": [
+    "Yu-Gi-Oh! Forbidden Memories"
+   ],
+   "description": "Yu-Gi-Oh! Forbidden Memories Recompiled is a native PC port of Yu-Gi-Oh! Forbidden Memories for Windows and Linux with up to 4x internal resolution and 3D monsters on the field.\n\nConfusingly, it has \"Recompiled\" in its name even though it is not a static recompilation.",
+   "artwork": "https://cdn2.steamgriddb.com/grid/914214030c263b3907749fd2ae051349.jpg",
+   "version": "v0.3.1-preview.2",
+   "released": 1793938472000,
+   "repository": "Unchiga/Yu-Gi-Oh-Forbidden-Memories-Recompiled",
+   "provider": "github",
+   "releasesUrl": "https://github.com/Unchiga/Yu-Gi-Oh-Forbidden-Memories-Recompiled/releases/latest",
+   "apkName": "yfm-redecomp-v0.3.0-android-arm64.apk",
+   "apkUrl": "https://github.com/Unchiga/Yu-Gi-Oh-Forbidden-Memories-Recompiled/releases/download/v0.3.0/yfm-redecomp-v0.3.0-android-arm64.apk",
+   "sha256": "799d1195112659d80c50ff2da7f474e7704b381df3ede1b850272de832778f8c",
+   "verified": true,
+   "recommended": 11,
+   "issues": 0,
+   "broken": 1
+  },
+  {
+   "slug": "z2rs",
+   "name": "Zelda II: The Adventure of Link",
+   "type": "port",
+   "consoles": [
+    "nes"
+   ],
+   "games": [
+    "The Legend of Zelda: The Adventure of Link"
+   ],
+   "description": "z2rs is a clean-room-style reconstruction of Zelda II: The Adventure of Link (NES) in Rust. It runs as a desktop app, in the browser (WebAssembly) and on Android, and it is checked frame by frame against the original ROM running in a reference emulator.",
+   "artwork": "https://cdn2.steamgriddb.com/icon/2735f7cbe17d0c29911ac75a53440fbc.png",
+   "version": "v0.6.0",
+   "released": 1792644159000,
+   "repository": "troyedwardsjr/z2rs",
+   "provider": "github",
+   "releasesUrl": "https://github.com/troyedwardsjr/z2rs/releases/latest",
+   "apkName": "z2rs-0.6.0-android.apk",
+   "apkUrl": "https://github.com/troyedwardsjr/z2rs/releases/download/v0.6.0/z2rs-0.6.0-android.apk",
+   "sha256": "da9928dbce3789a3acb96a35e174af060f8e8a2570a2968ab74af8710f631202",
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  },
+  {
+   "slug": "zombies-ate-my-neighbors-undead-neighbor-eaters-droid",
+   "name": "Zombies Ate My Neighbors",
+   "type": "port",
+   "consoles": [
+    "snes"
+   ],
+   "games": [
+    "Zombies Ate My Neighbors"
+   ],
+   "description": "Undead Neighbor Eaters Droid is an Android port of Zombies Ate My Neighbors with editable touchscreen controls and online multiplayer.",
+   "artwork": "https://cdn2.steamgriddb.com/grid/6b577925b8782c610aad5ddb71451390.png",
+   "version": "DROID",
+   "released": 1792117393000,
+   "repository": "sirdankz/Undead-Neighbor-Eaters-Droid",
+   "provider": "github",
+   "releasesUrl": "https://github.com/sirdankz/Undead-Neighbor-Eaters-Droid/releases/latest",
+   "apkName": "UndeadNeighborEatersV2.apk",
+   "apkUrl": "https://github.com/sirdankz/Undead-Neighbor-Eaters-Droid/releases/download/DROID/UndeadNeighborEatersV2.apk",
+   "sha256": "d755710dc2e26dbd7002291da8ac17ab61e32615584c04a3b236a19735cf86f4",
+   "verified": true,
+   "recommended": 1,
+   "issues": 0,
+   "broken": 0
+  }
+ ]
+}
