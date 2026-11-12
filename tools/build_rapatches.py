@@ -129,7 +129,9 @@ def _zip_names(url):
         # GitHub answers 416 when the archive is smaller than the range asked for, rather than
         # sending the whole file. Such an archive is under 16 KB, so just fetch all of it.
         # (Found porting this from chameleon-data: every small patch was silently dropped.)
-        if e.code != 416:
+        # Some archives get "501 Unsupported client range" every time, though the whole file
+        # downloads fine; those are fetched whole too (once: the result is cached).
+        if e.code not in (416, 501):
             raise
         tail, span = _get(url), ""
     total = int(span.rsplit("/", 1)[1]) if "/" in span and span.rsplit("/", 1)[1].isdigit() else len(tail)
