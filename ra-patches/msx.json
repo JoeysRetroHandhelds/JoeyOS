@@ -1,0 +1,1459 @@
+{
+  "fafe1303": [
+    {
+      "name": "Metal Gear (Japan) (RC-750)",
+      "type": "Conversion",
+      "path": "MSX/Conversion/10501-MetalGear-RC750.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Metal Gear (Japan) (Improvement) (v1.0) (FRS)",
+      "type": "Improvement",
+      "path": "MSX/Improvement/10501-MetalGear-Improvement.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Metal Gear (Unknown) (Improvements) (v1.0) (FRS)",
+      "type": "Translation",
+      "path": "MSX/Translation/Chinese/10501-MetalGear-Chinese.zip",
+      "format": "bps",
+      "inner": "Metal Gear (Japan) (Zh) (Unknown) (Improvements) (v1.0) (FRS).bps"
+    },
+    {
+      "name": "Metal Gear (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "MSX/Translation/Chinese/10501-MetalGear-Chinese.zip",
+      "format": "bps",
+      "inner": "Metal Gear (Japan) (Zh) (v1.0) (Unknown).bps"
+    },
+    {
+      "name": "Metal Gear (v1.0a) (Mr.Dude,TyrannoRanger)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10501-MetalGear-English.zip",
+      "format": "bps",
+      "inner": "Metal Gear (Japan) (En) (v1.0a) (Mr.Dude,TyrannoRanger).bps"
+    },
+    {
+      "name": "Metal Gear (v1.995c) (Nekura_Hoka)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10501-MetalGear-English.zip",
+      "format": "bps",
+      "inner": "Metal Gear (Japan) (En) (v1.995c) (Nekura_Hoka).bps"
+    },
+    {
+      "name": "Metal Gear     ) (v1.0a) (TyrannoRanger) (Improvements) (v1.0) (FRS)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10501-MetalGear-English.zip",
+      "format": "bps",
+      "inner": "Metal Gear (Japan) (En) (v1.0a) (TyrannoRanger) (Improvements)) (v1.0) (FRS).bps"
+    },
+    {
+      "name": "Metal Gear (v1.995) (Nekura_Hoka) (Improvements) (v1.0) (FRS)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10501-MetalGear-English.zip",
+      "format": "bps",
+      "inner": "Metal Gear (Japan) (En) (v1.995) (Nekura_Hoka) (Improvements) (v1.0) (FRS).bps"
+    },
+    {
+      "name": "Metal Gear (RC-750) (v1.995c) (Nekura_Hoka)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10501-MetalGear-English.zip",
+      "format": "bps",
+      "inner": "Metal Gear (Japan) (RC-750) (En) (v1.995c) (Nekura_Hoka).bps"
+    },
+    {
+      "name": "Metal Gear (Japan) (Es) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "MSX/Translation/Spanish/10501-MetalGear-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "18b1f34b": [
+    {
+      "name": "Solid Snake (Japan) (Turbo Fix) (FRS) (1.1)",
+      "type": "Fixes",
+      "path": "MSX/Fixes/10504-MetalGear2-TurboFix.zip",
+      "format": "bps"
+    },
+    {
+      "name": "Solid Snake (Unknown) (Turbo Fix) (v1.0) (FRS)",
+      "type": "Translation",
+      "path": "MSX/Translation/Chinese/10504-MetalGear2-Chinese.zip",
+      "format": "bps",
+      "inner": "Metal Gear 2 - Solid Snake (Japan) (Zh) (Unknown) (Turbo Fix) (v1.0) (FRS).bps"
+    },
+    {
+      "name": "Solid Snake (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "MSX/Translation/Chinese/10504-MetalGear2-Chinese.zip",
+      "format": "bps",
+      "inner": "Metal Gear 2 - Solid Snake (Japan) (Zh) (v1.0) (Unknown).bps"
+    },
+    {
+      "name": "Solid Snake (Addendum) (TurboFix) (v1.1) (FRS)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10504-MetalGear2-English.zip",
+      "format": "bps",
+      "inner": "Metal Gear 2 - Solid Snake (Japan) (En) (Addendum) (TurboFix) (v1.1) (FRS).bps"
+    },
+    {
+      "name": "Solid Snake (Addendum)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10504-MetalGear2-English.zip",
+      "format": "bps",
+      "inner": "Metal Gear 2 - Solid Snake (Japan) (En) (Addendum).bps"
+    },
+    {
+      "name": "Solid Snake (v1.2) (Maarten ter Huurne,Takamichi Suzukawa) (TurboFix) (v1.1) (FRS)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10504-MetalGear2-English.zip",
+      "format": "bps",
+      "inner": "Metal Gear 2 - Solid Snake (Japan) (En) (v1.2) (Maarten ter Huurne,Takamichi Suzukawa) (TurboFix) (v1.1) (FRS).bps"
+    },
+    {
+      "name": "Solid Snake (v1.2) (Maarten ter Huurne,Takamichi Suzukawa)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10504-MetalGear2-English.zip",
+      "format": "bps",
+      "inner": "Metal Gear 2 - Solid Snake (Japan) (En) (v1.2) (Maarten ter Huurne,Takamichi Suzukawa).bps"
+    },
+    {
+      "name": "Solid Snake (RC-767) (v1.4) (TurboFix) (v1.1) (FRS)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10504-MetalGear2-English.zip",
+      "format": "bps",
+      "inner": "Metal Gear 2 - Solid Snake (Japan) (RC-767) (En) (v1.4) (BiFi) (TurboFix) (v1.1) (FRS).bps"
+    },
+    {
+      "name": "Solid Snake (RC-767) (v1.4)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10504-MetalGear2-English.zip",
+      "format": "bps",
+      "inner": "Metal Gear 2 - Solid Snake (Japan) (RC-767) (En) (v1.4) (BiFi).bps"
+    },
+    {
+      "name": "Solid Snake (v1.0) (Andre Possebon) (TurboFix) (v1.1) (FRS)",
+      "type": "Translation",
+      "path": "MSX/Translation/Portuguese/10504-MetalGear2-Portuguese.zip",
+      "format": "bps",
+      "inner": "Metal Gear 2 - Solid Snake (Japan) (Pt) (v1.0) (Andre Possebon) (TurboFix) (v1.1) (FRS).bps"
+    },
+    {
+      "name": "Solid Snake (v1.0) (Andre Possebon)",
+      "type": "Translation",
+      "path": "MSX/Translation/Portuguese/10504-MetalGear2-Portuguese.zip",
+      "format": "bps",
+      "inner": "Metal Gear 2 - Solid Snake (Japan) (Pt) (v1.0) (Andre Possebon).bps"
+    },
+    {
+      "name": "Solid Snake (Japan) (Es) (v1.0) (Unknown)",
+      "type": "Translation",
+      "path": "MSX/Translation/Spanish/10504-MetalGear2-Spanish.zip",
+      "format": "bps"
+    }
+  ],
+  "aae7028b": [
+    {
+      "name": "Kekkyoku Nankyoku Dai Bouken (Japan) (Joystick Patch) (v1.0) (gdx)",
+      "type": "Fixes",
+      "path": "MSX/Fixes/18099-AntarcticAdv-JoystickPatch.zip",
+      "format": "bps"
+    }
+  ],
+  "63784bfd": [
+    {
+      "name": "Guido's Lost in Plantinus (1995)(MFZ Disk Magazine)(NL) (World 2 Softlock Fix) (Arjan Bakker)",
+      "type": "Fixes",
+      "path": "MSX/Fixes/41152-GuidosLostInPlantinus-World2SoftlockFix.zip",
+      "format": "bps"
+    }
+  ],
+  "0aedea40": [
+    {
+      "name": "Vampire Killer (Japan, Europe) (Alt) (Improvements) (v1.0) (FRS)",
+      "type": "Improvement",
+      "path": "MSX/Improvement/3289-VampireKiller-Improvement.zip",
+      "format": "bps"
+    }
+  ],
+  "1da7b4ca": [
+    {
+      "name": "Princess Maker    [Subset - 33 Endings] (1992) (Micro Cabin) (Disk 1)",
+      "type": "Subset",
+      "path": "MSX/Subset/34303-PrincessMaker-Subset-33Endings.zip",
+      "format": "bps",
+      "inner": "TOSEC + English Patch Base/Princess Maker (1992) (Micro Cabin) (En) [Subset - 33 Endings] (Disk 1).bps"
+    }
+  ],
+  "2490a3db": [
+    {
+      "name": "Princess Maker    [Subset - 33 Endings] (1992) (Micro Cabin) (Disk 2)",
+      "type": "Subset",
+      "path": "MSX/Subset/34303-PrincessMaker-Subset-33Endings.zip",
+      "format": "bps",
+      "inner": "TOSEC + English Patch Base/Princess Maker (1992) (Micro Cabin) (En) [Subset - 33 Endings] (Disk 2).bps"
+    }
+  ],
+  "7835967c": [
+    {
+      "name": "Princess Maker    [Subset - 33 Endings] (1992) (Micro Cabin) (Disk 3)",
+      "type": "Subset",
+      "path": "MSX/Subset/34303-PrincessMaker-Subset-33Endings.zip",
+      "format": "bps",
+      "inner": "TOSEC + English Patch Base/Princess Maker (1992) (Micro Cabin) (En) [Subset - 33 Endings] (Disk 3).bps"
+    }
+  ],
+  "b92f2fb2": [
+    {
+      "name": "Princess Maker    [Subset - 33 Endings] (1992) (Micro Cabin) (Disk 4)",
+      "type": "Subset",
+      "path": "MSX/Subset/34303-PrincessMaker-Subset-33Endings.zip",
+      "format": "bps",
+      "inner": "TOSEC + English Patch Base/Princess Maker (1992) (Micro Cabin) (En) [Subset - 33 Endings] (Disk 4).bps"
+    }
+  ],
+  "766d43e6": [
+    {
+      "name": "Princess Maker    [Subset - 33 Endings] (1992) (Micro Cabin) (Disk 5)",
+      "type": "Subset",
+      "path": "MSX/Subset/34303-PrincessMaker-Subset-33Endings.zip",
+      "format": "bps",
+      "inner": "TOSEC + English Patch Base/Princess Maker (1992) (Micro Cabin) (En) [Subset - 33 Endings] (Disk 5).bps"
+    }
+  ],
+  "3ab55228": [
+    {
+      "name": "Princess Maker    [Subset - 33 Endings] (1992) (Micro Cabin) (Disk 6)",
+      "type": "Subset",
+      "path": "MSX/Subset/34303-PrincessMaker-Subset-33Endings.zip",
+      "format": "bps",
+      "inner": "TOSEC + English Patch Base/Princess Maker (1992) (Micro Cabin) (En) [Subset - 33 Endings] (Disk 6).bps"
+    }
+  ],
+  "2d2670a3": [
+    {
+      "name": "Princess Maker    [Subset - 33 Endings] (1992) (Micro Cabin) (Disk 7)",
+      "type": "Subset",
+      "path": "MSX/Subset/34303-PrincessMaker-Subset-33Endings.zip",
+      "format": "bps",
+      "inner": "TOSEC + English Patch Base/Princess Maker (1992) (Micro Cabin) (En) [Subset - 33 Endings] (Disk 7).bps"
+    }
+  ],
+  "f46e161b": [
+    {
+      "name": "Princess Maker    [Subset - 33 Endings] (1992) (Micro Cabin) (Disk 1)",
+      "type": "Subset",
+      "path": "MSX/Subset/34303-PrincessMaker-Subset-33Endings.zip",
+      "format": "bps",
+      "inner": "TOSEC Base/Princess Maker (1992) (Micro Cabin) (En) [Subset - 33 Endings] (Disk 1).bps"
+    },
+    {
+      "name": "Princess Maker (1992) (Micro Cabin) (v1.0) (Teo Lopez Del Castillo) (Disk 1)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/21450-PrincessMaker-English.zip",
+      "format": "bps",
+      "inner": "Princess Maker (1992) (Micro Cabin) (En) (v1.0) (Teo Lopez Del Castillo) (Disk 1).bps"
+    }
+  ],
+  "0c4f3202": [
+    {
+      "name": "Princess Maker    [Subset - 33 Endings] (1992) (Micro Cabin) (Disk 2)",
+      "type": "Subset",
+      "path": "MSX/Subset/34303-PrincessMaker-Subset-33Endings.zip",
+      "format": "bps",
+      "inner": "TOSEC Base/Princess Maker (1992) (Micro Cabin) (En) [Subset - 33 Endings] (Disk 2).bps"
+    },
+    {
+      "name": "Princess Maker (1992) (Micro Cabin) (v1.0) (Teo Lopez Del Castillo) (Disk 2)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/21450-PrincessMaker-English.zip",
+      "format": "bps",
+      "inner": "Princess Maker (1992) (Micro Cabin) (En) (v1.0) (Teo Lopez Del Castillo) (Disk 2).bps"
+    }
+  ],
+  "2c2ec284": [
+    {
+      "name": "Princess Maker    [Subset - 33 Endings] (1992) (Micro Cabin) (Disk 3)",
+      "type": "Subset",
+      "path": "MSX/Subset/34303-PrincessMaker-Subset-33Endings.zip",
+      "format": "bps",
+      "inner": "TOSEC Base/Princess Maker (1992) (Micro Cabin) (En) [Subset - 33 Endings] (Disk 3).bps"
+    },
+    {
+      "name": "Princess Maker (1992) (Micro Cabin) (v1.0) (Teo Lopez Del Castillo) (Disk 3)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/21450-PrincessMaker-English.zip",
+      "format": "bps",
+      "inner": "Princess Maker (1992) (Micro Cabin) (En) (v1.0) (Teo Lopez Del Castillo) (Disk 3).bps"
+    }
+  ],
+  "9f7f7e92": [
+    {
+      "name": "Princess Maker    [Subset - 33 Endings] (1992) (Micro Cabin) (Disk 4)",
+      "type": "Subset",
+      "path": "MSX/Subset/34303-PrincessMaker-Subset-33Endings.zip",
+      "format": "bps",
+      "inner": "TOSEC Base/Princess Maker (1992) (Micro Cabin) (En) [Subset - 33 Endings] (Disk 4).bps"
+    },
+    {
+      "name": "Princess Maker (1992) (Micro Cabin) (v1.0) (Teo Lopez Del Castillo) (Disk 4)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/21450-PrincessMaker-English.zip",
+      "format": "bps",
+      "inner": "Princess Maker (1992) (Micro Cabin) (En) (v1.0) (Teo Lopez Del Castillo) (Disk 4).bps"
+    }
+  ],
+  "06552495": [
+    {
+      "name": "Princess Maker    [Subset - 33 Endings] (1992) (Micro Cabin) (Disk 5)",
+      "type": "Subset",
+      "path": "MSX/Subset/34303-PrincessMaker-Subset-33Endings.zip",
+      "format": "bps",
+      "inner": "TOSEC Base/Princess Maker (1992) (Micro Cabin) (En) [Subset - 33 Endings] (Disk 5).bps"
+    },
+    {
+      "name": "Princess Maker (1992) (Micro Cabin) (v1.0) (Teo Lopez Del Castillo) (Disk 5)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/21450-PrincessMaker-English.zip",
+      "format": "bps",
+      "inner": "Princess Maker (1992) (Micro Cabin) (En) (v1.0) (Teo Lopez Del Castillo) (Disk 5).bps"
+    }
+  ],
+  "d4f9fa9c": [
+    {
+      "name": "Princess Maker    [Subset - 33 Endings] (1992) (Micro Cabin) (Disk 6)",
+      "type": "Subset",
+      "path": "MSX/Subset/34303-PrincessMaker-Subset-33Endings.zip",
+      "format": "bps",
+      "inner": "TOSEC Base/Princess Maker (1992) (Micro Cabin) (En) [Subset - 33 Endings] (Disk 6).bps"
+    },
+    {
+      "name": "Princess Maker (1992) (Micro Cabin) (v1.0) (Teo Lopez Del Castillo) (Disk 6)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/21450-PrincessMaker-English.zip",
+      "format": "bps",
+      "inner": "Princess Maker (1992) (Micro Cabin) (En) (v1.0) (Teo Lopez Del Castillo) (Disk 6).bps"
+    }
+  ],
+  "c7cb2d5f": [
+    {
+      "name": "Princess Maker    [Subset - 33 Endings] (1992) (Micro Cabin) (Disk 7)",
+      "type": "Subset",
+      "path": "MSX/Subset/34303-PrincessMaker-Subset-33Endings.zip",
+      "format": "bps",
+      "inner": "TOSEC Base/Princess Maker (1992) (Micro Cabin) (En) [Subset - 33 Endings] (Disk 7).bps"
+    },
+    {
+      "name": "Princess Maker (1992) (Micro Cabin) (v1.0) (Teo Lopez Del Castillo) (Disk 7)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/21450-PrincessMaker-English.zip",
+      "format": "bps",
+      "inner": "Princess Maker (1992) (Micro Cabin) (En) (v1.0) (Teo Lopez Del Castillo) (Disk 7).bps"
+    }
+  ],
+  "98095852": [
+    {
+      "name": "Drasle Family (Japan) (En) (v1.0) (MSX Translations)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10467-DragonSlayerIV-English.zip",
+      "format": "bps"
+    }
+  ],
+  "b1b24da1": [
+    {
+      "name": "Penguin-kun Wars 2 (Japan) (En) (v1.0) (Max Iwamoto,Tsunami)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10472-PenguinkunWars2-English.zip",
+      "format": "bps"
+    }
+  ],
+  "47a82d74": [
+    {
+      "name": "Kokuu no Gajou (v1.0 - AS MSX-Audio) (MSX Translations)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10475-AshGuineStoryII-English.zip",
+      "format": "bps",
+      "inner": "AshGuine Story II - Kokuu no Gajou (Japan) (En) (v1.0 - AS MSX-Audio) (MSX Translations).bps"
+    },
+    {
+      "name": "Kokuu no Gajou (v1.0) (MSX Translations)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10475-AshGuineStoryII-English.zip",
+      "format": "bps",
+      "inner": "AshGuine Story II - Kokuu no Gajou (Japan) (En) (v1.0) (MSX Translations).bps"
+    }
+  ],
+  "e040e8a1": [
+    {
+      "name": "Borfesu (Japan) (En) (v20081105) (Hap)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10484-Borfesu-English.zip",
+      "format": "bps"
+    }
+  ],
+  "39e1c37a": [
+    {
+      "name": "War of the Dead (Japan) (En) (v1.0) (Dank Translations Team)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10503-ShiryouSensen-WaroftheDead-English.zip",
+      "format": "bps"
+    }
+  ],
+  "ec0ecd55": [
+    {
+      "name": "SD Snatcher (v0.9.2) (Melancholia) (Disk 1)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10505-SDSnatcher-English.zip",
+      "format": "bps",
+      "inner": "SCC+ Base/SD Snatcher (Japan) (En) (v0.9.2) (Melancholia) (Disk 1).bps"
+    }
+  ],
+  "930e06b3": [
+    {
+      "name": "SD Snatcher (v0.9.2) (Melancholia) (Disk 2)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10505-SDSnatcher-English.zip",
+      "format": "bps",
+      "inner": "SCC+ Base/SD Snatcher (Japan) (En) (v0.9.2) (Melancholia) (Disk 2).bps"
+    }
+  ],
+  "0547bb3a": [
+    {
+      "name": "SD Snatcher (v0.9.2) (Melancholia) (Disk 3)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10505-SDSnatcher-English.zip",
+      "format": "bps",
+      "inner": "SCC+ Base/SD Snatcher (Japan) (En) (v0.9.2) (Melancholia) (Disk 3).bps"
+    }
+  ],
+  "83dbe06f": [
+    {
+      "name": "SD Snatcher (v0.9.2) (Melancholia) (Disk 1)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10505-SDSnatcher-English.zip",
+      "format": "bps",
+      "inner": "Standard Base/SD Snatcher (Japan) (En) (v0.9.2) (Melancholia) (Disk 1).bps"
+    }
+  ],
+  "4e4aaa7d": [
+    {
+      "name": "SD Snatcher (v0.9.2) (Melancholia) (Disk 2)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10505-SDSnatcher-English.zip",
+      "format": "bps",
+      "inner": "Standard Base/SD Snatcher (Japan) (En) (v0.9.2) (Melancholia) (Disk 2).bps"
+    }
+  ],
+  "51d1199a": [
+    {
+      "name": "SD Snatcher (v0.9.2) (Melancholia) (Disk 3)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10505-SDSnatcher-English.zip",
+      "format": "bps",
+      "inner": "Standard Base/SD Snatcher (Japan) (En) (v0.9.2) (Melancholia) (Disk 3).bps"
+    }
+  ],
+  "17f9ee7f": [
+    {
+      "name": "Romancia (Japan) (En) (v1.0) (MSX Translations)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/10508-DragonSlayerJrRomancia-English.zip",
+      "format": "bps"
+    }
+  ],
+  "eb942948": [
+    {
+      "name": "The Legend of Heroes (v1.0) (Oasis, Randam) (Game Disk)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/11057-DragonSlayerVI-LegendofHeroes-ENglish.zip",
+      "format": "bps",
+      "inner": "Dragon Slayer - The Legend of Heroes (Japan) (En) (v1.0) (Oasis, Randam) (Game Disk).bps"
+    }
+  ],
+  "a61150e1": [
+    {
+      "name": "The Legend of Heroes (v1.0) (Oasis, Randam) (Scenario 1 Disk)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/11057-DragonSlayerVI-LegendofHeroes-ENglish.zip",
+      "format": "bps",
+      "inner": "Dragon Slayer - The Legend of Heroes (Japan) (En) (v1.0) (Oasis, Randam) (Scenario 1 Disk).bps"
+    }
+  ],
+  "175e7262": [
+    {
+      "name": "The Legend of Heroes (v1.0) (Oasis, Randam) (Scenario 2 Disk)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/11057-DragonSlayerVI-LegendofHeroes-ENglish.zip",
+      "format": "bps",
+      "inner": "Dragon Slayer - The Legend of Heroes (Japan) (En) (v1.0) (Oasis, Randam) (Scenario 2 Disk).bps"
+    }
+  ],
+  "fa685a65": [
+    {
+      "name": "The Legend of Heroes (v1.0) (Oasis, Randam) (Scenario 3 Disk)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/11057-DragonSlayerVI-LegendofHeroes-ENglish.zip",
+      "format": "bps",
+      "inner": "Dragon Slayer - The Legend of Heroes (Japan) (En) (v1.0) (Oasis, Randam) (Scenario 3 Disk).bps"
+    }
+  ],
+  "9f92f165": [
+    {
+      "name": "Dead of the Brain (v20200630) (Manuel Pazos) (Disk 1)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/11066-DeadoftheBrain-English.zip",
+      "format": "bps",
+      "inner": "Dead of the Brain (Japan) (En) (v20200630) (Manuel Pazos) (Disk 1).bps"
+    }
+  ],
+  "57883240": [
+    {
+      "name": "Dead of the Brain (v20200630) (Manuel Pazos) (Disk 2)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/11066-DeadoftheBrain-English.zip",
+      "format": "bps",
+      "inner": "Dead of the Brain (Japan) (En) (v20200630) (Manuel Pazos) (Disk 2).bps"
+    }
+  ],
+  "08fb12de": [
+    {
+      "name": "Dead of the Brain (v20200630) (Manuel Pazos) (Disk 3)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/11066-DeadoftheBrain-English.zip",
+      "format": "bps",
+      "inner": "Dead of the Brain (Japan) (En) (v20200630) (Manuel Pazos) (Disk 3).bps"
+    }
+  ],
+  "aea8d064": [
+    {
+      "name": "Woody Poco (Japan) (En) (v1.0.1) (MSX Translations)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16268-WoodyPoco-English.zip",
+      "format": "bps"
+    }
+  ],
+  "7729e7a9": [
+    {
+      "name": "Dragon Quest (Japan) (En) (v201804xx) (Django)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16400-DQ-English.zip",
+      "format": "bps"
+    }
+  ],
+  "4cfd3a9e": [
+    {
+      "name": "Final Fantasy    + Performance (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "bps",
+      "inner": "Final Fantasy (Japan) (En) (FCC) + Performance.bps"
+    },
+    {
+      "name": "Final Fantasy    + Performance (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "ips",
+      "inner": "Final Fantasy (Japan) (En) (FCC) + Performance.ips"
+    },
+    {
+      "name": "Final Fantasy (v20221212) (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "bps",
+      "inner": "Final Fantasy (Japan) (En) (v20221212) (FCC).bps"
+    },
+    {
+      "name": "Final Fantasy (v20221212) (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "ips",
+      "inner": "Final Fantasy (Japan) (En) (v20221212) (FCC).ips"
+    },
+    {
+      "name": "Final Fantasy (v20221212) (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "bps",
+      "inner": "older/Final Fantasy (Japan) (En) (v20221212) (FCC).bps"
+    }
+  ],
+  "69caf410": [
+    {
+      "name": "Final Fantasy    + Performance (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "bps",
+      "inner": "Final Fantasy (Japan) (En) (FCC) + Performance.bps"
+    },
+    {
+      "name": "Final Fantasy    + Performance (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "ips",
+      "inner": "Final Fantasy (Japan) (En) (FCC) + Performance.ips"
+    },
+    {
+      "name": "Final Fantasy (v20221212) (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "bps",
+      "inner": "Final Fantasy (Japan) (En) (v20221212) (FCC).bps"
+    },
+    {
+      "name": "Final Fantasy (v20221212) (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "ips",
+      "inner": "Final Fantasy (Japan) (En) (v20221212) (FCC).ips"
+    },
+    {
+      "name": "Final Fantasy (v20221212) (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "bps",
+      "inner": "older/Final Fantasy (Japan) (En) (v20221212) (FCC).bps"
+    }
+  ],
+  "919dfbed": [
+    {
+      "name": "Final Fantasy    + Performance (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "bps",
+      "inner": "Final Fantasy (Japan) (En) (FCC) + Performance.bps"
+    },
+    {
+      "name": "Final Fantasy    + Performance (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "ips",
+      "inner": "Final Fantasy (Japan) (En) (FCC) + Performance.ips"
+    },
+    {
+      "name": "Final Fantasy (v20221212) (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "bps",
+      "inner": "Final Fantasy (Japan) (En) (v20221212) (FCC).bps"
+    },
+    {
+      "name": "Final Fantasy (v20221212) (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "ips",
+      "inner": "Final Fantasy (Japan) (En) (v20221212) (FCC).ips"
+    },
+    {
+      "name": "Final Fantasy (v20221212) (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "bps",
+      "inner": "older/Final Fantasy (Japan) (En) (v20221212) (FCC).bps"
+    }
+  ],
+  "a3cc2c94": [
+    {
+      "name": "Final Fantasy    + Performance (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "bps",
+      "inner": "Final Fantasy (Japan) (En) (FCC) + Performance.bps"
+    },
+    {
+      "name": "Final Fantasy    + Performance (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "ips",
+      "inner": "Final Fantasy (Japan) (En) (FCC) + Performance.ips"
+    },
+    {
+      "name": "Final Fantasy (v20221212) (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "bps",
+      "inner": "Final Fantasy (Japan) (En) (v20221212) (FCC).bps"
+    },
+    {
+      "name": "Final Fantasy (v20221212) (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "ips",
+      "inner": "Final Fantasy (Japan) (En) (v20221212) (FCC).ips"
+    },
+    {
+      "name": "Final Fantasy (v20221212) (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "bps",
+      "inner": "older/Final Fantasy (Japan) (En) (v20221212) (FCC).bps"
+    }
+  ],
+  "df6c730f": [
+    {
+      "name": "Final Fantasy    + Performance (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "bps",
+      "inner": "Final Fantasy (Japan) (En) (FCC) + Performance.bps"
+    },
+    {
+      "name": "Final Fantasy    + Performance (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "ips",
+      "inner": "Final Fantasy (Japan) (En) (FCC) + Performance.ips"
+    },
+    {
+      "name": "Final Fantasy (v20221212) (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "bps",
+      "inner": "Final Fantasy (Japan) (En) (v20221212) (FCC).bps"
+    },
+    {
+      "name": "Final Fantasy (v20221212) (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "ips",
+      "inner": "Final Fantasy (Japan) (En) (v20221212) (FCC).ips"
+    },
+    {
+      "name": "Final Fantasy (v20221212) (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "bps",
+      "inner": "older/Final Fantasy (Japan) (En) (v20221212) (FCC).bps"
+    }
+  ],
+  "fea8dc8d": [
+    {
+      "name": "Final Fantasy    + Performance (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "bps",
+      "inner": "Final Fantasy (Japan) (En) (FCC) + Performance.bps"
+    },
+    {
+      "name": "Final Fantasy    + Performance (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "ips",
+      "inner": "Final Fantasy (Japan) (En) (FCC) + Performance.ips"
+    },
+    {
+      "name": "Final Fantasy (v20221212) (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "bps",
+      "inner": "Final Fantasy (Japan) (En) (v20221212) (FCC).bps"
+    },
+    {
+      "name": "Final Fantasy (v20221212) (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "ips",
+      "inner": "Final Fantasy (Japan) (En) (v20221212) (FCC).ips"
+    },
+    {
+      "name": "Final Fantasy (v20221212) (FCC)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16403-FinalFantasy-English.zip",
+      "format": "bps",
+      "inner": "older/Final Fantasy (Japan) (En) (v20221212) (FCC).bps"
+    }
+  ],
+  "966446ab": [
+    {
+      "name": "Golvellius II (v1.0) (Woomb) (Disk 1) (Opening Disk)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16404-GolvelliusII-English.zip",
+      "format": "bps",
+      "inner": "Golvellius II (Japan) (En) (v1.0) (Woomb) (Disk 1) (Opening Disk).bps"
+    }
+  ],
+  "322fc815": [
+    {
+      "name": "Golvellius II (v1.0) (Woomb) (Disk 2) (Game Disk)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16404-GolvelliusII-English.zip",
+      "format": "bps",
+      "inner": "Golvellius II (Japan) (En) (v1.0) (Woomb) (Disk 2) (Game Disk).bps"
+    }
+  ],
+  "9ce38420": [
+    {
+      "name": "Golvellius II (v1.0) (Woomb) (Disk 3) (User Disk)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16404-GolvelliusII-English.zip",
+      "format": "bps",
+      "inner": "Golvellius II (Japan) (En) (v1.0) (Woomb) (Disk 3) (User Disk).bps"
+    }
+  ],
+  "bf81e259": [
+    {
+      "name": "Pleasure Hearts (v1.01) (Yim)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16503-PleasureHearts-English.zip",
+      "format": "bps",
+      "inner": "Pleasure Hearts (Japan) (En) (v1.01) (Yim).bps"
+    },
+    {
+      "name": "Pleasure Hearts (v1.02) (Yim)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/16503-PleasureHearts-English.zip",
+      "format": "bps",
+      "inner": "Pleasure Hearts (Japan) (En) (v1.02) (Yim).bps"
+    }
+  ],
+  "d7d8e9ea": [
+    {
+      "name": "The Final Chapter (v1.0) (Oasis) (Disk 1) (Game Disk)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/17364-YsII-English.zip",
+      "format": "bps",
+      "inner": "Ancient Ys Vanished II - The Final Chapter (Japan) (En) (v1.0) (Oasis) (Disk 1) (Game Disk).bps"
+    }
+  ],
+  "73c23b9e": [
+    {
+      "name": "The Final Chapter (v1.0) (Oasis) (Disk 2) (Data Disk)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/17364-YsII-English.zip",
+      "format": "bps",
+      "inner": "Ancient Ys Vanished II - The Final Chapter (Japan) (En) (v1.0) (Oasis) (Disk 2) (Data Disk).bps"
+    }
+  ],
+  "022a8ab4": [
+    {
+      "name": "Snatcher (v0.6.0) (SCC+) (Fudeba Software) (Disk 1)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/18120-Snatcher-English.zip",
+      "format": "bps",
+      "inner": "Snatcher (Japan) (En) (v0.6.0) (SCC+) (Fudeba Software) (Disk 1).bps"
+    }
+  ],
+  "78774781": [
+    {
+      "name": "Snatcher (v0.6.0) (SCC+) (Fudeba Software) (Disk 2)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/18120-Snatcher-English.zip",
+      "format": "bps",
+      "inner": "Snatcher (Japan) (En) (v0.6.0) (SCC+) (Fudeba Software) (Disk 2).bps"
+    }
+  ],
+  "35e70ac9": [
+    {
+      "name": "Snatcher (v0.6.0) (SCC+) (Fudeba Software) (Disk 3)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/18120-Snatcher-English.zip",
+      "format": "bps",
+      "inner": "Snatcher (Japan) (En) (v0.6.0) (SCC+) (Fudeba Software) (Disk 3).bps"
+    }
+  ],
+  "2e78dea6": [
+    {
+      "name": "Sorcerian (v1.0) (Delta Soft) (Game Disk)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/22187-DragonSlayerV-Sorcerian-English.zip",
+      "format": "bps",
+      "inner": "Dragon Slayer V - Sorcerian (Japan) (En) (v1.0) (Delta Soft) (Game Disk).bps"
+    }
+  ],
+  "a672d57f": [
+    {
+      "name": "Sorcerian (v1.0) (Delta Soft) (Scenario 1 Disk)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/22187-DragonSlayerV-Sorcerian-English.zip",
+      "format": "bps",
+      "inner": "Dragon Slayer V - Sorcerian (Japan) (En) (v1.0) (Delta Soft) (Scenario 1 Disk).bps"
+    }
+  ],
+  "593ec54e": [
+    {
+      "name": "Sorcerian (v1.0) (Delta Soft) (Scenario 2 Disk)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/22187-DragonSlayerV-Sorcerian-English.zip",
+      "format": "bps",
+      "inner": "Dragon Slayer V - Sorcerian (Japan) (En) (v1.0) (Delta Soft) (Scenario 2 Disk).bps"
+    }
+  ],
+  "c31ff24b": [
+    {
+      "name": "Sorcerian (v1.0) (Delta Soft) (Scenario 3 Disk)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/22187-DragonSlayerV-Sorcerian-English.zip",
+      "format": "bps",
+      "inner": "Dragon Slayer V - Sorcerian (Japan) (En) (v1.0) (Delta Soft) (Scenario 3 Disk).bps"
+    }
+  ],
+  "e9993eca": [
+    {
+      "name": "Silviana (Pack In Video) (Japan) (En) (v20091213) (Jon Najar)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/22622-Silviana-English.zip",
+      "format": "bps"
+    }
+  ],
+  "4876f3e8": [
+    {
+      "name": "Rune Master II (v1.0) (Oasis) (Bug Fix) (v1.0) (232)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/24159-RuneMasterII-English.zip",
+      "format": "bps",
+      "inner": "Base = TOSEC (JP) (EN)/Rune Master II (Japan) (En) (v1.0) (Oasis) (Bug Fix) (v1.0) (232).bps"
+    }
+  ],
+  "7fdf9472": [
+    {
+      "name": "Rune Master II (v1.0) (Oasis) (Bug Fix) (v1.0) (232)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/24159-RuneMasterII-English.zip",
+      "format": "bps",
+      "inner": "Base = TOSEC (JP)/Rune Master II (Japan) (En) (v1.0) (Oasis) (Bug Fix) (v1.0) (232).bps"
+    }
+  ],
+  "fafd2686": [
+    {
+      "name": "Puyo Puyo (v1.0) (232,BiFi)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/25189-PuyoPuyo-English.zip",
+      "format": "bps",
+      "inner": "Puyo Puyo (Japan) (En) (v1.0) (232,BiFi).bps"
+    },
+    {
+      "name": "Puyo Puyo (v1.0) (Moonsound) (232,BiFi)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/25189-PuyoPuyo-English.zip",
+      "format": "bps",
+      "inner": "Puyo Puyo (Japan) (En) (v1.0) (Moonsound) (232,BiFi).bps"
+    },
+    {
+      "name": "Puyo Puyo (v1.0) (Old Logo) (232,BiFi)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/25189-PuyoPuyo-English.zip",
+      "format": "bps",
+      "inner": "Puyo Puyo (Japan) (En) (v1.0) (Old Logo) (232,BiFi).bps"
+    },
+    {
+      "name": "Puyo Puyo (v1.0) (Old Logo) (Moonsound) (232,BiFi)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/25189-PuyoPuyo-English.zip",
+      "format": "bps",
+      "inner": "Puyo Puyo (Japan) (En) (v1.0) (Old Logo) (Moonsound) (232,BiFi).bps"
+    },
+    {
+      "name": "Puyo Puyo (v1.0) (Old Logo) (Philips NMS-1205 or Toshiba HX-MU900) (232,BiFi)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/25189-PuyoPuyo-English.zip",
+      "format": "bps",
+      "inner": "Puyo Puyo (Japan) (En) (v1.0) (Old Logo) (Philips NMS-1205 or Toshiba HX-MU900) (232,BiFi).bps"
+    },
+    {
+      "name": "Puyo Puyo (v1.0) (Philips NMS-1205 or Toshiba HX-MU900) (232,BiFi)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/25189-PuyoPuyo-English.zip",
+      "format": "bps",
+      "inner": "Puyo Puyo (Japan) (En) (v1.0) (Philips NMS-1205 or Toshiba HX-MU900) (232,BiFi).bps"
+    },
+    {
+      "name": "Puyo Puyo (v1.0) (Rainbow Logo) (232,BiFi)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/25189-PuyoPuyo-English.zip",
+      "format": "bps",
+      "inner": "Puyo Puyo (Japan) (En) (v1.0) (Rainbow Logo) (232,BiFi).bps"
+    },
+    {
+      "name": "Puyo Puyo (v1.0) (Rainbow Logo) (Moonsound) (232,BiFi)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/25189-PuyoPuyo-English.zip",
+      "format": "bps",
+      "inner": "Puyo Puyo (Japan) (En) (v1.0) (Rainbow Logo) (Moonsound) (232,BiFi).bps"
+    },
+    {
+      "name": "Puyo Puyo (v1.0) (Rainbow Logo) (Philips NMS-1205 or Toshiba HX-MU900) (232,BiFi)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/25189-PuyoPuyo-English.zip",
+      "format": "bps",
+      "inner": "Puyo Puyo (Japan) (En) (v1.0) (Rainbow Logo) (Philips NMS-1205 or Toshiba HX-MU900) (232,BiFi).bps"
+    }
+  ],
+  "23b78a2d": [
+    {
+      "name": "Yomigaeru Densetu (Japan) (En) (v1.0) (Imanok)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/25625-KingKong2-English.zip",
+      "format": "bps"
+    }
+  ],
+  "4baea838": [
+    {
+      "name": "Adventure of Randar (Clean)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/27631-Randar-English.zip",
+      "format": "bps",
+      "inner": "Adventure of Randar (Japan) (Clean).bps"
+    },
+    {
+      "name": "Adventure of Randar (v2003) (Sargon)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/27631-Randar-English.zip",
+      "format": "bps",
+      "inner": "TOSEC Base/Adventure of Randar (Japan) (En) (v2003) (Sargon).bps"
+    }
+  ],
+  "09eaccc6": [
+    {
+      "name": "Adventure of Randar (v2003) (Sargon)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/27631-Randar-English.zip",
+      "format": "bps",
+      "inner": "TOSEC (Clean) Base/Adventure of Randar (Japan) (En) (v2003) (Sargon).bps"
+    }
+  ],
+  "5eac55df": [
+    {
+      "name": "Golvellius (Japan) (En) (v1.0) (Novalia Spirit)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/3263-Golvellius-English.zip",
+      "format": "bps"
+    }
+  ],
+  "3651f13f": [
+    {
+      "name": "Super Cooks (1989) (Compile) (En) (v1.0) (Django Translations)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/32666-SuperCooks-English.zip",
+      "format": "bps"
+    }
+  ],
+  "a95b26b4": [
+    {
+      "name": "Psycho World (Japan) (En) (v3.0) (Django, FRS)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/32667-PsychoWorld-English.zip",
+      "format": "bps"
+    }
+  ],
+  "40e53ea3": [
+    {
+      "name": "Karakuri Douchuu (Japan) (En) (v0.9.5) (MSX Translations)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/3269-GanbareGoemonKarakuriDouchuu-English.zip",
+      "format": "bps"
+    }
+  ],
+  "234b534c": [
+    {
+      "name": "Aleste 2 (1989) (Compile) (v1.0) (Woomb, BacklogOddy) (Disk 1)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/3287-Aleste2-English.zip",
+      "format": "bps",
+      "inner": "Aleste 2 (1989) (Compile) (En) (v1.0) (Woomb, BacklogOddy) (Disk 1).bps"
+    }
+  ],
+  "11020432": [
+    {
+      "name": "Aleste 2 (1989) (Compile) (v1.0) (Woomb, BacklogOddy) (Disk 2)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/3287-Aleste2-English.zip",
+      "format": "bps",
+      "inner": "Aleste 2 (1989) (Compile) (En) (v1.0) (Woomb, BacklogOddy) (Disk 2).bps"
+    }
+  ],
+  "680afec8": [
+    {
+      "name": "Aleste 2 (1989) (Compile) (v1.0) (Woomb, BacklogOddy) (Disk 3)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/3287-Aleste2-English.zip",
+      "format": "bps",
+      "inner": "Aleste 2 (1989) (Compile) (En) (v1.0) (Woomb, BacklogOddy) (Disk 3).bps"
+    }
+  ],
+  "8c7a7435": [
+    {
+      "name": "Stone of Wisdom, The (v1.0) (GDX)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/33195-StoneofWisdom-English.zip",
+      "format": "bps",
+      "inner": "Stone of Wisdom, The (Japan) (En) (v1.0) (GDX).bps"
+    },
+    {
+      "name": "translation patch",
+      "type": "Translation",
+      "path": "MSX/Translation/English/33195-StoneofWisdom-English.zip",
+      "format": "ips",
+      "inner": "original patch and docs/The Stone of Wisdom translation patch.ips"
+    }
+  ],
+  "9b447e70": [
+    {
+      "name": "Dragon's Eye - Super Shanghai (Japan) (En) (v1.0) (Ronin Translations)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/33575-DragonsEyeSuperShanghai-English.zip",
+      "format": "bps"
+    }
+  ],
+  "c44c6330": [
+    {
+      "name": "Gekitotsu Pennant Race 2 (Japan) (En) (v1.0) (Victor Martinez)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34009-GekitotsuPennantRace2-English.zip",
+      "format": "bps"
+    }
+  ],
+  "c6f74489": [
+    {
+      "name": "Hanseimei Senki Androgynus (v1.0 - MSX-Audio with Samples) (MSX Translations)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34010-HanseimeiSenkiAndrogynus-English.zip",
+      "format": "bps",
+      "inner": "Hanseimei Senki Androgynus (Japan) (En) (v1.0 - MSX-Audio with Samples) (MSX Translations).bps"
+    },
+    {
+      "name": "Hanseimei Senki Androgynus (v1.0 - MSX-Audio without Samples) (MSX Translations)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34010-HanseimeiSenkiAndrogynus-English.zip",
+      "format": "bps",
+      "inner": "Hanseimei Senki Androgynus (Japan) (En) (v1.0 - MSX-Audio without Samples) (MSX Translations).bps"
+    },
+    {
+      "name": "Hanseimei Senki Androgynus (v1.0) (MSX Translations)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34010-HanseimeiSenkiAndrogynus-English.zip",
+      "format": "bps",
+      "inner": "Hanseimei Senki Androgynus (Japan) (En) (v1.0) (MSX Translations).bps"
+    }
+  ],
+  "4faccae0": [
+    {
+      "name": "The Three-Eyed One Comes Here (Japan) (En) (v20210605) (Igor Bezhenar)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34011-MitsumegaToohru-English.zip",
+      "format": "bps"
+    }
+  ],
+  "712ae3c6": [
+    {
+      "name": "Mr. Ghost (Japan) (En) (v1.0.0) (MSX Translations)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34012-Yuureikun-MrGhost-English.zip",
+      "format": "bps"
+    }
+  ],
+  "3cb34efb": [
+    {
+      "name": "Densetsu no Seisenshi (Japan) (En) (v1.0) (Django)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34013-AshGuine-English.zip",
+      "format": "bps"
+    }
+  ],
+  "353382ce": [
+    {
+      "name": "Fukushuu no Honoo (Japan) (En) (v1.0) (Django)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34014-AshGuineStoryIII-English.zip",
+      "format": "bps"
+    }
+  ],
+  "f221b845": [
+    {
+      "name": "Deep Forest (Japan) (En) (v1.0) (Django)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34015-DeepForest-English.zip",
+      "format": "bps"
+    }
+  ],
+  "a29e6ab4": [
+    {
+      "name": "Zombie Hunter (Japan) (En) (v1.0) (Django)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34016-ZombieHunter-English.zip",
+      "format": "bps"
+    }
+  ],
+  "0bd18f9e": [
+    {
+      "name": "XZR II (v1.0) (Django) (Disk 1)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34017-XZRII-English.zip",
+      "format": "bps",
+      "inner": "XZR II (Japan) (En) (v1.0) (Django) (Disk 1).bps"
+    }
+  ],
+  "306e3d93": [
+    {
+      "name": "XZR II (v1.0) (Django) (Disk 2)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34017-XZRII-English.zip",
+      "format": "bps",
+      "inner": "XZR II (Japan) (En) (v1.0) (Django) (Disk 2).bps"
+    }
+  ],
+  "6abba413": [
+    {
+      "name": "The Rising of the Red Moon (v1.0) (Oasis) (Disk 1) (Opening Disk)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34018-XakII-English.zip",
+      "format": "bps",
+      "inner": "Xak II - The Rising of the Red Moon (Japan) (En) (v1.0) (Oasis) (Disk 1) (Opening Disk).bps"
+    }
+  ],
+  "ae57bc79": [
+    {
+      "name": "The Rising of the Red Moon (v1.0) (Oasis) (Disk 2) (Game Disk 1)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34018-XakII-English.zip",
+      "format": "bps",
+      "inner": "Xak II - The Rising of the Red Moon (Japan) (En) (v1.0) (Oasis) (Disk 2) (Game Disk 1).bps"
+    }
+  ],
+  "bbbb87a5": [
+    {
+      "name": "The Rising of the Red Moon (v1.0) (Oasis) (Disk 3) (Game Disk 2)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34018-XakII-English.zip",
+      "format": "bps",
+      "inner": "Xak II - The Rising of the Red Moon (Japan) (En) (v1.0) (Oasis) (Disk 3) (Game Disk 2).bps"
+    }
+  ],
+  "33a6f59b": [
+    {
+      "name": "The Rising of the Red Moon (v1.0) (Oasis) (Disk 4) (Game Disk 3)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34018-XakII-English.zip",
+      "format": "bps",
+      "inner": "Xak II - The Rising of the Red Moon (Japan) (En) (v1.0) (Oasis) (Disk 4) (Game Disk 3).bps"
+    }
+  ],
+  "9ff8e365": [
+    {
+      "name": "The Rising of the Red Moon (v1.0) (Oasis) (Disk 5) (Game Disk 4)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34018-XakII-English.zip",
+      "format": "bps",
+      "inner": "Xak II - The Rising of the Red Moon (Japan) (En) (v1.0) (Oasis) (Disk 5) (Game Disk 4).bps"
+    }
+  ],
+  "405160c0": [
+    {
+      "name": "The Tower of Gazzel (v1.0) (Oasis) (Disk 1) (Opening Disk)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34019-XakIII-English.zip",
+      "format": "bps",
+      "inner": "Xak III - The Tower of Gazzel (Japan) (En) (v1.0) (Oasis) (Disk 1) (Opening Disk).bps"
+    }
+  ],
+  "4437d318": [
+    {
+      "name": "The Tower of Gazzel (v1.0) (Oasis) (Disk 2) (Cabin Times)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34019-XakIII-English.zip",
+      "format": "bps",
+      "inner": "Xak III - The Tower of Gazzel (Japan) (En) (v1.0) (Oasis) (Disk 2) (Cabin Times).bps"
+    }
+  ],
+  "1006eb21": [
+    {
+      "name": "The Tower of Gazzel (v1.0) (Oasis) (Disk 3) (Game Disk 1)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34019-XakIII-English.zip",
+      "format": "bps",
+      "inner": "Xak III - The Tower of Gazzel (Japan) (En) (v1.0) (Oasis) (Disk 3) (Game Disk 1).bps"
+    }
+  ],
+  "0d427edd": [
+    {
+      "name": "The Tower of Gazzel (v1.0) (Oasis) (Disk 4) (Game Disk 2)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34019-XakIII-English.zip",
+      "format": "bps",
+      "inner": "Xak III - The Tower of Gazzel (Japan) (En) (v1.0) (Oasis) (Disk 4) (Game Disk 2).bps"
+    }
+  ],
+  "44acb4db": [
+    {
+      "name": "Undeadline (v1.0) (R800 Fix) (Woomb)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34025-Undeadline-English.zip",
+      "format": "bps",
+      "inner": "Undeadline (Japan) (En) (v1.0) (R800 Fix) (Woomb).bps"
+    },
+    {
+      "name": "Undeadline (v1.0) (Woomb)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34025-Undeadline-English.zip",
+      "format": "bps",
+      "inner": "Undeadline (Japan) (En) (v1.0) (Woomb).bps"
+    }
+  ],
+  "887cef76": [
+    {
+      "name": "In Magical Adventure (v1.0) (Oasis) (Disk 1) (Opening Disk 1)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34026-Fray-English.zip",
+      "format": "bps",
+      "inner": "Fray - In Magical Adventure (Japan) (En) (v1.0) (Oasis) (Disk 1) (Opening Disk 1).bps"
+    }
+  ],
+  "2c18d331": [
+    {
+      "name": "In Magical Adventure (v1.0) (Oasis) (Disk 2) (Opening Disk 2)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34026-Fray-English.zip",
+      "format": "bps",
+      "inner": "Fray - In Magical Adventure (Japan) (En) (v1.0) (Oasis) (Disk 2) (Opening Disk 2).bps"
+    }
+  ],
+  "8057d3cc": [
+    {
+      "name": "In Magical Adventure (v1.0) (Oasis) (Disk 3) (Game Disk 1)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34026-Fray-English.zip",
+      "format": "bps",
+      "inner": "Fray - In Magical Adventure (Japan) (En) (v1.0) (Oasis) (Disk 3) (Game Disk 1).bps"
+    }
+  ],
+  "5c7be1ef": [
+    {
+      "name": "In Magical Adventure (v1.0) (Oasis) (Disk 4) (Game Disk 2)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/34026-Fray-English.zip",
+      "format": "bps",
+      "inner": "Fray - In Magical Adventure (Japan) (En) (v1.0) (Oasis) (Disk 4) (Game Disk 2).bps"
+    }
+  ],
+  "bbe61f63": [
+    {
+      "name": "War of the Dead Part 2 (v1.0) (Oasis) (Disk 1)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/3835-ShiryouSensen-WaroftheDeadPart2-English.zip",
+      "format": "bps",
+      "inner": "Shiryou Sensen - War of the Dead Part 2 (Japan) (En) (v1.0) (Oasis) (Disk 1).bps"
+    }
+  ],
+  "84628411": [
+    {
+      "name": "War of the Dead Part 2 (v1.0) (Oasis) (Disk 2)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/3835-ShiryouSensen-WaroftheDeadPart2-English.zip",
+      "format": "bps",
+      "inner": "Shiryou Sensen - War of the Dead Part 2 (Japan) (En) (v1.0) (Oasis) (Disk 2).bps"
+    }
+  ],
+  "cf60fa7d": [
+    {
+      "name": "Shalom (Japan) (En) (v1.0b4) (RicardoBittencourt,SLotman)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/3836-KnightmareIII-English.zip",
+      "format": "bps"
+    }
+  ],
+  "7e637801": [
+    {
+      "name": "Tengoku Yoitoko (Japan) (En) (v1.0.2) (MSX Translations)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/4011-TengokuYoitoko-English.zip",
+      "format": "bps"
+    }
+  ],
+  "ca21cde4": [
+    {
+      "name": "Parodius (Japan) (En) (v1.0) (A&L Software)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/4015-Parodius-English.zip",
+      "format": "bps"
+    }
+  ],
+  "fa8f9bbc": [
+    {
+      "name": "A Life Planet (Japan) (En) (v1.2) (Bug Fix,New Font) (Hubz)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/4016-M36-English.zip",
+      "format": "bps"
+    }
+  ],
+  "6d81d863": [
+    {
+      "name": "Nyorols (Japan) (En) (v1.0) (PentarouZero)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/4017-Nyorols-English.zip",
+      "format": "bps"
+    }
+  ],
+  "d34d74f7": [
+    {
+      "name": "Mashou no Tachi Goblin (Japan) (En) (v20080619) (Hap,Zan)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/4018-MashounoYakataGoblin-English.zip",
+      "format": "bps"
+    }
+  ],
+  "32f044b3": [
+    {
+      "name": "The Art of Visual Stage (v1.0) (Delta Soft) (Disk 1) (Opening Disk)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/4019-Xak-English.zip",
+      "format": "bps",
+      "inner": "Xak - The Art of Visual Stage (Japan) (En) (v1.0) (Delta Soft) (Disk 1) (Opening Disk).bps"
+    }
+  ],
+  "1ab66c77": [
+    {
+      "name": "The Art of Visual Stage (v1.0) (Delta Soft) (Disk 2) (Game Disk 1)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/4019-Xak-English.zip",
+      "format": "bps",
+      "inner": "Xak - The Art of Visual Stage (Japan) (En) (v1.0) (Delta Soft) (Disk 2) (Game Disk 1).bps"
+    }
+  ],
+  "94e02e04": [
+    {
+      "name": "The Art of Visual Stage (v1.0) (Delta Soft) (Disk 3) (Game Disk 2)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/4019-Xak-English.zip",
+      "format": "bps",
+      "inner": "Xak - The Art of Visual Stage (Japan) (En) (v1.0) (Delta Soft) (Disk 3) (Game Disk 2).bps"
+    }
+  ],
+  "25fc11fa": [
+    {
+      "name": "Megami Tensei (Japan) (En) (v1.0) (Kaisaan)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/4024-DDS-MegamiTensei-English.zip",
+      "format": "bps"
+    }
+  ],
+  "a580b72a": [
+    {
+      "name": "Becky (Japan) (En) (v1.0) (Sargon,hap)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/4026-Becky-English.zip",
+      "format": "bps"
+    }
+  ],
+  "d95116b0": [
+    {
+      "name": "Hi no Tori Hououhen (Japan) (En) (v1.0) (232,BiFi)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/4027-Firebird-HinoTori-English.zip",
+      "format": "bps"
+    }
+  ],
+  "f7a9591d": [
+    {
+      "name": "Malaya no Hibou (Japan) (En) (v1.0) (MSX Translations)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/4029-MalayanoHibou-English.zip",
+      "format": "bps"
+    }
+  ],
+  "73aed1b4": [
+    {
+      "name": "Aleste (Japan) (En) (v1.0) (Sargon)",
+      "type": "Translation",
+      "path": "MSX/Translation/English/7578-Aleste-English.zip",
+      "format": "bps"
+    }
+  ]
+}
