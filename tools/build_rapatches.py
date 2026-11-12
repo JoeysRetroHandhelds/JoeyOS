@@ -91,13 +91,14 @@ def _open(url, headers=None):
     if url.startswith("https://api.github.com/") and os.environ.get("GITHUB_TOKEN"):
         auth = {"Authorization": "Bearer " + os.environ["GITHUB_TOKEN"]}
     req = urllib.request.Request(url, headers={**UA, **auth, **(headers or {})})
-    # A server hiccup (5xx, a dropped connection, a timeout) gets three more tries
-    # before the run fails; a real answer like 404 fails straight away.
+    # A server hiccup (500, 502, 503, 504, a dropped connection, a timeout) gets three more
+    # tries before the run fails. A real answer fails straight away: 404, or the 501 GitHub
+    # gives every time for some archives' range requests.
     for wait in (5, 20, 60, None):
         try:
             return urllib.request.urlopen(req, timeout=120)
         except urllib.error.HTTPError as e:
-            if e.code < 500 or wait is None:
+            if e.code not in (500, 502, 503, 504) or wait is None:
                 raise
             print(f"HTTP {e.code} from {url}; trying again in {wait}s", file=sys.stderr)
         except (urllib.error.URLError, TimeoutError, ConnectionError) as e:
