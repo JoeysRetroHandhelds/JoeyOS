@@ -46,6 +46,7 @@ The home screen with your own wallpaper and the dock along the bottom: your favo
 - For Vita3K to work, you must have a folder called Vita3K exactly on your internal storage or SD card
 - For DuckStation (the official app, including the new beta), your device must be able to access Android/data storage, where DuckStation keeps its play history. Recently Played shows every game you've played in it, saved or not. Duckstation-Patch (https://github.com/JoeysRetroHandhelds/duckstation-patch) also works, with a folder called DuckStation on your internal storage or SD card
 - For APS3E to work, your device must be able to access Android/data storage
+- Joey64 (N64) is the first choice for N64 when it's installed. For its Recently Played, your device must be able to access Android/data storage, where Joey64 keeps its recent games
 - For M64Plus FZ to work, you must have a folder called M64Plus exactly on your internal storage or SD card 
 - For ARMSX3 to work, you must have a folder called ARMSX3 exactly on your internal storage or SD card (with its recent_games.json inside), or your device must be able to access Android/data storage
 - For Flycast to work, you must have a folder called Flycast on your internal storage or SD card (or whichever home folder you picked in Flycast), or your device must be able to access Android/data storage
@@ -71,7 +72,7 @@ JoeyOS runs full screen. Swipe in from an edge to see the status and navigation 
 - **D-pad** or **L1 / R1** → move along the dock; **L2 / R2** → jump five at a time
 - Press **A** → opens the emulator
 - **Long-press the wallpaper**, tap the **Settings cog** (top-left), or press **Start** → opens Settings
-- **Tap the grid icon** (top-left) or press **B** → opens the App Drawer
+- **Swipe up** on the wallpaper, **tap the grid icon** (top-left) or press **B** → opens the App Drawer
 - **Long-press an app** or press **Y** → opens the Recently Played menu
 - **Dock icons**: in the App Drawer, press **Start** on a dock app (or long-press it) and choose **Dock icon** to show a system icon instead of the app's own. Pick the system, then the style and colour you like; you can then use that style for every dock app in one go. Recently Played and Favorites follow the style your dock apps use, or you can set their own in **Settings › Appearance**. Icons download the first time you pick them
 - Press **X** → launches your most recently played game directly
@@ -139,7 +140,7 @@ The panel only works in games started from JoeyOS, so other apps keep their left
 
 ## Second screen (dual-screen handhelds like the AYN Thor)
 
-On a device with two screens, JoeyOS puts its own app on the other screen. Turn it on or off in **Settings → Appearance → Second screen**, where you can also choose which screen games open on. Below that you can give it its own wallpaper: Plain (the default), any of the top screen's wallpapers, or your own image.
+On a device with two screens, JoeyOS puts its own app on the other screen. Only a screen built into the handheld counts: AR glasses, a TV or a monitor you plug in are left to Android, which shows your handheld's screen on them. Turn it on or off in **Settings → Appearance → Second screen**, where you can also choose which screen games open on. Below that you can give it its own wallpaper: Plain (the default), any of the top screen's wallpapers, or your own image.
 
 It's touch first, and it takes the controller only when your device sends it there (on the Thor, use its setting to lock controls to the top screen, the bottom screen, or whichever one you tap). The bottom screen's back arrow steps back inside it.
 
