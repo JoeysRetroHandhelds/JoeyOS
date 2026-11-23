@@ -29,6 +29,15 @@ The home screen with your own wallpaper and the dock along the bottom: your favo
 </tr>
 </table>
 
+**Play Retro Games Club** (if you turn it on):
+
+<table>
+<tr>
+<td width="60%" align="center"><b>Club on the dock</b><br><img src="https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/club.jpg" width="100%" alt="The Play Retro Games Club popup: Game of the Week, Game of the Month, Romhack of the Month and Game of the Season"></td>
+<td width="40%" align="center"><b>Club on the second screen</b><br><img src="https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/club-second-screen.jpg" width="100%" alt="The second screen's Club tab: each game with its rating, time to beat and description"></td>
+</tr>
+</table>
+
 **Settings › Tools:**
 
 ![Tools: BIOS check, ROM patching, playlists, compression and RetroAchievements romhacks](https://raw.githubusercontent.com/JoeysRetroHandhelds/JoeyOS/master/docs/images/tools.jpg)
@@ -46,7 +55,7 @@ The home screen with your own wallpaper and the dock along the bottom: your favo
 - For Vita3K to work, you must have a folder called Vita3K exactly on your internal storage or SD card
 - For DuckStation (the official app, including the new beta), your device must be able to access Android/data storage, where DuckStation keeps its play history. Recently Played shows every game you've played in it, saved or not. Duckstation-Patch (https://github.com/JoeysRetroHandhelds/duckstation-patch) also works, with a folder called DuckStation on your internal storage or SD card
 - For APS3E to work, your device must be able to access Android/data storage
-- Joey64 (N64) is the first choice for N64 when it's installed. For its Recently Played, your device must be able to access Android/data storage, where Joey64 keeps its recent games
+- Joey64 (N64) is the first choice for N64 when it's installed (you can pick another in **Settings › Emulators**). For its Recently Played, your device must be able to access Android/data storage, where Joey64 keeps its recent games
 - For M64Plus FZ to work, you must have a folder called M64Plus exactly on your internal storage or SD card 
 - For ARMSX3 to work, you must have a folder called ARMSX3 exactly on your internal storage or SD card (with its recent_games.json inside), or your device must be able to access Android/data storage
 - For Flycast to work, you must have a folder called Flycast on your internal storage or SD card (or whichever home folder you picked in Flycast), or your device must be able to access Android/data storage
@@ -79,6 +88,7 @@ JoeyOS runs full screen. Swipe in from an edge to see the status and navigation 
 - In the App Drawer, press **Start** on an app (or long-press it) → App Info, or add/remove it from the dock
 - In Settings or the App Drawer, tap the **✕** (top-right) or press **B** → back to the home screen
 - In any popup, **A** selects and **B** goes back
+- In a search box, press **A** to start typing and **B** to stop. The keyboard's **Done** takes you to the results
 
 ### Updates
 JoeyOS checks GitHub for a new version when it starts and every 15 minutes after that, and offers to install it. You can also check any time from **Settings → Tools → Check for updates**.
@@ -92,11 +102,14 @@ JoeyOS checks GitHub for a new version when it starts and every 15 minutes after
 - Set a dock background
 - Set the dock title size
 - Choose a default wallpaper or upload your own
+- **Play Retro Games Club**: Off (the default), on the Dock, on the Bottom screen, or Both. See below
 - **Panel over games** (single-screen handhelds): see below
 
 ### Settings → Emulators
-- For RetroArch, choose which cores you have installed
-- Default cores are pre-selected based on recommendation, but games won't load unless the chosen core is actually installed
+- Every console you have an emulator for, with the emulator JoeyOS uses for it. **Automatic** (the default) picks for you and shows which one it picked, for example "Automatic (Joey64)"
+- Press **A** on a console to choose another: any standalone emulator you have for it, or a RetroArch core. This is what Recently Played and the Play Retro Games Club use to open your games
+- **Search** at the top: type a console or an emulator and the list narrows as you type
+- RetroArch games only load if the chosen core is actually installed in RetroArch
 
 ### Settings → Achievements
 - Log in with your RetroAchievements account: enter your username and API key, then press **Connect**
@@ -113,7 +126,7 @@ The tools never change your original games, and only remove them if you choose t
 - **Compress ROMs**: zips cartridge games and converts discs to CHD, GameCube/Wii to RVZ, 3DS to ZCCI and full Xbox disc images to XISO (games already in XISO are left alone). Can be undone
 - **RetroAchievements romhacks**: finds hacks and translations with achievements for the games you own, and creates the patched game for you. For a game with a patch per disk, **Patch all disks** does them in one go
 - **ScreenScraper account** (optional): game manuals download from ScreenScraper without an account. Sign in with your own (free at screenscraper.fr) for a higher daily limit, and for when ScreenScraper is only open to its members. It's checked with ScreenScraper before it's saved, kept encrypted, and never backed up
-- **Android ports**: finds Android ports of games, with Search and a Games I own filter. Installs one in a click, or opens its release page if it has no APK. List based on the Quiver Launcher catalog
+- **Android ports**: finds Android ports of games, with Search and a Games I own filter. Installs one in a click, or opens its release page if it has no APK. Emulators aren't listed here (set those up in **Settings → Emulators**). List based on the Quiver Launcher catalog
 - **Check for updates** and **Share log** (send this to me if something goes wrong). The log is also saved in **Internal storage › JoeyOS**
 
 ---
@@ -138,6 +151,17 @@ It's off until you choose it. JoeyOS offers it during first-time setup (or once 
 
 The panel only works in games started from JoeyOS, so other apps keep their left edge. If you leave a game with Home and go back to it from Recents, start it from JoeyOS again to get the panel back.
 
+## Play Retro Games Club
+
+The games the Play Retro Games Club community is playing right now: Game of the Week, Game of the Month, Romhack of the Month, Game of the Season and any special event. It's off until you turn it on in **Settings → Appearance → Play Retro Games Club**: on the Dock, on the Bottom screen (dual-screen handhelds), or Both.
+
+- **On the dock**: a club icon after Recently Played. Press **A** for the list. A game you have shows its console in blue and **A** starts it with your emulator for that console. One you don't have is greyed out and says why (not in your games, or no emulator for it)
+- **Romhack of the Month**: if you don't have the hack yet but you do have the game it's built on, **A** takes you to the RetroAchievements romhack tool to make it
+- **On the second screen**: a **Club** tab with each game's rating out of 10, about how long it takes to beat, how many club members beat or mastered it, and its description. It's information only
+- Each game shows when the next one starts or when voting opens. Game of the Week changes every Sunday
+- The last row opens the club's Discord, where you can join in and vote
+- Opening the club gets the latest list (at most once every 15 minutes), and the last one still shows when you're offline
+
 ## Second screen (dual-screen handhelds like the AYN Thor)
 
 On a device with two screens, JoeyOS puts its own app on the other screen. Only a screen built into the handheld counts: AR glasses, a TV or a monitor you plug in are left to Android, which shows your handheld's screen on them. Turn it on or off in **Settings → Appearance → Second screen**, where you can also choose which screen games open on. Below that you can give it its own wallpaper: Plain (the default), any of the top screen's wallpapers, or your own image.
@@ -146,6 +170,7 @@ It's touch first, and it takes the controller only when your device sends it the
 
 Tabs:
 - **Apps**: every app on your device, to open on that screen
+- **Club** (if Play Retro Games Club is on for the Bottom screen): see above
 - **Achievements** (when logged in to RetroAchievements): your points, what you're playing, recent awards, "Almost there", awards by year, your Want to Play list, your fastest beats (your time to beat each game next to how long most players take), and a search of every game on RetroAchievements. Tap any game for its achievements, or a total (beaten this year, beaten all-time, completed) for its list
 - **Now playing** (while a game runs): the achievements of the game RetroAchievements sees you playing, with its live status, session and play time, how long most players take to beat it (and your own time once you have), a Show button (all, locked, earned, missable, to beat, leaderboards) and a Sort button (including Rarest), an "Unlocked!" banner, and tips from each achievement's comments. Under the live status are your last few status lines. **Leaderboards** shows your rank and score beside the top score. **Hunt this** on an achievement pins it to the top of the list with a tip (up to 3), and it unpins once you earn it. Each achievement shows how far into the game it's usually earned, and a RARE tag when fewer than 5% of players have it. Tap the game's icon for its box art, title screen and a screenshot, and how many players have beaten it
 - **Guide** (while a game runs): see below
