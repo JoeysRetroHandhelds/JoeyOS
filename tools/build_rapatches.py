@@ -498,6 +498,129 @@ class RaGames:
                 json.dump(self.cache, f, separators=(",", ":"), sort_keys=True)
 
 
+class RaHashes:
+    """RetroAchievements game ID -> the game files it gives achievements for.
+
+    RAPatches keeps old versions and unfixed patches beside the one RetroAchievements supports
+    (Pokemon Recordkeepers: v1.1, v1.2.1.1 and v1.2.1.1 (Fix) (Prims), of which only the last
+    gets achievements), and a patch made from the others makes a game with none. RA lists the
+    supported files by name, the patch's own name with the game's extension ("Pokemon Emerald -
+    Pokemon Recordkeepers (v1.2.1.1) (Turtleye) (Fix) (Prims).gba"), and the patch archive each
+    comes from. Asked with RA_API_KEY and kept in a cache file; an answer older than [FRESH] is
+    asked again, at most [STALE_PER_RUN] a run, since RA adds and retires files now and then.
+    """
+
+    API = "https://retroachievements.org/API/API_GetGameHashes.php"
+    FRESH = 7 * 24 * 3600
+    STALE_PER_RUN = 300
+
+    def __init__(self, cache_path):
+        self.key = os.environ.get("RA_API_KEY", "").strip()
+        self.path = cache_path
+        self.cache = {}
+        if cache_path and os.path.isfile(cache_path):
+            with open(cache_path, encoding="utf-8") as f:
+                self.cache = json.load(f)
+        self.asked = 0
+        self.refreshed = 0
+
+    def get(self, gid):
+        """{"names": [...], "urls": [...], "at": time} for game [gid], or None when unknown."""
+        entry = self.cache.get(gid)
+        now = time.time()
+        if entry and (now - entry.get("at", 0) < self.FRESH or not self.key or self.refreshed >= self.STALE_PER_RUN):
+            return entry
+        if not self.key:
+            return None
+        try:
+            data = json.loads(_get(f"{self.API}?i={gid}&y={urllib.parse.quote(self.key)}"))
+            results = data.get("Results") or []
+            fresh = {
+                "names": [r.get("Name") or "" for r in results],
+                "urls": [r.get("PatchUrl") for r in results if r.get("PatchUrl")],
+                "at": int(now),
+            }
+        except Exception as e:  # noqa: BLE001 - one bad lookup mustn't stop the build
+            print(f"  RA hash lookup failed for game {gid}: {e}")
+            return entry
+        if entry:
+            self.refreshed += 1
+        self.asked += 1
+        self.cache[gid] = fresh
+        time.sleep(0.25)  # gentle on RA's API
+        return fresh
+
+    def save(self):
+        if self.path:
+            os.makedirs(os.path.dirname(self.path) or ".", exist_ok=True)
+            with open(self.path, "w", encoding="utf-8") as f:
+                json.dump(self.cache, f, separators=(",", ":"), sort_keys=True)
+
+
+_EXT = re.compile(r"\.[a-z0-9]{1,7}$")
+
+
+def _stem(name):
+    """A file name to compare by: no folder, no extension, any case, single spaces."""
+    base = name.replace("\\", "/").rsplit("/", 1)[-1].strip().lower()
+    return " ".join(_EXT.sub("", base).split())
+
+
+def _ra_id(path):
+    m = re.match(r"(\d+)-", path.rsplit("/", 1)[-1])
+    return m.group(1) if m else None
+
+
+def keep_supported(index, lookup):
+    """Drops the hacks RetroAchievements gives no achievements for.
+
+    A hack stays when its patch's name is one of its RA game's supported files, or when its
+    archive holds just the one patch and RA names that archive as a supported file's patch.
+    A game none of whose hacks match either way keeps them all (a naming quirk mustn't hide a
+    working hack), as does a game RA lists no files for or that couldn't be asked.
+    """
+    by_game = {}
+    for table in index.values():
+        for hacks in table.values():
+            for h in hacks:
+                gid = _ra_id(h["path"])
+                if gid:
+                    by_game.setdefault(gid, {})[id(h)] = h
+    patches_in = {}
+    for hacks in by_game.values():
+        for h in hacks.values():
+            patches_in.setdefault(h["path"], set()).add(h["_file"])
+    drop = set()
+    kept_all = 0
+    for gid, hacks in sorted(by_game.items()):
+        info = lookup(gid)
+        if not info or not info.get("names"):
+            continue
+        stems = {_stem(n) for n in info["names"] if n}
+        urls = [urllib.parse.unquote(u) for u in info.get("urls", [])]
+
+        def supported(h):
+            if _stem(h["_file"]) in stems:
+                return True
+            return len(patches_in[h["path"]]) == 1 and any(u.endswith("/" + h["path"]) for u in urls)
+
+        good = [h for h in hacks.values() if supported(h)]
+        if not good:
+            kept_all += 1
+            print(f"  RA game {gid}: no patch matches its supported files, keeping all {len(hacks)}")
+            continue
+        for h in hacks.values():
+            if not supported(h):
+                drop.add(id(h))
+                print(f"  dropped (no achievements): {h['path']} :: {h['_file']}")
+    for table in index.values():
+        for crc in list(table):
+            table[crc] = [h for h in table[crc] if id(h) not in drop]
+            if not table[crc]:
+                del table[crc]
+    print(f"RA supported files: dropped {len(drop)} hack(s), {kept_all} game(s) kept whole for lack of a match")
+
+
 def build(out_dir, only=None, workers=16, cache_path=None):
     """Writes the index to [out_dir].
 
@@ -629,6 +752,7 @@ def build(out_dir, only=None, workers=16, cache_path=None):
                         "type": type_folder,
                         "path": path,
                         "format": "bps",
+                        "_file": inner,
                     }
                     if len(exact) > 1:
                         hack["inner"] = inner
@@ -645,6 +769,7 @@ def build(out_dir, only=None, workers=16, cache_path=None):
                 "type": type_folder,
                 "path": path,
                 "format": fmt,
+                "_file": display_name,
             }
             for crc in sorted(crcs):
                 table.setdefault(crc, []).append(hack)
@@ -657,11 +782,20 @@ def build(out_dir, only=None, workers=16, cache_path=None):
                 "path": path,
                 "format": inner.rsplit(".", 1)[1].lower(),
                 "inner": inner,
+                "_file": inner,
             }
             for crc in sorted(for_region(resolvers[short], crcs, inner)):
                 table.setdefault(crc, []).append(hack)
 
     ra_games.save()
+    ra_hashes = RaHashes(os.path.join(os.path.dirname(cache_path), "ra-hashes.json") if cache_path else None)
+    keep_supported(index, ra_hashes.get)
+    ra_hashes.save()
+    print(f"RA hash lookups: {ra_hashes.asked} asked ({ra_hashes.refreshed} refreshed), {len(ra_hashes.cache)} known")
+    for table in index.values():
+        for hacks in table.values():
+            for h in hacks:
+                h.pop("_file", None)
     if sources_path:
         with open(sources_path, "w", encoding="utf-8") as f:
             json.dump({k: v for k, v in sorted(sources.items()) if k in every_sha}, f, separators=(",", ":"))
