@@ -523,6 +523,10 @@ class RaHashes:
                 self.cache = json.load(f)
         self.asked = 0
         self.refreshed = 0
+        # RA said "too many requests" and kept saying it: no more asking this run. The games not
+        # asked keep all their patches and are asked next run (the first run, 4,342 games, was
+        # cut off for its last 424, Pokemon Recordkeepers among them).
+        self.blocked = False
 
     def get(self, gid):
         """{"names": [...], "urls": [...], "at": time} for game [gid], or None when unknown."""
@@ -530,10 +534,10 @@ class RaHashes:
         now = time.time()
         if entry and (now - entry.get("at", 0) < self.FRESH or not self.key or self.refreshed >= self.STALE_PER_RUN):
             return entry
-        if not self.key:
-            return None
+        if not self.key or self.blocked:
+            return entry
         try:
-            data = json.loads(_get(f"{self.API}?i={gid}&y={urllib.parse.quote(self.key)}"))
+            data = json.loads(self._ask(gid))
             results = data.get("Results") or []
             fresh = {
                 "names": [r.get("Name") or "" for r in results],
@@ -549,6 +553,24 @@ class RaHashes:
         self.cache[gid] = fresh
         time.sleep(0.25)  # gentle on RA's API
         return fresh
+
+    def _ask(self, gid):
+        """RA's answer for [gid]; on 429 waits as long as RA asks (a minute if it doesn't say), three times."""
+        url = f"{self.API}?i={gid}&y={urllib.parse.quote(self.key)}"
+        for attempt in range(4):
+            try:
+                return _get(url)
+            except urllib.error.HTTPError as e:
+                if e.code != 429:
+                    raise
+                if attempt == 3:
+                    self.blocked = True
+                    print("  RA keeps refusing (429): the rest are asked next run")
+                    raise
+                wait = e.headers.get("Retry-After", "") if e.headers else ""
+                wait = int(wait) if wait.isdigit() else 60
+                print(f"  RA asked us to slow down (429): waiting {wait}s")
+                time.sleep(min(wait, 300))
 
     def save(self):
         if self.path:
