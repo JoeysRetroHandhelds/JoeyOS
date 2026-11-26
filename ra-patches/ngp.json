@@ -1,0 +1,58 @@
+{
+  "add4fdff": [
+    {
+      "name": "Delta Warp (Japan) (En,Ja) (Save Fix) (RetroHQ)",
+      "type": "Fix",
+      "path": "Neo Geo Pocket/Fix/14396-DeltaWarp-SaveFix.zip",
+      "format": "bps"
+    }
+  ],
+  "8bd22145": [
+    {
+      "name": "Sonic The Hedgehog - Pocket Adventure - Sonic Pocket Winter (v1.0) (ValleyBell)",
+      "type": "Hack",
+      "path": "Neo Geo Pocket/Hack/Sonic Pocket Adventure/24935-SonicPocketAdventure-SonicPocketWinter.zip",
+      "format": "bps"
+    }
+  ],
+  "b173030a": [
+    {
+      "name": "The Match of the Millennium (World) (En,Ja) (SvC Unlock Char)",
+      "type": "Misc",
+      "path": "Neo Geo Pocket/Misc/10236-SNKvsCapcomMotM-CharUnlock.zip",
+      "format": "bps"
+    }
+  ],
+  "9c861e49": [
+    {
+      "name": "Rockman Battle & Fighters (Japan) (En) (v0.9) (marc_max)",
+      "type": "Translation",
+      "path": "Neo Geo Pocket/Translation/English/12895-RockmanBF-English.zip",
+      "format": "bps"
+    }
+  ],
+  "ccbcfda7": [
+    {
+      "name": "Card Fighters 2 - Expand Edition (Japan) (En) (v1-25-17) (CFC2 Translation Team)",
+      "type": "Translation",
+      "path": "Neo Geo Pocket/Translation/English/14397-SNKvsCapcom2ExEd-English.zip",
+      "format": "bps"
+    }
+  ],
+  "3cc3e269": [
+    {
+      "name": "Nige-ron-pa (Japan) (En) (v0.9) (Loic)",
+      "type": "Translation",
+      "path": "Neo Geo Pocket/Translation/English/20405-Nige-Ron-Pa-English.zip",
+      "format": "bps"
+    }
+  ],
+  "dceb7e11": [
+    {
+      "name": "Battle de Paradise (En) (v1.0) (marc_max,xenophile127)",
+      "type": "Translation",
+      "path": "Neo Geo Pocket/Translation/English/32107-KoF-BattledeParadise-English.zip",
+      "format": "bps"
+    }
+  ]
+}
